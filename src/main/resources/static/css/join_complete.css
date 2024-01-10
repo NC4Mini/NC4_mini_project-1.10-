@@ -1,0 +1,102 @@
+body, button{
+    line-height: 1;
+    letter-spacing: -.05em;
+    color: #4c4c4c;
+    font-size: 12px;
+    max-width: 100%;
+}
+
+a {
+    background-color: transparent;
+    text-decoration: none;
+    color: inherit;
+}
+
+
+
+
+#content{
+    min-width: 1050px;
+    padding-bottom: 120px;
+}
+
+.layout-wrapper{
+    position: relative;
+    width:1050px;
+    height:100%;
+    margin: 0 auto;
+}
+
+.xans-member-joincomplete{
+    padding: 50px 0;
+    line-height: 150%;
+    text-align: center;
+    background-color: #f7f5f8;
+    border-top: 2px solid #4d4d4d;
+    border-bottom: 1px solid #4d4d4d;
+}
+
+.xans-member-joincomplete .joinComplete{
+    width: 430px;
+    margin: 0 auto;
+    color: #4c4c4c;
+}
+
+.xans-member-joincomplete .desc{
+    margin: 0 0 30px;
+    font-size: 20px;
+    font-weight: 700;
+    background-color: rgba(243,250,247,var(--bg-opacity));
+}
+
+.xans-member-joincomplete .joinComplete .memberInfo{
+    overflow: hidden;
+    text-align: left;
+    border-top: 2px solid #6a3664;
+    padding-top: 10px;
+}
+
+.xans-member-joincomplete .joinComplete .memberInfo li {
+    border-bottom: 1px solid #6a3664;
+}
+
+.xans-member-joincomplete .joinComplete .memberInfo li strong{
+    display: inline-block;
+    width: 30%;
+    padding: 20px 0;
+    color: #000;
+    font-weight: 700;
+    font-size: 13px;
+    text-indent: 20px;
+}
+
+.xans-member-joincomplete .joinComplete .memberInfo li span{
+    font-size:12px;
+}
+
+.xans-member-joincomplete .joinComplete .button{
+    margin:30px 0 0;
+}
+
+.button .bhs_button{
+    float: none;
+    width:200px;
+}
+
+.bhs_button{
+    width: 150px;
+    display: inline-block;
+    line-height: 40px;
+    text-align: center;
+    background-color: #795b8f;
+    border: 1px solid #5f0080;
+    color: #fff;
+    
+    
+    margin-left: 2px;
+    font-size: 13px;
+}
+
+#main #content .layout-wrapper .indiv .xans-member-joincomplete .joinComplete .memberInfo ul{
+    padding:0;
+}

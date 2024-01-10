@@ -1,0 +1,175 @@
+#header {
+    position: fixed;
+    z-index: 200;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #e5e5e5;
+    background-color: #fff;
+    text-align: center;
+}
+
+#header .logo .tit {
+    display: block;
+    overflow: hidden;
+    padding: 17px 50px 0;
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    line-height: 20px;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#header .link_back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    background: url(https://res.kurly.com/mobile/service/common/2006/ico_navi_back.svg?v=1) no-repeat 0 50%;
+    background-size: 50px 50px;
+}
+
+.screen_out {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    font-size: 0;
+    line-height: 0;
+    text-indent: -9999px;
+}
+
+#header .cart_count {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 50px;
+    height: 50px;
+    background: url(https://res.kurly.com/mobile/service/common/2011/ico_navi_cart_black.svg) no-repeat 50% 50%;
+    background-size: 50px 50px;
+}
+
+#header .cart_count .num_count {
+    display: none;
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    width: 18px;
+    height: 18px;
+    padding-top: 1px;
+    border: 2px solid #fff;
+    border-radius: 10px;
+    background-color: #5f0080;
+    font-weight: 600;
+    font-size: 10px;
+    line-height: 14px;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#header-bottom {
+    height: calc(49px + env(safe-area-inset-bottom));
+}
+
+.menu_shortcut {
+    position: fixed;
+    z-index: 300;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 49px;
+    border-top: 1px solid #ddd;
+    background-color: #fff;
+    text-align: center;
+}
+
+.menu_shortcut .list {
+    overflow: hidden;
+}
+
+.menu_shortcut li {
+    float: left;
+    width: 25%;
+}
+
+.menu_shortcut a {
+    display: block;
+    overflow: hidden;
+    height: 100%;
+    padding: 3px 0 0;
+    font-size: 10px;
+    color: #333;
+    line-height: 20px;
+    text-align: center;
+}
+
+.menu_shortcut .shortcut_home:before {
+    background-image: url(https://res.kurly.com/mobile/service/common/2011/ico_home.svg?ver=2);
+}
+
+.menu_shortcut a:before {
+    content: "";
+    display: block;
+    width: 24px;
+    height: 25px;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 24px 24px;
+}
+
+.menu_shortcut .shortcut_menu:before {
+    background-image: url(https://res.kurly.com/mobile/service/common/2011/ico_cate.svg?ver=2);
+}
+
+
+.menu_shortcut .shortcut_search:before {
+    background-image: url(https://res.kurly.com/mobile/service/common/2011/ico_search.svg?ver=2);
+}
+
+
+
+.menu_shortcut li:last-child {
+    float: none;
+    width: auto;
+}
+
+.menu_shortcut .shortcut_mypage {
+    position: relative;
+}
+
+.menu_shortcut .on {
+    color: #5f0080;
+}
+
+.menu_shortcut .on.shortcut_mypage:before {
+    background-image: url(https://res.kurly.com/mobile/service/common/2011/ico_mypage_on.svg?ver=2);
+}

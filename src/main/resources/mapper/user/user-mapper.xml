@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/dtd/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bit.springboard.mapper.UserMapper">
+    <select id="idCheck"
+            parameterType="string"
+            resultType="int">
+        SELECT COUNT(*)
+            FROM T_USER
+            WHERE USER_ID = #{userId}
+    </select>
+
+    <insert id="join"
+            parameterType="user">
+        INSERT INTO T_USER(
+            USER_ID,
+            USER_PW,
+            USER_NAME,
+            USER_EMAIL,
+            USER_TEL
+        ) VALUES (
+            #{userId},
+            #{userPw},
+            #{userName},
+            #{userEmail},
+            #{userTel}
+        )
+    </insert>
+
+    <select id="login"
+            parameterType="user"
+            resultType="user">
+        SELECT ID
+             , USER_ID
+             , USER_NAME
+             , USER_EMAIL
+             , USER_TEL
+             , USER_REGDATE
+            FROM T_USER
+            WHERE USER_ID = #{userId}
+              AND USER_PW = #{userPw}
+    </select>
+</mapper>

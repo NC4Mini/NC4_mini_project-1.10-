@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+>
+
+<head th:replace="~{/fragments/config :: config}">
+
+</head>
+<body>
+    <div id="wrap">
+        <header th:replace="~{/fragments/header :: header}"></header>
+        <div th:replace="~{/fragments/content :: content}"></div>
+        <footer th:replace="~{/fragments/footer :: footer}"></footer>
+    </div>
+
+</body>
+</html>
