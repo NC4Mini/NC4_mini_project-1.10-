@@ -21,27 +21,28 @@ public class UserShpAddr {
     @ManyToOne
     @JoinColumn(name = "ID")
     @JsonBackReference
-    private User user;
+    private UserAccount userAccount;
 
     @Id
     @GeneratedValue(
             strategy = GenerationType.IDENTITY
     )
     private int addrId;
-    private String basicAddr;
-    private String detailAddr;
-    private String postAddr;
+    private String addrBasic;
+    private String addrDetail;
+    private String addrZone;
     // 기본 배송지일시 Y / 아니면 N, 상태코드값 부여
-    private char defaultAddr;
+    private char addrStandard;
+    private String addrNickname;
 
     public UserShpAddrDTO toDTO() {
         return UserShpAddrDTO.builder()
-                .id(this.user.getId())
+                .id(this.userAccount.getId())
                 .addrId(this.addrId)
-                .basicAddr(this.basicAddr)
-                .detailAddr(this.detailAddr)
-                .postAddr(this.postAddr)
-                .defaultAddr(this.defaultAddr)
+                .addrBasic(this.addrBasic)
+                .addrDetail(this.addrDetail)
+                .addrZone(this.addrZone)
+                .addrStandard(this.addrStandard)
                 .build();
     }
 }
