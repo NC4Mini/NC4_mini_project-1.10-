@@ -1,44 +1,51 @@
 package com.nc.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.nc.project.dto.UserDTO;
+import com.nc.project.dto.UserAccountDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "USER_ACCOUNT")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class UserAccount {
     @Id
-    @GeneratedValue(
+    @GeneratedValue (
             strategy = GenerationType.IDENTITY
     )
-
     private long id;
     @Column(unique = true)
     private String userId;
     private String userPw;
+    private String userName;
+    private String userTel;
+    private LocalDate userBirth;
+    private String userGender;
+    private String userProfile;
+    private String userEmail;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
-    private UserDetail userDetail;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<UserShpAddr> userShpAddrList;
 
-    public UserDTO toDTO() {
-        return UserDTO.builder()
+    public UserAccountDTO toDTO() {
+        return UserAccountDTO.builder()
                 .id(this.id)
                 .userId(this.userId)
                 .userPw(this.userPw)
-                .userDetailDTO(this.userDetail.toDTO())
+                .userName(this.userName)
+                .userTel(this.userTel)
+                .userBirth(this.userBirth.toString())
+                .userGender(this.userGender)
+                .userProfile(this.userProfile)
+                .userEmail(this.userEmail)
                 .userShpAddrDTOList(this.userShpAddrList.stream().map(UserShpAddr::toDTO).toList())
                 .build();
     }

@@ -1,7 +1,6 @@
 package com.nc.project.controller;
 
-import com.nc.project.dto.UserDTO;
-import com.nc.project.dto.UserDetailDTO;
+import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.dto.UserShpAddrDTO;
 import com.nc.project.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ import java.util.List;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 
-public class UserController {
+public class UserJoinController {
     private final UserService userService;
 
     // 회원가입 화면으로 이동
@@ -32,12 +31,11 @@ public class UserController {
     }
 
     @PostMapping("/join")
-    public ModelAndView join(UserDTO userDTO, UserDetailDTO userDetailDTO,
+    public ModelAndView join(UserAccountDTO userAccountDTO,
                              List<UserShpAddrDTO> userShpAddrDTOList) {
-        userDTO.setUserDetailDTO(userDetailDTO);
-        userDTO.setUserShpAddrDTOList(userShpAddrDTOList);
+        userAccountDTO.setUserShpAddrDTOList(userShpAddrDTOList);
 
-        userService.join(userDTO);
+        userService.join(userAccountDTO);
 
         ModelAndView mav = new ModelAndView();
 

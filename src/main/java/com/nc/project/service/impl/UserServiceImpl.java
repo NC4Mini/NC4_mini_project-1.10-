@@ -1,7 +1,7 @@
 package com.nc.project.service.impl;
 
-import com.nc.project.dto.UserDTO;
-import com.nc.project.entity.User;
+import com.nc.project.dto.UserAccountDTO;
+import com.nc.project.entity.UserAccount;
 import com.nc.project.entity.UserShpAddr;
 import com.nc.project.repository.UserRepository;
 import com.nc.project.service.UserService;
@@ -15,17 +15,17 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     @Override
-    public void join(UserDTO userDTO) {
+    public void join(UserAccountDTO userDTO) {
 
-        User user = userDTO.toEntity();
+        UserAccount userAccount = userDTO.toEntity();
 
         List<UserShpAddr> userShpAddrList = userDTO.getUserShpAddrDTOList().stream()
-                .map(userShpAddrDTO -> userShpAddrDTO.toEntity(user)).toList();
+                .map(userShpAddrDTO -> userShpAddrDTO.toEntity(userAccount)).toList();
 
         userShpAddrList.stream().forEach(
-                userShpAddr -> user.addUserShaAddrList(userShpAddr)
+                userShpAddr -> userAccount.addUserShaAddrList(userShpAddr)
         );
 
-        userRepository.save(user);
+        userRepository.save(userAccount);
     }
 }
