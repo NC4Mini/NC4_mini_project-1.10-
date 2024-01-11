@@ -1,6 +1,6 @@
-package com.nc.project.repository;//package com.example.tempproject.repository;
+//package com.nc.project.repository;
 //
-//import com.example.tempproject.entity.Cart;
+//import com.nc.project.entity.Cart;
 //import org.springframework.data.jpa.repository.JpaRepository;
 //
 //public interface CartRepository extends JpaRepository <Cart, Long> {

@@ -38,7 +38,7 @@ public class CartController {
     // 배송지 변경 페이지에서 배송지 변경 기능
 
 
-    // 주문하기
+
 
     // 장바구니에 물건 삭제
 

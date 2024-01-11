@@ -3,6 +3,7 @@
 //import com.nc.project.entity.Cart;
 //import com.nc.project.entity.CartItem;
 //import com.nc.project.entity.Item;
+//import jakarta.persistence.IdClass;
 //import lombok.*;
 //
 //import java.util.ArrayList;
@@ -14,17 +15,19 @@
 //@AllArgsConstructor
 //@Builder
 //@ToString
-//public class CartDTO {
+//public class CartItemDTO {
 //
-//    private long id;
+//    private long cartItemId;
 //    private long cartId;
-//    private List<CartItem> cartItemList;
+//    private long itemId;
+//    private int cartItemCnt;
 //
-//    public Cart toEntity() {
-//        return Cart.builder()
-//                .id(this.id)
+//    public CartItem toEntity() {
+//        return CartItem.builder()
+//                .cartItemId(this.cartItemId)
 //                .cartId(this.cartId)
-//                .cartItemList()
+//                .itemId(this.itemId)
+//                .cartItemCnt(this.cartItemCnt)
 //                .build();
 //    }
 //}

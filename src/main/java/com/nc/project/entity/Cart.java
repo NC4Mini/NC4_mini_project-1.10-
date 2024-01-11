@@ -1,46 +1,44 @@
-package com.nc.project.entity;//package com.example.tempproject.entity;
+//package com.nc.project.entity;
 //
-//import com.example.tempproject.dto.CartDTO;
+//
+//import com.nc.project.dto.CartDTO;
+//import com.nc.project.dto.ItemDTO;
 //import com.fasterxml.jackson.annotation.JsonBackReference;
+//import com.fasterxml.jackson.annotation.JsonManagedReference;
 //import jakarta.persistence.*;
 //import lombok.*;
 //
+//import java.util.List;
+//
 //@Entity
 //@Table(name = "CART")
-//@SequenceGenerator(
-//        name = "CartSeqGenerator",
-//        sequenceName = "CART_SEQ",
-//        initialValue = 1,
-//        allocationSize = 1
-//)
 //@Getter
+//@Setter
 //@NoArgsConstructor
 //@AllArgsConstructor
 //@Builder
-//@Setter
 //public class Cart {
 //    // 키값
 //    @Id
-//    @GeneratedValue(
-//           strategy = GenerationType.SEQUENCE,
-//            generator = "CartSeqGenerator"
-//    )
-//    private int cartNo;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private long cartId;
 //
-//    private int cartItemsCnt;
+//    // cartItem과 OneToMany 관계
+//    @OneToMany
+//    @JsonManagedReference
+//    private List<CartItem> cartItemList;
 //
-//    @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
+//    // cart와 user OneToOne 관계
+//    @OneToOne
+//    @JoinColumn(name = "ID")
 //    @JsonBackReference
 //    private User user;
 //
-//    @OneToMany(mappedBy = "cart")
-//    @JsonBackReference
-//    private Item item;
-//
 //    public CartDTO toDTO() {
 //        return CartDTO.builder()
-//                      .cartNo(this.cartNo)
-//                      .cartItemCnt(this.cartItemsCnt)
-//                      .build();
+//                .id(this.user.getId())
+//                .cartId(this.cartId)
+//                .cartItemList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()))
+//                .build();
 //    }
 //}
