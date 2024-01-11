@@ -1,25 +1,31 @@
 package com.nc.project.service.impl;
 
-import com.nc.project.dto.UserAccountDto;
-import com.nc.project.entity.UserAccount;
-import com.nc.project.repository.UserAccountRepository;
+import com.nc.project.dto.UserDTO;
+import com.nc.project.entity.User;
+import com.nc.project.entity.UserShpAddr;
+import com.nc.project.repository.UserRepository;
 import com.nc.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-@RequiredArgsConstructor
+import java.util.List;
+
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-
-    private final UserAccountRepository userAccountRepository;
-
+    private UserRepository userRepository;
     @Override
-    public void modifyUser(UserAccountDto userAccountDto) {
-        userAccountRepository.save(userAccountDto.toEntity());
-    }
+    public void join(UserDTO userDTO) {
 
-    @Override
-    public void resignUser(UserAccountDto userAccountDto) {
-        userAccountRepository.delete(userAccountDto.toEntity());
+        User user = userDTO.toEntity();
+
+        List<UserShpAddr> userShpAddrList = userDTO.getUserShpAddrDTOList().stream()
+                .map(userShpAddrDTO -> userShpAddrDTO.toEntity(user)).toList();
+
+        userShpAddrList.stream().forEach(
+                userShpAddr -> user.addUserShaAddrList(userShpAddr)
+        );
+
+        userRepository.save(user);
     }
 }

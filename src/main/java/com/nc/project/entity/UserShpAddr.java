@@ -1,0 +1,47 @@
+package com.nc.project.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.nc.project.dto.UserShpAddrDTO;
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = "USER_SHPADDR")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+// 복합키 클래스 지정
+@IdClass(UserShpAddrId.class)
+
+public class UserShpAddr {
+    @Id
+    // 사용자 한명이 배송지가 다른 여러 주문을 가질 수 있으므로 가능하므로 N:1
+    @ManyToOne
+    @JoinColumn(name = "ID")
+    @JsonBackReference
+    private User user;
+
+    @Id
+    @GeneratedValue(
+            strategy = GenerationType.IDENTITY
+    )
+    private int addrId;
+    private String basicAddr;
+    private String detailAddr;
+    private String postAddr;
+    // 기본 배송지일시 Y / 아니면 N, 상태코드값 부여
+    private char defaultAddr;
+
+    public UserShpAddrDTO toDTO() {
+        return UserShpAddrDTO.builder()
+                .id(this.user.getId())
+                .addrId(this.addrId)
+                .basicAddr(this.basicAddr)
+                .detailAddr(this.detailAddr)
+                .postAddr(this.postAddr)
+                .defaultAddr(this.defaultAddr)
+                .build();
+    }
+}
