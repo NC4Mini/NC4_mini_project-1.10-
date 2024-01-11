@@ -16,16 +16,18 @@
 //@Builder
 //@ToString
 //public class CartItemDTO {
-////    private long cartId;
-////    private long cartItemId;
-////    private cart cartItem;
-////    private int cartItemCnt;
-////
-////    public CartItem toEntity() {
-////        return CartItem.builder()
-////                .cartItemId(this.cartItemId)
-////                .cartItem(this.cartItem)
-////                .cartItemCnt(this.cartItemCnt)
-////                .build();
-////    }
+//
+//    private long cartItemId;
+//    private long cartId;
+//    private long itemId;
+//    private int cartItemCnt;
+//
+//    public CartItem toEntity() {
+//        return CartItem.builder()
+//                .cartItemId(this.cartItemId)
+//                .cartId(this.cartId)
+//                .itemId(this.itemId)
+//                .cartItemCnt(this.cartItemCnt)
+//                .build();
+//    }
 //}
