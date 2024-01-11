@@ -12,18 +12,14 @@ public class UserController {
         return "/user/modify";
     }
 
-    @PostMapping("/profile/nickname-change")
-    public void nicknameChange() {
+
+    @PostMapping("/profile/change")
+    public void change() {
 
     }
 
-    @PostMapping("/profile/password-change")
-    public void passwordChange() {
-
-    }
-
-    @PostMapping("/profile/user-delete")
-    public void userDelete() {
+    @PostMapping("/profile/resign")
+    public void resign() {
 
     }
 
