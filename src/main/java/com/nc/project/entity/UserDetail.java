@@ -1,37 +1,45 @@
-package com.nc.project.dto;
+package com.nc.project.entity;
 
-import com.nc.project.entity.UserAccount;
-import lombok.*;
+
+import com.nc.project.dto.UserDetailDto;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Setter
-public class UserAccountDto {
+public class UserDetail {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String userId;
+
+    @Column(unique = true) private String userId;
     private String userPw;
     private String userName;
     private String userTel;
     private String userAddr;
-    private String userBirth;
+    private LocalDateTime userBirth;
     private String userGender;
     private String userProfile;
     private String userEmail;
 
-    public UserAccount toEntity() {
-        return UserAccount.builder()
+    public UserDetailDto toDTO() {
+        return UserDetailDto.builder()
                 .id(this.id)
                 .userId(this.userId)
                 .userPw(this.userPw)
                 .userName(this.userName)
                 .userTel(this.userTel)
                 .userAddr(this.userAddr)
-                .userBirth(LocalDateTime.parse(this.userBirth))
+                .userBirth(this.userBirth.toString())
                 .userGender(this.userGender)
                 .userProfile(this.userProfile)
                 .userEmail(this.userEmail)
