@@ -4,9 +4,9 @@
 
 
 
+
 #main #content {
     min-width: 1050px;
-    
 }
 
 #main.page_aticle {
@@ -67,7 +67,6 @@
     top: 124px;
     margin-left: 420px;
 }
-
 
 
 #main .page_aticle.aticle_type2 .page_section {
@@ -138,7 +137,4 @@ tblParent {
     border: 0px none;
     cursor: pointer;
 }
-
-
-/*ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ*/
 

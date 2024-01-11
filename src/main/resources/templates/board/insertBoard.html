@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout2}">
+<head>
+    <th:block layout:fragment="script">
+        <script>
+            // 추가된 파일들을 담아줄 배열. File 객체들을 하나씩 저장
+            const uploadFiles = [];
+
+            $(() => {
+                $("#uploadFiles").on("change", (e) => {
+                    // input에 추가된 파일들을 변수로 받기
+                    const files = e.target.files;
+
+                    // 변수로 받아온 파일들 배열로 변환
+                    const fileArr = Array.prototype.slice.call(files);
+
+                    // 배열에 담긴 파일 하나씩 꺼내서 미리보기 처리
+                    for(file of fileArr) {
+                        // 미리보기 처리 메소드만들어서 호출
+                        imageLoader(file);
+                    }
+                });
+
+                // 폼이 서브밋될 때 uploadFiles 배열에 담겨있는 File들을 input에 담아서 서브밋
+                $("#insertBtn").on("click", () => {
+                    let dt = new DataTransfer();
+
+                    for(i in uploadFiles) {
+                        const file = uploadFiles[i];
+                        console.log(i);
+                        dt.items.add(file);
+                    }
+
+                    $("#uploadFiles")[0].files = dt.files;
+
+                    //첨부파일을 보내려면 enctype이 multipart/form-data
+                    //x-www-form-urlencoded형식은 전송이 불가능하다.
+                    //?boardTitle=DUUE%ASDfk&boardContent=IDRKDHA%%ASDF
+                    //FormData 객체를 하나 생성해서 보내줘야한다.
+                    const formData = new FormData($("#insertForm")[0]);
+
+                    //ajax에서 formData를 전송하기 위해서는
+                    //enctype을 multipart/form-data로 지정
+                    //processData를 false로 지정
+                    //contentType을 false로 지정
+                    $.ajax({
+                        enctype: 'multipart/form-data',
+                        url: '/board/board',
+                        type: 'post',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: (obj) => {
+                            console.log(obj);
+
+                            alert(obj.item.msg);
+                            location.href = "/board/board-list";
+                        },
+                        error: (err) => {
+                            console.log(err);
+                            alert(err.responseJSON.errorMessage);
+                        }
+                    });
+                });
+            });
+
+            // 미리보기 처리 메소드
+            // 미리보기될 파일은 업로드가 되어있는 상태가 아니기 때문에
+            // 파일 자체를 Base64 인코딩 방식으로 문자열로 변환해서 이미지로 호출
+            // 이미지가 들어갈 태그 생성 및 파일을 Base64 인코딩
+            const imageLoader = (file) => {
+                // 추가된 파일 배열에 담기
+                uploadFiles.push(file);
+
+                let reader = new FileReader();
+
+                reader.onload = (e) => {
+                    // 이미지 표출할 img 태그 생성
+                    let img = document.createElement("img");
+                    img.setAttribute("style", "width: 100%; height: 100%; z-index: none;");
+
+                    // 이미지 파일인지 아닌지 판단
+                    if(file.name.toLowerCase().match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
+                        img.src = e.target.result;
+                    } else {
+                        img.src = "/images/defaultFileImg.png";
+                    }
+
+                    // 미리보기 영역에 추가
+                    // 미리보기 이미지 태그와 삭제버튼 그리고 파일명을 표출하는 태그 묶은 div 태그를 만들어주는 메소드 호출
+                    $("#attachZone").append(makeDiv(img, file));
+                }
+
+                // 파일을 Base64 인코딩한 문자열로 로드
+                reader.readAsDataURL(file);
+            }
+
+            // 미리보기 영역에 추가될 div를 만들어주는 메소드
+            const makeDiv = (img, file) => {
+                // div 태그 생성
+                let div = document.createElement("div");
+
+                div.setAttribute("style", "display: inline-block; position: relative;" +
+                    " width: 150px; height: 120px; margin: 5px; border: 1px solid #00f; z-index: 1;");
+
+                // 잘못 올렸을 때 삭제할 수 있는 삭제 버튼 생성
+                let btn = document.createElement("input");
+                btn.setAttribute("type", "button");
+                btn.setAttribute("value", "x");
+                // 사용자 정의 속성 추가
+                btn.setAttribute("deleteFile", file.name);
+                btn.setAttribute("style", "width: 30px; height: 30px; position: absolute;" +
+                    " right: 0; bottom: 0; z-index: 999; background-color: rgba(255, 255, 255, 0.1);" +
+                    " color: #f00;");
+
+                // 위에서 생성한 버튼 클릭했을 때 파일 삭제되는 기능 구현
+                btn.onclick = (e) => {
+                    // 클릭된 버튼
+                    const ele = e.srcElement;
+
+                    const deleteFile = ele.getAttribute("deleteFile");
+
+                    for(let i = 0; i < uploadFiles.length; i++) {
+                        //배열에서도 같은 이름의 파일 삭제
+                        if(deleteFile === uploadFiles[i].name) {
+                            uploadFiles.splice(i, 1);
+                        }
+                    }
+
+                    // 버튼 클릭 했을 때 input에 첨부된 파일도 삭제
+                    // input type="file"은 첨부된 파일들을 fileList 형태로 관리
+                    // fileList는 File 객체에 바로 담을 수 없다.
+                    // DataTransfer라는 클래스를 이용해서 변환 후에 사용한다.
+
+                    let dt = new DataTransfer();
+
+                    for(i in uploadFiles) {
+                        const file = uploadFiles[i];
+                        dt.items.add(file);
+                    }
+
+                    $("#uploadFiles")[0].files = dt.files;
+
+                    // 해당 img 태그를 가지고 있는 div 태그 삭제
+                    const parentDiv = ele.parentNode;
+                    $(parentDiv).remove();
+                }
+
+                // 파일 명을 표출할 p 태그 생성
+                let fileNameP = document.createElement("p");
+                fileNameP.setAttribute("style", "display: inline-block; font-size: 8px;");
+                fileNameP.textContent = file.name;
+
+                // div 태그에 img, button, p태그 추가
+                div.appendChild(img);
+                div.appendChild(btn);
+                div.appendChild(fileNameP);
+
+                return div;
+            }
+        </script>
+    </th:block>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h3>새 글 등록</h3>
+            <form id="insertForm" action="/board/insertBoard.do" method="post" enctype="multipart/form-data">
+                <table border="1" style="border-collapse: collapse">
+                    <tr>
+                        <td style="background: skyblue; width: 70px;">
+                            제목
+                        </td>
+                        <td style="text-align: left;">
+                            <input type="text" name="boardTitle">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background: skyblue;">
+                            작성자
+                        </td>
+                        <td style="text-align: left;">
+                            <input type="text" name="boardWriter" th:value="${#authentication.principal.username}" readonly>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background: skyblue; width: 70px;">
+                            내용
+                        </td>
+                        <td style="text-align: left;">
+                            <textarea name="boardContent" cols="40" rows="10"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background: skyblue; width: 70px;">
+                            첨부파일
+                        </td>
+                        <td style="text-align: left;">
+                            <input type="file" name="uploadFiles" id="uploadFiles" multiple>
+                            <div id="attachZone"
+                                 data-placeholder="파일을 첨부하려면 파일선택 버튼을 누르세요.">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <button id="insertBtn" type="button">새 글 등록</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <hr/>
+            <a href="#">글 목록</a>
+        </div>
+    </div>
+</body>
+</html>
