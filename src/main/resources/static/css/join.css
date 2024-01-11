@@ -1,0 +1,255 @@
+#main {
+    border-bottom: 1px solid #f7f7f7;
+}
+
+#content {
+    min-width: 1050px;
+    padding-bottom: 120px;
+}
+
+#header, #container, #content {
+    position: relative;
+}
+
+.page_aticle {
+    width: 1050px;
+    margin: 0 auto;
+}
+
+.member_join {
+    width: 640px;
+    margin: 0 auto;
+}
+
+.member_join .field_head .tit {
+    padding-top: 64px;
+    font-weight: 900;
+    font-size: 30px;
+    color: #333;
+    line-height: 40px;
+    text-align: center;
+    letter-spacing: -.5px;
+}
+
+.member_join .field_head .sub {
+    padding: 23px 0 10px;
+    font-size: 12px;
+    color: #666;
+    line-height: 17px;
+    text-align: right;
+}
+
+.member_join .field_head .sub .ico {
+    padding-right: 2px;
+    color: #ee6a7b;
+}
+
+.member_join .tbl_comm {
+    width: 100%;
+    border-top: 2px solid #333;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.member_join .tbl_comm .fst th {
+    padding-top: 29px;
+}
+
+.member_join th {
+    width: 159px;
+    padding: 20px 0 0 20px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #333;
+    line-height: 20px;
+    vertical-align: top;
+    text-align: left;
+}
+
+.member_join th .ico {
+    color: #ee6a7b;
+}
+
+.screen_out {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    font-size: 0;
+    line-height: 0;
+    text-indent: -9999px;
+}
+
+.member_join .tbl_comm .fst td {
+    padding-top: 19px;
+}
+
+.member_join td {
+    padding: 10px 0;
+    border-top: 0;
+    font-size: 14px;
+    vertical-align: top;
+    text-align: left;
+}
+
+.member_join input[type=text], .member_join input[type=password] {
+    width: 332px;
+}
+
+.type_form textarea, .type_form input[type=text], .type_form input[type=password] {
+    height: 44px;
+    padding: 0 14px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #333;
+    line-height: 20px;
+    border-radius: 3px;
+    background: #fff;
+    outline: none;
+    vertical-align: top;
+}
+
+.type_form .btn.default {
+    border: 1px solid #5f0080;
+    background-color: #fff;
+    color: #5f0080;
+}
+
+#main .member_join .btn {
+    display: inline-block;
+    width: 120px;
+    margin-left: 5px;
+    vertical-align: top;
+}
+
+.type_form .btn {
+    display: block;
+    width: 100%;
+    height: 44px;
+    border: 0;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 40px;
+    text-align: center;
+    outline: none;
+}
+
+.member_join .txt_guide {
+    width: 332px;
+}
+
+.type_form .txt_guide {
+    display: none;
+    padding: 10px 0 9px;
+    font-size: 12px;
+    color: #666;
+    line-height: 18px;
+    word-break: break-all;
+    letter-spacing: -.1px;
+    clear: both;
+}
+
+.type_form .txt_guide .txt {
+    display: block;
+}
+
+.type_form .square .txt:before {
+    content: '\2022';
+    display: inline-block;
+    padding: 0 4px 0 2px;
+    font-size: 12px;
+    vertical-align: 0;
+}
+
+.member_join .field_address {
+    padding-bottom: 20px;
+}
+
+.member_join #addressSearch {
+    display: block;
+    overflow: hidden;
+    width: 332px;
+    height: 44px;
+    border: 1px solid #5f0080;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.member_join #addressNo {
+    display: inline-block;
+    height: 100%;
+    margin-left: -14px;
+    padding-left: 24px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #5f0080;
+    line-height: 40px;
+    background: url(https://res.kurly.com/pc/service/common/2006/ico_search.svg) no-repeat 0 50%;
+    background-size: 25px 24px;
+    vertical-align: top;
+}
+
+.member_join .birth .birth_day {
+    overflow: hidden;
+    width: 332px;
+    padding-left: 18px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.member_join .birth .birth_day input[type=text] {
+    float: left;
+    width: 84px;
+    height: 40px;
+    border: 0;
+    text-align: center;
+}
+
+.member_join .birth .bar {
+    float: left;
+}
+
+.member_join .birth .bar:after {
+    content: "/";
+    float: left;
+    width: 22px;
+    height: 100%;
+    font-size: 14px;
+    color: #ccc;
+    line-height: 42px;
+    text-align: center;
+}
+
+.member_join .form_footer {
+    padding-top: 40px;
+    text-align: center;
+}
+
+#main .member_join .form_footer .btn_join {
+    width: 240px;
+    height: 56px;
+    font-size: 16px;
+    line-height: 54px;
+    
+}
+
+.type_form .btn.active {
+    border: 1px solid #5f0081;
+    background-color: #5f0080;
+    color: #fff;
+}
+
+input::placeholder{
+    color:rgb(165, 160, 160);
+}
+
+.field_address input{
+    display:none;
+    margin-top:10px
+}

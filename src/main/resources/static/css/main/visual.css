@@ -1,0 +1,37 @@
+/* visual.css : header 바로 밑 이미지 슬라이드 파트 */
+
+@charset "utf-8";
+
+/* visual */
+#visual {
+    position: relative; /* position: absolute의 경우 우측 플로팅 배너가 올라옴*/
+    width: 1900px; /*고정 width 값으로 변경*/
+    height: 370px;
+    margin: 0 auto; /*가운데 정렬*/
+}
+
+#visual .swipe {
+    overflow-x: hidden;
+}
+
+.swipe .promotions {
+    width: 11400px;
+    background-color: #ddd;
+}
+
+.swipe .promotions .slide_list {
+    float: left; /*position 삭제*/
+    width: 1900px;
+    height: 370px;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+}
+
+.swipe .slide_list .thumb {
+    display: block;
+    height: 370px;
+    background-position: 50% 50%; /* 가운데 정렬을 위해 추가  */
+    
+}
+
+

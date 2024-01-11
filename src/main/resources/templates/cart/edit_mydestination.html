@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../main/css/reset.css">
+    <link rel="stylesheet" href="../main/css/common.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="css/list.bundle.css">
+</head>
+<body onresize="parent.resizeTo(514,584)" onload="parent.resizeTo(514,584)">
+    <div class="only_pc">
+        <h2  class="pop_head">배송지 수정</h2>
+    </div>
+    <div class="section_destination">
+        <div id="inputForm" class="">
+            <div class="modify only_pc">
+                <input type="hidden" name="addrNo" value="7260215">
+                <input type="hidden" name="road_zonecode" value="21913">
+                <input type="hidden" name="zipcode" value="406-810">
+                <div class="field"><span class="badge_default">기본 배송지</span>
+                    <div id="addrMain" class="address">인천 연수구 송도동<!-- address value here--></div>
+                    <input type="text" id="addrSub" name="addrSub" placeholder="나머지 주소를 입력해주세요" data-max-length="74" data-format="text" value="105호">
+                </div>
+                <div class="field">
+                    <label class="label_block" for="receiverName">받으실 분</label>
+                    <input type="text" id="receiverName" name="receiverName" data-max-length="20" 
+                        placeholder="이름을 입력해주세요" value=""></div>
+                <div class="field">
+                    <label class="label_block" for="receiverPhone">휴대폰</label>
+                    <input type="text" id="receiverPhone" name="receiverPhone" data-max-length="11"
+                        data-format="number" pattern="[0-9]*" inputmode="decimal" placeholder="번호를 입력해주세요" value="">
+                </div>
+                <button type="button" class="btn active">저장</button>
+                <!-- 저장 후 db내용 변경 > 페이지 새로고침-->
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
+
+
+

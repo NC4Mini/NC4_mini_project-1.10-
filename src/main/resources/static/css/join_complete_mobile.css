@@ -1,0 +1,189 @@
+.py-12 {
+    padding-bottom: 3rem;
+}
+
+
+.flex {
+    display: flex;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-6 {
+    margin-top: 1.5rem;
+}
+
+.leading-9 {
+    line-height: 2.25rem;
+}
+
+
+.text-3xl {
+    font-size: 1.875rem;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.mx-auto{
+    width:100%;
+}
+
+.mt-8 {
+    margin-top: 2rem;
+}
+
+
+
+.py-8 {
+    padding-bottom: 2rem;
+}
+
+.px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.bg-white {
+    --bg-opacity: 1;
+    background-color: #fff;
+    background-color: rgba(255,255,255,var(--bg-opacity));
+    margin: 0 auto;
+    display: block;
+    max-width: 28rem;
+    position: relative;
+}
+
+.p-4 {
+    padding: 1rem;
+    padding-top: 30px;
+}
+
+
+.mb-5 {
+    margin-bottom: 1.25rem;
+}
+
+.rounded-md {
+    border-radius: .375rem;
+}
+
+.bg-green-50 {
+    --bg-opacity: 1;
+    background-color: #f3faf7;
+    background-color: rgba(243,250,247,var(--bg-opacity));
+}
+
+
+.flex {
+    display: flex;
+}
+
+.flex-shrink-0 {
+    flex-shrink: 0;
+}
+
+.w-5 {
+    width: 1.25rem;
+}
+
+.text-green-400 {
+    --text-opacity: 1;
+    color: #31c48d;
+    color: rgba(49,196,141,var(--text-opacity));
+}
+
+.h-5 {
+    height: 1.25rem;
+}
+
+.ml-3 {
+    margin-left: .75rem;
+}
+
+.flex-1 {
+    flex: 1 1 0%;
+}
+
+.text-green-700 {
+    --text-opacity: 1;
+    color: #046c4e;
+    color: rgba(4,108,78,var(--text-opacity));
+}
+
+.leading-5 {
+    line-height: 1.25rem;
+}
+
+.text-sm {
+    font-size: .875rem;
+}
+
+.mt-3 {
+    margin-top: .75rem;
+}
+
+
+
+.transition, .transition-colors {
+    transition-duration: .25s;
+    transition-duration: var(--transition-duration);
+}
+
+.transition {
+    transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+}
+
+.ease-in-out {
+    transition-timing-function: cubic-bezier(.4,0,.2,1);
+}
+
+.whitespace-no-wrap {
+    white-space: nowrap;
+}
+
+.text-green-700 {
+    --text-opacity: 1;
+    color: #046c4e;
+    color: rgba(4,108,78,var(--text-opacity));
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.memberInfo li strong{
+    display: inline-block;
+    width: 30%;
+    padding: 20px 0;
+    color: #000;
+    font-weight: 700;
+    font-size: 16px;
+    text-indent: 20px;
+}
+
+.button{
+    margin: 30px 0 0;
+
+}
+
+.bhs_button {
+    width: 150px;
+    display: inline-block;
+    line-height: 40px;
+    text-align: center;
+    background-color: #795b8f;
+    border: 1px solid #5f0080;
+    color: #fff;
+    margin-left: 2px;
+    font-size: 13px;
+    float: none;
+    width: 200px;
+}
+
+.memberInfo li{
+    font-size: 14px;
+}

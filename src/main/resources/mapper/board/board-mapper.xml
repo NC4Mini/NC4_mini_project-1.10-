@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/dtd/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bit.springboard.mapper.BoardMapper">
+    <select id="getBoard"
+    parameterType="int"
+    resultType="board">
+        SELECT BOARD_NO
+             , BOARD_TITLE
+             , BOARD_CONTENT
+             , BOARD_WRITER
+             , BOARD_REGDATE
+             , BOARD_CNT
+            FROM T_BOARD
+            WHERE BOARD_NO = #{boardNo}
+    </select>
+
+    <insert id="insertBoard"
+            parameterType="com.bit.springboard.dto.BoardDTO">
+        <selectKey keyProperty="boardNo" order="AFTER" resultType="int">
+            SELECT IFNULL(MAX(BOARD_NO), 1) FROM T_BOARD
+        </selectKey>
+        INSERT INTO T_BOARD (
+            BOARD_TITLE,
+            BOARD_CONTENT,
+            BOARD_WRITER
+        ) VALUES (
+            #{boardTitle},
+            #{boardContent},
+            #{boardWriter}
+        )
+    </insert>
+
+    <delete id="deleteBoard"
+            parameterType="int">
+        DELETE FROM T_BOARD
+            WHERE BOARD_NO = #{boardNo}
+    </delete>
+
+    <select id="getBoardFileList"
+            parameterType="int"
+            resultType="com.bit.springboard.dto.BoardFileDTO">
+        SELECT BOARD_NO
+             , BOARD_FILE_NO
+             , BOARD_FILE_NAME
+             , BOARD_FILE_PATH
+             , BOARD_FILE_ORIGIN
+             , BOARD_FILE_CATE
+            FROM T_BOARD_FILE
+            WHERE BOARD_NO = #{boardNo}
+    </select>
+
+    <insert id="insertBoardFile"
+            parameterType="boardFile">
+        INSERT INTO T_BOARD_FILE(
+            BOARD_NO,
+            BOARD_FILE_NO,
+            BOARD_FILE_NAME,
+            BOARD_FILE_PATH,
+            BOARD_FILE_ORIGIN,
+            BOARD_FILE_CATE
+        ) VALUES (
+            #{boardNo},
+            (
+                SELECT IFNULL(MAX(A.BOARD_FILE_NO), 0) + 1
+                    FROM T_BOARD_FILE A
+                    WHERE A.BOARD_NO = #{boardNo}
+            ),
+            #{boardFileName},
+            #{boardFilePath},
+            #{boardFileOrigin},
+            #{boardFileCate}
+        )
+    </insert>
+
+    <update id="updateBoardFile"
+            parameterType="boardFile">
+        UPDATE T_BOARD_FILE
+            SET
+                BOARD_FILE_NAME = #{boardFileName},
+                BOARD_FILE_PATH = #{boardFilePath},
+                BOARD_FILE_ORIGIN = #{boardFileOrigin},
+                BOARD_FILE_CATE = #{boardFileCate}
+            WHERE BOARD_NO = #{boardNo}
+              AND BOARD_FILE_NO = #{boardFileNo}
+    </update>
+
+    <delete id="deleteBoardFile"
+            parameterType="boardFile">
+        DELETE FROM T_BOARD_FILE
+            WHERE BOARD_NO = #{boardNo}
+              AND BOARD_FILE_NO = #{boardFileNo}
+    </delete>
+</mapper>

@@ -1,0 +1,1765 @@
+body {
+    background-color: #fff
+}
+
+.noBody,
+body {
+    -webkit-overflow-scrolling: touch
+}
+
+input[type=radio] {
+    position: absolute;
+    z-index: -1;
+    opacity: 0
+}
+
+input[type=radio]+.ico {
+    display: inline-block;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    border-radius: 100%;
+    vertical-align: -5px
+}
+
+input[type=radio]:focus {
+    outline: 0
+}
+
+input[type=radio]:checked+.ico {
+    border: 1px solid #5f0081;
+    background-color: #5f0080
+}
+
+input[type=radio]:checked+.ico:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 10px;
+    height: 10px;
+    margin: -5px 0 0 -5px;
+    border-radius: 100%;
+    background-color: #fff
+}
+
+input[type=radio]:disabled+.ico {
+    border: 1px solid #ddd;
+    background-color: #fafafa
+}
+
+.skin_checkbox input[type=radio],
+input[type=checkbox] {
+    position: absolute;
+    z-index: -1;
+    opacity: 0
+}
+
+.skin_checkbox input[type=radio]+.ico,
+input[type=checkbox]+.ico {
+    display: inline-block;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    margin-right: 12px;
+    border: 0;
+    background-image: url(https://res.kurly.com/mobile/service/common/2006/ico_checkbox.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: 50% 50%;
+    vertical-align: -7px
+}
+
+.skin_checkbox input:focus[type=radio],
+input[type=checkbox]:focus {
+    outline: 0
+}
+
+.skin_checkbox input:checked[type=radio]+.ico,
+input[type=checkbox]:checked+.ico {
+    background-image: url(https://res.kurly.com/mobile/service/common/2006/ico_checkbox_checked.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: 50% 50%
+}
+
+.skin_checkbox input:disabled[type=radio]+.ico,
+input[type=checkbox]:disabled+.ico {
+    background-image: url(https://res.kurly.com/mobile/service/common/2003/ico_checkbox_disabled.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: 50% 50%
+}
+
+.skin_checkbox input[type=radio]+.ico {
+    border: none;
+    background-color: transparent
+}
+
+.skin_checkbox input[type=radio]:focus {
+    outline: 0
+}
+
+.skin_checkbox input[type=radio]:checked+.ico {
+    border: none;
+    background-color: transparent
+}
+
+.skin_checkbox input[type=radio]:checked+.ico:after {
+    background-color: transparent
+}
+
+.skin_checkbox input[type=radio]:disabled+.ico {
+    border: none;
+    background-color: transparent
+}
+
+label {
+    font-size: 16px;
+    line-height: 24px
+}
+
+label.label_block {
+    display: block
+}
+
+.select_box {
+    position: relative;
+    width: 100%
+}
+
+.select_box .tit_selected {
+    display: block;
+    overflow: hidden;
+    height: 50px;
+    padding: 14px 54px 0 11px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #fff;
+    font-size: 16px;
+    line-height: 24px
+}
+
+@media screen and (max-width:320px) {
+    .select_box .tit_selected {
+        white-space: nowrap
+    }
+}
+
+.select_box .tit_selected.off {
+    border: 1px solid #ccc;
+    color: #ddd
+}
+
+.select_box .tit_selected.off:after {
+    background-image: url(https://res.kurly.com/mobile/service/common/2003/ico_drop_up_disabled.png);
+    transform: rotate(0);
+    -webkit-transform: rotate(0);
+    -moz-transform: rotate(0);
+    -ms-transform: rotate(0);
+    -o-transform: rotate(0)
+}
+
+.select_box .tit_selected.off:after,
+.select_box .tit_selected:after {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+    background-position: 50% 50%
+}
+
+.select_box .tit_selected:after {
+    content: "";
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 48px;
+    height: 48px;
+    background-image: url(https://res.kurly.com/mobile/service/common/2003/ico_drop_up.png);
+    transform: rotate(-180deg);
+    -webkit-transform: rotate(-180deg);
+    -moz-transform: rotate(-180deg);
+    -ms-transform: rotate(-180deg);
+    -o-transform: rotate(-180deg)
+}
+
+.select_box select {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    opacity: 0
+}
+
+.screen_out {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    font-size: 0;
+    line-height: 0;
+    text-indent: -9999px
+}
+
+.noScroll {
+    overflow: hidden;
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 100%
+}
+
+.btn {
+    width: 100%;
+    height: 48px;
+    border: 0;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 50px;
+    text-align: center;
+    outline: none
+}
+
+.btn.normal {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #333
+}
+
+.btn.default {
+    border: 1px solid #5f0080;
+    background-color: #fff;
+    color: #5f0080
+}
+
+.btn.active {
+    border: 1px solid #5f0081;
+    background-color: #5f0080;
+    color: #fff
+}
+
+.btn.submit {
+    height: 56px;
+    line-height: 58px
+}
+
+.btn.disabled,
+.btn:disabled {
+    background-color: #ddd;
+    color: #fff;
+    cursor: default
+}
+
+.double {
+    display: flex
+}
+
+.double .btn {
+    margin-left: 4px
+}
+
+.double .btn:first-child {
+    margin-left: 0;
+    margin-right: 4px
+}
+
+.stamper {
+    width: 101px;
+    border: 1px solid #e1e1e1;
+    border-radius: 4px
+}
+
+.stamper,
+.stamper .btn {
+    overflow: hidden;
+    height: 36px
+}
+
+.stamper .btn {
+    float: left;
+    width: 35px;
+    border: 0;
+    font-size: 0;
+    text-indent: -9999px
+}
+
+.stamper .btn.minus {
+    background-image: url(https://res.kurly.com/mobile/service/cart/2010/ico_minus_on.svg)
+}
+
+.stamper .btn.minus,
+.stamper .btn.minus.off {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 36px 36px;
+    background-position: 50% 50%
+}
+
+.stamper .btn.minus.off {
+    background-image: url(https://res.kurly.com/mobile/service/cart/2010/ico_minus.svg)
+}
+
+.stamper .btn.plus {
+    float: right;
+    background-image: url(https://res.kurly.com/mobile/service/cart/2010/ico_plus_on.svg)
+}
+
+.stamper .btn.plus,
+.stamper .btn.plus.off {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 36px 36px;
+    background-position: 50% 50%
+}
+
+.stamper .btn.plus.off {
+    background-image: url(https://res.kurly.com/mobile/service/cart/2010/ico_plus.svg)
+}
+
+.stamper .num {
+    float: left;
+    width: 29px;
+    height: 36px;
+    margin-right: -1px;
+    padding: 0;
+    border: 0;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    line-height: 20px;
+    text-align: center
+}
+
+.only_pc .stamper {
+    width: 88px;
+    height: 30px;
+    border-radius: 3px
+}
+
+.only_pc .stamper .btn {
+    width: 30px;
+    height: 30px
+}
+
+.only_pc .stamper .btn.minus {
+    background-image: url(https://res.kurly.com/pc/service/common/2009/ico_minus_on.svg)
+}
+
+.only_pc .stamper .btn.minus,
+.only_pc .stamper .btn.minus.off {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-position: 50% 50%
+}
+
+.only_pc .stamper .btn.minus.off {
+    background-image: url(https://res.kurly.com/pc/service/common/2009/ico_minus.svg)
+}
+
+.only_pc .stamper .btn.plus {
+    background-image: url(https://res.kurly.com/pc/service/common/2009/ico_plus_on.svg)
+}
+
+.only_pc .stamper .btn.plus,
+.only_pc .stamper .btn.plus.off {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-position: 50% 50%
+}
+
+.only_pc .stamper .btn.plus.off {
+    background-image: url(https://res.kurly.com/pc/service/common/2009/ico_plus.svg)
+}
+
+.only_pc .stamper .num {
+    width: 26px;
+    height: 30px;
+    padding-bottom: 4px;
+    font-weight: 400;
+    line-height: 18px
+}
+
+.layer_kurly {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%
+}
+
+.layer_kurly .layer_off {
+    position: relative
+}
+
+.layer_kurly .layer_off .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 44px;
+    height: 44px;
+    background-image: url(https://res.kurly.com/mobile/service/common/2003/ico_popup_close.png);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: 50% 50%
+}
+
+.layer_kurly:before {
+    content: "";
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    opacity: .6
+}
+
+.layer_kurly.scroll_head.full .inner_layer {
+    padding-top: 0
+}
+
+.layer_kurly.scroll_head .inner_layer {
+    overflow: hidden;
+    padding: 15px 0 80px
+}
+
+.layer_kurly.scroll_head .in_layer {
+    overflow-y: scroll;
+    height: 100%
+}
+
+.layer_kurly.no_scroll .inner_layer {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%)
+}
+
+.layer_kurly.no_scroll .inner_layer .layer_head {
+    padding: 40px 15px 20px
+}
+
+.layer_kurly.no_scroll .tit_layer {
+    padding-top: 0;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+    letter-spacing: -.4px;
+    text-align: center
+}
+
+.layer_kurly.no_scroll .layer_body:after {
+    display: none
+}
+
+.layer_kurly.no_scroll .layer_foot {
+    position: static;
+    height: auto;
+    padding: 0 20px 20px
+}
+
+.layer_kurly.no_scroll .layer_foot .btn {
+    margin-top: 10px
+}
+
+.layer_kurly.scroll_body .inner_layer {
+    padding: 64px 0 80px
+}
+
+.layer_kurly.scroll_body .inner_layer .in_layer {
+    overflow: hidden;
+    height: 100%
+}
+
+.layer_kurly.scroll_body .inner_layer .layer_head {
+    position: absolute;
+    left: 0;
+    top: 0
+}
+
+.layer_kurly.scroll_body .inner_layer .layer_body {
+    overflow: hidden;
+    height: 100%
+}
+
+.layer_kurly .inner_layer {
+    overflow: hidden;
+    position: fixed;
+    left: 20px;
+    right: 20px;
+    top: 20px;
+    bottom: 20px;
+    border-radius: 4px;
+    background-color: #fff
+}
+
+.layer_kurly .layer_head {
+    width: 100%;
+    padding: 21px 20px 19px;
+    background-color: #fff
+}
+
+.layer_kurly .tit_layer {
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px
+}
+
+.layer_kurly .layer_body:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 80px;
+    width: 100%;
+    height: 24px;
+    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0), #fff);
+    pointer-events: none
+}
+
+.layer_kurly .layer_foot {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 15px;
+    background-color: #fff
+}
+
+.layer_addresssearch {
+    display: none;
+    position: relative;
+    width: 100%;
+    height: 100%
+}
+
+.appView #kMain {
+    margin: 0
+}
+
+#header {
+    border-bottom: 0
+}
+
+#qnb {
+    display: none
+}
+
+#cartItemList:after {
+    content: "";
+    display: block;
+    overflow: hidden;
+    height: 0;
+    font-size: 0;
+    clear: both
+}
+
+.cart_delivery {
+    position: relative;
+    z-index: 3
+}
+
+.cart_delivery .inner_delivery {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: #fff
+}
+
+.cart_delivery .inner_delivery.focus {
+    position: fixed
+}
+
+.cart_delivery .no_address {
+    display: block;
+    position: relative;
+    padding: 12px 20px;
+    font-size: 16px;
+    color: #5f0080;
+    line-height: 20px
+}
+
+.cart_delivery .address .addr:after,
+.cart_delivery .no_address:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    background-image: url(https://res.kurly.com/mobile/service/cart/2007/ico_arrow_gray_16x16.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    background-position: 100% 50%
+}
+
+.cart_delivery .address {
+    display: block;
+    position: relative;
+    padding: 8px 0 10px 16px
+}
+
+.cart_delivery .address .addr {
+    position: relative;
+    padding-left: 28px;
+    padding-right: 64px;
+    font-size: 14px;
+    line-height: 17px
+}
+
+.cart_delivery .address .addr:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px;
+    height: 20px;
+    background-image: url(https://res.kurly.com/mobile/service/cart/2007/ico_location_v3.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: 0 50%
+}
+
+.cart_delivery .address .delivery {
+    display: block;
+    padding: 6px 0 0 28px;
+    font-weight: 600;
+    font-size: 12px
+}
+
+.cart_delivery .address .delivery.star {
+    color: #5f0080
+}
+
+.cart_delivery .address .delivery.regular {
+    color: #666
+}
+
+.cart_delivery .address .delivery.none {
+    color: #ccc
+}
+
+.cart_item {
+    overflow: hidden;
+    position: relative;
+    z-index: 1
+}
+
+.cart_item.no_item {
+    overflow: visible
+}
+
+.cart_select {
+    position: relative;
+    z-index: 2;
+    height: 46px
+}
+
+.cart_select .inner_select {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0 20px;
+    border-bottom: 1px solid #ccc;
+    background-color: #fff
+}
+
+.cart_select .inner_select.focus {
+    position: fixed
+}
+
+.cart_select .check {
+    float: left;
+    padding: 11px 0 10px
+}
+
+.cart_select .btn_delete {
+    float: right;
+    padding: 11px 0 10px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 24px
+}
+
+.empty .cart_select {
+    display: none
+}
+
+.empty .inner_empty .bg {
+    display: block;
+    height: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #f4f4f4
+}
+
+.empty .inner_empty .txt {
+    width: 100%;
+    margin-top: 49%;
+    font-size: 16px;
+    color: #999;
+    line-height: 24px;
+    text-align: center
+}
+
+.empty .cart_result {
+    display: none
+}
+
+.box {
+    border-top: 10px solid #f4f4f4;
+    background-color: #fff
+}
+
+.box .tit {
+    position: relative;
+    z-index: 1;
+    height: 56px
+}
+
+.box .tit .inner_tit {
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 56px;
+    padding: 17px 20px 15px;
+    background-color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    color: #333;
+    line-height: 24px
+}
+
+.box .tit .inner_tit.focus {
+    position: fixed
+}
+
+.box .tit .ico {
+    float: left;
+    width: 24px;
+    height: 24px;
+    margin: -1px 12px 0 0
+}
+
+.box .btn_dropup {
+    display: none
+}
+
+.box.cold .tit .ico {
+    background-image: url(https://res.kurly.com/mobile/service/cart/2007/ico_cold.svg)
+}
+
+.box.cold .tit .ico,
+.box.frozen .tit .ico {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: 50% 50%
+}
+
+.box.frozen .tit .ico {
+    background-image: url(https://res.kurly.com/mobile/service/cart/2010/ico_frozen.svg)
+}
+
+.box.room .tit .ico {
+    background-image: url(https://res.kurly.com/mobile/service/cart/2009/ico_room.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    background-position: 50% 50%
+}
+
+.box.sold_out .tit .ico {
+    display: none
+}
+
+.box.sold_out .package.none,
+.box.sold_out .product.none,
+.box.sold_out .thumb.none {
+    cursor: default
+}
+
+.box .list {
+    padding: 4px 20px 0
+}
+
+.box .list li {
+    padding-left: 36px
+}
+
+.box .list li:first-child .item {
+    border-top: 0
+}
+
+.box .list li .item {
+    position: relative;
+    padding: 23px 36px 20px 0;
+    border-top: 1px solid #f4f4f4
+}
+
+.box .list li .limit {
+    padding-bottom: 2px;
+    font-size: 14px;
+    color: #5f0080;
+    line-height: 20px
+}
+
+.box .list li .limit .emph {
+    font-weight: 600
+}
+
+.box .list li .check {
+    position: absolute;
+    left: -56px;
+    top: 0;
+    width: 56px;
+    height: 66px;
+    padding: 20px 0 0 20px
+}
+
+.box .list li .name .package {
+    display: block;
+    max-height: 48px;
+    font-weight: 400;
+    font-size: 16px;
+    color: #333;
+    line-height: 20px;
+    word-break: break-all;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical
+}
+
+.box .list li .name .product {
+    display: block;
+    padding-top: 3px;
+    font-weight: 400;
+    font-size: 14px;
+    color: #999;
+    line-height: 17px;
+    word-break: break-all
+}
+
+.box .list li .name .tag {
+    padding-bottom: 1px
+}
+
+.box .list li .name .tag .txt {
+    display: inline-block;
+    height: 20px;
+    margin: 8px 4px -1px 0;
+    padding: 0 5px 0 6px;
+    border-radius: 4px;
+    background-color: #f1f1f1;
+    font-weight: 600;
+    font-size: 10px;
+    color: #666;
+    line-height: 22px;
+    vertical-align: top
+}
+
+.box .list li .goods {
+    overflow: hidden;
+    padding-top: 14px
+}
+
+.box .list li .goods .thumb {
+    overflow: hidden;
+    float: left;
+    width: 60px;
+    height: 78px;
+    margin-top: 2px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: cover;
+    background-color: #f4f4f4;
+    font-size: 0;
+    text-indent: -9999px
+}
+
+.box .list li .goods .price {
+    overflow: hidden;
+    padding-left: 20px
+}
+
+.box .list li .goods .price .selling {
+    font-weight: 700;
+    font-size: 16px;
+    color: #333;
+    line-height: 24px;
+    word-break: break-all
+}
+
+.box .list li .goods .price .cost {
+    padding-left: 6px;
+    font-size: 14px;
+    color: #999;
+    line-height: 20px;
+    word-break: break-all;
+    text-decoration: line-through;
+    vertical-align: 1px
+}
+
+.box .list li .goods .price .noti {
+    height: 19px;
+    padding-top: 1px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #b3130b;
+    line-height: 18px
+}
+
+.box .list li .goods .price .count .btn.plus.off {
+    background-image: url(https://res.kurly.com/mobile/service/cart/2010/ico_plus_on.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 36px 36px;
+    background-position: 50% 50%
+}
+
+.box .list li .goods .msg {
+    display: none;
+    overflow: hidden;
+    padding-left: 20px;
+    font-size: 14px;
+    color: #666;
+    line-height: 17px
+}
+
+.box .list li .btn_delete {
+    overflow: hidden;
+    position: absolute;
+    right: -22px;
+    top: 4px;
+    width: 56px;
+    height: 56px;
+    padding: 22px 24px;
+    border: 0;
+    background-image: url(https://res.kurly.com/mobile/service/cart/2007/ico_delete.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+    background-position: 50% 50%;
+    font-size: 0;
+    text-indent: -9999px
+}
+
+.box.sold_out .list li {
+    padding-left: 81px
+}
+
+.box.sold_out .list li .item {
+    min-height: 114px;
+    padding: 17px 36px 20px 0
+}
+
+.box.sold_out .list li .check {
+    display: none
+}
+
+.box.sold_out .list li .name .package,
+.box.sold_out .list li .name .product {
+    color: #ddd
+}
+
+.box.sold_out .list li .name .tag .txt {
+    background-color: #f6f6f6;
+    color: #ccc
+}
+
+.box.sold_out .list li .goods {
+    padding-top: 7px
+}
+
+.box.sold_out .list li .goods .thumb {
+    position: absolute;
+    left: -81px;
+    top: 14px;
+    opacity: .3
+}
+
+.box.sold_out .list li .goods .price {
+    display: none
+}
+
+.box.sold_out .list li .goods .msg {
+    display: block;
+    padding-left: 0
+}
+
+.box.sold_out .list li .limit {
+    color: #ddd
+}
+
+.box.sold_out .list li .btn_delete {
+    top: -2px
+}
+
+.amount_view {
+    padding: 13px 20px 90px;
+    border-top: 10px solid #f4f4f4;
+    --safe-area-inset-bottom: env(safe-area-inset-bottom);
+    padding-bottom: calc(90px + var(--safe-area-inset-bottom))
+}
+
+@supports(padding-bottom:constant(safe-area-inset-bottom)) {
+    .amount_view {
+        --safe-area-inset-bottom: constant(safe-area-inset-bottom)
+    }
+}
+
+.amount_view .amount {
+    overflow: hidden;
+    padding-top: 9px
+}
+
+.amount_view .amount .tit {
+    float: left;
+    width: 90px;
+    font-size: 16px;
+    line-height: 24px;
+    white-space: nowrap
+}
+
+.amount_view .amount .price {
+    float: right;
+    line-height: 24px;
+    text-align: right
+}
+
+.amount_view .amount .price .num {
+    font-size: 18px
+}
+
+.amount_view .amount .price .num.minus:before {
+    content: "-";
+    display: inline-block;
+    vertical-align: 0
+}
+
+.amount_view .amount .price .num.plus:before {
+    content: "+";
+    display: inline-block;
+    vertical-align: 0
+}
+
+.amount_view .amount .price .won {
+    padding-left: 2px;
+    font-size: 16px;
+    vertical-align: 1px
+}
+
+.amount_view .amount .price .free {
+    display: block;
+    padding-bottom: 1px;
+    font-size: 16px;
+    color: #5f0080;
+    line-height: 24px;
+    letter-spacing: -.5px
+}
+
+.amount_view .amount.lst {
+    margin: 11px 0 0;
+    padding-top: 12px;
+    border-top: 1px solid #f4f4f4
+}
+
+.amount_view .amount.lst .tit {
+    padding-top: 2px
+}
+
+.amount_view .amount.lst .price .num {
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 28px
+}
+
+.amount_view .no_sale {
+    padding: 2px 0;
+    color: #666
+}
+
+.amount_view .free_limit,
+.amount_view .no_sale {
+    font-size: 12px;
+    line-height: 18px;
+    text-align: right
+}
+
+.amount_view .free_limit {
+    display: block;
+    padding-top: 2px;
+    color: #5f0080
+}
+
+.amount_view .reserve {
+    padding-top: 6px;
+    font-size: 12px;
+    color: #666;
+    line-height: 16px;
+    text-align: right
+}
+
+.amount_view .reserve .bage {
+    display: inline-block;
+    height: 18px;
+    margin-right: 6px;
+    padding: 0 5px 0 6px;
+    border: 1px solid #e8a828;
+    border-radius: 9px;
+    background-color: #ffbf00;
+    font-weight: 600;
+    font-size: 10px;
+    color: #fff;
+    line-height: 18px;
+    vertical-align: 0
+}
+
+.amount_view .reserve .txt {
+    display: block;
+    padding-top: 12px
+}
+
+.amount_view .reserve .emph {
+    font-weight: 600
+}
+
+.amount_view .reserve .ico {
+    opacity: 0
+}
+
+.btn_submit {
+    position: fixed;
+    z-index: 2;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(180deg, hsla(0, 0%, 100%, 0), #fff);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom);
+    padding-bottom: calc(12px + var(--safe-area-inset-bottom))
+}
+
+@supports(padding-bottom:constant(safe-area-inset-bottom)) {
+    .btn_submit {
+        --safe-area-inset-bottom: constant(safe-area-inset-bottom)
+    }
+}
+
+.btn_submit .btn {
+    height: 56px;
+    line-height: 58px
+}
+
+.btn_submit .btn.disabled,
+.btn_submit .btn:disabled {
+    color: #fff
+}
+
+.only_pc {
+    width: 1050px;
+    margin: 0 auto
+}
+
+.only_pc#cartItemList {
+    min-height: 545px
+}
+
+.only_pc * {
+    font-family: Noto Sans;
+    letter-spacing: 0
+}
+
+.only_pc:after {
+    content: "";
+    display: block;
+    clear: both
+}
+
+.only_pc .cart_item {
+    float: left;
+    width: 742px
+}
+
+.only_pc .empty .cart_result,
+.only_pc .empty .cart_select {
+    display: block
+}
+
+.only_pc .empty .inner_empty {
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #f4f4f4
+}
+
+.only_pc .empty .inner_empty .bg {
+    display: none
+}
+
+.only_pc .empty .inner_empty .txt {
+    width: 100%;
+    margin-top: 0;
+    padding: 115px 0 116px;
+    font-weight: 700;
+    font-size: 16px;
+    color: #333
+}
+
+.only_pc .empty .inner_empty .btn_submit {
+    display: none
+}
+
+.only_pc .cart_result {
+    position: relative;
+    float: right;
+    width: 284px
+}
+
+.only_pc .cart_result .inner_result {
+    position: absolute;
+    right: 0;
+    top: 60px;
+    width: 284px;
+    background-color: #fff
+}
+
+.only_pc .cart_result .notice {
+    padding-top: 34px
+}
+
+.only_pc .cart_result .notice .txt {
+    display: block;
+    position: relative;
+    padding: 6px 0 0 10px;
+    font-size: 12px;
+    color: #666;
+    line-height: 18px;
+    letter-spacing: -.5px
+}
+
+.only_pc .cart_result .notice .txt .ico {
+    position: absolute;
+    left: 0;
+    top: 6px
+}
+
+.only_pc .cart_select {
+    position: static;
+    height: auto
+}
+
+.only_pc .cart_select .inner_select {
+    position: static;
+    padding: 0 10px 0 2px;
+    border-bottom: none
+}
+
+.only_pc .cart_select .check {
+    padding: 18px 0 17px;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -.3px
+}
+
+.only_pc .cart_select .btn_delete {
+    float: left;
+    padding: 18px 0 17px 20px;
+    font-weight: 700;
+    line-height: 25px
+}
+
+.only_pc .cart_select .btn_delete:before {
+    content: "";
+    float: left;
+    width: 1px;
+    height: 14px;
+    margin: 6px 21px 0 0;
+    background-color: #ddd
+}
+
+.only_pc .cart_select .btn_shown {
+    float: right;
+    padding: 18px 0 17px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 25px
+}
+
+.only_pc .cart_delivery {
+    padding: 23px 19px 20px;
+    border: 1px solid #f2f2f2;
+    border-bottom: 0
+}
+
+.only_pc .cart_delivery .tit {
+    padding-left: 24px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+    letter-spacing: -.3px;
+    background-image: url(https://res.kurly.com/pc/service/cart/2007/ico_location.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: 0 50%
+}
+
+.only_pc .cart_delivery .btn {
+    display: block;
+    width: 100%;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 34px
+}
+
+.only_pc .cart_delivery .btn .ico {
+    display: inline-block;
+    width: 21px;
+    height: 20px;
+    margin-left: -14px;
+    background-image: url(https://res.kurly.com/pc/service/cart/2007/ico_search.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 21px 20px;
+    background-position: 0 50%;
+    vertical-align: -5px
+}
+
+.only_pc .cart_delivery .no_address {
+    position: static;
+    padding: 11px 0 0;
+    font-weight: 700;
+    font-size: 16px;
+    color: #333;
+    line-height: 24px
+}
+
+.only_pc .cart_delivery .no_address .emph {
+    color: #5f0080
+}
+
+.only_pc .cart_delivery .no_address .btn {
+    margin-top: 17px
+}
+
+.only_pc .cart_delivery .address .addr:after,
+.only_pc .cart_delivery .no_address:after {
+    display: none
+}
+
+.only_pc .cart_delivery .address {
+    display: block;
+    position: relative;
+    padding: 11px 0 0
+}
+
+.only_pc .cart_delivery .address:after {
+    display: none
+}
+
+.only_pc .cart_delivery .address .addr {
+    position: static;
+    padding-left: 0;
+    padding-right: 0;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 24px
+}
+
+.only_pc .cart_delivery .address .addr:before {
+    display: none
+}
+
+.only_pc .cart_delivery .address .delivery {
+    padding: 8px 0 0;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: -.3px
+}
+
+.only_pc .cart_delivery .address .btn {
+    margin-top: 17px
+}
+
+.only_pc .amount_view {
+    padding: 9px 18px 18px 20px;
+    border: 1px solid #f2f2f2;
+    background-color: #fafafa
+}
+
+.only_pc .amount_view .amount {
+    padding-top: 9px
+}
+
+.only_pc .amount_view .amount .tit {
+    float: left;
+    width: 96px;
+    font-weight: 400;
+    letter-spacing: -.5px
+}
+
+.only_pc .amount_view .amount .price {
+    float: right
+}
+
+.only_pc .amount_view .amount .price .num {
+    letter-spacing: -.5px
+}
+
+.only_pc .amount_view .amount .price .free {
+    display: block;
+    padding-top: 2px
+}
+
+.only_pc .amount_view .amount.lst {
+    margin: 17px 0 0;
+    padding-top: 17px;
+    border-top: 1px solid #eee
+}
+
+.only_pc .amount_view .amount.lst .tit {
+    padding-top: 2px
+}
+
+.only_pc .amount_view .amount.lst .price .num {
+    font-weight: 700
+}
+
+.only_pc .amount_view .free_limit {
+    padding-top: 3px
+}
+
+.only_pc .amount_view .reserve {
+    padding-top: 9px
+}
+
+.only_pc .amount_view .reserve .bage {
+    height: 18px;
+    margin-right: 4px;
+    padding: 0 6px;
+    font-weight: 700;
+    line-height: 16px;
+    vertical-align: 1px
+}
+
+.only_pc .amount_view .reserve .txt {
+    padding-top: 10px
+}
+
+.only_pc .amount_view .reserve .emph {
+    font-weight: 700
+}
+
+.only_pc .amount_view .reserve .ico {
+    opacity: 1
+}
+
+.only_pc .btn_submit {
+    position: static;
+    padding: 20px 0 0;
+    background: 0 0
+}
+
+.only_pc .btn_submit .btn {
+    height: 56px;
+    padding-bottom: 2px;
+    line-height: 0px
+}
+
+.only_pc .box {
+    border-top: 1px solid #333
+}
+
+.only_pc .box .tit_box {
+    overflow: hidden;
+    height: 60px;
+    padding: 14px 5px 15px 0
+}
+
+.only_pc .box .tit_box .btn_dropup {
+    display: block;
+    overflow: hidden;
+    float: right;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    background-image: url(https://res.kurly.com/pc/service/cart/2007/ico_dropup.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-position: 50% 50%;
+    font-size: 0;
+    text-indent: -9999px
+}
+
+.only_pc .box .tit_box .btn_dropup.off {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg)
+}
+
+.only_pc .box .tit {
+    position: static;
+    height: auto
+}
+
+.only_pc .box .tit .inner_tit {
+    position: static;
+    float: left;
+    width: 50%;
+    height: auto;
+    padding: 3px 0 0;
+    font-weight: 700;
+    line-height: 26px
+}
+
+.only_pc .box .tit .ico {
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin: -3px 9px 0 0
+}
+
+.only_pc .box.cold .tit .ico {
+    background-image: url(https://res.kurly.com/pc/service/cart/2007/ico_cold.svg)
+}
+
+.only_pc .box.cold .tit .ico,
+.only_pc .box.frozen .tit .ico {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-position: 50% 50%
+}
+
+.only_pc .box.frozen .tit .ico {
+    background-image: url(https://res.kurly.com/pc/service/cart/2007/ico_frozen.svg)
+}
+
+.only_pc .box.room .tit .ico {
+    background-image: url(https://res.kurly.com/pc/service/cart/2009/ico_room_v2.svg?v=1);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-position: 50% 50%
+}
+
+.only_pc .box .list {
+    padding: 0;
+    border-bottom: 1px solid #f4f4f4
+}
+
+.only_pc .box .list.off {
+    overflow: hidden;
+    height: 0
+}
+
+.only_pc .box .list li {
+    padding-left: 0
+}
+
+.only_pc .box .list li .item {
+    overflow: hidden;
+    min-height: 128px;
+    padding: 0
+}
+
+.only_pc .box .list li .limit {
+    padding-top: 0;
+    padding-bottom: 6px;
+    line-height: 18px
+}
+
+.only_pc .box .list li .limit .emph {
+    font-weight: 700
+}
+
+.only_pc .box .list li .check {
+    left: 2px;
+    top: 50%;
+    width: 24px;
+    height: 24px;
+    margin-top: -12px;
+    padding: 0
+}
+
+.only_pc .box .list li .check .ico {
+    margin-right: 0
+}
+
+.only_pc .box .list li .name {
+    display: table;
+    width: 463px;
+    min-height: 128px;
+    padding: 19px 0 18px 136px
+}
+
+.only_pc .box .list li .name .inner_name {
+    display: table-cell;
+    vertical-align: middle
+}
+
+.only_pc .box .list li .name .package {
+    overflow: hidden;
+    max-height: 54px;
+    font-weight: 700;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis
+}
+
+.only_pc .box .list li .name .product {
+    display: block;
+    overflow: hidden;
+    width: 318px;
+    max-height: 51px;
+    padding-top: 7px;
+    line-height: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis
+}
+
+.only_pc .box .list li .name .info {
+    overflow: hidden
+}
+
+.only_pc .box .list li .name .info .tag {
+    float: left;
+    padding-top: 10px
+}
+
+.only_pc .box .list li .name .info .tag .txt {
+    height: 22px;
+    margin: 0 6px 0 0;
+    padding: 0 8px;
+    font-weight: 700;
+    font-size: 12px
+}
+
+.only_pc .box .list li .name .info .noti {
+    padding-top: 10px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #b3130b;
+    line-height: 22px
+}
+
+.only_pc .box .list li .goods {
+    overflow: visible;
+    height: 100%;
+    padding-top: 0
+}
+
+.only_pc .box .list li .goods .thumb {
+    position: absolute;
+    left: 56px;
+    top: 50%;
+    margin-top: -39px
+}
+
+.only_pc .box .list li .goods .price .in_price {
+    position: absolute;
+    right: 49px;
+    top: 50%;
+    width: 116px;
+    transform: translateY(-50%)
+}
+
+.only_pc .box .list li .goods .price .in_price .selling {
+    display: block;
+    font-weight: 700;
+    font-size: 16px;
+    text-align: right
+}
+
+.only_pc .box .list li .goods .price .in_price .cost {
+    display: block;
+    padding-top: 4px;
+    line-height: 24px;
+    text-align: right
+}
+
+.only_pc .box .list li .goods .price .in_price .noti {
+    height: auto
+}
+
+.only_pc .box .list li .goods .price .count {
+    position: absolute;
+    left: 473px;
+    top: 50%;
+    margin-top: -13px
+}
+
+.only_pc .box .list li .goods .msg {
+    position: absolute;
+    left: 473px;
+    top: 50%;
+    width: 214px;
+    transform: translateY(-49%);
+    color: #333;
+    line-height: 22px;
+    letter-spacing: -.2px;
+    text-align: right
+}
+
+.only_pc .box .list li .btn_delete {
+    right: 5px;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin-top: -13px;
+    border: 0;
+    background-image: url(https://res.kurly.com/pc/service/cart/2007/ico_delete.svg);
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 30px 30px;
+    background-position: 50% 50%
+}
+
+.only_pc .box.sold_out .list li .check {
+    display: block
+}
+
+.only_pc .box.sold_out .list li .msg {
+    display: block;
+    left: auto;
+    right: 55px;
+    padding-left: 0
+}
+
+.only_pc .box.sold_out .list li .name {
+    padding-left: 80px
+}
+
+.only_pc .box.sold_out .list li .thumb {
+    left: 0
+}

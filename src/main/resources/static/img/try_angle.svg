@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="11px" viewBox="0 0 18 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>dropdown_tail</title>
+    <g id="뷰티컬리-Phase-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="PC_Home_Market_진입시" transform="translate(-1111.000000, -132.000000)">
+            <g id="dropdown_box" transform="translate(978.000000, 132.000000)">
+                <g id="dropdown_tail" transform="translate(133.000000, 0.000000)">
+                    <rect id="Rectangle" fill="#FFFFFF" x="0" y="0" width="18" height="11"></rect>
+                    <rect id="Rectangle" fill="#DDDDDD" x="0" y="10" width="18" height="1"></rect>
+                    <path d="M9,0 L17.25,11 L0.75,11 L9,0 Z" id="Combined-Shape" fill="#DDDDDD"></path>
+                    <path d="M9,1.65 L16.016,10.999 L2.008,10.999 L9,1.65 Z" id="Combined-Shape" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

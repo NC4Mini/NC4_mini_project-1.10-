@@ -1,0 +1,273 @@
+.search_date, .order_state {
+    position: relative;
+    z-index: 1;
+}
+
+.screen_out {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    font-size: 0;
+    line-height: 0;
+    text-indent: -9999px;
+}
+
+.search_date .btn_layer {
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: -74px;
+    width: 157px;
+    height: 44px;
+    padding: 11px 0 0 15px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    color: #666;
+    line-height: 18px;
+    letter-spacing: -.5px;
+}
+
+
+.search_date .layer_search {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: -30px;
+    width: 157px;
+    border: 1px solid #dddfe1;
+    border-top: 0;
+}
+
+.search_date .layer_search li:first-child {
+    border-top: 0;
+}
+
+
+.search_date .layer_search li {
+    background-color: #fff;
+}
+
+.search_date .layer_search a.on {
+    background-color: #f7f7f7;
+}
+
+.search_date .layer_search a {
+    display: block;
+    overflow: hidden;
+    height: 32px;
+    padding: 7px 0 0 8px;
+    font-size: 14px;;
+    color: #666;
+    line-height: 18px;
+    letter-spacing: -.2px;
+}
+
+.search_date .btn_layer:after {
+    content: "";
+    position: absolute;
+    left: 128px;
+    top: 18px;
+    width: 12px;
+    height: 8px;
+    background: url(https://res.kurly.com/pc/ico/2008/ico_down_12x8.svg) no-repeat 0 0;
+    background-size: 12px 8px;
+}
+
+.order_state .btn_layer {
+    overflow: hidden;
+    position: absolute;
+    right: 195px;
+    top: -74px;
+    width: 157px;
+    height: 44px;
+    padding: 11px 0 0 15px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    color: #666;
+    line-height: 18px;
+    letter-spacing: -.5px;
+}
+
+
+.order_state .layer_search {
+    display: block;
+    position: absolute;
+    right: 195px;
+    top: -30px;
+    width: 157px;
+    border: 1px solid #dddfe1;
+    border-top: 0;
+}
+
+.order_state .layer_search li:first-child {
+    border-top: 0;
+}
+
+
+.order_state .layer_search li {
+    background-color: #fff;
+}
+
+.order_state .layer_search a.on {
+    background-color: #f7f7f7;
+}
+
+.order_state .layer_search a {
+    display: block;
+    overflow: hidden;
+    height: 32px;
+    padding: 7px 0 0 8px;
+    font-size: 14px;
+    color: #666;
+    line-height: 18px;
+    letter-spacing: -.2px;
+}
+
+.order_state .btn_layer:after {
+    content: "";
+    position: absolute;
+    left: 128px;
+    top: 18px;
+    width: 12px;
+    height: 8px;
+    background: url(https://res.kurly.com/pc/ico/2008/ico_down_12x8.svg) no-repeat 0 0;
+    background-size: 12px 8px;
+}
+
+.section_orderlist .list_order {
+    padding-top: 10px;
+    border-top: 2px solid #333;
+    margin-bottom: 100px;
+}
+
+.section_orderlist .list_order .date {
+    padding-top: 20px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #666;
+}
+
+.section_orderlist .list_order .order_goods {
+    position: relative;
+    margin-top: 10px;
+    padding: 0 20px;
+    border: 1px solid #dddfe1;
+}
+
+.section_orderlist .list_order .name {
+    padding: 20px 0 13px;
+    border-bottom: 1px solid #dddfe1;
+}
+
+.section_orderlist .list_order .name a {
+    display: block;
+    overflow: hidden;
+    background: url(https://res.kurly.com/pc/ico/1806/ico_arrow_10x15.png) no-repeat 100% 1px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 700;
+    color: #000;
+    cursor: pointer;
+}
+
+.section_orderlist .list_order .order_info {
+    overflow: hidden;
+    padding: 14px 0 20px;
+}
+
+
+.section_orderlist .list_order .desc {
+    overflow: hidden;
+    padding-top: 1px;
+}
+
+.section_orderlist .list_order .order_info dl:first-child {
+    padding-top: 3px;
+}
+
+.section_orderlist .list_order .order_info dl {
+    overflow: hidden;
+    padding-top: 6px;
+}
+
+.section_orderlist .list_order .order_info dt {
+    float: left;
+    padding-right: 15px;
+    font-size: 12px;
+    color: #000;
+    line-height: 20px;
+}
+
+.section_orderlist .list_order .order_info dd {
+    float: left;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 700;
+    color: #000;
+}
+
+.section_orderlist .list_order .order_info .end {
+    color: #514859;
+}
+
+.order_info{
+    display:flex;
+}
+
+.section_orderlist .list_order .order_status {
+    display: table;
+    position: absolute;
+    right: 57px;
+    bottom: 0;
+    height: 114px;
+    vertical-align: middle;
+}
+
+.section_orderlist .list_order .inner_status {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.section_orderlist .list_order .order_status .link_review {
+    margin-bottom: 4px;
+    border: 1px solid #512771;
+    background-color: #5f0080;
+    color: #fff;
+}
+
+.section_orderlist .list_order .order_status .link {
+    display: block;
+    width: 90px;
+    height: 34px;
+    border: 1px solid #5f0080;
+    background-color: #fff;
+    font-size: 12px;
+    color: #5f0080;
+    line-height: 32px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#user_order_state{
+    margin-bottom: 6px;
+    padding-left: 10px;
+    margin-top: 10px;
+}
+
+select:focus{
+    outline:none;
+}
+
+
+.no_order_data{
+    display:none;
+    border-bottom: 1px solid #dddfe1;
+    padding: 90px 0 220px 0;
+    font-size: 15px;
+    color: #757575;
+    text-align: center;
+}
