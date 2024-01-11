@@ -1,31 +1,49 @@
 package com.nc.project.controller;
 
+import com.nc.project.dto.UserDTO;
+import com.nc.project.dto.UserDetailDTO;
+import com.nc.project.dto.UserShpAddrDTO;
+import com.nc.project.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+import java.util.List;
+
+@RestController
+@RequestMapping("/user")
+@RequiredArgsConstructor
+
 public class UserController {
+    private final UserService userService;
 
-    @GetMapping("/edit-profile")
-    public String editProfile() {
-        return "/menu/editProfile";
+    // 회원가입 화면으로 이동
+    @GetMapping("/join-view")
+    public ModelAndView joinView() {
+
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("user/join.html");
+
+        return mav;
     }
 
-    @PostMapping("/editprofile/nickname-change")
-    public void nicknameChange() {
+    @PostMapping("/join")
+    public ModelAndView join(UserDTO userDTO, UserDetailDTO userDetailDTO,
+                             List<UserShpAddrDTO> userShpAddrDTOList) {
+        userDTO.setUserDetailDTO(userDetailDTO);
+        userDTO.setUserShpAddrDTOList(userShpAddrDTOList);
 
-    }
+        userService.join(userDTO);
 
-    @PostMapping("/editprofile/password-change")
-    public void passwordChange() {
+        ModelAndView mav = new ModelAndView();
 
-    }
+        mav.setViewName("user/login.html");
 
-    @PostMapping("/editprofile/user-delete")
-    public void userDelete() {
-
+        return mav;
     }
 
 }
