@@ -18,18 +18,18 @@ import java.time.LocalDateTime;
 public class UserAccount {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(unique = true)
-    private String userId;
+
+    @Column(unique = true) private String userId;
     private String userPw;
     private String userName;
-    private String userEmail;
     private String userTel;
-    private LocalDateTime userRegdate;
-    private String role;
+    private String userAddr;
+    private LocalDateTime userBirth;
+    private String userGender;
+    private String userProfile;
+    private String userNickname;
 
     public UserAccountDto toDTO() {
         return UserAccountDto.builder()
@@ -37,10 +37,12 @@ public class UserAccount {
                 .userId(this.userId)
                 .userPw(this.userPw)
                 .userName(this.userName)
-                .userEmail(this.userEmail)
                 .userTel(this.userTel)
-                .userRegdate(this.userRegdate.toString())
-                .role(this.role)
+                .userAddr(this.userAddr)
+                .userBirth(this.userBirth.toString())
+                .userGender(this.userGender)
+                .userProfile(this.userProfile)
+                .userNickname(this.userNickname)
                 .build();
     }
 }

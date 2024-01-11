@@ -16,11 +16,12 @@ public class UserAccountDto {
     private String userId;
     private String userPw;
     private String userName;
-    private String userEmail;
     private String userTel;
-    private String userRegdate;
-    private String role;
-    private String curUserPw;
+    private String userAddr;
+    private String userBirth;
+    private String userGender;
+    private String userProfile;
+    private String userNickname;
 
     public UserAccount toEntity() {
         return UserAccount.builder()
@@ -28,10 +29,12 @@ public class UserAccountDto {
                 .userId(this.userId)
                 .userPw(this.userPw)
                 .userName(this.userName)
-                .userEmail(this.userEmail)
                 .userTel(this.userTel)
-                .userRegdate(LocalDateTime.parse(this.userRegdate))
-                .role(this.role)
+                .userAddr(this.userAddr)
+                .userBirth(LocalDateTime.parse(this.userBirth))
+                .userGender(this.userGender)
+                .userProfile(this.userProfile)
+                .userNickname(this.userNickname)
                 .build();
     }
 }
