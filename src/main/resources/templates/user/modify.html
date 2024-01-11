@@ -151,13 +151,13 @@
     <div layout:fragment="content">
         <div class="form-wrapper">
             <form id="modifyForm" action="/user/join" method="post">
-                <input type="hidden" id="id" name="id" th:value="${#authentication.principal.user.id}">
+                <input type="hidden" id="id" name="id">
                 <h3>회원정보 수정</h3>
                 <div class="label-wrapper">
                     <label for="userId">아이디</label>
                 </div>
                 <div>
-                    <input type="text" id="userId" name="userId" required th:value="${#authentication.principal.username}" readonly>
+                    <input type="text" id="userId" name="userId" readonly>
                 </div>
                 <div class="label-wrapper">
                     <label for="userPw">현재 비밀번호</label>
@@ -178,15 +178,15 @@
                 <div class="label-wrapper">
                     <label for="userName">이름</label>
                 </div>
-                <input type="text" id="userName" name="userName" th:value="${#authentication.principal.user.userName}" required>
+                <input type="text" id="userName" name="userName">
                 <div class="label-wrapper">
                     <label for="userEmail">이메일</label>
                 </div>
-                <input type="email" id="userEmail" name="userEmail" th:value="${#authentication.principal.user.userEmail}" required>
+                <input type="email" id="userEmail" name="userEmail">
                 <div class="label-wrapper">
                     <label for="userTel">전화번호</label>
                 </div>
-                <input type="text" id="userTel" name="userTel" th:value="${#authentication.principal.user.userTel}" placeholder="숫자만 입력하세요.">
+                <input type="text" id="userTel" name="userTel" >
                 <div style="display: block; margin: 20px auto;">
                     <button type="button" id="modifyBtn">회원정보 수정</button>
                 </div>
