@@ -1,46 +1,43 @@
-package com.nc.project.entity;//package com.example.tempproject.entity;
-//
-//import com.example.tempproject.dto.CartDTO;
-//import com.fasterxml.jackson.annotation.JsonBackReference;
-//import jakarta.persistence.*;
-//import lombok.*;
-//
-//@Entity
-//@Table(name = "CART")
-//@SequenceGenerator(
-//        name = "CartSeqGenerator",
-//        sequenceName = "CART_SEQ",
-//        initialValue = 1,
-//        allocationSize = 1
-//)
-//@Getter
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Builder
-//@Setter
-//public class Cart {
-//    // 키값
-//    @Id
-//    @GeneratedValue(
-//           strategy = GenerationType.SEQUENCE,
-//            generator = "CartSeqGenerator"
-//    )
-//    private int cartNo;
-//
-//    private int cartItemsCnt;
-//
-//    @OneToOne(mappedBy = "cart", cascade = CascadeType.ALL)
+package com.nc.project.entity;
+
+
+import com.nc.project.dto.CartDTO;
+import com.nc.project.dto.ItemDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "CART")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class Cart {
+    // 키값
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long cartId;
+
+    // cartItem과 oneToMany 관계
+    @OneToMany
+    @JoinColumn(name = "CART_ITEM")
+    private List<CartItem> cartItemList;
+
+
+
+//    // cart와 user onetoone 관계
+//    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 //    @JsonBackReference
 //    private User user;
-//
-//    @OneToMany(mappedBy = "cart")
-//    @JsonBackReference
-//    private Item item;
-//
-//    public CartDTO toDTO() {
-//        return CartDTO.builder()
-//                      .cartNo(this.cartNo)
-//                      .cartItemCnt(this.cartItemsCnt)
-//                      .build();
-//    }
-//}
+
+    public CartDTO toDTO() {
+        return CartDTO.builder()
+                .cartId(this.cartId)
+                .build();
+    }
+}
