@@ -21,7 +21,7 @@ public class UserAccountDto {
     private String userBirth;
     private String userGender;
     private String userProfile;
-    private String userNickname;
+    private String userEmail;
 
     public UserAccount toEntity() {
         return UserAccount.builder()
@@ -34,7 +34,7 @@ public class UserAccountDto {
                 .userBirth(LocalDateTime.parse(this.userBirth))
                 .userGender(this.userGender)
                 .userProfile(this.userProfile)
-                .userNickname(this.userNickname)
+                .userEmail(this.userEmail)
                 .build();
     }
 }

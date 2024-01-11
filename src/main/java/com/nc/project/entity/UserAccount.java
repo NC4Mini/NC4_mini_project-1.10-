@@ -29,7 +29,7 @@ public class UserAccount {
     private LocalDateTime userBirth;
     private String userGender;
     private String userProfile;
-    private String userNickname;
+    private String userEmail;
 
     public UserAccountDto toDTO() {
         return UserAccountDto.builder()
@@ -42,7 +42,7 @@ public class UserAccount {
                 .userBirth(this.userBirth.toString())
                 .userGender(this.userGender)
                 .userProfile(this.userProfile)
-                .userNickname(this.userNickname)
+                .userEmail(this.userEmail)
                 .build();
     }
 }
