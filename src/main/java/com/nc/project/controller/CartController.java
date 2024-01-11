@@ -38,7 +38,17 @@ public class CartController {
     // 배송지 변경 페이지에서 배송지 변경 기능
 
 
-    // 주문하기
+    // 주문하기 클릭시 주문서 페이지로 이동
+    @GetMapping("/order")
+    public ModelAndView getOrder () {
+        ModelAndView mav = new ModelAndView();
+
+
+        mav.setViewName("order/getOrder.html");
+
+        return mav;
+    }
+
 
     // 장바구니에 물건 삭제
 

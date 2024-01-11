@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 
 <head th:replace="~{/fragments/config :: config}">
@@ -9,7 +10,7 @@
 <body>
     <div id="wrap">
         <header th:replace="~{/fragments/header :: header}"></header>
-        <div th:replace="~{/fragments/content :: content}"></div>
+        <div layout:fragment="content"></div>
         <footer th:replace="~{/fragments/footer :: footer}"></footer>
     </div>
 

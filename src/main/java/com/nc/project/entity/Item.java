@@ -30,15 +30,15 @@ public class Item {
     private String itemCategory;
     private int itemPrice;
 
-    public ItemDTO toDTO() {
-        return ItemDTO.builder()
-                .itemId(this.itemId)
-                .itemName(this.itemName)
-                .itemDescription(this.itemDescription)
-                .itemStock(this.itemStock)
-                .itemStatus(this.itemStatus)
-                .itemCategory(this.itemCategory)
-                .itemPrice(this.itemPrice)
-                .build();
-    }
+//    public ItemDTO toDTO() {
+//        return ItemDTO.builder()
+//                .itemId(this.itemId)
+//                .itemName(this.itemName)
+//                .itemDescription(this.itemDescription)
+//                .itemStock(this.itemStock)
+//                .itemStatus(this.itemStatus)
+//                .itemCategory(this.itemCategory)
+//                .itemPrice(this.itemPrice)
+//                .build();
+//    }
 }
