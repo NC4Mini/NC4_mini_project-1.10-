@@ -391,3 +391,6 @@ $RECYCLE.BIN/
 
 #application properties
 application.properties
+
+#log files
+*.log
