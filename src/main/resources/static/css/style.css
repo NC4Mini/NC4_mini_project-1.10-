@@ -1,5 +1,6 @@
 @import url("./fonts.css");
 @import url("./reset.css");
+@import Url("./admin_common.css");
 #content{
   width:100%;
   height:500px;
@@ -884,18 +885,6 @@
   width: 100%;
 }
 
-button{
-  display: block;
-  padding: 0px 10px;
-  text-align: center;
-  overflow: hidden;
-  width: 120px;
-  height: 44px;
-  border-radius: 3px;
-  color: rgb(255, 255, 255);
-  background-color: rgb(95, 0, 128);
-  border: 0px none;
-  position: absolute;
-  left:50%;
-  top:50%;
+button a {
+  color:white;
 }

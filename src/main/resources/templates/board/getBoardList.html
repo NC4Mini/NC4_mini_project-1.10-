@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<body>
+<div layout:fragment="content" id="main">
+    <div class="page_aticle aticle_type2">
+        <div id="snb" class="snb_my">
+            <h2 class="tit_snb">고객센터</h2>
+            <div class="inner_snb">
+                <ul class="list_menu">
+                    <li>
+                        <a href="#">공지사항</a>
+                    </li>
+                    <li>
+                        <a href="#">자주하는 질문</a>
+                    </li>
+                    <li>
+                        <a href="#">1:1 문의</a>
+                    </li>
+
+                    <li>
+                        <a href="#">대량주문 문의</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="viewOrderList" class="page_section section_destination">
+            <div class="head_aticle">
+                <h2 class="tit">
+                    1:1문의
+                </h2>
+            </div>
+
+
+            <div id="tblParent" class="type_select">
+                <table class="tbl tbl_type1">
+                    <thead>
+                    <tr>
+                        <th class="tit_select">번호</th>
+                        <th class="tit_address">제목</th>
+                        <th class="tit_receive">작성자</th>
+                        <th class="tit_phone">등록일</th>
+                        <th class="tit_delivery">조회수</th>
+                        <th class="tit_modify">상태</th>
+                    </tr>
+                    </thead>
+                    <tbody id="addrList">
+                    <tr>
+                        <td class="select type_radio">
+                            <label class="skin_checkbox">
+                                <p>3</p>
+                            </label>
+                        </td>
+                        <td class="address">
+
+                            <p class="addr">
+                                감자 고구마 달걀 물 고구마 김치
+                            </p>
+                        </td>
+                        <td class="name">
+                            <span>1300원</span>
+                        </td>
+                        <td class="phone">
+                            <span>999개</span>
+                        </td>
+                        <td>
+                            <span class="delivery star">샛별 배송</span>
+                        </td>
+                        <td>
+                            <button type="button" class="ico modify" onclick="popup()" target = "_blank">수정하기</button>
+                        </td>
+                        <td class="delete_position">
+                            <button type="button"  class="product_delete">삭제하기</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="select type_radio">
+                            <p>2</p>
+                        </td>
+                        <td class="address">
+
+                            <p class="addr">
+                                빵 시루떡
+                            </p>
+                        </td>
+                        <td class="name">
+                            <span>300원</span>
+                        </td>
+                        <td class="phone">
+                            <span>22개</span>
+                        </td>
+                        <td>
+                            <span class="delivery star">일반 배송</span>
+                        </td>
+                        <td>
+                            <button type="button" class="ico modify" onclick="popup()" target = "_blank">수정하기</button>
+                        </td>
+                        <td class="delete_position">
+                            <button type="button"  class="product_delete">삭제하기</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="select type_radio">
+                            <p>1</p>
+                        </td>
+                        <td class="address">
+
+                            <p class="addr">
+                                사과 오렌지 배
+                            </p>
+                        </td>
+                        <td class="name">
+                            <span>3000원</span>
+                        </td>
+                        <td class="phone">
+                            <span>20000개</span>
+                        </td>
+                        <td>
+                            <span class="delivery star">샛별 배송</span>
+                        </td>
+                        <td>
+                            <button type="button" class="ico modify" onclick="popup()" target = "_blank">수정하기</button>
+                        </td>
+                        <td class="delete_position">
+                            <button type="button"  class="product_delete">삭제하기</button>
+                        </td>
+                    </tr>
+
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+
+</body>
+</html>
