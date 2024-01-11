@@ -1,0 +1,14 @@
+.manual_product_name{
+    display:flex;
+}
+
+
+.manual_product_title{
+    font-size: 35px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.manual_list li{
+    padding-bottom: 100px;
+}

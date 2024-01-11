@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--5개의 로그 레벨
+        ERROR: 로직 상 심각한 문제가 발생하여 어플리케이션이 작동이 안되는 단계
+        WARN: 시스템 에러의 원인이 될 수 있을만한 사항이 발생한 단계
+        INFO: 어플리케이션의 상태나 상태값이 변경됐을 때의 단계
+        DEBUG: 어플리케이션의 디버깅을 위한 메시지를 표시하는 단계
+        TRACE: DEBUG 단계보다 상세한 메시지를 표출하기 위한 단계
+    -->
+    <property name="LOG_PATH" value="./logs"/>
+
+    <!--Appender: 로그를 찍는 방식 지정-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <!--encoder: 로그가 찍히는 형식을 지정-->
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%-5level] [%thread] %logger %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <!--전체 로그가 저장될 파일지정-->
+        <file>${LOG_PATH}/info.log</file>
+        <append>true</append>
+        <!--하루에 하나씩 생성될 로그파일 지정-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/log.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%-5level] [%thread] %logger %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <!--생성한 appender 매핑-->
+        <appender-ref ref="console"></appender-ref>
+        <appender-ref ref="LOG_FILE"></appender-ref>
+    </root>
+</configuration>

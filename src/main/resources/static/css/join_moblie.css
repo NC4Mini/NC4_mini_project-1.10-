@@ -1,0 +1,430 @@
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+    display: block;
+}
+
+
+
+
+
+#wrap, .preload:after {
+    height: 100%;
+    width: 100%;
+}
+
+.layout-main-wrapper.no_relative {
+    position: static;
+}
+
+
+
+
+
+.section_join {
+    background-color: #fff;
+}
+
+.user_form {
+    min-height: 100%;
+    padding: 0 0 70px;
+    color: #333;
+    line-height: 1.5;
+    letter-spacing: 0;
+}
+
+.user_reg .join_cell {
+    padding: 0 20px;
+}
+
+.user_reg .tit {
+    overflow: hidden;
+    padding: 18px 0 7px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    line-height: 20px;
+}
+
+.user_reg .tit .ico {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 14px;
+    color: #ee6a7b;
+    vertical-align: top;
+}
+
+.field_id .desc {
+    position: relative;
+    padding-right: 93px;
+}
+
+.user_reg .desc {
+    width: 100%;
+    color: #666;
+}
+
+input[type=search], input[type=email], input[type=password], input[type=text], input[type=number], textarea, .field_address .txt_address, .birth_day {
+    width: 100%;
+    height: 48px;
+    padding: 0 11px 1px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+}
+
+input {
+    line-height: normal;
+}
+
+
+
+.user_reg .btn.default {
+    border: 1px solid #5f0080;
+    background-color: #fff;
+    color: #5f0080;
+}
+
+#appStyle .field_id .btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 85px;
+}
+
+.user_reg .btn {
+    display: block;
+    width: 100%;
+    height: 48px;
+    border: 0;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 46px;
+    text-align: center;
+    outline: none;
+}
+
+.user_reg .desc:after {
+    content: "";
+    display: block;
+    overflow: hidden;
+    clear: both;
+}
+
+.user_reg .txt_guide {
+    display: none;
+    padding: 9px 0 0;
+    margin-bottom: -1px;
+    font-size: 12px;
+    color: #666;
+    line-height: 18px;
+    clear: both;
+}
+
+.user_reg .txt_guide .txt {
+    display: block;
+    word-break: break-all;
+    letter-spacing: -.3px;
+}
+
+
+.field_id .txt_guide .txt:before, .field_pw .txt_guide .txt:before, .field_newpw .txt_guide .txt:before {
+    content: "\2022";
+    display: inline-block;
+    padding-right: 2px;
+    font-size: 12px;
+    vertical-align: 0;
+}
+
+.user_reg .join_cell:after {
+    content: "";
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 0;
+    text-indent: -9999px;
+    clear: both;
+}
+
+#appStyle .field_email .btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 85px;
+}
+
+.field_email .desc {
+    position: relative;
+    padding-right: 93px;
+}
+
+#addressSearch {
+    display: block;
+    position: relative;
+    padding: 11px 50px 9px 15px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #ccc;
+    line-height: 24px;
+}
+
+#addressNo {
+    padding-bottom: 2px;
+}
+
+#selectAddress, #selectAddressSub {
+    display: block;
+}
+
+#addr {
+    color: #333;
+}
+
+#delivery {
+    padding: 4px 0 1px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+#selectAddressSub {
+    position: relative;
+    padding: 12px 0 2px;
+}
+
+.field_address .txt {
+    padding-top: 8px;
+    font-size: 12px;
+    color: #999;
+}
+
+.section_join .field_birth .birth_day {
+    padding-top: 4px;
+}
+
+.section_join .birth_day input[name=year], .section_join .birth_day input[name="month"], .section_join .birth_day input[name="day"] {
+    float: left;
+    width: 30%;
+    height: 39px;
+    padding: 0;
+    border: 0;
+    text-align: center;
+}
+
+.section_join .birth_day .bar {
+    overflow: hidden;
+    float: left;
+    width: 3%;
+    height: 39px;
+    color: #ccc;
+    line-height: 39px;
+}
+
+input::placeholder{
+    color: #ddd;
+}
+
+.reg_agree {
+    border-top: 10px solid #f4f4f4;
+    background-color: #fff;
+}
+
+.join_submit {
+    padding: 19px 20px 0;
+}
+
+.user_reg .btn.active {
+    border: 1px solid #5f0081;
+    background-color: #5f0080;
+    color: #fff;
+}
+
+#addressSearch:after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    width: 50px;
+    height: 50px;
+    margin-top: -25px;
+    background: url(https://res.kurly.com/mobile/service/common/2006/ico_search_address.svg) no-repeat 50% 50%;
+    background-size: 20px 20px;
+}
+
+
+#user_address{
+    display:none;
+    margin-bottom: 12px;
+}
+
+
+.layout-layer-popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 9999;
+    background-color: rgba(0,0,0,.6);
+    color: #fff;
+    display:none;
+}
+
+.layout-layer-popup-wrapper {
+    overflow: hidden;
+    position: absolute;
+    z-index: 9999;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    padding: 0 20px;
+    text-align: center;
+    -webkit-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+}
+
+.layout-layer-popup-container {
+    overflow: hidden;
+    overflow-y: auto;
+    position: relative;
+    width: 100%;
+    max-height: 100vh;
+    margin: 0 auto;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    text-align: center;
+}
+
+.btn_delivery_close {
+    z-index: 1;
+}
+
+.btn_delivery_close, .choice_agree .btn_ok {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 56px;
+    border: 0;
+    border-top: 1px solid #f7f7f7;
+    border-radius: 0 0 4px 4px;
+    background-color: #fff;
+    font-weight: 600;
+    font-size: 16px;
+    color: #5f0080;
+    line-height: 58px;
+    text-align: center;
+}
+
+.layout-layer-popup-scroller {
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    overflow: scroll;
+}
+
+.layout-layer-popup-scroller:before {
+    content: "";
+    display: block;
+    position: relative;
+    z-index: 1;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 4px 4px 0 0;
+}
+
+.layout-layer-popup-scroller:after {
+    content: "";
+    display: block;
+    position: relative;
+    z-index: 1;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 0 0 4px 4px;
+}
+
+
+.research_address{
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: 50px;
+    border: 1px solid #5f0081;
+    border-radius: 3px;
+    background-color: #5f0080;
+    font-size: 0;
+    text-align: center;
+    margin-top:30px;
+}
+
+.research_address .txt_type{
+    display: inline-block;
+    height: 100%;
+    font-weight: 500;
+    font-size: 16px;
+    color: #fff;
+    line-height: 51px;
+    text-align: center;
+}
+
+
+.layer_prev {
+    overflow: hidden;
+    height: 44px;
+    border-bottom: 1px solid #ccc;
+    background-color: #fff;
+}
+
+
+.layer_prev .tit {
+    float: left;
+    font-weight: 600;
+    font-size: 16px;
+    color: #333;
+    line-height: 44px;
+    text-align: center;
+}
+
+.no_delivery {
+    overflow: hidden;
+    padding: 30px 15px;
+    background-color: #fff;
+}
+
+.no_delivery .inner_no {
+    padding: 14px 10px 16px;
+    background-color: #f4f4f4;
+    text-align: center;
+}
+
+.no_delivery .tit .ico {
+    display: inline-block;
+    height: 18px;
+    padding-left: 19px;
+    font-weight: 600;
+    font-size: 12px;
+    color: #b3130b;
+    line-height: 18px;
+    background: url(https://res.kurly.com/mobile/ico/1908/ico_noti_delivery_popup.png) no-repeat 0 50%;
+    background-size: 14px 14px;
+}
+
+.no_delivery .tit .desc {
+    display: block;
+    font-weight: 400;
+    font-size: 12px;
+    color: #666;
+}
+
+.address_scroll {   /*팝업창 스크롤 크기 100%로 꽉차게 지정해줘야됨 .. 이거안해서 하루종일 화났음;;*/
+    height: 100%;
+}
