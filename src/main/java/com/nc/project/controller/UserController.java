@@ -39,7 +39,6 @@ public class UserController {
                 .userPw("12341234")
                 .userName("12341234")
                 .userTel("12341234")
-                .userAddr("12341234")
                 .userBirth(originalUserAccountDTO.getUserBirth())
                 .userGender("12341234")
                 .userProfile("12341234")

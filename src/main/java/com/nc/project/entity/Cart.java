@@ -1,15 +1,10 @@
 package com.nc.project.entity;
 
 
-import com.nc.project.dto.CartDTO;
-import com.nc.project.dto.CartItemDTO;
-import com.nc.project.dto.ItemDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.nc.project.dto.CartDTO;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
 
 @Entity
 @Table(name = "CART")
@@ -35,11 +30,11 @@ public class Cart {
     @OneToOne
     @JoinColumn(name = "ID")
     @JsonBackReference
-    private UserDetail userDetail;
+    private UserAccount userAccount;
 
     public CartDTO toDTO() {
         return CartDTO.builder()
-                .id(this.userDetail.getId())
+                .id(this.userAccount.getId())
                 .cartId(this.cartId)
 //                .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
                 .build();

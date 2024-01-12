@@ -1,8 +1,6 @@
 package com.nc.project;
 
-import com.nc.project.dto.UserDTO;
-import com.nc.project.entity.User;
-import com.nc.project.entity.UserDetail;
+import com.nc.project.entity.UserAccount;
 import com.nc.project.repository.CartRepository;
 import com.nc.project.repository.UserAccountRepository;
 import jakarta.persistence.EntityManager;
@@ -25,7 +23,7 @@ class ProjectApplicationTests {
     @PersistenceContext
     EntityManager em;
 
-    public UserDetail createUser() {
+    public UserAccount createUser() {
 
 
         return null;
