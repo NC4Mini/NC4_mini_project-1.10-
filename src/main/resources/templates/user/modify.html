@@ -123,8 +123,8 @@
 
 
                     $.ajax({
-                       url: '/user/modify',
-                       type: 'put',
+                       url: '/profile/change',
+                       type: 'post',
                        data: $("#modifyForm").serialize(),
                        success: (obj) => {
                            alert(obj.item.msg);
@@ -174,7 +174,7 @@
     <div layout:fragment="content">
         <div class="form-wrapper">
             <br><br>
-            <form id="modifyForm" action="/user/join" method="post">
+            <form id="modifyForm" action="/profile/change" method="post">
                 <input type="hidden" id="id" name="id">
                 <h3>회원정보 수정</h3>
                 <div class="label-wrapper">
