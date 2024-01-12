@@ -2,408 +2,145 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout2}">
-<head>
-    <th:block layout:fragment="script">
-        <script th:inline="javascript">
-            // 추가된 파일들을 담아줄 배열
-            const uploadFiles = [];
-            // 기존의 업로드되어있던 파일들을 담아줄 배열
-            // 게시글번호, 파일번호, 파일이름을 객체형태로 담아준다.
-            const originFiles = [];
-            // 변경된 파일들을 담아줄 배열
-            const changeFiles = [];
-
-            $(() => {
-                // session, model에 담겨있는 값을 javascript에서 사용
-                // thymeleaf에서 모델이나 세션에 담겨있는 값을 사용할 때는
-                // script 태그 선언문에 th:inline속성을 선언해줘야한다.
-                const loginUser = /*[[${#authentication.principal.user}]]*/;
-                const boardWriter = /*[[${getBoard.boardWriter}]]*/;
-
-                if(loginUser == null || loginUser.userId !== boardWriter) {
-                    $("#deleteBtn").hide();
-                    $("#btnUpdate").hide();
-                    $("#boardTitle").attr("readonly", true);
-                    $("#boardContent").attr("readonly", true);
-                }
-
-                // originFiles 배열에 기존에 업로드된 파일정보들 담기
-                for(let i = 0; i < $("#boardFileCnt").val(); i++) {
-                    const originFileObj = {
-                        boardNo: $("#boardNo" + i).val(),
-                        boardFileNo: $("#boardFileNo" + i).val(),
-                        boardFileName: $("#boardFileName" + i).val(),
-                        boardFileStatus: "N" //수정되면 U, 삭제되면 D
-                    }
-
-                    originFiles.push(originFileObj);
-                }
-
-                $("#uploadFiles").on("change", (e) => {
-                    // input에 추가된 파일들을 변수로 받기
-                    const files = e.target.files;
-
-                    // 변수로 받아온 파일들 배열로 변환
-                    const fileArr = Array.prototype.slice.call(files);
-
-                    // 배열에 담긴 파일 하나씩 꺼내서 미리보기 처리
-                    for(file of fileArr) {
-                        // 미리보기 처리 메소드만들어서 호출
-                        imageLoader(file);
-                    }
-                });
-
-                // updateForm 서브밋될 때
-                // uploadFiles 배열에 담겨있는 파일들은 uploadFiles input에 담기
-                // changeFiles 배열에 담겨있는 파일들은 changeFiles input에 담기
-                // originFiles 배열에 담겨있는 객체들은 JSON.stringify로 문자열로 변환 후에 originFiles input에 담기
-                $("#btnUpdate").on("click", (e) => {
-                    let dt1 = new DataTransfer();
-
-                    for(i in uploadFiles) {
-                        const file = uploadFiles[i];
-                        dt1.items.add(file);
-                    }
-
-                    $("#uploadFiles")[0].files = dt1.files;
-
-                    let dt2 = new DataTransfer();
-
-                    for(i in changeFiles) {
-                        const file = changeFiles[i];
-                        dt2.items.add(file);
-                    }
-
-                    $("#changeFiles")[0].files = dt2.files;
-
-
-                    $("#originFiles").val(JSON.stringify(originFiles));
-
-                    const formData = new FormData($("#updateForm")[0]);
-
-                    // form 서브밋은 post와 get방식만 지원한다.
-                    $.ajax({
-                       url: '/board/board',
-                       type: 'put',
-                        enctype: "multipart/form-data",
-                        data: formData,
-                        processData: false,
-                        contentType: false,
-                        success: (obj) => {
-                            alert(obj.item.msg);
-                            location.href = `/board/board/${$("#boardNo").val()}`;
-                        },
-                        error: (err) => {
-                           console.log(err)
-                        }
-                    });
-                });
-
-                // a태그 클릭하면 get방식으로만 동작하기 때문에 DeleteMapping으로 보내려면
-                // ajax로 처리해야한다.
-                $("#deleteBtn").on("click", (e) => {
-                    e.preventDefault();
-
-                    $.ajax({
-                        url: `/board/board/${$("#boardNo").val()}`,
-                        type: 'delete',
-                        success: (obj) => {
-                            alert(obj.item.msg);
-                            location.href = "/board/board-list";
-                        },
-                        error: (err) => {
-                            console.log(err);
-                        }
-                    });
-                });
-            });
-
-            // 미리보여지는 업로드된 파일 이미지를 클릭했을 때 display: none;되어있는 input 클릭 이벤트 발생
-            const fnFileChange = (boardFileNo) => {
-                const changeFileInput = document.getElementById("changeFile" + boardFileNo);
-
-                changeFileInput.click();
-            }
-
-            // 파일을 변경했을 때 동작할 메소드
-            const fnGetChangeFileInfo = (boardFileNo, e) => {
-                // 변경된 파일 변수로 받기
-                const files = e.target.files;
-
-                // 받아온 파일 배열로 변경
-                const fileArr = Array.prototype.slice.call(files);
-
-                // 변경된 파일을 changeFiles 배열에 담아준다
-                changeFiles.push(fileArr[0]);
-
-                // 미리보기 화면에 변경된 파일 출력
-                const reader = new FileReader();
-
-                reader.onload = (ee) => {
-                    const img = document.getElementById("img" + boardFileNo);
-                    const p = document.getElementById("fileName" + boardFileNo);
-
-                    if(fileArr[0].name.match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
-                        img.src = ee.target.result;
-                    } else {
-                        img.src = "/images/defaultFileImg.png";
-                    }
-
-                    p.textContent = fileArr[0].name;
-                }
-
-                reader.readAsDataURL(fileArr[0]);
-
-                // originFiles에 담겨있던 기존 파일에 대한 정보 수정
-                for(let i = 0; i < originFiles.length; i++) {
-                    if(boardFileNo == originFiles[i].boardFileNo) {
-                        originFiles[i].boardFileStatus = "U";
-                        originFiles[i].newFileName = fileArr[0].name;
-                    }
-                }
-            }
-
-            const fnDeleteFile = (e) => {
-                // 클릭된 태그
-                const ele = e.srcElement;
-
-                // deleteFile 속성 값 가져오기
-                const deleteFile = ele.getAttribute("data-deleteFile");
-
-                // originFiles에 담겨있던 기존 파일에 대한 정보 수정
-                for(let i = 0; i < originFiles.length; i++) {
-                    if(deleteFile === originFiles[i].boardFileNo) {
-                        originFiles[i].boardFileStatus = "D";
-                    }
-                }
-
-                // 부모 요소 div 삭제
-                const div = ele.parentNode;
-                $(div).remove();
-            }
-
-            // 미리보기 처리 메소드
-            // 미리보기될 파일은 업로드가 되어있는 상태가 아니기 때문에
-            // 파일 자체를 Base64 인코딩 방식으로 문자열로 변환해서 이미지로 호출
-            // 이미지가 들어갈 태그 생성 및 파일을 Base64 인코딩
-            const imageLoader = (file) => {
-                // 추가된 파일 배열에 담기
-                uploadFiles.push(file);
-
-                let reader = new FileReader();
-
-                reader.onload = (e) => {
-                    // 이미지 표출할 img 태그 생성
-                    let img = document.createElement("img");
-                    img.setAttribute("style", "width: 100%; height: 100%; z-index: none;");
-
-                    // 이미지 파일인지 아닌지 판단
-                    if(file.name.toLowerCase().match(/(.*?)\.(jpg|jpeg|png|gif|svg|bmp)$/)) {
-                        img.src = e.target.result;
-                    } else {
-                        img.src = "/images/defaultFileImg.png";
-                    }
-
-                    // 미리보기 영역에 추가
-                    // 미리보기 이미지 태그와 삭제버튼 그리고 파일명을 표출하는 태그 묶은 div 태그를 만들어주는 메소드 호출
-                    $("#attachZone").append(makeDiv(img, file));
-                }
-
-                // 파일을 Base64 인코딩한 문자열로 로드
-                reader.readAsDataURL(file);
-            }
-
-            // 미리보기 영역에 추가될 div를 만들어주는 메소드
-            const makeDiv = (img, file) => {
-                // div 태그 생성
-                let div = document.createElement("div");
-
-                div.setAttribute("style", "display: inline-block; position: relative;" +
-                    " width: 150px; height: 120px; margin: 5px; border: 1px solid #00f; z-index: 1;");
-
-                // 잘못 올렸을 때 삭제할 수 있는 삭제 버튼 생성
-                let btn = document.createElement("input");
-                btn.setAttribute("type", "button");
-                btn.setAttribute("value", "x");
-                // 사용자 정의 속성 추가
-                btn.setAttribute("deleteFile", file.name);
-                btn.setAttribute("style", "width: 30px; height: 30px; position: absolute;" +
-                    " right: 0; bottom: 0; z-index: 999; background-color: rgba(255, 255, 255, 0.1);" +
-                    " color: #f00;");
-
-                // 위에서 생성한 버튼 클릭했을 때 파일 삭제되는 기능 구현
-                btn.onclick = (e) => {
-                    // 클릭된 버튼
-                    const ele = e.srcElement;
-
-                    const deleteFile = ele.getAttribute("deleteFile");
-
-                    for(let i = 0; i < uploadFiles.length; i++) {
-                        //배열에서도 같은 이름의 파일 삭제
-                        if(deleteFile === uploadFiles[i].name) {
-                            uploadFiles.splice(i, 1);
-                        }
-                    }
-
-                    // 버튼 클릭 했을 때 input에 첨부된 파일도 삭제
-                    // input type="file"은 첨부된 파일들을 fileList 형태로 관리
-                    // fileList는 File 객체에 바로 담을 수 없다.
-                    // DataTransfer라는 클래스를 이용해서 변환 후에 사용한다.
-
-                    let dt = new DataTransfer();
-
-                    for(i in uploadFiles) {
-                        const file = uploadFiles[i];
-                        dt.items.add(file);
-                    }
-
-                    $("#uploadFiles")[0].files = dt.files;
-
-                    // 해당 img 태그를 가지고 있는 div 태그 삭제
-                    const parentDiv = ele.parentNode;
-                    $(parentDiv).remove();
-                }
-
-                // 파일 명을 표출할 p 태그 생성
-                let fileNameP = document.createElement("p");
-                fileNameP.setAttribute("style", "display: inline-block; font-size: 8px;");
-                fileNameP.textContent = file.name;
-
-                // div 태그에 img, button, p태그 추가
-                div.appendChild(img);
-                div.appendChild(btn);
-                div.appendChild(fileNameP);
-
-                return div;
-            }
-
-            // 파일다운로드
-            const fnFileDown = (boardNo, boardFileNo) => {
-                // a태그의 href와 동일한 기능
-                window.location = '/board/fileDown.do?boardNo=' + boardNo
-                    + '&boardFileNo=' + boardFileNo;
-            }
-        </script>
-    </th:block>
-</head>
+      layout:decorate="~{layouts/layout}">
 <body>
-    <div layout:fragment="content">
-        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
-            <h3>게시글 상세</h3>
-            <form id="updateForm" action="/board/board" method="post" enctype="multipart/form-data">
-                <input type="hidden" name="boardNo" id="boardNo" th:value="${getBoard.boardNo }">
-                <input type="hidden" name="originFiles" id="originFiles">
-                <table border="1" style="border-collapse: collapse;">
-                    <tr>
-                        <td style="background: skyblue; width: 70px">
-                            제목
-                        </td>
-                        <td style="text-align: left">
-                            <input type="text" name="boardTitle" id="boardTitle" th:value="${getBoard.boardTitle }">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="background: skyblue;">
-                            작성자
-                        </td>
-                        <td style="text-align: left">
-                            <input type="text" name="boardWriter" id="boardWriter" th:value="${getBoard.boardWriter }" readonly>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="background: skyblue;">
-                            내용
-                        </td>
-                        <td style="text-align: left">
-                            <textarea name="boardContent" id="boardContent" cols="40" rows="10" th:text="${getBoard.boardContent }"></textarea>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="background: skyblue;">
-                            작성일
-                        </td>
-                        <td style="text-align: left" th:text="${getBoard.boardRegdate }">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="background: skyblue;">
-                            조회수
-                        </td>
-                        <td style="text-align: left" th:text="${getBoard.boardCnt }">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="background: skyblue;">
-                            첨부파일
-                        </td>
-                        <td style="text-align: left;">
-                            <div id="image-preview">
-                                <input type="file" id="uploadFiles" name="uploadFiles" multiple>
-                                <input type="file" id="changeFiles" name="changeFiles" style="display: none;"
-                                       multiple>
-                                <p style="color: red; font-size:0.9rem;">
-                                    파일을 변경하려면 이미지를 클릭하세요. 파일을 다운로드하려면 파일이름을 클릭하세요. 파일을 추가하려면 파일 선택 버튼을 클릭하세요.
-                                </p>
-                                <div id="attachZone">
-                                    <div th:each="file : ${getBoard.boardFileDTOList}" style="display: inline-block; position: relative;
-                                         width: 150px; height: 120px; margin: 5px;
-                                         border: 1px solid #00f; z-index: 1;">
-                                        <input type="hidden" th:id="'boardNo' + ${fileStat.index }"
-                                               th:value="${file.boardNo }">
-                                        <input type="hidden" th:id="'boardFileNo' + ${fileStat.index }"
-                                               th:value="${file.boardFileNo }">
-                                        <input type="hidden" th:id="'boardFileName' + ${fileStat.index }"
-                                               th:value="${file.boardFileName }">
-                                        <input type="file" th:id="'changeFile' + ${file.boardFileNo }"
-                                               th:name="'changeFile' + ${file.boardFileNo }"
-                                               style="display: none;"
-                                               th:onchange="fnGetChangeFileInfo([[${file.boardFileNo }]], event)">
-                                        <input th:if="${fileStat.last}" type="hidden" id="boardFileCnt"
-                                               name="boardFileCnt" th:value="${fileStat.count }">
-                                        <img th:if="${file.boardFileCate } == 'image'"
-                                             th:id="'img' + ${file.boardFileNo }"
-                                             th:src="@{'https://kr.object.ncloudstorage.com/bitcamp-bucket-502/board/' + ${file.boardFileName}}"
-                                             style="width: 100%; height: 100%; z-index: none; cursor: pointer;"
-                                             class="fileImg"
-                                             th:onclick="fnFileChange([[${file.boardFileNo}]])">
-                                        <img th:if="${file.boardFileCate} != 'image'"
-                                             th:id="'img' + ${file.boardFileNo }"
-                                             src="/img/defaultFileImg.png"
-                                             style="width: 100%; height: 100%; z-index: none; cursor: pointer;"
-                                             class="fileImg"
-                                             th:onclick="fnFileChange([[${file.boardFileNo}]])">
-                                        <input type="button" class="btnDelete" value="x"
-                                               th:data-deleteFile="${file.boardFileNo }"
-                                               style="width: 30px; height: 30px;
-                                               position: absolute; right: 0; bottom: 0;
-                                               z-index: 999;
-                                               background-color: rgba(255, 255, 255, 0.1);
-                                               color: #f00;"
-                                               onclick="fnDeleteFile(event)">
-                                        <p th:id="'fileName' + ${file.boardFileNo }"
-                                           style="display: inline-block; font-size: 8px;
-                                           cursor: pointer;"
-                                           th:onclick="fnFileDown([[${file.boardNo}]], [[${file.boardFileNo }]])"
-                                           th:text="${file.boardFileOrigin}">
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr id="btnWrap">
-                        <td colspan="2" align="center">
-                            <button type="button" id="btnUpdate">수정</button>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-            <hr/>
-            <a href="#">글 등록</a>
-            <a href="#" id="deleteBtn">글 삭제</a>
-            <a href="#">글 목록</a>
+<div layout:fragment="content" id="main">
+    <div class="page_aticle aticle_type2">
+        <div id="snb" class="snb_my">
+            <h2 class="tit_snb">고객센터</h2>
+            <div class="inner_snb">
+                <ul class="list_menu">
+                    <li>
+                        <a href="#">공지사항</a>
+                    </li>
+                    <li>
+                        <a href="#">자주하는 질문</a>
+                    </li>
+                    <li>
+                        <a href="/board/getBoardList">1:1 문의</a>
+                    </li>
+                    <li>
+                        <a href="#">대량주문 문의</a>
+                    </li>
+
+                </ul>
+            </div>
         </div>
+
+        <div id="viewOrderList" class="page_section section_destination">
+            <div class="head_aticle">
+                <h2 class="tit">
+                    1:1문의
+                </h2>
+            </div>
+
+
+            <div id="tblParent" class="type_select">
+                <table class="tbl tbl_type1">
+                    <thead>
+                    <tr>
+                        <th class="tit_select">번호</th>
+                        <th class="tit_address">제목</th>
+                        <th class="tit_receive">작성자</th>
+                        <th class="tit_phone">등록일</th>
+                        <th class="tit_delivery">조회수</th>
+                        <th class="tit_modify">상태</th>
+                    </tr>
+                    </thead>
+                    <tbody id="addrList">
+                    <tr>
+                        <td class="select type_radio">
+                            <label class="skin_checkbox">
+                                <p>3</p>
+                            </label>
+                        </td>
+                        <td class="address">
+
+                            <p class="addr">
+                                제품에 하자가 있어요
+                            </p>
+                        </td>
+                        <td class="name">
+                            <span>admin</span>
+                        </td>
+                        <td class="phone">
+                            <span>2023-11-27T16:44</span>
+                        </td>
+                        <td>
+                            <span class="delivery star">13</span>
+                        </td>
+                        <td class="delete_position">
+                            <span class="delivery star">Y</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="select type_radio">
+                            <label class="skin_checkbox">
+                                <p>3</p>
+                            </label>
+                        </td>
+                        <td class="address">
+
+                            <p class="addr">
+                                제품에 하자가 있어요
+                            </p>
+                        </td>
+                        <td class="name">
+                            <span>admin</span>
+                        </td>
+                        <td class="phone">
+                            <span>2023-11-27T16:44</span>
+                        </td>
+                        <td>
+                            <span class="delivery star">13</span>
+                        </td>
+                        <td class="delete_position">
+                            <span class="delivery star">N</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="select type_radio">
+                            <label class="skin_checkbox">
+                                <p>3</p>
+                            </label>
+                        </td>
+                        <td class="address">
+
+                            <p class="addr">
+                                제품에 하자가 있어요
+                            </p>
+                        </td>
+                        <td class="name">
+                            <span>admin</span>
+                        </td>
+                        <td class="phone">
+                            <span>2023-11-27T16:44</span>
+                        </td>
+                        <td>
+                            <span class="delivery star">13</span>
+                        </td>
+                        <td class="delete_position">
+                            <span class="delivery star">Y</span>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+                <a href="/board/getBoardList"><button class="delete_button">등록</button></a>
+            </div>
+
+
+
+
+        </div>
+
+
+
+
     </div>
+
+</div>
+
+
 </body>
 </html>

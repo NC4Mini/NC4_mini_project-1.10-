@@ -3,16 +3,14 @@ package com.nc.project.dto;
 import com.nc.project.entity.UserAccount;
 import lombok.*;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
-@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@Setter
 public class UserAccountDTO {
     //aa
     private long id;
@@ -20,12 +18,11 @@ public class UserAccountDTO {
     private String userPw;
     private String userName;
     private String userTel;
+    private String userAddr;
     private String userBirth;
     private String userGender;
     private String userProfile;
     private String userEmail;
-
-    private List<UserShpAddrDTO> userShpAddrDTOList;
 
     public UserAccount toEntity() {
         return UserAccount.builder()
@@ -34,11 +31,11 @@ public class UserAccountDTO {
                 .userPw(this.userPw)
                 .userName(this.userName)
                 .userTel(this.userTel)
-                .userBirth(LocalDate.parse(this.userBirth))
+                .userAddr(this.userAddr)
+                .userBirth(LocalDateTime.parse(this.userBirth))
                 .userGender(this.userGender)
                 .userProfile(this.userProfile)
                 .userEmail(this.userEmail)
-                .userShpAddrList(new ArrayList<>())
                 .build();
     }
 }

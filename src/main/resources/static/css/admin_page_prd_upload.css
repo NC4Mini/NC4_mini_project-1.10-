@@ -29,7 +29,7 @@
     padding: 11px 100px 10px 15px;
     vertical-align: top;
     color: #2e3039;
-    background-color: #f3f3f3;
+    background-color:#f7f7f7;
     width:177px;
     font-size:15px;
 }
@@ -64,7 +64,7 @@ tbody input, textarea{
 }
 
 .i_text{
-    height:32px;
+    height:44px;
     line-height:14px;
     font-size:14px;
 }
@@ -136,7 +136,7 @@ table td .product_category{
 }
 
 table .text8{
-    height:150px;
+    height:240px;
     width:500px;
     resize: none;
 }
@@ -342,12 +342,12 @@ table .text8{
 
 
 
-#product_submit{
+#product_submit {
     border: 1px solid #d4d4d4;
     position: absolute;
-    bottom: 12px;
-    left: 50%;
-    height: 40px;
+    bottom: -7px;
+    left: 44%;
+    height: 42px;
     width: 134.5px;
 }
 

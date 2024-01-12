@@ -1,5 +1,4 @@
 package com.nc.project.service.impl;
-
 import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.entity.UserAccount;
 import com.nc.project.entity.UserShpAddr;
@@ -7,7 +6,6 @@ import com.nc.project.repository.UserRepository;
 import com.nc.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -27,5 +25,16 @@ public class UserServiceImpl implements UserService {
         );
 
         userRepository.save(userAccount);
+
+    @Override
+    public void modifyUser(UserAccountDto userAccountDto) {
+        userAccountRepository.save(userAccountDto.toEntity());
     }
+
+    @Override
+    public void resignUser(UserAccountDto userAccountDto) {
+        userAccountRepository.delete(userAccountDto.toEntity());
+    }
+
+
 }

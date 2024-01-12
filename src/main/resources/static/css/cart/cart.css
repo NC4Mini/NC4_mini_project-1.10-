@@ -5,7 +5,7 @@
     min-width: 1050px;
     padding-bottom: 120px;
 }
-#header, #container, #content {
+#container, #content {
     position: relative;
 }
 #qnb {
@@ -162,21 +162,14 @@ element.style {
     width: 342px;
 }
 
-.only_pc .fixed_head {
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    background-color: #fff;
-}
-.only_pc .pop_head {
-    padding: 32px 0 0 30px;
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 36px;
-    letter-spacing: -.5px;
-}
+
+/*.only_pc .pop_head {*/
+/*    padding: 32px 0 0 30px;*/
+/*    font-weight: 700;*/
+/*    font-size: 24px;*/
+/*    line-height: 36px;*/
+/*    letter-spacing: -.5px;*/
+/*}*/
 .only_pc .pop_head .sub {
     display: inline-block;
     padding-left: 12px;

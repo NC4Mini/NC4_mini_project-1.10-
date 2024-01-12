@@ -4,26 +4,26 @@
 
 
 
-#content {
+
+#main #content {
     min-width: 1050px;
-    
 }
 
-.page_aticle {
+#main.page_aticle {
     width: 1050px;
     margin: 0 auto;
 }
 
-.page_aticle.aticle_type2 {
+#main .page_aticle.aticle_type2 {
     padding-top: 65px;
 }
 
-#snb {
+#main #snb {
     float: left;
     width: 200px;
 }
 
-#snb .tit_snb {
+#main #snb .tit_snb {
     padding: 8px 0 33px 1px;
     font-weight: 700;
     font-size: 30px;
@@ -32,24 +32,24 @@
     letter-spacing: -.5px;
 }
 
-#snb .inner_snb {
+#main #snb .inner_snb {
     border: 1px solid #f2f2f2;
     border-bottom: 0;
 }
 
-#snb .list_menu li {
+#main #snb .list_menu li {
     border-bottom: 1px solid #f2f2f2;
 }
 
 
-#snb .list_menu li.on a, #snb .list_menu li a:hover {
+#main #snb .list_menu li.on a, #snb .list_menu li a:hover {
     background: #fafafa url(https://res.kurly.com/pc/ico/2008/ico_arrow_6x11_on.svg) no-repeat 174px 52%;
     background-size: 6px 11px;
     font-weight: 700;
     color: #5f0080;
 }
 
-#snb .list_menu li a {
+#main #snb .list_menu li a {
     display: block;
     overflow: hidden;
     padding: 15px 0 15px 20px;
@@ -62,29 +62,29 @@
 }
 
 
-.snb_my{   
-    position:absolute;
-    top:264px;
-    
-    margin-right:-670px;
+#main .snb_my{
+    position: absolute;
+    top: 124px;
+    margin-left: 420px;
 }
 
 
-
-.page_aticle.aticle_type2 .page_section {
-    float: right;
+#main .page_aticle.aticle_type2 .page_section {
     width: 820px;
-    position: relative;
     top: 117px;
-}
-    
-
-
-.page_aticle .head_aticle {
-    padding: 5px 0 34px;
+    position: absolute;
+    left: 34%;
 }
 
-.page_aticle .head_aticle .tit {
+
+
+#main .page_aticle .head_aticle {
+    padding: 20px 5px 20px;
+    border-top: 1px solid rgb(51, 51, 51);
+
+}
+
+#main .page_aticle .head_aticle .tit {
     height: 36px;
     font-weight: 700;
     font-size: 24px;
@@ -94,8 +94,47 @@
     display:inline-block;
 }
 
+#main #tblParent {
+    margin-bottom: 120px;
+    border-top: 1px solid rgb(51, 51, 51);
+}
 
+.page_aticle .tbl {
+    width: 100%;
+    margin-top: 23px;
+}
+.section_destination .tbl_type1 .tit_select {
+    width: 60px;
+}
 
+.section_destination .tbl_type1 tr:first-child td, .section_destination .tbl_type1 td {
+    height: 90px;
+    font-size: 14px;
+    color: rgb(51, 51, 51);
+    line-height: 22px;
+    letter-spacing: -0.4px;
+    vertical-align: middle;
+    text-align: center;
+}
 
+tblParent {
+    margin-bottom: 120px;
+    border-top: 1px solid rgb(51, 51, 51);
+}
 
+.delete_button{
+    position: absolute;
+    right:10px;
+    display: block;
+    padding: 0px 10px;
+    text-align: center;
+    overflow: hidden;
+    width: 120px;
+    height: 44px;
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(95, 0, 128);
+    border: 0px none;
+    cursor: pointer;
+}
 
