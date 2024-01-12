@@ -17,129 +17,159 @@
                         <a href="#">자주하는 질문</a>
                     </li>
                     <li>
-                        <a href="#">1:1 문의</a>
+                        <a href="/board/getBoardList">1:1 문의</a>
                     </li>
-
                     <li>
                         <a href="#">대량주문 문의</a>
                     </li>
+
                 </ul>
             </div>
         </div>
 
-        <div id="viewOrderList" class="page_section section_destination">
+        <div id="viewOrderList" class="page_section section_orderlist">
             <div class="head_aticle">
                 <h2 class="tit">
                     1:1문의
                 </h2>
             </div>
 
+            <div class="list_order">
+                <form action="" class="">
+                    <div class="size">
+                        <div class="p_board">
+                            <table width="100%">
+                                <tbody>
+                                <tr>
+                                    <th >유형</th>
+                                    <td colspan="2">
+                                        <div>
+                                                <span>
+                                                    <input type="text" name="product_name" class="i_text text1" onkeyup="chkword_name(this, 80)">
+                                                </span>
+                                        </div>
+                                        <span class="txtByte" title="현재글자수/최대글자수">
+                                              [
+                                              <strong class="txt_count_name">0</strong>
+                                               / 80 ]
+                                            </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>제목</th>
+                                    <td colspan="2">
+                                        <div>
+                                                <span>
+                                                    <input type="text" class="i_text text2" name="product_introduce" onkeyup="chkword_introduce(this, 150)">
+                                                </span>
 
-            <div id="tblParent" class="type_select">
-                <table class="tbl tbl_type1">
-                    <thead>
-                    <tr>
-                        <th class="tit_select">번호</th>
-                        <th class="tit_address">제목</th>
-                        <th class="tit_receive">작성자</th>
-                        <th class="tit_phone">등록일</th>
-                        <th class="tit_delivery">조회수</th>
-                        <th class="tit_modify">상태</th>
-                    </tr>
-                    </thead>
-                    <tbody id="addrList">
-                    <tr>
-                        <td class="select type_radio">
-                            <label class="skin_checkbox">
-                                <p>3</p>
-                            </label>
-                        </td>
-                        <td class="address">
+                                        </div>
+                                        <span class="txtByte" title="현재글자수/최대글자수">
+                                              [
+                                              <strong class="txt_count_introduce">0</strong>
+                                               / 150 ]
+                                            </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>내용</th>
+                                    <td>
+                                        <div>
+                                                <span>
+                                                    <textarea class="i_text text8" name="product_information" id="" cols="30" rows="10" onkeyup="chkword_information(this, 550)"></textarea>
+                                                </span>
+                                        </div>
+                                        <span class="txtByte_big txtByte" title="현재글자수/최대글자수">
+                                              [
+                                              <strong class="txt_count_information">0</strong>
+                                               / 550 ]
+                                            </span>
+                                    </td>
+                                </tr>
 
-                            <p class="addr">
-                                감자 고구마 달걀 물 고구마 김치
-                            </p>
-                        </td>
-                        <td class="name">
-                            <span>1300원</span>
-                        </td>
-                        <td class="phone">
-                            <span>999개</span>
-                        </td>
-                        <td>
-                            <span class="delivery star">샛별 배송</span>
-                        </td>
-                        <td>
-                            <button type="button" class="ico modify" onclick="popup()" target = "_blank">수정하기</button>
-                        </td>
-                        <td class="delete_position">
-                            <button type="button"  class="product_delete">삭제하기</button>
-                        </td>
-                    </tr>
+                                <tr>
+                                    <th>이미지</th>
+                                    <td class="img_upload">
+                                        <div>
+                                            <span>대표 이미지</span>
 
-                    <tr>
-                        <td class="select type_radio">
-                            <p>2</p>
-                        </td>
-                        <td class="address">
+                                            <div class="image_box">
 
-                            <p class="addr">
-                                빵 시루떡
-                            </p>
-                        </td>
-                        <td class="name">
-                            <span>300원</span>
-                        </td>
-                        <td class="phone">
-                            <span>22개</span>
-                        </td>
-                        <td>
-                            <span class="delivery star">일반 배송</span>
-                        </td>
-                        <td>
-                            <button type="button" class="ico modify" onclick="popup()" target = "_blank">수정하기</button>
-                        </td>
-                        <td class="delete_position">
-                            <button type="button"  class="product_delete">삭제하기</button>
-                        </td>
-                    </tr>
 
-                    <tr>
-                        <td class="select type_radio">
-                            <p>1</p>
-                        </td>
-                        <td class="address">
+                                                <div class="image_add">
 
-                            <p class="addr">
-                                사과 오렌지 배
-                            </p>
-                        </td>
-                        <td class="name">
-                            <span>3000원</span>
-                        </td>
-                        <td class="phone">
-                            <span>20000개</span>
-                        </td>
-                        <td>
-                            <span class="delivery star">샛별 배송</span>
-                        </td>
-                        <td>
-                            <button type="button" class="ico modify" onclick="popup()" target = "_blank">수정하기</button>
-                        </td>
-                        <td class="delete_position">
-                            <button type="button"  class="product_delete">삭제하기</button>
-                        </td>
-                    </tr>
+                                                    <input type="file" name="product_main_image" accept="image/*" id="image_input" onchange="set_image(event);">
+                                                    <button type="button" class="image_input_button"></button>
+                                                    <div id="image_container"></div>
+
+                                                    <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
+                                                    <script>
+                                                        function set_image(){
+
+                                                            var reader = new FileReader();
+
+                                                            reader.onload = function(event) {
+                                                                var img = document.createElement("img");
+                                                                img.setAttribute("src", event.target.result);
+                                                                document.querySelector("div#image_container").appendChild(img);
+                                                            };
+
+                                                            reader.readAsDataURL(event.target.files[0]);
+                                                        }
+
+                                                    </script>
 
 
 
-                    </tbody>
+                                                    <button type="button" class="re_upload">
+                                                            <span>
+                                                                수정
+                                                            </span></button>
+                                                    <button type="button" class="remove">
+                                                            <span>
+                                                                삭제
+                                                            </span>
+                                                    </button>
 
-                </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div>
+
+                                        </div>
+
+
+
+
+
+
+
+
+
+
+
+                                    </td>
+
+
+
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="product_submit" class="pd_submit">
+                            <button type="submit" >등록하기</button>
+                        </div>
+
+                    </div>
+                </form>
+
+
 
             </div>
-
-
 
 
         </div>
