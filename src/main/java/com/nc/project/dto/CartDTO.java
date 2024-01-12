@@ -1,13 +1,8 @@
 package com.nc.project.dto;
 
 import com.nc.project.entity.Cart;
-import com.nc.project.entity.CartItem;
-import com.nc.project.entity.Item;
-import com.nc.project.entity.UserDetail;
+import com.nc.project.entity.UserAccount;
 import lombok.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
@@ -21,9 +16,9 @@ public class CartDTO {
     private long cartId;
 //    private List<CartItemDTO> cartItemDTOList;
 
-    public Cart toEntity(UserDetail userDetail) {
+    public Cart toEntity(UserAccount userAccount) {
         return Cart.builder()
-                .userDetail(userDetail)
+                .userAccount(userAccount)
                 .cartId(this.cartId)
 //                .cartItemList(new ArrayList<>())
                 .build();
