@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "USER_SHPADDR")
+@Table(name = "user_shpaddr")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,7 +25,7 @@ public class UserShpAddr {
     @Id
     // 사용자 한명이 배송지가 다른 여러 주문을 가질 수 있으므로 가능하므로 N:1
     @ManyToOne
-    @JoinColumn(name = "ID")
+    @JoinColumn(name = "id")
     @JsonBackReference
     private UserAccount userAccount;
 
