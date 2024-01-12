@@ -14,7 +14,12 @@ import lombok.*;
 @Builder
 // 복합키 클래스 지정
 @IdClass(UserShpAddrId.class)
-
+@SequenceGenerator(
+        name = "userShpAddrSeqGenerator",
+        sequenceName = "user_shp_addr_seq",
+        initialValue = 1,
+        allocationSize = 1
+)
 public class UserShpAddr {
     @Id
     // 사용자 한명이 배송지가 다른 여러 주문을 가질 수 있으므로 가능하므로 N:1
@@ -25,7 +30,8 @@ public class UserShpAddr {
 
     @Id
     @GeneratedValue(
-            strategy = GenerationType.IDENTITY
+            strategy = GenerationType.SEQUENCE,
+            generator = "userShpAddrSeqGenerator"
     )
     private int addrId;
     private String addrBasic;

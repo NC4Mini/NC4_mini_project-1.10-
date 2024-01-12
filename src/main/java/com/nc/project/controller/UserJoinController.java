@@ -19,8 +19,8 @@ import java.util.List;
 public class UserJoinController {
     private final UserService userService;
 
-    // 회원가입 화면으로 이동
-    @GetMapping("/join-view")
+    // 회원가입 화면으로 이동(GET - header.html)
+    @GetMapping("/join")
     public ModelAndView joinView() {
 
         ModelAndView mav = new ModelAndView();
@@ -30,6 +30,7 @@ public class UserJoinController {
         return mav;
     }
 
+    // 회원가입 로직 (POST - join.html)
     @PostMapping("/join")
     public ModelAndView join(UserAccountDTO userAccountDTO,
                              List<UserShpAddrDTO> userShpAddrDTOList) {

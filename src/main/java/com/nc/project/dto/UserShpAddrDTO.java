@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
+@ToString
 public class UserShpAddrDTO {
 
     private int addrId;
@@ -28,6 +28,7 @@ public class UserShpAddrDTO {
                 .addrDetail(this.addrDetail)
                 .addrZone(this.addrZone)
                 .addrStandard(this.addrStandard)
+                .addrNickname(this.addrNickname)
                 .build();
     }
 }
