@@ -1,11 +1,13 @@
 package com.nc.project.service;
 
 
-import com.nc.project.dto.UserDetailDto;
+import com.nc.project.dto.UserAccountDto;
+import com.nc.project.entity.UserAccount;
 
 public interface UserService {
-    void resignUser(UserDetailDto userDetailDTO);
+    void resignUser(UserAccountDto userAccountDTO);
 
-    void modifyUser(UserDetailDto userDetailDTO);
+    void modifyUser(UserAccountDto userAccountDTO);
+
 
 }
