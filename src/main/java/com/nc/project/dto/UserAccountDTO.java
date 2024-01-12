@@ -1,16 +1,17 @@
 package com.nc.project.dto;
 
-import com.nc.project.entity.UserDetail;
+import com.nc.project.entity.UserAccount;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Setter
-public class UserDetailDto {
+public class UserAccountDTO {
 
     private long id;
     private String userId;
@@ -23,8 +24,8 @@ public class UserDetailDto {
     private String userProfile;
     private String userEmail;
 
-    public UserDetail toEntity() {
-        return UserDetail.builder()
+    public UserAccount toEntity() {
+        return UserAccount.builder()
                 .id(this.id)
                 .userId(this.userId)
                 .userPw(this.userPw)

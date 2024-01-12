@@ -1,21 +1,19 @@
 package com.nc.project.entity;
 
 
-import com.nc.project.dto.UserDetailDto;
+import com.nc.project.dto.UserAccountDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDetail {
+public class UserAccount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,8 +29,8 @@ public class UserDetail {
     private String userProfile;
     private String userEmail;
 
-    public UserDetailDto toDTO() {
-        return UserDetailDto.builder()
+    public UserAccountDTO toDTO() {
+        return UserAccountDTO.builder()
                 .id(this.id)
                 .userId(this.userId)
                 .userPw(this.userPw)
