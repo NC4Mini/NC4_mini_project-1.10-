@@ -1,5 +1,6 @@
 package com.nc.project.dto;
 
+import com.nc.project.entity.Item;
 import lombok.*;
 
 @Getter
@@ -17,8 +18,8 @@ public class ItemDTO {
     private String itemCategory;
     private int itemPrice;
 
-    public ItemDTO toEntity() {
-        return ItemDTO.builder()
+    public Item toEntity() {
+        return Item.builder()
                 .itemId(this.itemId)
                 .itemName(this.itemName)
                 .itemDescription(this.itemDescription)

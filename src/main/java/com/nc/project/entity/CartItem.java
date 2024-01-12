@@ -48,4 +48,6 @@ public class CartItem {
                 .cartItemCnt(this.cartItemCnt)
                 .build();
     }
+
+
 }
