@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserAccount {
-
+public class UserAccount 
+    //aa
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

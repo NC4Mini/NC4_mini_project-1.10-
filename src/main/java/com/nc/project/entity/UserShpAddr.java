@@ -21,6 +21,7 @@ import lombok.*;
         allocationSize = 1
 )
 public class UserShpAddr {
+    //aa
     @Id
     // 사용자 한명이 배송지가 다른 여러 주문을 가질 수 있으므로 가능하므로 N:1
     @ManyToOne
