@@ -11,7 +11,7 @@ import lombok.*;
 @Builder
 @ToString
 public class UserShpAddrDTO {
-
+    //aa
     private int addrId;
     private long id;
     private String addrBasic;
