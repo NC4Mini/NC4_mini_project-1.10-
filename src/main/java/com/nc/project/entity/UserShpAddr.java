@@ -49,6 +49,7 @@ public class UserShpAddr {
                 .addrDetail(this.addrDetail)
                 .addrZone(this.addrZone)
                 .addrStandard(this.addrStandard)
+                .addrNickname(this.addrNickname)
                 .build();
     }
 }
