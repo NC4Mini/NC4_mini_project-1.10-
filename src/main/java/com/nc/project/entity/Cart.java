@@ -17,17 +17,19 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Builder
 public class Cart {
     // 키값
     @Id
+    @Column(name = "CART_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long cartId;
 
-    // cartItem과 OneToMany 관계
-    @OneToMany
-    @JsonManagedReference
-    private List<CartItem> cartItemList;
+//    // cartItem과 OneToMany 관계
+//    @OneToMany
+//    @JsonManagedReference
+//    private List<CartItem> cartItemList;
 
     // cart와 user OneToOne 관계
     @OneToOne
@@ -39,7 +41,7 @@ public class Cart {
         return CartDTO.builder()
                 .id(this.userDetail.getId())
                 .cartId(this.cartId)
-                .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
+//                .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
                 .build();
     }
 }

@@ -19,13 +19,13 @@ public class CartDTO {
 
     private long id;
     private long cartId;
-    private List<CartItemDTO> cartItemDTOList;
+//    private List<CartItemDTO> cartItemDTOList;
 
     public Cart toEntity(UserDetail userDetail) {
         return Cart.builder()
                 .userDetail(userDetail)
                 .cartId(this.cartId)
-                .cartItemList(new ArrayList<>())
+//                .cartItemList(new ArrayList<>())
                 .build();
     }
 }

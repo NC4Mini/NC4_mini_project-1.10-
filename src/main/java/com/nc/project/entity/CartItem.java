@@ -16,24 +16,28 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CartItem {
-    // 키 값
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long cartItemId;
 
-    // cart와 ManyToOne 관계
+//@IdClass(CartItemId.class)
+public class CartItem {
+    // cart와 ManyToOne 관계 (pk, fk)
+
     @ManyToOne
     @JoinColumn(name = "CART_ID")
     @JsonBackReference
     private Cart cart;
 
-    // item과 ManyToOne 관계
+    // 키 값 (pk)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long cartItemId;
+
+    // item과 ManyToOne 관계 (fk)
     @ManyToOne
     @JoinColumn(name = "ITEM_ID")
     @JsonBackReference
     private Item item;
 
+    @Column(name = "CART_ITEM_CNT")
     private int cartItemCnt;
 
     public CartItemDTO toDTO() {
