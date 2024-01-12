@@ -9,6 +9,6 @@ import java.io.Serializable;
 @Setter
 public class UserShpAddrId implements Serializable {
     private int addrId;
-    private long userAccount;
+    private long userAccount; 
 }
 
