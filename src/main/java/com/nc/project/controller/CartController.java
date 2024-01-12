@@ -32,9 +32,10 @@ public class CartController {
         return mav;
     }
 
-    // 장바구니에 물건 추가
+    // 장바구니에 물건 추가 시 장바구니 화면에 전시
 //    @PostMapping("/add-cart")
 //    public
+
     // 배송지 변경 페이지에서 배송지 변경 기능
 
 

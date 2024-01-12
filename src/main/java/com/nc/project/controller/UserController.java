@@ -1,6 +1,6 @@
 package com.nc.project.controller;
 
-import com.nc.project.dto.UserAccountDto;
+import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.entity.UserAccount;
 import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.service.impl.UserServiceImpl;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -32,16 +31,16 @@ public class UserController {
         //테스트용 데이터
         Long id = 1L;
 
-        UserAccountDto originalUserAccountDto = userAccountRepository.findById(id).get().toDTO();
+        UserAccountDTO originalUserAccountDTO = userAccountRepository.findById(id).get().toDTO();
 
-        UserAccountDto aaa= UserAccountDto.builder()
+        UserAccountDTO aaa= UserAccountDTO.builder()
                 .id(id)
                 .userId("11")
                 .userPw("12341234")
                 .userName("12341234")
                 .userTel("12341234")
                 .userAddr("12341234")
-                .userBirth(originalUserAccountDto.getUserBirth())
+                .userBirth(originalUserAccountDTO.getUserBirth())
                 .userGender("12341234")
                 .userProfile("12341234")
                 .userEmail("12341234")
@@ -58,16 +57,16 @@ public class UserController {
 
         System.out.println("결과");
 
-        originalUserAccountDto = aaa;
-        System.out.println(originalUserAccountDto);
-        userService.modifyUser(originalUserAccountDto);
+        originalUserAccountDTO = aaa;
+        System.out.println(originalUserAccountDTO);
+        userService.modifyUser(originalUserAccountDTO);
     }
 
     @PostMapping("/profile/resign")
 //    public void resign(UserAccountDto userAccountDto) {
     public void resign() {
 
-        UserAccountDto userAccountDto = new UserAccountDto();
+        UserAccountDTO userAccountDto = new UserAccountDTO();
         //테스트용 데이터
         Long id = 1L;
         Optional<UserAccount> userAccount = userAccountRepository.findById(id);
