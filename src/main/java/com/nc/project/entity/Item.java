@@ -26,7 +26,7 @@ public class Item {
     @Column(name="item_stock")
     private int stockNumber;
 
-    @Column (name="item_stock")
+    @Column (name="item_status")
     private String itemSellStatus;
 
     @Column (name="item_category")
