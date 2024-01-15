@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
     @Bean
@@ -23,7 +22,10 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorizeRequests) -> {
+                    authorizeRequests.requestMatchers("/user/profile").authenticated();
                     authorizeRequests.anyRequest().permitAll();
+                })
+                .formLogin((formLogin) -> {
                 })
                 .build();
 
