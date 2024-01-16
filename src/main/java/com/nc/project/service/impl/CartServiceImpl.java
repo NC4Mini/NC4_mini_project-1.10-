@@ -1,23 +1,16 @@
 package com.nc.project.service.impl;//package com.example.tempproject.service.impl;
 
-import com.nc.project.dto.CartItemDTO;
 import com.nc.project.dto.ItemDTO;
-import com.nc.project.dto.UserDetailDTO;
-import com.nc.project.entity.Cart;
-import com.nc.project.entity.CartItem;
-import com.nc.project.entity.Item;
-import com.nc.project.entity.UserDetail;
+import com.nc.project.dto.UserAccountDTO;
+import com.nc.project.entity.UserAccount;
 import com.nc.project.repository.CartItemRepository;
 import com.nc.project.repository.CartRepository;
 import com.nc.project.repository.ItemRepository;
 import com.nc.project.repository.UserDetailRepository;
 import com.nc.project.service.CartService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,12 +26,12 @@ public class CartServiceImpl implements CartService {
     // 장바구니에 물건 담기
     @Override
     @Transactional
-    public void addCart(UserDetailDTO userDetailDTO, ItemDTO itemDTO) {
+    public void addCart(UserAccountDTO userAccountDTO, ItemDTO itemDTO) {
 
         // body에 담겨있는 userId로 유저의 장바구니가 있는지 확인
-        UserDetail userDetail = userDetailDTO.toEntity();
+        UserAccount userAccount = userAccountDTO.toEntity();
 
-        userDetailRepository.findById(userDetail.getId());
+        userDetailRepository.findById(userAccount.getId());
 
 
 //        // 유저 고유 id로 유저의 장바구니 찾기

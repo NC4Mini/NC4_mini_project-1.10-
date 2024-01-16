@@ -1,11 +1,10 @@
 package com.nc.project.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nc.project.dto.CartDTO;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,25 +27,26 @@ public class Cart {
     // cart와 user OneToOne 관계
     @OneToOne
     @JoinColumn(name = "id")
-    private UserDetail userDetail;
+    @JsonBackReference
+    private UserAccount userAccount;
 
     // cartItem과 OneToMany 관계
-    @OneToMany (mappedBy = "cart")
-    @JsonManagedReference
-    private List<CartItem> cartItemList = new ArrayList<>();
+//    @OneToMany (mappedBy = "cart")
+//    @JsonManagedReference
+//    private List<CartItem> cartItemList = new ArrayList<>();
 
     // user 엔티티를 받아서 장바구니 엔티티를 생성하는 메서드
-    public static Cart createCart(UserDetail userDetail) {
+    public static Cart createCart(UserAccount userAccount) {
         Cart cart = new Cart();
-        cart.setUserDetail(userDetail);
+        cart.setUserAccount(userAccount);
         return cart;
     }
 
     public CartDTO toDTO() {
         return CartDTO.builder()
-                .id(this.userDetail.getId())
+                .id(this.userAccount.getId())
                 .cartId(this.cartId)
-                .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
+//                .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
                 .build();
     }
 }

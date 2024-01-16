@@ -29,7 +29,7 @@ public class CartItem {
     // cart와 ManyToOne 관계 (fk)
     @ManyToOne
     @JoinColumn(name = "cart_id")
-    @JsonBackReference
+//    @JsonBackReference
     private Cart cart;
 
     // item과 ManyToOne 관계 (fk)
