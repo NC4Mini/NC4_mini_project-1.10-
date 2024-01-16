@@ -1,44 +1,41 @@
 package com.nc.project.entity;
 
-import com.nc.project.dto.ItemDTO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.util.List;
 
 @Entity
-@Table(name = "ITEM")
+@Table(name="item")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@ToString
 public class Item {
-
-    @ManyToOne
-    @JoinColumn(name = "CART_ITEM_ID")
-    @JsonBackReference
-    private CartItem cartItem;
-
     @Id
-    private long itemId;
-    private String itemName;
-    private String itemDescription;
-    private int itemStock;
-    private char itemStatus;
-    private String itemCategory;
-    private int itemPrice;
+    @Column (name="item_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
-    public ItemDTO toDTO() {
-        return ItemDTO.builder()
-                .itemId(this.itemId)
-                .itemName(this.itemName)
-                .itemDescription(this.itemDescription)
-                .itemStock(this.itemStock)
-                .itemStatus(this.itemStatus)
-                .itemCategory(this.itemCategory)
-                .itemPrice(this.itemPrice)
-                .build();
-    }
+    @Column(name="item_name")
+    private String itemNm;
+
+    @Column(name="item_description")
+    private String itemDetail;
+
+    @Column(name="item_stock")
+    private int stockNumber;
+
+    @Column (name="item_status")
+    private String itemSellStatus;
+
+    @Column (name="item_category")
+    private String itemCategory;
+
+    @Column (name="item_price")
+    private int price;
+
+    @Column (name="cart_item_id")
+    private Long cartItemId;
+
 }
