@@ -3,6 +3,7 @@ package com.nc.project.dto;
 import com.nc.project.entity.Cart;
 import com.nc.project.entity.UserAccount;
 import lombok.*;
+import org.apache.catalina.User;
 
 @Getter
 @Setter
@@ -14,13 +15,13 @@ public class CartDTO {
 
     private long id;
     private long cartId;
-//    private List<CartItemDTO> cartItemDTOList;
+    private List<CartItemDTO> cartItemDTOList;
 
     public Cart toEntity(UserAccount userAccount) {
         return Cart.builder()
                 .userAccount(userAccount)
                 .cartId(this.cartId)
-//                .cartItemList(new ArrayList<>())
+                .cartItemList(new ArrayList<>())
                 .build();
     }
 }

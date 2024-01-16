@@ -1,15 +1,24 @@
 package com.nc.project.controller;
 
+import com.nc.project.repository.UserDetailRepository;
+import com.nc.project.service.CartService;
+import com.nc.project.service.ItemService;
+import com.nc.project.service.UserDetailService;
+import com.nc.project.service.impl.CartServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/cart")
 @RequiredArgsConstructor
 public class CartController {
+
+    private final CartService cartService;
+    private final ItemService itemService;
+    private final UserDetailRepository userDetailRepository;
+    private final CartServiceImpl cartServiceImpl;
+    private final UserDetailService userDetailService;
 
     // 장바구니 페이지 이동
     @GetMapping("/mycart")
@@ -32,17 +41,14 @@ public class CartController {
         return mav;
     }
 
-    // 장바구니에 물건 추가 시 장바구니 화면에 전시
-//    @PostMapping("/add-cart")
-//    public
+    // 장바구니에 물건 추가
+//    @PostMapping("/add/{id}/{itemId}")
+//    public String addCartItem (@PathVariable("id") Long id, @PathVariable("itemId") Long itemId, int itemCount) {
+//        UserDetail userDetail = userService.getUser(id);
+//        Item item = itemService.getItem(itemId);
+//
+//        cartService.addCart(userDetail, item, itemCount);
+//    }
 
-    // 배송지 변경 페이지에서 배송지 변경 기능
-
-
-
-
-    // 장바구니에 물건 삭제
-
-    //
 
 }

@@ -14,4 +14,5 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     @Query(value = "select i from Item i", nativeQuery = true)
     List<Item> findByItemDetail();
 
+
 }

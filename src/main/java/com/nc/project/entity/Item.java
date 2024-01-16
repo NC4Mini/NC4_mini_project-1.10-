@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="item")
@@ -12,6 +13,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Item {
+
     @Id
     @Column (name="item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,5 +39,20 @@ public class Item {
 
     @Column (name="cart_item_id")
     private Long cartItemId;
+
+    @OneToMany(mappedBy = "item")
+    private List<CartItem> itemList = new ArrayList<>();
+
+//    public ItemDTO toDTO() {
+//        return ItemDTO.builder()
+//                .itemId(this.itemId)
+//                .itemName(this.itemName)
+//                .itemDescription(this.itemDescription)
+//                .itemStock(this.itemStock)
+//                .itemStatus(this.itemStatus)
+//                .itemCategory(this.itemCategory)
+//                .itemPrice(this.itemPrice)
+//                .build();
+//    }
 
 }

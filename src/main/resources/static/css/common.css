@@ -2,9 +2,6 @@
 
 @charset "utf-8";
 
-
-/* 이도현이 추가한거 */
-
 textarea::placeholder, input::placeholder{
     color:rgb(173, 173, 173);
 }
