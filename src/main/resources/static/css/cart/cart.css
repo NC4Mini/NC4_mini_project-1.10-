@@ -1,13 +1,13 @@
-#main {
-    border-bottom: 1px solid #f7f7f7;
-}
-#content {
-    min-width: 1050px;
-    padding-bottom: 120px;
-}
-#container, #content {
-    position: relative;
-}
+/*#main {*/
+/*    border-bottom: 1px solid #f7f7f7;*/
+/*}*/
+/*#content {*/
+/*    min-width: 1050px;*/
+/*    padding-bottom: 120px;*/
+/*}*/
+/*#container, #content {*/
+/*    position: relative;*/
+/*}*/
 #qnb {
     display: none;
 }
@@ -35,7 +35,7 @@ element.style {
 .tit_page h2.tit {
     font-weight: 800;
     font-family: noto sans;
-    font-size: 30px;
+    font-size: 26px;
     color: #333;
     line-height: 50px;
     text-align: center;
@@ -50,7 +50,7 @@ element.style {
     display: block;
     max-height: 48px;
     font-weight: 400;
-    font-size: 16px;
+    font-size: 12px;
     color: #333;
     line-height: 20px;
     word-break: break-all;
@@ -580,14 +580,14 @@ label {
     line-height: 24px;
     color: #333;
 }
-ul {
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    padding-inline-start: 40px;  
-}
+/*ul {*/
+/*    display: block;*/
+/*    margin-block-start: 1em;*/
+/*    margin-block-end: 1em;*/
+/*    margin-inline-start: 0px;*/
+/*    margin-inline-end: 0px;*/
+/*    padding-inline-start: 40px;  */
+/*}*/
 h3 {
     display: block;
     font-size: 1.17em;
@@ -600,15 +600,15 @@ h3 {
 input::placeholder{
     color:rgb(196, 192, 192);
 }
-ol, ul {
-    list-style-type: none;
-}
+/*ol, ul {*/
+/*    list-style-type: none;*/
+/*}*/
 
 
-li {
-    text-align: -webkit-match-parent;
-    display: list-item;
-}
+/*li {*/
+/*    text-align: -webkit-match-parent;*/
+/*    display: list-item;*/
+/*}*/
 ::-webkit-scrollbar{
     display:none;
     -ms-overflow-style: none;

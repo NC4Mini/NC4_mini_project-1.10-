@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,29 +17,30 @@ import java.util.List;
 @Builder
 public class Item {
 
-    @ManyToOne
-    @JoinColumn(name = "CART_ITEM_ID")
-    @JsonBackReference
-    private CartItem cartItem;
-
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long itemId;
+
     private String itemName;
     private String itemDescription;
     private int itemStock;
     private char itemStatus;
     private String itemCategory;
     private int itemPrice;
+    private String photo;
 
-    public ItemDTO toDTO() {
-        return ItemDTO.builder()
-                .itemId(this.itemId)
-                .itemName(this.itemName)
-                .itemDescription(this.itemDescription)
-                .itemStock(this.itemStock)
-                .itemStatus(this.itemStatus)
-                .itemCategory(this.itemCategory)
-                .itemPrice(this.itemPrice)
-                .build();
-    }
+    @OneToMany(mappedBy = "item")
+    private List<CartItem> itemList = new ArrayList<>();
+
+//    public ItemDTO toDTO() {
+//        return ItemDTO.builder()
+//                .itemId(this.itemId)
+//                .itemName(this.itemName)
+//                .itemDescription(this.itemDescription)
+//                .itemStock(this.itemStock)
+//                .itemStatus(this.itemStatus)
+//                .itemCategory(this.itemCategory)
+//                .itemPrice(this.itemPrice)
+//                .build();
+//    }
 }

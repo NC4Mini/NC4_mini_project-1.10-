@@ -1,18 +1,15 @@
 package com.nc.project.entity;
 
 
-import com.nc.project.dto.CartDTO;
-import com.nc.project.dto.CartItemDTO;
-import com.nc.project.dto.ItemDTO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
-@Table(name = "CART")
+@Table(name = "cart")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,26 +19,31 @@ import java.util.List;
 public class Cart {
     // 키값
     @Id
-    @Column(name = "CART_ID")
+    @Column(name = "cart_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long cartId;
 
-//    // cartItem과 OneToMany 관계
-//    @OneToMany
-//    @JsonManagedReference
-//    private List<CartItem> cartItemList;
-
     // cart와 user OneToOne 관계
     @OneToOne
-    @JoinColumn(name = "ID")
-    @JsonBackReference
+    @JoinColumn(name = "id")
     private UserDetail userDetail;
 
-    public CartDTO toDTO() {
-        return CartDTO.builder()
-                .id(this.userDetail.getId())
-                .cartId(this.cartId)
-//                .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
-                .build();
+    // cartItem과 OneToMany 관계
+    @OneToMany (mappedBy = "cart")
+    private List<CartItem> cartItemList = new ArrayList<>();
+
+    public static Cart createCart(UserDetail userDetail) {
+        Cart cart = new Cart();
+        cart.setUserDetail(userDetail);
+        return cart;
     }
+
+
+//    public CartDTO toDTO() {
+//        return CartDTO.builder()
+//                .id(this.userDetail.getId())
+//                .cartId(this.cartId)
+////                .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
+//                .build();
+//    }
 }
