@@ -19,25 +19,25 @@ import java.util.List;
 
 //@IdClass(CartItemId.class)
 public class CartItem {
-    // cart와 ManyToOne 관계 (pk, fk)
-
-    @ManyToOne
-    @JoinColumn(name = "CART_ID")
-    @JsonBackReference
-    private Cart cart;
 
     // 키 값 (pk)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cart_item_id")
     private long cartItemId;
+
+    // cart와 ManyToOne 관계 (fk)
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
+//    @JsonBackReference
+    private Cart cart;
 
     // item과 ManyToOne 관계 (fk)
     @ManyToOne
-    @JoinColumn(name = "ITEM_ID")
-    @JsonBackReference
+    @JoinColumn(name = "item_id")
     private Item item;
 
-    @Column(name = "CART_ITEM_CNT")
+    @Column(name = "cart_item_cnt")
     private int cartItemCnt;
 
     public CartItemDTO toDTO() {
@@ -47,6 +47,20 @@ public class CartItem {
                 .itemId(this.item.getItemId())
                 .cartItemCnt(this.cartItemCnt)
                 .build();
+    }
+    // 장바구니에 담을 상품 엔티티를 생성하는 메소드
+    public static CartItem createCartItem (Cart cart, Item item, int cartItemCnt) {
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setCartItemCnt(cartItemCnt);
+        return cartItem;
+    }
+
+
+    // 기존 담겨있는 상품을 추가로 담으면 기존수량에 + 됨
+    public void addCount(int cartItemCnt) {
+        this.cartItemCnt += cartItemCnt;
     }
 
 
