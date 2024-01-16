@@ -2,214 +2,180 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}">
+      layout:decorate="~{layouts/layout3}">
 <head>
     <th:block layout:fragment="css">
-        <style>
-            .form-wrapper {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-
-            #joinForm {
-                width: 250px;
-                text-align: center;
-            }
-
-            #joinForm .label-wrapper {
-                margin-top: 20px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            #joinForm input {
-                width: 100%;
-            }
-
-            #joinForm div {
-                display: flex;
-                align-items: center;
-            }
-
-            #btnIdCheck {
-                width: 50px;
-            }
-        </style>
-    </th:block>
-
-    <th:block layout:fragment="script">
-        <script>
-            $(() => {
-                //아이디 중복체크 여부
-                let checkId = false;
-                //비밀번호 유효성 검사 여부
-                let validationPw = false;
-                //비밀번호 일치 여부
-                let cofirmPw = false;
-
-                //아이디 중복체크
-                $("#btnIdCheck").on("click", () => {
-                    if($("#userId").val() === "") {
-                        alert("아이디를 입력하세요.")
-                        $("#userId").focus();
-                        return;
-                    }
-
-                    console.log($("#joinForm").serialize());
-
-                    //ajax로 백엔드와 통신
-                    $.ajax({
-                        url: '/user/id-check',
-                        type: 'post',
-                        data: $("#joinForm").serialize(),
-                        success: (obj) => {
-                            console.log(obj);
-
-                            console.log(obj.item);
-                            console.log(obj.item.idCheckMsg);
-
-                            if(obj.item.idCheckMsg === "idFail") {
-                                checkId = false;
-                                alert("중복된 아이디 입니다.");
-                                $("#userId").focus();
-                                return;
-                            }
-
-                            if(confirm(`사용가능한 아이디입니다. ${$("#userId").val()}를(을) 사용하시겠습니까?`)) {
-                                checkId = true;
-                                $("#btnIdCheck").attr("disabled", true);
-                            }
-                        },
-                        error: (error) => {
-                            console.log(error);
-                        }
-                    });
-
-                });
-
-                // 중복체크 완료된 상태에서 아이디 값 변경했을 때 중복체크 버튼 다시 활성화
-                $("#userId").on("change", () => {
-                    checkId = false;
-                    $("#btnIdCheck").attr("disabled", false);
-                });
-
-                // 비밀번호 유효성 검사 정규식
-                const validatePassword = (userPw) => {
-                    return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=-]).{9,}$/.test(userPw);
-                }
-
-                // 비밀번호 입력 시 비밀번호 유효성 검사
-                $("#userPw").on("change", () => {
-                    if(validatePassword($("#userPw").val())) {
-                        validationPw = true;
-                        $("#pwValidation").hide();
-                    }else {
-                        validationPw = false;
-                        $("#pwValidation").show();
-                    }
-
-                    if($("#userPw").val() === $("#userPwCheck").val()) {
-                        confirmPw = true;
-                        $("#pwCheckResult").text("비밀번호가 일치합니다.");
-                        $("#pwCheckResult").css("color", "green");
-                    } else {
-                        confirmPw = false;
-                        $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
-                        $("#pwCheckResult").css("color", "red");
-                    }
-                });
-
-
-                // 비밀번호 확인과 비밀번호가 일치하는 지 검사
-                $("#userPwCheck").on("change", () => {
-                    $("#pwCheckResult").show();
-
-                    if($("#userPw").val() === $("#userPwCheck").val()) {
-                        confirmPw = true;
-                        $("#pwCheckResult").text("비밀번호가 일치합니다.");
-                        $("#pwCheckResult").css("color", "green");
-                        return;
-                    }
-
-                    confirmPw = false;
-                    $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
-                    $("#pwCheckResult").css("color", "red");
-                });
-
-                // joinForm이 서브밋될 때 유효성 검사가 하나라도 false면 서브밋 막기
-                $("#joinForm").on("submit", (e) => {
-                    // id 중복체크가 되지 않았을 때
-                    if(!checkId) {
-                        e.preventDefault();
-                        alert("아이디 중복체크를 진행하세요.");
-                        $("#userId").focus();
-                        return;
-                    }
-
-                    // pw 유효성 검사가 틀렸을 때
-                    if(!validationPw) {
-                        e.preventDefault();
-                        alert("비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정하세요.");
-                        $("#userPw").focus();
-                        return;
-                    }
-
-                    // pw가 일치하지 않을 때
-                    if(!confirmPw) {
-                        e.preventDefault();
-                        alert("비밀번호가 일치하지 않습니다.");
-                        $("#userPwCheck").focus();
-                        return;
-                    }
-                });
-            });
-        </script>
+        <link rel="stylesheet" th:href="@{/css/join.css}">
+        <link rel="stylesheet" th:href="@{/css/common.css}">
     </th:block>
 </head>
 <body>
-    <div layout:fragment="content">
-        <div class="form-wrapper">
-            <form id="joinForm" action="/user/join" method="post">
-                <h3>회원가입</h3>
-                <div class="label-wrapper">
-                    <label for="userId">아이디</label>
+        <div layout:fragment="content" id="content">
+            <div class="form-wrapper">
+                <div class="type_form member_join">
+                <form id="joinForm" action="/user/join" method="post">
+                    <div class="field_head">
+                        <h3 class="tit">회원가입</h3>
+                        <p class="sub">
+                            <span class="ico">*</span>
+                            필수입력사항
+                        </p>
+                    </div>
+
+                    <table class="tbl_comm">
+                        <tbody>
+                        <tr class="fst field_id">
+                            <th>아이디
+                                <span class="ico">
+                                                    *
+                                                    <span class="screen_out">필수항목</span>
+                                                </span>
+                            </th>
+                            <td>
+                                <input type="text" name="id" maxlength="16" required="" option="regId" onkeyup="id_check()" placeholder="6자 이상의 영문 혹은 영문과 숫자를 조합">
+                                <a class="btn default" href="#">중복확인</a>
+                                <p class="txt_guide square">
+                                                    <span class="txt txt_case1">
+                                                        6자 이상의 영문 혹은 영문과 숫자를 조합
+                                                    </span>
+                                    <span class="txt txt_case2">
+                                                        아이디 중복확인
+                                                    </span>
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr class="field_pw">
+                            <th>
+                                비밀번호
+                                <span class="ico">*
+                                                    <span class="screen_out">필수항목</span>
+                                                </span>
+                            </th>
+                            <td>
+                                <input type="password" name="pw" required=""  option="regPass" onkeyup="pw_check()" maxlength="16" class="reg_pw bad" placeholder="비밀번호를 입력해주세요">
+                                <p class="txt_guide square">
+                                                    <span class="txt txt_case1">
+                                                        10자 이상 입력
+                                                    </span>
+                                    <span class="txt txt_case2">
+                                                        영문/숫자/특수문자(공백 제외)만 허용하며, 2개 이상 조합
+                                                    </span>
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr class="member_pwd field_repw">
+                            <th>
+                                비밀번호확인
+                                <span class="ico">
+                                                    *
+                                                    <span class="screen_out">필수항목</span>
+                                                </span>
+                            </th>
+                            <td>
+                                <input type="password" required=""  option="regPass" onkeyup="pw2_check()" maxlength="16" class="confirm_pw" placeholder="비밀번호를 한번 더 입력해주세요">
+                                <p class="txt_guide square">
+                                                    <span class="txt txt_case1">
+                                                        동일한 비밀번호를 입력해주세요.
+                                                    </span>
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr class="field_name">
+                            <th>
+                                이름
+                                <span class="ico">
+                                                    *
+                                                    <span class="screen_out">필수항목</span>
+                                                </span>
+                            </th>
+                            <td>
+                                <input type="text" name="name"  required=""  label="이름" placeholder="이름을 입력해주세요">
+                            </td>
+                        </tr>
+
+                        <tr class="field_email">
+                            <th>
+                                이메일
+                                <span class="ico">
+                                                    *
+                                                    <span class="screen_out">필수항목</span>
+                                                </span>
+                            </th>
+
+                            <td>
+                                <input type="text" name="email"   size="30" required=""  option="regEmail" label="이메일" placeholder="예: marketkurly@kurly.com">
+                                <a href="#" class="btn default">중복확인</a>
+                            </td>
+                        </tr>
+
+
+                        <tr class="field_phone">
+                            <th>
+                                휴대폰
+                                <span class="ico">
+                                                    *
+                                                    <span class="screen_out">필수항목</span>
+                                                </span>
+                            </th>
+
+                            <td>
+                                <div class="phone_num">
+                                    <input type="text" value="" pattern="[0-9]*" name="mobileInp" placeholder="숫자만 입력해주세요" class="inp">
+
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th>
+                                주소
+                                <span class="ico">
+                                                    *
+                                                    <span class="screen_out">필수항목</span>
+                                                </span>
+                            </th>
+                            <td class="field_address">
+                                <a href="#" id="addressSearch" class="search">
+                                    <span id="addressNo" class="address_no">주소검색</span>
+                                </a>
+                                <input type="text" id="user_address" name="user_address" placeholder="주소">
+                                <input type="text" id="user_detail_address" name="user_detail_address"  placeholder="상세주소">
+                                <p class="txt_guide" style="display:block;">
+                                    <span class="txt txt_case1">배송지에 따라 상품 정보가 달라질 수 있습니다.</span>
+
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr class="birth field_birth">
+                            <th>생년월일</th>
+
+                            <td>
+                                <div class="birth_day">
+                                    <input type="text" name="year" id="birth_year" pattern="[0-9]*"  label="생년월일" size="4" maxlength="4" placeholder="YYYY">
+                                    <span class="bar">
+
+                                                    </span>
+                                    <input type="text" name="month" id="birth_month" pattern="[0-9]*"  label="생년월일" size="2" maxlength="2" placeholder="MM">
+                                    <span class="bar"></span>
+                                    <input type="text" name="day" id="birth_day" pattern="[0-9]*"  label="생년월일" size="2" maxlength="2" placeholder="DD">
+
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div id="formSubmit" class="form_footer" style="border-top: 1px solid #333;">
+                        <button type="submit" class="btn active btn_join" >가입하기</button>
+                    </div>
+                </form>
                 </div>
-                <div>
-                    <input type="text" id="userId" name="userId" required style="width: auto;">
-                    <button type="button" id="btnIdCheck" style="width: 70px">중복체크</button>
-                </div>
-                <div class="label-wrapper">
-                    <label for="userPw">비밀번호</label>
-                </div>
-                <input type="password" id="userPw" name="userPw" required>
-                <p id="pwValidation" style="color: red; font-size: 0.8rem;">
-                    비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.
-                </p>
-                <div class="label-wrapper">
-                    <label for="userPwCheck">비밀번호 확인</label>
-                </div>
-                <input type="password" id="userPwCheck" name="userPwCheck" required>
-                <p id="pwCheckResult" style="font-size: 0.8rem;"></p>
-                <div class="label-wrapper">
-                    <label for="userName">이름</label>
-                </div>
-                <input type="text" id="userName" name="userName" required>
-                <div class="label-wrapper">
-                    <label for="userEmail">이메일</label>
-                </div>
-                <input type="email" id="userEmail" name="userEmail" required>
-                <div class="label-wrapper">
-                    <label for="userTel">전화번호</label>
-                </div>
-                <input type="text" id="userTel" name="userTel" placeholder="숫자만 입력하세요.">
-                <div style="display: block; margin: 20px auto;">
-                    <button type="submit">회원가입</button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
 </body>
 </html>
