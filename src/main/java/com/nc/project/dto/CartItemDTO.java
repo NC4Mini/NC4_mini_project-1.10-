@@ -17,13 +17,17 @@ import java.util.List;
 @ToString
 public class CartItemDTO {
 
-    private Long itemId;
+    private long cartItemId;
+    private long cartId;
+    private long itemId;
     private int cartItemCnt;
 
-//    public CartItem toEntity(Item item) {
-//        return CartItem.builder()
-//                .item(item)
-//                .cartItemCnt(this.cartItemCnt)
-//                .build();
-//    }
+    public CartItem toEntity(Cart cart, Item item) {
+        return CartItem.builder()
+                .cartItemId(this.cartItemId)
+                .cart(cart)
+                .item(item)
+                .cartItemCnt(this.cartItemCnt)
+                .build();
+    }
 }

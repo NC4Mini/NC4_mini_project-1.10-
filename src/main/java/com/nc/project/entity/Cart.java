@@ -1,6 +1,8 @@
 package com.nc.project.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.nc.project.dto.CartDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,20 +32,21 @@ public class Cart {
 
     // cartItem과 OneToMany 관계
     @OneToMany (mappedBy = "cart")
+    @JsonManagedReference
     private List<CartItem> cartItemList = new ArrayList<>();
 
+    // user 엔티티를 받아서 장바구니 엔티티를 생성하는 메서드
     public static Cart createCart(UserDetail userDetail) {
         Cart cart = new Cart();
         cart.setUserDetail(userDetail);
         return cart;
     }
 
-
-//    public CartDTO toDTO() {
-//        return CartDTO.builder()
-//                .id(this.userDetail.getId())
-//                .cartId(this.cartId)
-////                .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
-//                .build();
-//    }
+    public CartDTO toDTO() {
+        return CartDTO.builder()
+                .id(this.userDetail.getId())
+                .cartId(this.cartId)
+                .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
+                .build();
+    }
 }

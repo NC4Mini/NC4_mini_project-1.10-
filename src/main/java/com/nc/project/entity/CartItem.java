@@ -29,6 +29,7 @@ public class CartItem {
     // cart와 ManyToOne 관계 (fk)
     @ManyToOne
     @JoinColumn(name = "cart_id")
+    @JsonBackReference
     private Cart cart;
 
     // item과 ManyToOne 관계 (fk)
@@ -39,15 +40,15 @@ public class CartItem {
     @Column(name = "cart_item_cnt")
     private int cartItemCnt;
 
-//    public CartItemDTO toDTO() {
-//        return CartItemDTO.builder()
-//                .cartItemId(this.cartItemId)
-//                .cartId(this.cart.getCartId())
-//                .itemId(this.item.getItemId())
-//                .cartItemCnt(this.cartItemCnt)
-//                .build();
-//    }
-    // DTO 처리
+    public CartItemDTO toDTO() {
+        return CartItemDTO.builder()
+                .cartItemId(this.cartItemId)
+                .cartId(this.cart.getCartId())
+                .itemId(this.item.getItemId())
+                .cartItemCnt(this.cartItemCnt)
+                .build();
+    }
+    // 장바구니에 담을 상품 엔티티를 생성하는 메소드
     public static CartItem createCartItem (Cart cart, Item item, int cartItemCnt) {
         CartItem cartItem = new CartItem();
         cartItem.setCart(cart);
