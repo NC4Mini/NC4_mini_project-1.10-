@@ -10,7 +10,7 @@
         <link rel="stylesheet" th:href="@{/css/cart/list.bundle.css}">
     </th:block>
     <th:block layout:fragment="script">
-        <script th:src="@{js/cart/cart.js}"></script>
+        <script th:src="@{/js/cart/cart.js}"></script>
     </th:block>
 </head>
 <body>
@@ -51,10 +51,12 @@
                                     </label>
                                     <div class="name">
                                         <div class="inner_name">
-                                            <a href="#" class="package ">[채소] 감자</a>
+                                            <!-- 제목 누르면 해당 상품 페이지로 가지도록 설정 -->
+                                            <a href="#" class="package " th:text="${itemDTO.itemName}"><!--[채소] 감자--></a>
                                             <div class="info"></div>
                                         </div>
                                         <div class="goods">
+                                            <!-- 상품 이미지 누르면 해당 상품 페이지 가지도록 설정 -->
                                             <a href="#" class="thumb "
                                                style="background-image: url(&quot;https://img-cf.kurly.com/shop/data/goods/1610599300495i0.jpg&quot;);">상품이미지</a>
                                             <!-- 이미지자리 ^-->
@@ -107,7 +109,7 @@
                                 <p class="addr">인천 연수구 909호</p>
                                 <!-- address here -->
                                 <span class="delivery star">샛별배송</span>
-                                <a href="/cart/change-addr"
+                                <a href="/cart/addr-select"
                                    onclick="window.open(this.href,'shipping destination','width=514, height=584');return false;"
                                    class="btn default">배송지 변경</a>
                             </div>
