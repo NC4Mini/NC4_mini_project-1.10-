@@ -29,6 +29,8 @@ public class CartController {
     private final CartService cartService;
     private final ItemService itemService;
     private final UserService userService;
+    private final UserAccountRepository userAccountRepository;
+    private final ItemRepository itemRepository;
 
     // 장바구니 임시 접속용
     @GetMapping("/mycart")
@@ -44,10 +46,11 @@ public class CartController {
     // 유저의 해당 장바구니 페이지 이동
     @GetMapping("/mycart/{id}")
     public ModelAndView getUserCart (@PathVariable("id") long id) {
-
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("cart/getCart.html");
+        mav.addObject("cartItemList", cartService.getCartItem(id));
+
+        mav.setViewName("cart/getCartTest.html");
 
         return mav;
     }
@@ -84,8 +87,8 @@ public class CartController {
     }
 
     // 상품 상세페이지에서 장바구니에 물건 추가 (개수 지정)
-    @PostMapping("/add/{id}/{itemId}/{itemCount}")
-    public void addCartItem () {
+    @PostMapping("/add")
+    public void addCartItem (UserAccountDTO userAccountDTO, ItemDTO itemDTO, int itemCount) {
 
     }
 

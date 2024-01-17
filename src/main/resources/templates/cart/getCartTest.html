@@ -41,7 +41,7 @@
                         <ul class="list" id='dropup_list'>
                             <li>
                                 <!-- 상품 목록 중 1. 추가/삭제될 목록임. -->
-                                <div class="item">
+                                <div class="item" th:each="cartItemDTO, ${cartItemDTOList}">
                                     <label class="check" for="chkItem1">
                                         <!-- 개당 체크박스 -->
                                         <input onclick='check_sel_all(this)' type="checkbox" id="chkItem1" name="checkOne"
@@ -52,7 +52,7 @@
                                     <div class="name">
                                         <div class="inner_name">
                                             <!-- 제목 누르면 해당 상품 페이지로 가지도록 설정 -->
-                                            <a href="#" class="package">[채소] 감자</a>
+                                            <a href="#" class="package" th:text="${cartItemDTO.item}"></a>
                                                 <!--<a href="#" class="package" th:text = "${item.itemName}">   </a>-->
                                                 <div class="info">
 
@@ -88,6 +88,7 @@
                                                 data-type="cold">
                                             상품 삭제</button>
                                     </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
