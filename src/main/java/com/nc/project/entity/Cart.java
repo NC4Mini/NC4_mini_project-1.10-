@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+// 장바구니 식별용 객체
 @Entity
 @Table(name = "cart")
 @Getter
@@ -32,6 +33,7 @@ public class Cart {
     // cartItem과 OneToMany 관계
     @OneToMany (mappedBy = "cart")
     private List<CartItem> cartItemList = new ArrayList<>();
+
 
     // user 엔티티를 받아서 장바구니 엔티티를 생성하는 메서드
     public static Cart createNewCart(UserAccount userAccount) {

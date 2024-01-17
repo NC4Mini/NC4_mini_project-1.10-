@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.util.List;
 
+// 장바구니에 상품들을 담아주고, 수량을 체크해주는 객체
 @Entity
 @Table(name = "cart_item")
 @Getter

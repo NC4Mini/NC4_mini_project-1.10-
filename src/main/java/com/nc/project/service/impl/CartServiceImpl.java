@@ -25,7 +25,6 @@ public class CartServiceImpl implements CartService {
 
     // 장바구니에 물건 담기
     @Override
-    @Transactional
     public void addCart(UserAccountDTO userAccountDTO, ItemDTO itemDTO, int itemCnt) {
 
         // 1. body에 담겨있는 userId로 유저의 장바구니가 있는지 확인
@@ -60,22 +59,10 @@ public class CartServiceImpl implements CartService {
             cartItem.setCartItemCnt(itemCnt);
         }
 
+    }
 
-//        // 상품이 장바구니에 없을 때 카트 상품 생성 후 추가
-//        if (cartItem == null) {
-//            cartItem = CartItem.createCartItem(cart, item, itemCount);
-//            cartItemRepository.save(cartItem);
-//        }
-
-        // 상품이 장바구니에 이미 있을 때 수량만 증가
-//        else {
-//            CartItem updateCartItem = cartItem;
-//            updateCartItem.setCart(cartItem.getCart());
-//            updateCartItem.setItem(cartItem.getItem());
-//            updateCartItem.addCount(itemCount);
-//            cartItemRepository.save(updateCartItem);
-//        }
-
+    @Override
+    public void deleteCartItem(long cartItemId) {
 
     }
 }

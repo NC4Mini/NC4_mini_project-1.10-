@@ -1,15 +1,25 @@
 package com.nc.project.controller;
 
+import com.nc.project.dto.ItemDTO;
 import com.nc.project.dto.UserAccountDTO;
+import com.nc.project.entity.Item;
 import com.nc.project.entity.UserAccount;
+import com.nc.project.repository.ItemRepository;
+import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.repository.UserDetailRepository;
 import com.nc.project.service.CartService;
 import com.nc.project.service.ItemService;
 import com.nc.project.service.UserService;
 import com.nc.project.service.impl.CartServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/cart")
@@ -18,13 +28,22 @@ public class CartController {
 
     private final CartService cartService;
     private final ItemService itemService;
-    private final UserDetailRepository userDetailRepository;
-    private final CartServiceImpl cartServiceImpl;
     private final UserService userService;
 
+    // 장바구니 임시 접속용
+    @GetMapping("/mycart")
+    public ModelAndView getUserCart () {
+
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("cart/getCart.html");
+
+        return mav;
+    }
+
     // 유저의 해당 장바구니 페이지 이동
-    @GetMapping("/mycart/{userId}")
-    public ModelAndView getUserCart (@PathVariable() UserAccountDTO userAccountDTO) {
+    @GetMapping("/mycart/{id}")
+    public ModelAndView getUserCart (@PathVariable("id") long id) {
 
         ModelAndView mav = new ModelAndView();
 
@@ -65,9 +84,9 @@ public class CartController {
     }
 
     // 상품 상세페이지에서 장바구니에 물건 추가 (개수 지정)
-    @PostMapping("/add/{id}/{itemId}")
-    public void addCartItem (@PathVariable("id") Long id, @PathVariable("itemId") Long itemId, int itemCount) {
-//        cartService.addCart();
+    @PostMapping("/add/{id}/{itemId}/{itemCount}")
+    public void addCartItem () {
+
     }
 
 
