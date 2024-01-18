@@ -90,13 +90,16 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    // 받아온 장바구니 ID 정보로 새로운 개수를 저장해주는 기능
     @Override
     public void updateCartItemCount(Long cartItemId, int newCartItemCnt) {
-        Optional<CartItem> updateCartItem = cartItemRepository.findById(cartItemId);
+        Optional<CartItem> receiveCartItem = cartItemRepository.findById(cartItemId);
 
-        updateCartItem.get().setCartItemCnt(newCartItemCnt);
+        CartItem updateCartItem = receiveCartItem.get();
 
-        cartItemRepository.save(updateCartItem.get());
+        updateCartItem.setCartItemCnt(newCartItemCnt);
+
+        cartItemRepository.save(updateCartItem);
     }
 
 }

@@ -76,14 +76,51 @@
                                                 </div>
 
                                                 <!-- 개수 조정 부분. -->
+                                                <script>
+                                                    function updateCartItemCnt (cartItemId, newCartItemCnt) {
+                                                        $.ajax({
+                                                            type: 'POST',
+                                                            url: '/cart/update-itemCnt',
+                                                            data: {
+                                                                cartItemId: cartItemId,
+                                                                cartItemCnt: newCartItemCnt
+                                                            },
+                                                            success: function (response) {
+                                                                $('#cartItemCnt-' + cartItemId).text(newCartItemCnt);
+                                                                console.log(response);
+                                                            },
+                                                            error: function (error) {
+                                                                console.error(error);
+                                                            }
+                                                        });
+                                                        event.stopPropagation();
+                                                    }
+                                                </script>
                                                 <div class="stamper count">
-                                                    <button type="button" class="btn minus off"
+
+                                                    <!-- 수량 감소 시키는 부분 -->
+                                                    <!-- 원래코드 -->
+                                                    <!--<button type="button" class="btn minus off"
                                                             data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
-                                                            data-opt="decrease">감소</button>
-                                                    <input type="text" id="stepperCounter" class="num" readonly="" value="1">
-                                                    <button type="button" class="btn plus"
+                                                            data-opt="decrease">감소</button>-->
+                                                    <!--<button onclick="updateCartItemCnt(${cartItem.cartItemId}, ${cartItem.cartItemCnt - 1})"> - </button>-->
+                                                    <button class="btn minus off"
                                                             data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
-                                                            data-opt="increase">추가</button>
+                                                            data-opt="decrease" th:onclick="updateCartItemCnt([[${cartItem.cartItemId}]], [[${cartItem.cartItemCnt - 1}]])">감소</button>
+
+                                                    <!-- DB에서 CartItemCnt를 불러올 부분 -->
+                                                    <!-- 원래코드   >>>>>>    <input type="text" id="stepperCounter" class="num" readonly="" value="1">-->
+                                                    <span th:text="${cartItem.cartItemCnt}" id="cartItemCnt-${cartItem.cartItemId" class="num"></span>
+
+                                                    <!-- 수량 증가 시키는 부분 -->
+                                                    <!-- 원래 코드 -->
+                                                    <!--<button type="button" class="btn plus"
+                                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                                            data-opt="increase">추가</button>-->
+                                                    <!--<button onclick="updateCartItemCnt(${cartItem.cartItemId}, ${cartItem.cartItemCnt + 1})"> + </button>-->
+                                                    <button class="btn plus"
+                                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                                            data-opt="increase" th:onclick="updateCartItemCnt([[${cartItem.cartItemId}]], [[${cartItem.cartItemCnt + 1}]])">추가</button>
                                                 </div>
                                             </div>
                                         </div>

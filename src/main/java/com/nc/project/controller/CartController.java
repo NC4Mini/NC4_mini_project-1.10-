@@ -62,7 +62,13 @@ public class CartController {
     }
 
     // 장바구니 페이지에서 상품 수량 변경하는 기능
+    @PostMapping("/update-itemCnt")
+    public ResponseEntity<?> updateCartItemCnt (Long cartItemId, int cartItemCnt) {
 
+        cartService.updateCartItemCount(cartItemId, cartItemCnt);
+
+        return ResponseEntity.ok("수량 변경 완료");
+    }
 
     // 장바구니 페이지에서 배송지 변경 이동
     @GetMapping("/addr-select")

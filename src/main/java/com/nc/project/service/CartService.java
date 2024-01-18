@@ -21,5 +21,6 @@ public interface CartService {
     // 장바구니에서 장바구니 아이템을 삭제하는 기능
     public void deleteCartItem (long cartItemId);
 
-    public void updateCartItemCount(Long cartItemId, int newCartItemCnt);
+    // 장바구니의 상품목록의 상품 개수를 바꿔주는 기능
+    public void updateCartItemCount(Long cartItemId, int cartItemCnt);
 }
