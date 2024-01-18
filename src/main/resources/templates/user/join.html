@@ -143,6 +143,11 @@
                     $("#userBirth").val(userBirth);
                     console.log($("#joinForm").serialize())
                 }
+                // 비밀번호 유효성 검사 정규식
+                const validatePassword = (userPw) => {
+                    return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=-]).{9,}$/.test(userPw);
+                }
+                // 비밀번호 입력 시 비밀번호 유효성 검사
             });
         </script>
     </th:block>
@@ -174,9 +179,9 @@
                                 <input type="text" id="userId" name="userId" maxlength="16" required="" placeholder="6자 이상의 영문 혹은 영문과 숫자를 조합">
                                 <button type="button" id="btnIdCheck" class="btn default">중복확인</button>
                                 <p class="txt_guide square">
-                                                    <span class="txt txt_case1">
-                                                        6자 이상의 영문 혹은 영문과 숫자를 조합
-                                                    </span>
+<!--                                                    <span class="txt txt_case1">-->
+<!--                                                        6자 이상의 영문 혹은 영문과 숫자를 조합-->
+<!--                                                    </span>-->
                                     <span class="txt txt_case2">
                                                         아이디 중복확인
                                                     </span>
