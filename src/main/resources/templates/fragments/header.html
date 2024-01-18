@@ -9,7 +9,10 @@
             <ul>
                 <li><a th:href="@{/user/join}">회원가입</a></li>
                 <li><i>|</i></li>
-                <li><a href="#">로그인</a></li>
+                <li sec:authorize="!isAuthenticated()" ><a th:href="@{/login}">로그인</a></li>
+                <li sec:authorize="isAuthenticated()" ><a th:href="@{/user/profile}">회원정보</a></li>
+                <li sec:authorize="isAuthenticated()" ><i>|</i></li>
+                <li sec:authorize="isAuthenticated()" ><a th:href="@{/logout}">로그아웃</a></li>
                 <li><i>|</i></li>
                 <li class="service-box">
                     <a href="board/board-list" class="service-center-btn">고객센터<img src="/img/ico_down_16x10.png" alt=""></a>
