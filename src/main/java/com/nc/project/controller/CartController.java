@@ -1,5 +1,6 @@
 package com.nc.project.controller;
 
+import com.nc.project.dto.CartItemDTO;
 import com.nc.project.dto.ItemDTO;
 import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.entity.Item;
@@ -13,6 +14,8 @@ import com.nc.project.service.UserService;
 import com.nc.project.service.impl.CartServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
@@ -20,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/cart")
@@ -32,6 +35,8 @@ public class CartController {
     private final UserService userService;
     private final UserAccountRepository userAccountRepository;
     private final ItemRepository itemRepository;
+
+    private final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
     // 장바구니 임시 접속용
     @GetMapping("/mycart")
@@ -55,6 +60,9 @@ public class CartController {
 
         return mav;
     }
+
+    // 장바구니 페이지에서 상품 수량 변경하는 기능
+
 
     // 장바구니 페이지에서 배송지 변경 이동
     @GetMapping("/addr-select")

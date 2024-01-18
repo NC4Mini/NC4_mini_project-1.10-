@@ -40,6 +40,9 @@ public class CartItem {
     @Column(name = "cart_item_cnt")
     private int cartItemCnt;
 
+//    @Column(name = "totalPrice")
+//    private int totalPrice;
+
     public CartItemDTO toDTO() {
         return CartItemDTO.builder()
                 .cartItemId(this.cartItemId)
