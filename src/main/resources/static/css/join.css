@@ -240,6 +240,14 @@ table {
     color: #fff;
 }
 
+.btn.default:hover {
+    cursor: pointer;
+}
+
+.btn.active:hover {
+    cursor: pointer;
+}
+
 input::placeholder{
     color:rgb(165, 160, 160);
 }

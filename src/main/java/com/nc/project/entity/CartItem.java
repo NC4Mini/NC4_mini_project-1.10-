@@ -9,6 +9,7 @@ import lombok.*;
 
 import java.util.List;
 
+// 장바구니에 상품들을 담아주고, 수량을 체크해주는 객체
 @Entity
 @Table(name = "cart_item")
 @Getter
@@ -29,7 +30,6 @@ public class CartItem {
     // cart와 ManyToOne 관계 (fk)
     @ManyToOne
     @JoinColumn(name = "cart_id")
-//    @JsonBackReference
     private Cart cart;
 
     // item과 ManyToOne 관계 (fk)
@@ -39,6 +39,9 @@ public class CartItem {
 
     @Column(name = "cart_item_cnt")
     private int cartItemCnt;
+
+//    @Column(name = "totalPrice")
+//    private int totalPrice;
 
     public CartItemDTO toDTO() {
         return CartItemDTO.builder()

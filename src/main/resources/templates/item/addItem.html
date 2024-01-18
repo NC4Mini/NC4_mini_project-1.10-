@@ -7,9 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>상품등록</title>
-        <link rel="stylesheet" th:href="@{/css/common.css}">
-        <link rel="stylesheet" th:href="@{/css/admin_page_prd_upload.css}">
+<!--        <link rel="stylesheet" th:href="@{/css/common.css}">-->
         <link rel="stylesheet" th:href="@{/css/admin_common.css}">
+        <link rel="stylesheet" th:href="@{/css/admin_page_prd_upload.css}">
     <th:block layout:fragment="css"></th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/common.js}"></script>
@@ -137,7 +137,6 @@
 
 
     </script>
-
     <script>
         function img_remove(obj){
             var obj_name = $(obj).attr('name');
@@ -157,29 +156,29 @@
             <div id="content">
                 <div class="page_aticle aticle_type2">
                     <!--왼쪽 카테고리-->
-<!--                    <div id="snb" class="snb_my">-->
-<!--                        <h2 class="tit_snb">관리자 메뉴</h2>-->
-<!--                        <div class="inner_snb">-->
-<!--                            <ul class="list_menu">-->
-<!--                                <li>-->
-<!--                                    <a href="#">상품 등록</a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="#">상품 관리</a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="#">주문 관리</a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="#">후기 관리</a>-->
-<!--                                </li>-->
-<!--                                <li>-->
-<!--                                    <a href="#">1:1문의 관리</a>-->
-<!--                                </li>-->
+                    <div id="snb" class="snb_my">
+                        <h2 class="tit_snb">관리자 메뉴</h2>
+                        <div class="inner_snb">
+                            <ul class="list_menu">
+                                <li>
+                                    <a href="#">상품 등록</a>
+                                </li>
+                                <li>
+                                    <a href="#">상품 관리</a>
+                                </li>
+                                <li>
+                                    <a href="#">주문 관리</a>
+                                </li>
+                                <li>
+                                    <a href="#">후기 관리</a>
+                                </li>
+                                <li>
+                                    <a href="#">1:1문의 관리</a>
+                                </li>
 
-<!--                            </ul>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                            </ul>
+                        </div>
+                    </div>
 
                     <div id="viewOrderList" class="page_section section_orderlist">
                         <div class="head_aticle">

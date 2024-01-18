@@ -62,21 +62,49 @@ window.addEventListener('DOMContentLoaded',function(){
     }
 });
 
-$(function(){ 
+$(function(){
     $('.plus').click(function(){ //count up
         var n = $('.plus').index(this);
         var num = $(".num:eq("+n+")").val();
-        num = $(".num:eq("+n+")").val(num*1+1); 
-        
+        num = $(".num:eq("+n+")").val(num*1+1);
+
     });
     $('.minus').click(function(){  // count down..
         var n = $('.minus').index(this);
         var num = $(".num:eq("+n+")").val();
         if (num!=1){
-            num = $(".num:eq("+n+")").val(num*1-1); 
+            num = $(".num:eq("+n+")").val(num*1-1);
         }
     });
 });
+
+// function updateItemCount (button, isDecrease) {
+//     var itemId = button.getAttribute('data-itemId');
+//     var currentCount = parseInt(document.getElementById('cartItemCount').innerText);
+//     var newCount = isDecrease ? currentCount - 1 : currentCount + 1;
+//
+//     var xhr = new XMLHttpRequest();
+//     xhr.open('POST', '/cart/update', ture);
+//     xhr.setRequestHeader('Content-Type', 'application/json');
+//     xhr.onreadystatechange = function () {
+//         if (xhr.readyState === 4 && xhr.status === 200) {
+//             // 서버로부터 응답을 처리
+//             var response = JSON.parse(xhr.responseText);
+//             alert(response.message);
+//             document.getElementById('cartItemCount').innerText = response.newCount;
+//             // 총 가격 로직
+//             // document.getElementById('totalPrice').innerText = response.newTotalPrice;
+//         }
+//     };
+//
+//     var data = JSON.stringify({
+//         itemId: itemId,
+//         newCount: newCount
+//     });
+//
+//     xhr.send(data);
+// };
+
 function check_sel_all(checkbox)  { /*개별 선택에 따른 전체선택상태변경 */
     const selectall = document.querySelectorAll('input[name="checkAll"]');
     const checkboxes = document.querySelectorAll('input[name="checkOne"]');    
