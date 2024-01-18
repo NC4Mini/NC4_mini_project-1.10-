@@ -23,4 +23,14 @@ public class ItemController {
 
         return mav;
     }
+
+    // 메인에서 상품 상세페이지 이동 (임시작업)
+    @GetMapping("/item-detail")
+    public ModelAndView getItemDetail () {
+        ModelAndView mav = new ModelAndView();
+
+        mav.setViewName("item/itemDetail.html");
+
+        return mav;
+    }
 }

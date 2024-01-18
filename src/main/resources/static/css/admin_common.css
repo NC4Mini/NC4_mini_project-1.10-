@@ -63,17 +63,16 @@
 
 
 #main .snb_my{
-    position: absolute;
-    top: 124px;
-    margin-left: 420px;
+    top: 50px;
+    position : sticky;
 }
 
 
 #main .page_aticle.aticle_type2 .page_section {
-    width: 820px;
-    top: 117px;
-    position: absolute;
-    left: 34%;
+    width: 850px;
+    text-align: center;
+    margin: 0 auto;
+    display: table;
 }
 
 

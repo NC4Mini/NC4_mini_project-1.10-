@@ -21,7 +21,7 @@
             </div>
             <div id="cartItemList" class="only_pc" style="min-height: 602px;">
             <div class="">
-                <div class="cart_item ">
+                <div class="cart_item">
                     <div class="cart_select">
                         <div class="inner_select">
                             <label class="check">
@@ -41,7 +41,8 @@
                         <ul class="list" id='dropup_list'>
                             <li>
                                 <!-- 상품 목록 중 1. 추가/삭제될 목록임. -->
-                                <div class="item">
+                                <!-- cartitem에 담긴 것들 가져올 목록 div -->
+                                <div class="item" th:each="cartItem : ${cartItemList}">
                                     <label class="check" for="chkItem1">
                                         <!-- 개당 체크박스 -->
                                         <input onclick='check_sel_all(this)' type="checkbox" id="chkItem1" name="checkOne"
@@ -52,7 +53,9 @@
                                     <div class="name">
                                         <div class="inner_name">
                                             <!-- 제목 누르면 해당 상품 페이지로 가지도록 설정 -->
-                                            <a href="#" class="package">[채소] 감자</a>
+                                            <a href="#" class="package">
+                                                <div th:text="${cartItem.item.itemName}"></div>
+                                            </a>
                                                 <!--<a href="#" class="package" th:text = "${item.itemName}">   </a>-->
                                                 <div class="info">
 
@@ -60,16 +63,18 @@
                                         </div>
                                         <div class="goods">
                                             <!-- 상품 이미지 누르면 해당 상품 페이지 가지도록 설정 -->
+                                            <!-- 이미지자리 ^-->
                                             <a href="#" class="thumb "
                                                style="background-image: url(&quot;https://img-cf.kurly.com/shop/data/goods/1610599300495i0.jpg&quot;);">상품이미지</a>
-                                            <!-- 이미지자리 ^-->
+                                            <!-- 가격 자리 -->
                                             <div class="price">
                                                 <div class="in_price">
-                                                <span class="selling">6,000
-                                                    <span class="won">원</span>
+                                                <span class="selling">
+                                                    <div th:text="${cartItem.item.itemPrice}"></div><span class="won">원</span>
                                                 </span>
                                                     <p class="noti"></p>
                                                 </div>
+
                                                 <!-- 개수 조정 부분. -->
                                                 <div class="stamper count">
                                                     <button type="button" class="btn minus off"
@@ -88,6 +93,7 @@
                                                 data-type="cold">
                                             상품 삭제</button>
                                     </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
