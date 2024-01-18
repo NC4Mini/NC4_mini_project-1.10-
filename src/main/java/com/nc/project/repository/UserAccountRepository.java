@@ -7,4 +7,8 @@ import java.util.Optional;
 
 public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
     Optional<UserAccount> findByUserId(String UserId);
+
+    int countByUserId(String userId);
+
+    int countByUserEmail(String userEmail);
 }

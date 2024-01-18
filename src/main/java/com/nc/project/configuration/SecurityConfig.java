@@ -23,6 +23,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorizeRequests) -> {
                     authorizeRequests.requestMatchers("/user/profile").authenticated();
+                    authorizeRequests.requestMatchers("/user/join").permitAll();
                     authorizeRequests.anyRequest().permitAll();
                 })
                 .formLogin((formLogin) -> {
