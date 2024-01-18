@@ -28,6 +28,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public int idCheck(String userId) {
+        return userAccountRepository.countByUserId(userId);
+    }
+
+    @Override
+    public int emailCheck(String userEmail) { return userAccountRepository.countByUserEmail(userEmail);}
+
+    @Override
     public void modifyUser(UserAccountDTO userAccountDTO) {
         userAccountRepository.save(userAccountDTO.toEntity());
     }
