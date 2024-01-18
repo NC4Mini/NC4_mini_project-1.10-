@@ -68,17 +68,21 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public List<CartItemDTO> getCartItem (long id) {
+    public List<CartItem> getCartItem (long id) {
         // 받아온 id로 cart를 찾기
         Cart cart = cartRepository.findByUserAccountId(id);
         // 해당하는 모든 CartItem을 찾기위해 CartItem타입 리스트 선언
         List<CartItem> cartItemList = new ArrayList<>();
         // 찾은 cart의 cart_id에 해당하는 모든 CartItem들을 불러오기
         cartItemList = cartItemRepository.findAllByCart_CartId(cart.getCartId());
-        // 불러온 CartItem들을 DTO로 다시 변환해주는 작업
-        List<CartItemDTO> cartItemDTOList = cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList();
-        // DTO로 바꾼 CartItem들을 반환하기
-        return cartItemDTOList;
+
+        return cartItemList;
+
+//        DTO형태로 리턴
+//        // 불러온 CartItem들을 DTO로 다시 변환해주는 작업
+//        List<CartItemDTO> cartItemDTOList = cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList();
+//        // DTO로 바꾼 CartItem들을 반환하기
+//        return cartItemDTOList;
     }
 
     @Override
