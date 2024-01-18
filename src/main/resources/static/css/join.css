@@ -1,17 +1,12 @@
-#main {
-    border-bottom: 1px solid #f7f7f7;
-}
-
 #content {
     min-width: 1050px;
+    width:100%;
     padding-bottom: 120px;
-}
-
-#header, #container, #content {
     position: relative;
+    height: auto;
 }
 
-.page_aticle {
+.form-wrapper {
     width: 1050px;
     margin: 0 auto;
 }
@@ -120,16 +115,14 @@ table {
     color: #5f0080;
 }
 
-#main .member_join .btn {
-    display: inline-block;
+.member_join .btn {
     width: 120px;
-    margin-left: 5px;
+    margin-right: 20px;
     vertical-align: top;
 }
 
 .type_form .btn {
     display: block;
-    width: 100%;
     height: 44px;
     border: 0;
     border-radius: 3px;
@@ -138,6 +131,7 @@ table {
     line-height: 40px;
     text-align: center;
     outline: none;
+    float : right;
 }
 
 .member_join .txt_guide {
@@ -229,14 +223,15 @@ table {
 .member_join .form_footer {
     padding-top: 40px;
     text-align: center;
+    display: flex;
+    justify-content: center;
 }
 
-#main .member_join .form_footer .btn_join {
+.member_join .form_footer .btn_join {
     width: 240px;
     height: 56px;
     font-size: 16px;
     line-height: 54px;
-    
 }
 
 .type_form .btn.active {

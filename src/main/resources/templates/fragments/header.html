@@ -7,7 +7,7 @@
     <div class="row1">
         <div class="container">
             <ul>
-                <li><a href="#">회원가입</a></li>
+                <li><a th:href="@{/user/join}">회원가입</a></li>
                 <li><i>|</i></li>
                 <li><a href="#">로그인</a></li>
                 <li><i>|</i></li>
@@ -31,7 +31,7 @@
                 <ul>
                     <li> <!-- 홈 -->
                         <h1>
-                            <a href="./" title="마켓컬리">
+                            <a href="/" title="마켓컬리">
                                 <img src="/img/logo_kurly.svg" alt="">
                                 <span>마켓컬리</span>
                             </a>
@@ -56,6 +56,10 @@
                 </form>
             </div>
             <div class="right">
+                <!--상품 추가 버튼 생성 / 24.01.16-->
+                <div>
+                    <a href="/item/add-item" title="상품 추가"><img src="/img/addItem.svg"> </a>
+                </div>
                 <div class="map-tooltip-box">
                     <a href="#" title="배송지" class="map-tootip-btn"><img src="/img/map.svg" alt=""></a>
                     <div class="map-tooltip-memnu">
@@ -74,6 +78,7 @@
                 <div>
                     <a href="#" title="찜하기"><img src="/img/heart.svg" alt=""></a>
                 </div>
+
                 <div>
                     <a href="/cart/mycart" title="장바구니"><img src="/img/cart.svg" alt="장바구니 모양"></a>
                 </div>
