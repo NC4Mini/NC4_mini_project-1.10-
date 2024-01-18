@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<nav th:fragment="sidebar" id="main">
+  <div class="page_aticle aticle_type2">
+    <div id="snb" class="snb_my">
+      <h2 class="tit_snb">고객센터</h2>
+      <div class="inner_snb">
+        <ul class="list_menu">
+          <li>
+            <a href="#">공지사항</a>
+          </li>
+          <li>
+            <a href="#">자주하는 질문</a>
+          </li>
+          <li>
+            <a href="/board/getBoardList">1:1 문의</a>
+          </li>
+          <li>
+            <a href="/user/profile">회원정보 관리</a>
+          </li>
+          <li>
+            <a href="#">대량주문 문의</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+</body>
+</html>

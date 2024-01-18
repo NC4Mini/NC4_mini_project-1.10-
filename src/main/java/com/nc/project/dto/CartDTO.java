@@ -1,25 +1,30 @@
-package com.nc.project.dto;//package com.example.tempproject.dto;
-//
-//import com.example.tempproject.entity.Cart;
-//import lombok.*;
-//
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Builder
-//@ToString
-//public class CartDTO {
-//
-//    private int cartNo;
-//    private Item cartItem;
-//    private int cartItemCnt;
-//
-//    public Cart toEntity() {
-//        return Cart.builder()
-//                .cartNo(this.cartNo)
-//                .cartItem(this.cartItem)
-//                .cartItemsCnt(this.cartItemCnt)
-//                .build();
-//    }
-//}
+package com.nc.project.dto;
+
+import com.nc.project.entity.Cart;
+import com.nc.project.entity.UserAccount;
+import lombok.*;
+import org.apache.catalina.User;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@ToString
+public class CartDTO {
+
+    private long id;
+    private long cartId;
+//    private List<CartItemDTO> cartItemDTOList;
+
+    public Cart toEntity(UserAccount userAccount) {
+        return Cart.builder()
+                .userAccount(userAccount)
+                .cartId(this.cartId)
+//                .cartItemList(new ArrayList<>())
+                .build();
+    }
+}

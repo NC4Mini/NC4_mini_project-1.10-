@@ -11,29 +11,17 @@
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{js/cart/cart.js}"></script>
-
-
-
-
-        <script>
-            // 주문하기 눌렀을 때 동작할 것
-
-        </script>
-
     </th:block>
 </head>
 <body>
     <div layout:fragment="content">
-        <form id="CartForm" action="/cart/mycart" method="get">
 
             <div class="tit_page">
-            <h2 class="tit">장바구니</h2>
+                <h2 class="tit">장바구니</h2>
             </div>
-
             <div id="cartItemList" class="only_pc" style="min-height: 602px;">
             <div class="">
                 <div class="cart_item ">
-
                     <div class="cart_select">
                         <div class="inner_select">
                             <label class="check">
@@ -43,7 +31,6 @@
                             <a href="#none" class="btn_delete">선택삭제</a>
                         </div>
                     </div>
-
                     <div class="box cold">
                         <div class="tit_box">
                             <h4 class="tit">
@@ -62,7 +49,6 @@
                                                data-item-parent-no="65810">
                                         <span class="ico"></span>
                                     </label>
-
                                     <div class="name">
                                         <div class="inner_name">
                                             <a href="#" class="package ">[채소] 감자</a>
@@ -166,7 +152,9 @@
                         </div>
                         <!-- 계산 필요 . -->
                         <div class="btn_submit">
+                            <a href="/order/myorder">
                             <button type="button" class="btn active" id="orderBtn">주문하기</button>
+                            </a>
                             <!-- 결제 페이지로 이동 -->
                         </div>
                         <div class="notice">
@@ -185,7 +173,7 @@
                 </div>
             </div>
         </div>
-        </form>
+<!--        </form>-->
     </div>
 </body>
 </html>
