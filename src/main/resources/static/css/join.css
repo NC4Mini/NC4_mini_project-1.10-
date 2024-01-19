@@ -162,7 +162,7 @@ table {
 }
 
 .member_join .field_address {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .member_join #addressSearch {
@@ -256,3 +256,21 @@ input::placeholder{
     display:none;
     margin-top:10px
 }
+
+#userGender div {
+    display:flex; width: 332px; justify-content: space-between; text:bold;
+}
+
+#userGender .radio_box { display: inline-block; *display: inline; *zoom: 1; position: relative; padding-left: 10%; cursor: pointer; font-size: 14px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
+
+/* 기본 라디오 버튼 숨기기 */
+#userGender .radio_box input[type="radio"] { display: none; }
+
+/* 선택되지 않은 라디오 버튼 스타일 꾸미기 */
+#userGender .on { width: 24px; height: 24px; background: #fff; border: 1px solid #a5a0a0; border-radius: 50%; position: absolute; top: 0; left: 0; transform: translateY(-20%);}
+
+/* 선택된 라디오 버튼 스타일 꾸미기 */
+#userGender .radio_box input[type="radio"]:checked + .on { background: #5f0081;}
+#userGender .on:after { content: ""; position: absolute; display: none; }
+#userGender .radio_box input[type="radio"]:checked + .on:after { display: block; }
+#userGender .on:after { width: 10px; height: 10px; background: #fff; border-radius: 50%; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);}

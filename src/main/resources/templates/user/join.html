@@ -8,6 +8,9 @@
         <link rel="stylesheet" th:href="@{/css/join.css}">
         <link rel="stylesheet" th:href="@{/css/common.css}">
     </th:block>
+    <style>
+
+    </style>
     <th:block layout:fragment="script">
         <script>
             $(() => {
@@ -19,6 +22,13 @@
                 let confirmPw = false;
                 // 이메일 중복 체크 여부
                 let checkEmail = false;
+
+                // 모든 엘리먼트 요소 엔터값 방지
+                $(document).on('keydown', function(event) {
+                    if (event.which === 13) {
+                        event.preventDefault();
+                    }
+                });
 
                 // 아이디 중복 체크
                 $("#btnIdCheck").on("click", () => {
@@ -83,7 +93,6 @@
                                 checkEmail = true;
                                 $("#btnEmailCheck").attr("disabled", true);
                             }
-                            console.log($("#joinForm").serialize());
                         },
                         error: (error) => {
                             console.log(error);
@@ -148,7 +157,31 @@
                     return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=-]).{9,}$/.test(userPw);
                 }
                 // 비밀번호 입력 시 비밀번호 유효성 검사
+                $("#userPw").on("change", () => {
+                    if(validatePassword($("#userPw").val())) {
+                        validationPw = true;
+                        $("#pwValidation").hide();
+                    } else {
+                        validationPw = false;
+                        $("#pwValidation").show();
+                    }
+                });
+                // 비밀번호 확인과 비밀번호가 일치하는지 검사
+                $("#userPwCheck").on("change", () => {
+                    $("#pwCheckResult").show();
+
+                    if($("#userPw").val() === $("#userPwCheck").val()) {
+                        confirmPw = true;
+                        $("#pwCheckResult").text("비밀번호가 일치합니다.");
+                        $("#pwCheckResult").css("color", "green");
+                        return;
+                    }
+                    confirmPw = false;
+                    $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
+                    $("#pwCheckResult").css("color", "red");
+                });
             });
+            console.log($("#joinForm").serialize());
         </script>
     </th:block>
 </head>
@@ -178,14 +211,7 @@
                             <td>
                                 <input type="text" id="userId" name="userId" maxlength="16" required="" placeholder="6자 이상의 영문 혹은 영문과 숫자를 조합">
                                 <button type="button" id="btnIdCheck" class="btn default">중복확인</button>
-                                <p class="txt_guide square">
-<!--                                                    <span class="txt txt_case1">-->
-<!--                                                        6자 이상의 영문 혹은 영문과 숫자를 조합-->
-<!--                                                    </span>-->
-                                    <span class="txt txt_case2">
-                                                        아이디 중복확인
-                                                    </span>
-                                </p>
+                                <p class="txt_guide square"></p>
                             </td>
                         </tr>
 
@@ -197,14 +223,9 @@
                                                 </span>
                             </th>
                             <td>
-                                <input type="password" id="userPw" name="userPw" required=""  option="regPass" onkeyup="pw_check()" maxlength="16" class="reg_pw bad" placeholder="비밀번호를 입력해주세요">
-                                <p class="txt_guide square">
-                                                    <span class="txt txt_case1">
-                                                        10자 이상 입력
-                                                    </span>
-                                    <span class="txt txt_case2">
-                                                        영문/숫자/특수문자(공백 제외)만 허용하며, 2개 이상 조합
-                                                    </span>
+                                <input type="password" id="userPw" name="userPw" required="" maxlength="16" class="reg_pw bad" placeholder="비밀번호를 입력해주세요">
+                                <p id="pwValidation" class="txt_guide square" style="font-size: 0.8rem; color:red;">
+                                    영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.
                                 </p>
                             </td>
                         </tr>
@@ -219,11 +240,7 @@
                             </th>
                             <td>
                                 <input type="password" required="" id="userPwCheck" name="userPwCheck" maxlength="16" class="confirm_pw" placeholder="비밀번호를 한번 더 입력해주세요">
-                                <p class="txt_guide square">
-                                                    <span class="txt txt_case1">
-                                                        동일한 비밀번호를 입력해주세요.
-                                                    </span>
-                                </p>
+                                <p id="pwCheckResult" class="txt_guide square" style="font-size: 0.8rem"></p>
                             </td>
                         </tr>
 
@@ -267,8 +284,7 @@
 
                             <td>
                                 <div class="phone_num">
-                                    <input type="text" value="" pattern="[0-9]*" id="userTel" name="userTel" placeholder="숫자만 입력해주세요" class="inp">
-
+                                    <input type="text" value="" pattern="[0-9]*" id="userTel" name="userTel" required="" placeholder="숫자만 입력해주세요" class="inp">
                                 </div>
                             </td>
                         </tr>
@@ -294,23 +310,45 @@
                                 </p>
                             </td>
                         </tr>
-
+                        <tr>
+                            <th class="gender" style="padding-top:10px; vertical-align: top" >
+                                성별
+                            </th>
+                            <td id="userGender" class="userGender">
+                                <div>
+                                <label for="gender-man" class="radio_box">
+                                    <input type="radio" id="gender-man" name="userGender" value="MALE">
+                                    <span class="on"></span>
+                                    남자
+                                </label>
+                                <label for="gender-woman" class="radio_box">
+                                    <input type="radio" id="gender-woman" name="userGender" value="WOMAN">
+                                    <span class="on"></span>
+                                    여자
+                                </label>
+                                <label for="gender-none" class="radio_box">
+                                    <input type="radio" id="gender-none" name="userGender" value="NONE">
+                                    <span class="on"></span>
+                                    선택안함
+                                </label>
+                                </div>
+                            </td>
+                        </tr>
                         <tr class="birth field_birth">
-                            <th>생년월일</th>
-                            <td>
+                            <th style="padding-top: 30px">생년월일</th>
+                            <td style="padding-top: 20px; padding-bottom: 30px">
                                 <div class="birth_day">
-                                    <input type="text" name="userBirthYear" id="userBirthYear" pattern="[0-9]*"  label="생년월일" size="4" maxlength="4" placeholder="YYYY">
+                                    <label for="userBirthYear"><input type="text" name="userBirthYear" id="userBirthYear" pattern="[0-9]*"  label="생년월일" size="4" maxlength="4" placeholder="YYYY"></label>
                                     <span class="bar"></span>
-                                    <input type="text" name="userBirthMonth" id="userBirthMonth" pattern="[0-9]*"  label="생년월일" size="2" maxlength="2" placeholder="MM">
+                                    <label for="userBirthMonth"><input type="text" name="userBirthMonth" id="userBirthMonth" pattern="[0-9]*"  label="생년월일" size="2" maxlength="2" placeholder="MM"></label>
                                     <span class="bar"></span>
-                                    <input type="text" name="userBirthDay" id="userBirthDay" pattern="[0-9]*"  label="생년월일" size="2" maxlength="2" placeholder="DD">
+                                    <label for="userBirthDay"><input type="text" name="userBirthDay" id="userBirthDay" pattern="[0-9]*"  label="생년월일" size="2" maxlength="2" placeholder="DD"></label>
                                 </div>
                                 <input type="hidden" name="userBirth" id="userBirth">
                             </td>
                         </tr>
                         </tbody>
                     </table>
-
 
                     <div id="formSubmit" class="form_footer" style="border-top: 1px solid #333;">
                         <button type="submit" class="btn active btn_join" id="btnJoin" >가입하기</button>
