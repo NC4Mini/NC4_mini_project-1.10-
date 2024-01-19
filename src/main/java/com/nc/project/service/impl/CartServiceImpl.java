@@ -85,12 +85,7 @@ public class CartServiceImpl implements CartService {
 //        return cartItemDTOList;
     }
 
-    @Override
-    public void deleteCartItem(long cartItemId) {
-
-    }
-
-    // 받아온 장바구니 ID 정보로 새로운 개수를 저장해주는 기능
+    // 장바구니의 상품목록의 상품 개수를 버튼으로 바꿔주는 기능 (완료)
     @Override
     public CartItem updateCartItemCount(Long cartItemId, String action) {
         CartItem cartItem = cartItemRepository.findById(cartItemId).get();
@@ -104,6 +99,12 @@ public class CartServiceImpl implements CartService {
         cartItemRepository.save(cartItem);
 
         return cartItem;
+    }
+
+    @Override
+    public void deleteCartItem(long cartItemId) {
+
+        cartItemRepository.deleteById(cartItemId);
     }
 
 }

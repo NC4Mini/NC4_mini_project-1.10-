@@ -2,6 +2,7 @@ package com.nc.project.controller;
 
 import com.nc.project.dto.CartItemDTO;
 import com.nc.project.dto.ItemDTO;
+import com.nc.project.dto.ResponseDTO;
 import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.entity.CartItem;
 import com.nc.project.entity.Item;
@@ -63,14 +64,27 @@ public class CartController {
         return mav;
     }
 
-     // 장바구니 페이지에서 상품 수량 변경하는 기능
+     // 장바구니 페이지에서 상품 수량 변경하는 기능 (완료, 01.19)
     @PostMapping("/update-itemCnt")
     public ResponseEntity<?> updateCartItemCnt (Long cartItemId, String action) {
         CartItem cartItem = cartService.updateCartItemCount(cartItemId, action);
 
         return ResponseEntity.ok(cartItem.getCartItemCnt());
     }
+    // 장바구니 페이지에서 상품목록 삭제하는 기능
+    @DeleteMapping("/delete-cart-item")
+    public ResponseEntity<?> deleteCartItem (Long cartItemId) {
+        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
+        Map<String, String> returnMap = new HashMap<>();
 
+        cartService.deleteCartItem(cartItemId);
+
+        returnMap.put("msg", "삭제 되었습니다.");
+
+        response.setItem(returnMap);
+        response.setStatusCode(HttpStatus.OK.value());
+        return ResponseEntity.ok(response);
+    }
     // 장바구니 페이지에서 배송지 변경 이동
     @GetMapping("/addr-select")
     public ModelAndView changeAddr() {
