@@ -11,6 +11,7 @@
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/cart/cart.js}"></script>
+
     </th:block>
 </head>
 <body>
@@ -43,6 +44,7 @@
                                 <!-- 상품 목록 중 1. 추가/삭제될 목록임. -->
                                 <!-- cartitem에 담긴 것들 가져올 목록 div -->
                                 <div class="item" th:each="cartItem : ${cartItemList}">
+                                    <input type="hidden" name="cartItemId" id="cartItemId" th:value="${cartItem.cartItemId}">
                                     <label class="check" for="chkItem1">
                                         <!-- 개당 체크박스 -->
                                         <input onclick='check_sel_all(this)' type="checkbox" id="chkItem1" name="checkOne"
@@ -56,15 +58,16 @@
                                             <a href="#" class="package">
                                                 <div th:text="${cartItem.item.itemName}"></div>
                                             </a>
-                                                <!--<a href="#" class="package" th:text = "${item.itemName}">   </a>-->
-                                                <div class="info">
+                                            <!--<a href="#" class="package" th:text = "${item.itemName}">   </a>-->
+                                            <div class="info">
 
-                                                </div>
+                                            </div>
                                         </div>
+                                        <!-- 상품 자리 -->
                                         <div class="goods">
                                             <!-- 상품 이미지 누르면 해당 상품 페이지 가지도록 설정 -->
                                             <!-- 이미지자리 ^-->
-                                            <a href="#" class="thumb "
+                                            <a th:href="@{/item/item-detail(itemId=${cartItem.item.itemId})}" class="thumb "
                                                style="background-image: url(&quot;https://img-cf.kurly.com/shop/data/goods/1610599300495i0.jpg&quot;);">상품이미지</a>
                                             <!-- 가격 자리 -->
                                             <div class="price">
@@ -75,23 +78,40 @@
                                                     <p class="noti"></p>
                                                 </div>
 
-                                                <!-- 개수 조정 부분. -->
                                                 <div class="stamper count">
-                                                    <button type="button" class="btn minus off"
+
+                                                    <!-- 수량 감소 시키는 부분 -->
+                                                    <!-- 원래코드 -->
+                                                    <!--<button type="button" class="btn minus off"
                                                             data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
-                                                            data-opt="decrease">감소</button>
-                                                    <input type="text" id="stepperCounter" class="num" readonly="" value="1">
-                                                    <button type="button" class="btn plus"
+                                                            data-opt="decrease">감소</button>-->
+                                                    <!--<button onclick="updateCartItemCnt(${cartItem.cartItemId}, ${cartItem.cartItemCnt - 1})"> - </button>-->
+                                                    <button class="btn minus off"
                                                             data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
-                                                            data-opt="increase">추가</button>
+                                                            data-opt="decrease" th:onclick="updateCartItemCnt('decrease')">감소</button>
+
+                                                    <!-- DB에서 CartItemCnt를 불러올 부분 -->
+                                                    <!-- 원래코드   >>>>>>    <input type="text" id="stepperCounter" class="num" readonly="" value="1">-->
+                                                    <span th:text="${cartItem.cartItemCnt}" id="cartItemCnt" class="num"></span>
+
+                                                    <!-- 수량 증가 시키는 부분 -->
+                                                    <!-- 원래 코드 -->
+                                                    <!--<button type="button" class="btn plus"
+                                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                                            data-opt="increase">추가</button>-->
+                                                    <!--<button onclick="updateCartItemCnt(${cartItem.cartItemId}, ${cartItem.cartItemCnt + 1})"> + </button>-->
+                                                    <button class="btn plus"
+                                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                                            data-opt="increase" th:onclick="updateCartItemCnt('increase')">추가</button>
                                                 </div>
                                             </div>
                                         </div>
                                         <!-- 상품 삭제 시 db반영 (btn_delete)-->
-                                            <button type="button" onclick="del_row(this)" class="btn_delete" id="deleteBtn"
+                                            <button type="button" onclick="deleteCartItem(cartItemId)" class="btn_delete" id="deleteBtn"
                                                 data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
                                                 data-type="cold">
                                             상품 삭제</button>
+
                                     </div>
                                 </div>
                             </li>
@@ -168,7 +188,8 @@
                             </a>
                             <!-- 결제 페이지로 이동 -->
                         </div>
-                        <div class="notice">
+                        <!-- 겹치게 나오는 부분 삭제 -->
+                        <!--<div class="notice">
                         <span class="txt">
                             <span class="ico">·</span>쿠폰/적립금은 주문서에서 사용 가능합니다
                         </span>
@@ -179,12 +200,40 @@
                             <span class="ico">·</span>‘입금확인’ 이후 상태에는 고객센터로 문의해주세요.
 
                         </span>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </div>
         </div>
 <!--        </form>-->
+        <!-- 개수 조정 부분. -->
+        <script th:inline="javascript">
+            /*var cartItemId = $('#cartItemId').text();*/
+            var cartItemId = $('#cartItemId').val();
+            function updateCartItemCnt (action) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/cart/update-itemCnt',
+                    data: {
+                        cartItemId: cartItemId,
+                        action: action
+                    },
+                    success: function (newCartItemCnt) {
+                        $('#cartItemCnt').text(newCartItemCnt)
+                    },
+                    error: function (newCartItemCnt) {
+
+                    }
+                });
+            }
+
+            // function deleteCartItem (cartItemId) {
+            //     $.ajax({
+            //         type: 'DELETE',
+            //         url: ''
+            //     })
+            // }
+        </script>
     </div>
 </body>
 </html>

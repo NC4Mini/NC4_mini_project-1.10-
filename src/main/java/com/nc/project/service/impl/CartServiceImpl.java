@@ -85,18 +85,26 @@ public class CartServiceImpl implements CartService {
 //        return cartItemDTOList;
     }
 
+    // 장바구니의 상품목록의 상품 개수를 버튼으로 바꿔주는 기능 (완료)
     @Override
-    public void deleteCartItem(long cartItemId) {
+    public CartItem updateCartItemCount(Long cartItemId, String action) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId).get();
 
+        if ("increase".equals(action)) {
+            cartItem.setCartItemCnt(cartItem.getCartItemCnt() + 1);
+        } else if ("decrease".equals(action)) {
+            cartItem.setCartItemCnt(cartItem.getCartItemCnt() - 1);
+        }
+
+        cartItemRepository.save(cartItem);
+
+        return cartItem;
     }
 
     @Override
-    public void updateCartItemCount(Long cartItemId, int newCartItemCnt) {
-        Optional<CartItem> updateCartItem = cartItemRepository.findById(cartItemId);
+    public void deleteCartItem(long cartItemId) {
 
-        updateCartItem.get().setCartItemCnt(newCartItemCnt);
-
-        cartItemRepository.save(updateCartItem.get());
+        cartItemRepository.deleteById(cartItemId);
     }
 
 }

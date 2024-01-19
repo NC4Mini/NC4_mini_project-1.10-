@@ -10,7 +10,7 @@ public interface ItemService {
     // 상품 등록
     public void addItem (Item item);
 
-    // 상품 읽어오기 (1개)
+    // 해당 상품 읽어오기 (1개) - 상세 페이지
     public Item getItem(Long itemId);
 
     // 상품 읽어오기 (모두)
