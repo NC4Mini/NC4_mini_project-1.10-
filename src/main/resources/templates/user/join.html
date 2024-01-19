@@ -235,6 +235,17 @@
                 $("#addressSearch").on("click", () => {
                     openZipSearch();
                 });
+                // 주소 배열을 담을 변수
+                const addressArray = [];
+                // 주소 입력 폼이 변경될 때마다 배열에 추가
+                $("#addrZone, #addrBasic, #addrDetail").on("input", function() {
+                    const address = {
+                        zone: $("#addrZone").val(),
+                        basic: $("#addrBasic").val(),
+                        detail: $("#addrDetail").val()
+                    };
+                    addressArray.push(address);
+                });
                 // joinForm이 서브밋될 때 유효성 검사가 전부 완료되지 않으면 서브밋 제어
                 $("#joinForm").on("submit", (e) => {
                     // id 중복체크가 되지 않았을 때
@@ -242,6 +253,13 @@
                         e.preventDefault();
                         alert("아이디 중복체크를 해주세요.")
                         $("userId").focus();
+                        return;
+                    }
+                    // id 유효성 검사가 틀렸을 때
+                    if(!validationId) {
+                        e.preventDefault()
+                        alert("아이디는 영문자, 숫자 조합의 6자리 이상으로 설정해주세요")
+                        $("#userId").focus();
                         return;
                     }
                     // pw 유효성 검사가 틀렸을 때
@@ -258,9 +276,28 @@
                         $("#userPwCheck").focus();
                         return;
                     }
+                    // Email 중복검사가 실행되지 않았을 때
+                    if(!checkEmail) {
+                        e.preventDefault();
+                        alert("이메일 중복체크를 해주세요.")
+                        $("#userEmail").focus();
+                        return;
+                    }
+                    // Email 유효성 검사가 틀렸을 때
+                    if(!validationEmail) {
+                        e.preventDefault();
+                        alert("이메일 형식에 맞게 설정해주세요.")
+                        $("#userEmail").focus();
+                        return;
+                    }
+                    // 주소 중 입력이 안된 내용이 있을 때
+                    if ($("#addrZone").val() === "" || $("#addrBasic").val() === "" || $("#addrDetail").val() === "") {
+                        e.preventDefault();
+                        alert("주소를 모두 입력해주세요.")
+                        return;
+                    }
                 });
             });
-            // console.log($("#joinForm").serialize());
         </script>
     </th:block>
 </head>
