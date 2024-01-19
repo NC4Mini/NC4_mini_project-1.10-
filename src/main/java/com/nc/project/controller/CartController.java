@@ -3,6 +3,7 @@ package com.nc.project.controller;
 import com.nc.project.dto.CartItemDTO;
 import com.nc.project.dto.ItemDTO;
 import com.nc.project.dto.UserAccountDTO;
+import com.nc.project.entity.CartItem;
 import com.nc.project.entity.Item;
 import com.nc.project.entity.UserAccount;
 import com.nc.project.repository.ItemRepository;
@@ -16,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
@@ -44,30 +46,29 @@ public class CartController {
 
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("cart/getCart.html");
+        mav.setViewName("cart/get_cart.html");
 
         return mav;
     }
 
-    // 유저의 해당 장바구니 페이지 이동
+    // 해당 유저의 장바구니 페이지 이동
     @GetMapping("/mycart/{id}")
     public ModelAndView getUserCart (@PathVariable("id") long id) {
         ModelAndView mav = new ModelAndView();
 
         mav.addObject("cartItemList", cartService.getCartItem(id));
 
-        mav.setViewName("cart/getCartTest.html");
+        mav.setViewName("cart/get_cart_test.html");
 
         return mav;
     }
 
-    // 장바구니 페이지에서 상품 수량 변경하는 기능
+     // 장바구니 페이지에서 상품 수량 변경하는 기능
     @PostMapping("/update-itemCnt")
-    public ResponseEntity<?> updateCartItemCnt (Long cartItemId, int cartItemCnt) {
+    public ResponseEntity<?> updateCartItemCnt (Long cartItemId, String action) {
+        CartItem cartItem = cartService.updateCartItemCount(cartItemId, action);
 
-        cartService.updateCartItemCount(cartItemId, cartItemCnt);
-
-        return ResponseEntity.ok("수량 변경 완료");
+        return ResponseEntity.ok(cartItem.getCartItemCnt());
     }
 
     // 장바구니 페이지에서 배송지 변경 이동
@@ -75,7 +76,7 @@ public class CartController {
     public ModelAndView changeAddr() {
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("cart/addrSelect.html");
+        mav.setViewName("cart/addr_select.html");
 
         return mav;
     }
@@ -86,7 +87,7 @@ public class CartController {
         ModelAndView mav = new ModelAndView();
 
 
-        mav.setViewName("cart/addrModify.html");
+        mav.setViewName("cart/addr_modify.html");
 
         return mav;
     }
@@ -96,7 +97,7 @@ public class CartController {
     public ModelAndView addAddr() {
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("cart/addrAdd.html");
+        mav.setViewName("cart/addr_Add.html");
 
         return mav;
     }
