@@ -257,9 +257,29 @@ input::placeholder{
     margin-top:10px
 }
 
-#userGender div {
-    display:flex; width: 332px; justify-content: space-between; text:bold;
+.field_address button {
+    background: white;
 }
+
+.field_address button:hover {
+    cursor: pointer;
+}
+
+#addrZone {
+    margin-bottom: 10px;
+}
+
+#addrBasic {
+    margin-top : 10px;
+    margin-bottom: 10px;
+}
+
+#addrDetail {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#userGender div { display:flex; width: 332px; justify-content: space-between; }
 
 #userGender .radio_box { display: inline-block; *display: inline; *zoom: 1; position: relative; padding-left: 10%; cursor: pointer; font-size: 14px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; }
 

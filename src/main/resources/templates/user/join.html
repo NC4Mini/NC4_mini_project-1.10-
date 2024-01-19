@@ -8,20 +8,22 @@
         <link rel="stylesheet" th:href="@{/css/join.css}">
         <link rel="stylesheet" th:href="@{/css/common.css}">
     </th:block>
-    <style>
-
-    </style>
     <th:block layout:fragment="script">
+        <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script>
             $(() => {
                 // 아이디 중복 체크 여부
                 let checkId = false;
+                // 아이디 유효성 검사 여부
+                let validationId = false;
                 // 비밀번호 유효성 검사 여부
                 let validationPw = false;
                 // 비밀번호 일치 여부
                 let confirmPw = false;
                 // 이메일 중복 체크 여부
                 let checkEmail = false;
+                // 이메일 유효성 검사 여부
+                let validationEmail = false;
 
                 // 모든 엘리먼트 요소 엔터값 방지
                 $(document).on('keydown', function(event) {
@@ -38,7 +40,7 @@
                         return;
                     }
 
-                    //ajax - 백엔드
+                    //ajax - 백엔드 (아이디 중복체크)
                     $.ajax({
                         url: '/user/id-check',
                         type: 'post',
@@ -75,7 +77,7 @@
                         $("#userEmail").focus();
                         return;
                     }
-                    //ajax - 백엔드
+                    //ajax - 백엔드 (이메일 중복체크)
                     $.ajax({
                         url: '/user/email-check',
                         type: 'post',
@@ -150,12 +152,30 @@
 
                     // 가공된 날짜를 숨겨진 필드에 할당
                     $("#userBirth").val(userBirth);
-                    console.log($("#joinForm").serialize())
+                    // console.log($("#joinForm").serialize())
+                }
+                // 아이디 유효성 검사 정규식
+                const validateId = (userId) => {
+                    return /^[A-Za-z0-9][A-Za-z0-9]{6,12}$/.test(userId);
                 }
                 // 비밀번호 유효성 검사 정규식
                 const validatePassword = (userPw) => {
                     return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=-]).{9,}$/.test(userPw);
                 }
+                // 이메일 유효성 검사 정규식
+                const validateEmail = (userEmail) => {
+                    return /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i.test(userEmail);
+                }
+                // 아이디 입력 시 아이디 유효성 검사
+                $("#userId").on("change", () => {
+                    if(validateId($("#userId").val())) {
+                        validationId = true;
+                        $("#idValidation").hide();
+                    } else {
+                        validationId = false;
+                        $("#idValidation").show();
+                    }
+                });
                 // 비밀번호 입력 시 비밀번호 유효성 검사
                 $("#userPw").on("change", () => {
                     if(validatePassword($("#userPw").val())) {
@@ -166,6 +186,16 @@
                         $("#pwValidation").show();
                     }
                 });
+                // 이메일 입력 시 이메일 유효성 검사
+                $("#userEmail").on("change", () => {
+                    if(validateEmail($("#userEmail").val())) {
+                        validationEmail = true;
+                        $("#emailValidation").hide();
+                    } else {
+                        validationEmail = false;
+                        $("#emailValidation").show();
+                    }
+                })
                 // 비밀번호 확인과 비밀번호가 일치하는지 검사
                 $("#userPwCheck").on("change", () => {
                     $("#pwCheckResult").show();
@@ -180,8 +210,57 @@
                     $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
                     $("#pwCheckResult").css("color", "red");
                 });
+                // 주소 API 적용
+                function openZipSearch() {
+                    new daum.Postcode({
+                        oncomplete: function(data) {
+                            var addr = '';
+                            if (data.userSelectedType === 'R') {
+                                addr = data.roadAddress;
+                            } else {
+                                addr = data.jibunAddress;
+                            }
+
+                            $("#addrZone").val(data.zonecode);
+                            $("#addrBasic").val(addr);
+                            $("#addrDetail").val("").focus();
+
+                            // 버튼 숨기기
+                            $("#addressSearch").hide();
+                            // 주소 입력란 화면 표출
+                            $(".field_address input").show().css("margin-top", "0");
+                        }
+                    }).open();
+                }
+                $("#addressSearch").on("click", () => {
+                    openZipSearch();
+                });
+                // joinForm이 서브밋될 때 유효성 검사가 전부 완료되지 않으면 서브밋 제어
+                $("#joinForm").on("submit", (e) => {
+                    // id 중복체크가 되지 않았을 때
+                    if(!checkId) {
+                        e.preventDefault();
+                        alert("아이디 중복체크를 해주세요.")
+                        $("userId").focus();
+                        return;
+                    }
+                    // pw 유효성 검사가 틀렸을 때
+                    if(!validationPw) {
+                        e.preventDefault();
+                        alert("비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.");
+                        $("#userPw").focus();
+                        return;
+                    }
+                    // pw가 pw확인과 일치하지 않을 때
+                    if(!confirmPw) {
+                        e.preventDefault();
+                        alert("비밀번호가 일치하지 않습니다.");
+                        $("#userPwCheck").focus();
+                        return;
+                    }
+                });
             });
-            console.log($("#joinForm").serialize());
+            // console.log($("#joinForm").serialize());
         </script>
     </th:block>
 </head>
@@ -211,7 +290,9 @@
                             <td>
                                 <input type="text" id="userId" name="userId" maxlength="16" required="" placeholder="6자 이상의 영문 혹은 영문과 숫자를 조합">
                                 <button type="button" id="btnIdCheck" class="btn default">중복확인</button>
-                                <p class="txt_guide square"></p>
+                                <p id="idValidation" class="txt_guide square" style="font-size: 0.8rem; color:red;">
+                                    영문자, 숫자 조합의 6자리 이상으로 설정해주세요.
+                                </p>
                             </td>
                         </tr>
 
@@ -269,9 +350,11 @@
                             <td>
                                 <input type="text" id="userEmail" name="userEmail" size="30" required="" placeholder="예: marketkurly@kurly.com">
                                 <button type="button" id="btnEmailCheck" class="btn default">중복확인</button>
+                                <p id="emailValidation" class="txt_guide square" style="font-size: 0.8rem; color:red;">
+                                    이메일 형식에 맞도록 설정해주세요.
+                                </p>
                             </td>
                         </tr>
-
 
                         <tr class="field_phone">
                             <th>
@@ -298,15 +381,16 @@
                                                 </span>
                             </th>
                             <td class="field_address">
-                                <a href="#" id="addressSearch" class="search">
+                                <button type="button" id="addressSearch" class="search">
                                     <span id="addressNo" class="address_no">주소검색</span>
-                                </a>
-                                <input type="text" id="addrBasic" name="addrBasic" placeholder="주소">
-                                <input type="text" id="addrDetail" name="addrDetail"  placeholder="상세주소">
-                                <input type="text" id="addrZone" name="addrZone"  placeholder="우편번호">
+                                </button>
+                                <div>
+                                <input type="text" id="addrZone" name="addrZone" placeholder="우편번호" readonly="readonly">
+                                <input type="text" id="addrBasic" name="addrBasic" placeholder="기본주소" readonly="readonly">
+                                <input type="text" id="addrDetail" name="addrDetail"  placeholder="상세주소" >
+                                </div>
                                 <p class="txt_guide" style="display:block;">
                                     <span class="txt txt_case1">배송지에 따라 상품 정보가 달라질 수 있습니다.</span>
-
                                 </p>
                             </td>
                         </tr>
