@@ -4,6 +4,7 @@ import com.nc.project.entity.Board;
 import com.nc.project.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,7 +20,7 @@ public class BoardController {
     public ModelAndView board(){
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("board/getBoard.html");
+        mav.setViewName("board/get_board.html");
 
         return mav;
     }
@@ -30,7 +31,7 @@ public class BoardController {
         ModelAndView mav = new ModelAndView();
 
 
-        mav.setViewName("board/getBoardList.html");
+        mav.setViewName("board/get_board_list.html");
 
         return mav;
     }
@@ -44,6 +45,11 @@ public class BoardController {
         return "";
     }
 
+    @GetMapping("/list")
+    public String boardList(Model model){
+        model.addAttribute("list", boardService.boardList());
+        return "boardlist";
+    }
 
 
 

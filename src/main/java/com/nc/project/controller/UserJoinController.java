@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.sql.model.ModelMutationLogging;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -22,6 +23,7 @@ import java.util.Map;
 
 public class UserJoinController {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     // url : /user로 접근시 "/" 페이지로 리다이렉션(이동)
     @GetMapping
@@ -48,8 +50,9 @@ public class UserJoinController {
     // 회원가입 로직 (POST - join.html)
     @PostMapping("/join")
     public ModelAndView join(UserAccountDTO userAccountDTO,
-                             List<UserShpAddrDTO> userShpAddrDTOList) {
+                           List<UserShpAddrDTO> userShpAddrDTOList) {
         userAccountDTO.setUserShpAddrDTOList(userShpAddrDTOList);
+        userAccountDTO.setUserPw(passwordEncoder.encode(userAccountDTO.getUserPw()));
 
         userService.join(userAccountDTO);
 
