@@ -55,7 +55,7 @@
                                     <div class="name">
                                         <div class="inner_name">
                                             <!-- 제목 누르면 해당 상품 페이지로 가지도록 설정 -->
-                                            <a href="#" class="package">
+                                            <a th:href="@{/item/item-detail(itemId=${cartItem.item.itemId})}" class="package">
                                                 <div th:text="${cartItem.item.itemName}"></div>
                                             </a>
                                             <!--<a href="#" class="package" th:text = "${item.itemName}">   </a>-->
@@ -107,7 +107,7 @@
                                             </div>
                                         </div>
                                         <!-- 상품 삭제 시 db반영 (btn_delete)-->
-                                            <button type="button" onclick="deleteCartItem(cartItemId)" class="btn_delete" id="deleteBtn"
+                                            <button type="button" onclick="deleteCartItem(/*[[${cartItem.cartItemId}]]*/)" class="btn_delete" id="deleteBtn"
                                                 data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
                                                 data-type="cold">
                                             상품 삭제</button>
@@ -229,6 +229,9 @@
                 });
             }
 
+            function deleteCartItem (cartItemId) {
+
+            }
         </script>
     </div>
 </body>
