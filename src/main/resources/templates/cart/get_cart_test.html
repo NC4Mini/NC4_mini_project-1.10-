@@ -44,10 +44,10 @@
                                 <!-- 상품 목록 중 1. 추가/삭제될 목록임. -->
                                 <!-- cartitem에 담긴 것들 가져올 목록 div -->
                                 <div class="item" th:each="cartItem : ${cartItemList}">
-                                    <input type="hidden" name="cartItemId" id="cartItemId" th:value="${cartItem.cartItemId}">
+                                    <input type="hidden" name="cartItemId" th:id="cartItemId" th:value="${cartItem.cartItemId}">
                                     <label class="check" for="chkItem1">
                                         <!-- 개당 체크박스 -->
-                                        <input onclick='check_sel_all(this)' type="checkbox" id="chkItem1" name="checkOne"
+                                        <input onclick="check_sel_all(this)" type="checkbox" id="chkItem1" name="checkOne"
                                                class="checkOne" data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
                                                data-item-parent-no="65810">
                                         <span class="ico"></span>
@@ -88,11 +88,11 @@
                                                     <!--<button onclick="updateCartItemCnt(${cartItem.cartItemId}, ${cartItem.cartItemCnt - 1})"> - </button>-->
                                                     <button class="btn minus off"
                                                             data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
-                                                            data-opt="decrease" th:onclick="updateCartItemCnt('decrease')">감소</button>
+                                                            data-opt="decrease" th:onclick="updateCartItemCnt('decrease', /*[[${cartItem.cartItemId}]]*/)">감소</button>
 
                                                     <!-- DB에서 CartItemCnt를 불러올 부분 -->
                                                     <!-- 원래코드   >>>>>>    <input type="text" id="stepperCounter" class="num" readonly="" value="1">-->
-                                                    <span th:text="${cartItem.cartItemCnt}" id="cartItemCnt" class="num"></span>
+                                                    <span th:text="${cartItem.cartItemCnt}" th:id="'cartItemCntId_' + ${cartItem.cartItemId}" class="num"></span>
 
                                                     <!-- 수량 증가 시키는 부분 -->
                                                     <!-- 원래 코드 -->
@@ -100,9 +100,9 @@
                                                             data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
                                                             data-opt="increase">추가</button>-->
                                                     <!--<button onclick="updateCartItemCnt(${cartItem.cartItemId}, ${cartItem.cartItemCnt + 1})"> + </button>-->
-                                                    <button class="btn plus"
+                                                    <button class="btn plus off"
                                                             data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
-                                                            data-opt="increase" th:onclick="updateCartItemCnt('increase')">추가</button>
+                                                            data-opt="increase" th:onclick="updateCartItemCnt('increase', /*[[${cartItem.cartItemId}]]*/)">추가</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -205,12 +205,13 @@
                 </div>
             </div>
         </div>
-<!--        </form>-->
+
+        <!-- 스크립트 작성 부분 -->
         <!-- 개수 조정 부분. -->
         <script th:inline="javascript">
-            /*var cartItemId = $('#cartItemId').text();*/
-            var cartItemId = $('#cartItemId').val();
-            function updateCartItemCnt (action) {
+            /*var cartItemId = $('#cartItemId').val();*/
+            function updateCartItemCnt (action, cartItemId) {
+                var cartItemCntId = 'cartItemCntId_' + cartItemId;
                 $.ajax({
                     type: 'POST',
                     url: '/cart/update-itemCnt',
@@ -219,20 +220,15 @@
                         action: action
                     },
                     success: function (newCartItemCnt) {
-                        $('#cartItemCnt').text(newCartItemCnt)
+                        $('#' + cartItemCntId).text(newCartItemCnt);
+                        console.log("수정 완료")
                     },
                     error: function (newCartItemCnt) {
-
+                        console.log("수정 실패")
                     }
                 });
             }
 
-            // function deleteCartItem (cartItemId) {
-            //     $.ajax({
-            //         type: 'DELETE',
-            //         url: ''
-            //     })
-            // }
         </script>
     </div>
 </body>
