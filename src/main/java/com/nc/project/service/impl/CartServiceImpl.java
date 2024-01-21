@@ -14,9 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -87,8 +85,11 @@ public class CartServiceImpl implements CartService {
 
     // 장바구니의 상품목록의 상품 개수를 버튼으로 바꿔주는 기능 (완료)
     @Override
-    public CartItem updateCartItemCount(Long cartItemId, String action) {
+    public Map<String, Integer> updateCartItemCount(Long cartItemId, String action) {
+        Map<String, Integer> newCartItemMap = new HashMap<>();
+
         CartItem cartItem = cartItemRepository.findById(cartItemId).get();
+        Item item = cartItemRepository.findById(cartItemId).get().getItem();
 
         if ("increase".equals(action)) {
             cartItem.setCartItemCnt(cartItem.getCartItemCnt() + 1);
@@ -98,7 +99,10 @@ public class CartServiceImpl implements CartService {
 
         cartItemRepository.save(cartItem);
 
-        return cartItem;
+        newCartItemMap.put("newCartItemCnt", cartItem.getCartItemCnt());
+        newCartItemMap.put("newItemPrice", item.getItemPrice());
+
+        return newCartItemMap;
     }
 
     @Override

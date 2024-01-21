@@ -73,7 +73,9 @@
                                             <div class="price">
                                                 <div class="in_price">
                                                 <span class="selling">
-                                                    <div th:text="${cartItem.item.itemPrice}"></div><span class="won">원</span>
+                                                    <span class="won">
+                                                        <div th:id="'cartItemPriceId_' + ${cartItem.cartItemId}" th:text="${cartItem.item.itemPrice * cartItem.cartItemCnt + '원'}"></div>
+                                                    </span>
                                                 </span>
                                                     <p class="noti"></p>
                                                 </div>
@@ -119,18 +121,17 @@
                         </ul>
                     </div>
 
-                    <!-- 목록 선택 부분 -->
-                    <!-- 여긴 고정. -->
-                    <div class="cart_select">
-                        <div class="inner_select">
-                            <label class="check">
-                                <input type="checkbox" name="checkAll" onclick="sel_all(this)">
-                                <span class="ico"></span>전체선택 (1/1)
-                            </label>
-                            <!-- 1/n : db-->
-                            <a href="#none" class="btn_delete" id="deleteSelectBtn">선택삭제</a>
-                        </div>
-                    </div>
+                    <!-- 상품 목록 하단 상품 전체 선택, 선택 삭제 버튼 부분 / 기능 구현여부 미정 -->
+<!--                    <div class="cart_select">-->
+<!--                        <div class="inner_select">-->
+<!--                            <label class="check">-->
+<!--                                <input type="checkbox" name="checkAll" onclick="sel_all(this)">-->
+<!--                                <span class="ico"></span>전체선택 (1/1)-->
+<!--                            </label>-->
+<!--                            &lt;!&ndash; 1/n : db&ndash;&gt;-->
+<!--                            <a href="#none" class="btn_delete" id="deleteSelectBtn">선택삭제</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
                 <div class="cart_result">
                     <div class="inner_result" style="top: 60px;">
@@ -149,7 +150,7 @@
                             <dl class="amount">
                                 <dt class="tit">상품금액</dt>
                                 <dd class="price">
-                                    <span class="num">6,000</span>
+                                    <span class="num" ></span>
                                     <!-- product price here-->
                                     <span class="won">원</span>
                                 </dd>
@@ -190,6 +191,7 @@
                             </a>
                             <!-- 결제 페이지로 이동 -->
                         </div>
+
                         <!-- 겹치게 나오는 부분 삭제 -->
                         <!--<div class="notice">
                         <span class="txt">
@@ -214,6 +216,7 @@
             // 상품 개수 조절 버튼 기능
             function updateCartItemCnt (action, cartItemId) {
                 var cartItemCntId = 'cartItemCntId_' + cartItemId;
+                var cartItemPriceId = 'cartItemPriceId_' + cartItemId;
                 $.ajax({
                     type: 'POST',
                     url: '/cart/update-itemCnt',
@@ -221,8 +224,15 @@
                         cartItemId: cartItemId,
                         action: action
                     },
-                    success: function (newCartItemCnt) {
+                    success: function (response) {
+                        var newCartItemCnt = response.newCartItemCnt;
+                        // 수량 업데이트 부분
                         $('#' + cartItemCntId).text(newCartItemCnt);
+
+                        // 가격 업데이트
+                        var newItemPrice = response.newItemPrice;
+                        var newPrice = newCartItemCnt * newItemPrice;
+                        $('#' + cartItemPriceId).text(newPrice + '원');
                         console.log("수정 완료")
                     },
                     error: function (newCartItemCnt) {

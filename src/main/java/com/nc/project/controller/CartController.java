@@ -67,9 +67,12 @@ public class CartController {
      // 장바구니 페이지에서 상품 수량 변경하는 기능 (완료, 01.19)
     @PostMapping("/update-itemCnt")
     public ResponseEntity<?> updateCartItemCnt (Long cartItemId, String action) {
-        CartItem cartItem = cartService.updateCartItemCount(cartItemId, action);
 
-        return ResponseEntity.ok(cartItem.getCartItemCnt());
+        Map<String, Integer> response = new HashMap<>();
+
+        response = cartService.updateCartItemCount(cartItemId, action);
+
+        return ResponseEntity.ok(response);
     }
     // 장바구니 페이지에서 상품목록 삭제하는 기능
     @DeleteMapping("/delete-cart-item")
