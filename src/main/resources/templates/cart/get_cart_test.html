@@ -43,7 +43,7 @@
                             <li>
                                 <!-- 상품 목록 중 1. 추가/삭제될 목록임. -->
                                 <!-- cartitem에 담긴 것들 가져올 목록 div -->
-                                <div class="item" th:each="cartItem : ${cartItemList}">
+                                <div class="item" th:each="cartItem : ${cartItemList}" th:data-cartItem-id="${cartItem.cartItemId}">
                                     <input type="hidden" name="cartItemId" th:id="cartItemId" th:value="${cartItem.cartItemId}">
                                     <label class="check" for="chkItem1">
                                         <!-- 개당 체크박스 -->
@@ -80,7 +80,7 @@
 
                                                 <div class="stamper count">
 
-                                                    <!-- 수량 감소 시키는 부분 -->
+                                                    <!-- 수량 감소 시키는 버튼 -->
                                                     <!-- 원래코드 -->
                                                     <!--<button type="button" class="btn minus off"
                                                             data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
@@ -94,7 +94,7 @@
                                                     <!-- 원래코드   >>>>>>    <input type="text" id="stepperCounter" class="num" readonly="" value="1">-->
                                                     <span th:text="${cartItem.cartItemCnt}" th:id="'cartItemCntId_' + ${cartItem.cartItemId}" class="num"></span>
 
-                                                    <!-- 수량 증가 시키는 부분 -->
+                                                    <!-- 수량 증가 시키는 버튼 -->
                                                     <!-- 원래 코드 -->
                                                     <!--<button type="button" class="btn plus"
                                                             data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
@@ -106,11 +106,12 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- 상품 삭제하는 버튼 (X 표시 된거) -->
                                         <!-- 상품 삭제 시 db반영 (btn_delete)-->
-                                            <button type="button" onclick="deleteCartItem(/*[[${cartItem.cartItemId}]]*/)" class="btn_delete" id="deleteBtn"
-                                                data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
-                                                data-type="cold">
-                                            상품 삭제</button>
+                                        <button type="button" th:onclick="deleteCartItem(/*[[${cartItem.cartItemId}]]*/)" class="btn_delete"
+                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                            data-type="cold">
+                                        상품 삭제</button>
 
                                     </div>
                                 </div>
@@ -118,6 +119,7 @@
                         </ul>
                     </div>
 
+                    <!-- 목록 선택 부분 -->
                     <!-- 여긴 고정. -->
                     <div class="cart_select">
                         <div class="inner_select">
@@ -207,9 +209,9 @@
         </div>
 
         <!-- 스크립트 작성 부분 -->
-        <!-- 개수 조정 부분. -->
+
         <script th:inline="javascript">
-            /*var cartItemId = $('#cartItemId').val();*/
+            // 상품 개수 조절 버튼 기능
             function updateCartItemCnt (action, cartItemId) {
                 var cartItemCntId = 'cartItemCntId_' + cartItemId;
                 $.ajax({
@@ -229,8 +231,21 @@
                 });
             }
 
+            //  상품 삭제 버튼 기능
             function deleteCartItem (cartItemId) {
-
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/cart/delete-cart-item',
+                    data: {
+                        cartItemId: cartItemId
+                    },
+                    success: function () {
+                        $('[data-cartItem-id="' + cartItemId + '"]').remove();
+                    },
+                    error: function (error) {
+                        console.error('상품 삭제 실패: ', error);
+                    }
+                });
             }
         </script>
     </div>

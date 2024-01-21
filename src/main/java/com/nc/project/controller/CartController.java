@@ -85,6 +85,15 @@ public class CartController {
         response.setStatusCode(HttpStatus.OK.value());
         return ResponseEntity.ok(response);
     }
+
+//    // 장바구니 페이지에서 상품목록 삭제하는 기능
+//    @DeleteMapping("/delete-cart-item")
+//    public void deleteCartItem (Long cartItemId) {
+//
+//        cartService.deleteCartItem(cartItemId);
+//    }
+
+
     // 장바구니 페이지에서 배송지 변경 이동
     @GetMapping("/addr-select")
     public ModelAndView changeAddr() {
