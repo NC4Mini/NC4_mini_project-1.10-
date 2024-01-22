@@ -1,5 +1,6 @@
 package com.nc.project.service;
 
+import com.nc.project.dto.BoardDTO;
 import com.nc.project.entity.Board;
 import com.nc.project.repository.BoardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
-    //특정 게시글 불러오기
+    public void save(BoardDTO boardDTO) {
+    }
+
 
 }
