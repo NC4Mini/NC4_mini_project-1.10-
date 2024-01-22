@@ -42,20 +42,13 @@ public class CartController {
 
     private final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
-    // 장바구니 임시 접속용
-    @GetMapping("/mycart")
-    public ModelAndView getUserCart () {
-
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("cart/get_cart.html");
-
-        return mav;
-    }
-
     // 해당 유저의 장바구니 페이지 이동
-    @GetMapping("/mycart/{id}")
-    public ModelAndView getUserCart (@PathVariable("id") long id) {
+    @GetMapping("/mycart")
+    public ModelAndView getUserCart (Principal principal) {
+        String userName = principal.getName();
+
+        long id = userAccountRepository.findByUserId(userName).get().getId();
+
         ModelAndView mav = new ModelAndView();
 
         mav.addObject("cartItemList", cartService.getCartItem(id));
@@ -64,21 +57,6 @@ public class CartController {
 
         return mav;
     }
-
-    // 해당 유저의 장바구니 페이지 이동 (spring security 적용 연구)
-//    @GetMapping("/mycart")
-//    public ModelAndView getUserCart (Authentication authentication) {
-//        ModelAndView mav = new ModelAndView();
-//
-//        UserAccount userAccount = (UserAccount)authentication.getPrincipal();
-//        long id = userAccount.getId();
-//
-//        mav.addObject("cartItemList", cartService.getCartItem(id));
-//
-//        mav.setViewName("cart/get_cart_test.html");
-//
-//        return mav;
-//    }
 
      // 장바구니 페이지에서 상품 수량 변경하는 기능 (완료, 01.19)
     @PostMapping("/update-itemCnt")
