@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,6 +65,21 @@ public class CartController {
         return mav;
     }
 
+    // 해당 유저의 장바구니 페이지 이동 (spring security 적용 연구)
+//    @GetMapping("/mycart")
+//    public ModelAndView getUserCart (Authentication authentication) {
+//        ModelAndView mav = new ModelAndView();
+//
+//        UserAccount userAccount = (UserAccount)authentication.getPrincipal();
+//        long id = userAccount.getId();
+//
+//        mav.addObject("cartItemList", cartService.getCartItem(id));
+//
+//        mav.setViewName("cart/get_cart_test.html");
+//
+//        return mav;
+//    }
+
      // 장바구니 페이지에서 상품 수량 변경하는 기능 (완료, 01.19)
     @PostMapping("/update-itemCnt")
     public ResponseEntity<?> updateCartItemCnt (Long cartItemId, String action) {
@@ -88,13 +104,6 @@ public class CartController {
         response.setStatusCode(HttpStatus.OK.value());
         return ResponseEntity.ok(response);
     }
-
-//    // 장바구니 페이지에서 상품목록 삭제하는 기능
-//    @DeleteMapping("/delete-cart-item")
-//    public void deleteCartItem (Long cartItemId) {
-//
-//        cartService.deleteCartItem(cartItemId);
-//    }
 
 
     // 장바구니 페이지에서 배송지 변경 이동

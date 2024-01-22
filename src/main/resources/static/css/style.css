@@ -1,8 +1,9 @@
 @import url("./fonts.css");
 @import url("./reset.css");
-@import Url("admin/admin_common.css");
-@import Url("admin/admin_page_prd_upload.css");
-@import Url("order/order.css");
+/* 주문 페이지에만 적용되는 css로 공통 스타일에 적용 불필요 제거(01.22) */
+/*@import Url("admin/admin_common.css");*/
+/*@import Url("admin/admin_page_prd_upload.css");*/
+/*@import Url("order/order.css");*/
 #content{
   width:100%;
   height:500px;
