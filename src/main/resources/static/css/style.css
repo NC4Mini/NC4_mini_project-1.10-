@@ -1,7 +1,8 @@
 @import url("./fonts.css");
 @import url("./reset.css");
-@import Url("./admin_common.css");
-@import Url("admin_page_prd_upload.css");
+@import Url("admin/admin_common.css");
+@import Url("admin/admin_page_prd_upload.css");
+@import Url("order/order.css");
 #content{
   width:100%;
   height:500px;
