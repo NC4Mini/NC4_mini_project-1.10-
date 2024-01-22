@@ -117,7 +117,7 @@ public class CartController {
 
     // 상품 상세페이지에서 장바구니에 물건 추가 (개수 지정)
     @PostMapping("/add")
-    public void addCartItem (UserAccountDTO userAccountDTO, ItemDTO itemDTO, int itemCount) {
+    public void addCartItem (UserAccountDTO userAccountDTO, ItemDTO itemDTO) {
 
     }
 

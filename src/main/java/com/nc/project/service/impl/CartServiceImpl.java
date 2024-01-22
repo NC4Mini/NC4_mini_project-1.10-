@@ -65,6 +65,7 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    // 해당 사용자의 장바구니를 표출해주는 기능 (완료)
     @Override
     public List<CartItem> getCartItem (long id) {
         // 받아온 id로 cart를 찾기
@@ -105,6 +106,7 @@ public class CartServiceImpl implements CartService {
         return newCartItemMap;
     }
 
+    // 장바구니의 상품을 지우는 기능 (완료)
     @Override
     public void deleteCartItem(long cartItemId) {
         CartItem cartItem = cartItemRepository.findById(cartItemId).get();
