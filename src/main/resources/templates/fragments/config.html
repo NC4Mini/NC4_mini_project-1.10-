@@ -8,9 +8,9 @@
 
     <link rel="stylesheet" th:href="@{/css/style.css}">
 
-    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
-
     <script th:src="@{/js/intro.js}"></script>
+
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
 
     <th:block layout:fragment="css">
         <!-- <style></style>
@@ -21,6 +21,10 @@
         <!--<script></script>
         <script th:src="@{}"></script>-->
     </th:block>
+
+    <th:block th:fragment="cart_css"></th:block>
+    <th:block th:fragment="cart_js"></th:block>
+
 </head>
 <body>
 

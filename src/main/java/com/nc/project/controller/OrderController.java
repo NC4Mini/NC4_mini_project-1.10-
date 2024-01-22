@@ -15,7 +15,7 @@ public class OrderController {
     public ModelAndView getOrder() {
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("/order/getOrder.html");
+        mav.setViewName("/order/get_order.html");
 
         return mav;
     }

@@ -7,9 +7,12 @@
     <div class="row1">
         <div class="container">
             <ul>
-                <li><a href="#">회원가입</a></li>
+                <li><a th:href="@{/user/join}">회원가입</a></li>
                 <li><i>|</i></li>
-                <li><a href="#">로그인</a></li>
+                <li sec:authorize="!isAuthenticated()" ><a th:href="@{/login}">로그인</a></li>
+                <li sec:authorize="isAuthenticated()" ><a th:href="@{/user/profile}">회원정보</a></li>
+                <li sec:authorize="isAuthenticated()" ><i>|</i></li>
+                <li sec:authorize="isAuthenticated()" ><a th:href="@{/logout}">로그아웃</a></li>
                 <li><i>|</i></li>
                 <li class="service-box">
                     <a href="board/board-list" class="service-center-btn">고객센터<img src="/img/ico_down_16x10.png" alt=""></a>
@@ -56,6 +59,10 @@
                 </form>
             </div>
             <div class="right">
+                <!--상품 추가 버튼 생성 / 24.01.16-->
+                <div>
+                    <a href="/item/add-item" title="상품 추가"><img src="/img/addItem.svg"> </a>
+                </div>
                 <div class="map-tooltip-box">
                     <a href="#" title="배송지" class="map-tootip-btn"><img src="/img/map.svg" alt=""></a>
                     <div class="map-tooltip-memnu">
@@ -74,6 +81,7 @@
                 <div>
                     <a href="#" title="찜하기"><img src="/img/heart.svg" alt=""></a>
                 </div>
+
                 <div>
                     <a href="/cart/mycart" title="장바구니"><img src="/img/cart.svg" alt="장바구니 모양"></a>
                 </div>

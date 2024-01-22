@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<body>
+<div layout:fragment="content" id="main">
+    <div class="page_aticle aticle_type2">
+        <div id="snb" class="snb_my">
+            <h2 class="tit_snb">고객센터</h2>
+            <div class="inner_snb">
+                <ul class="list_menu">
+                    <li>
+                        <a href="#">공지사항</a>
+                    </li>
+                    <li>
+                        <a href="#">자주하는 질문</a>
+                    </li>
+                    <li>
+                        <a href="/board/getBoardList">1:1 문의</a>
+                    </li>
+                    <li>
+                        <a href="#">대량주문 문의</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+
+        <div id="viewOrderList" class="page_section section_orderlist">
+            <div class="head_aticle">
+                <h2 class="tit">
+                    1:1문의
+                </h2>
+            </div>
+
+            <div class="list_order">
+                <form action="/board/writedo" method="post">
+                    <div class="size">
+                        <div class="p_board">
+                            <table width="100%">
+                                <tbody>
+                                <tr>
+                                    <th >유형</th>
+                                    <td colspan="2">
+                                        <div>
+                                                <span>
+                                                    <input type="text" name="questionCategory" class="i_text text1" onkeyup="chkword_name(this, 80)">
+                                                </span>
+                                        </div>
+                                        <span class="txtByte" title="현재글자수/최대글자수">
+                                              [
+                                              <strong class="txt_count_name">0</strong>
+                                               / 80 ]
+                                            </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>제목</th>
+                                    <td colspan="2">
+                                        <div>
+                                                <span>
+                                                    <input type="text" class="i_text text2" name="questionTitle" onkeyup="chkword_introduce(this, 150)">
+                                                </span>
+
+                                        </div>
+                                        <span class="txtByte" title="현재글자수/최대글자수">
+                                              [
+                                              <strong class="txt_count_introduce">0</strong>
+                                               / 150 ]
+                                            </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>내용</th>
+                                    <td>
+                                        <div>
+                                                <span>
+                                                    <textarea class="i_text text8" name="questionContent" id="" cols="30" rows="10" onkeyup="chkword_information(this, 550)"></textarea>
+                                                </span>
+                                        </div>
+                                        <span class="txtByte_big txtByte" title="현재글자수/최대글자수">
+                                              [
+                                              <strong class="txt_count_information">0</strong>
+                                               / 550 ]
+                                            </span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th>이미지</th>
+                                    <td class="img_upload">
+                                        <div>
+                                            <span>대표 이미지</span>
+
+                                            <div class="image_box">
+
+
+                                                <div class="image_add">
+
+                                                    <input type="file" name="product_main_image" accept="image/*" id="image_input" onchange="set_image(event);">
+                                                    <button type="button" class="image_input_button"></button>
+                                                    <div id="image_container"></div>
+
+                                                    <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
+                                                    <script>
+                                                        function set_image(){
+
+                                                            var reader = new FileReader();
+
+                                                            reader.onload = function(event) {
+                                                                var img = document.createElement("img");
+                                                                img.setAttribute("src", event.target.result);
+                                                                document.querySelector("div#image_container").appendChild(img);
+                                                            };
+
+                                                            reader.readAsDataURL(event.target.files[0]);
+                                                        }
+
+                                                    </script>
+
+
+
+<!--                                                    <button type="button" class="re_upload">-->
+<!--                                                            <span>-->
+<!--                                                                수정-->
+<!--                                                            </span></button>-->
+<!--                                                    <button type="button" class="remove">-->
+<!--                                                            <span>-->
+<!--                                                                삭제-->
+<!--                                                            </span>-->
+<!--                                                    </button>-->
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div>
+
+                                        </div>
+
+
+
+
+
+
+
+
+
+
+
+                                    </td>
+
+
+
+
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="product_submit" class="pd_submit">
+                            <button type="submit" >등록하기</button>
+                        </div>
+
+                    </div>
+                </form>
+
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

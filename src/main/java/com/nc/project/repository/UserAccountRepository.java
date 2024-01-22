@@ -1,8 +1,14 @@
 package com.nc.project.repository;
 
-import com.nc.project.entity.UserDetail;
+import com.nc.project.entity.UserAccount;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserAccountRepository extends JpaRepository<UserDetail, Long> {
-public UserDetail findByUserId(String UserId);
+import java.util.Optional;
+
+public interface UserAccountRepository extends JpaRepository<UserAccount, Long> {
+    Optional<UserAccount> findByUserId(String UserId);
+
+    int countByUserId(String userId);
+
+    int countByUserEmail(String userEmail);
 }

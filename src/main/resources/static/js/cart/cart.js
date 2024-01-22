@@ -62,21 +62,23 @@ window.addEventListener('DOMContentLoaded',function(){
     }
 });
 
-$(function(){ 
+$(function(){
     $('.plus').click(function(){ //count up
         var n = $('.plus').index(this);
         var num = $(".num:eq("+n+")").val();
-        num = $(".num:eq("+n+")").val(num*1+1); 
-        
+        num = $(".num:eq("+n+")").val(num*1+1);
+
     });
     $('.minus').click(function(){  // count down..
         var n = $('.minus').index(this);
         var num = $(".num:eq("+n+")").val();
         if (num!=1){
-            num = $(".num:eq("+n+")").val(num*1-1); 
+            num = $(".num:eq("+n+")").val(num*1-1);
         }
     });
 });
+
+
 function check_sel_all(checkbox)  { /*개별 선택에 따른 전체선택상태변경 */
     const selectall = document.querySelectorAll('input[name="checkAll"]');
     const checkboxes = document.querySelectorAll('input[name="checkOne"]');    
@@ -115,8 +117,8 @@ function sel_all(selectAll){ /* 전체선택버튼 활성화 */
     });
 }
 
-function del_row(ths){
-    var ths = $(ths);
+function del_row(this){
+    var ths = $(this);
 
     ths.parents("li").remove();
 }

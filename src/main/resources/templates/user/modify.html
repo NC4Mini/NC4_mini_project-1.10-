@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout2}">
+      layout:decorate="~{layouts/layoutSidebar}">
 <head>
     <th:block layout:fragment="css">
         <style>
@@ -123,8 +123,8 @@
 
 
                     $.ajax({
-                       url: '/user/modify',
-                       type: 'put',
+                       url: '/profile/change',
+                       type: 'post',
                        data: $("#modifyForm").serialize(),
                        success: (obj) => {
                            alert(obj.item.msg);
@@ -143,6 +143,29 @@
                        }
                     });
                 });
+
+                $("#resignBtn").on("click", (e) => {
+                    $.ajax({
+                        url: '/profile/resign',
+                        type: 'post',
+                        data: $("#modifyForm").serialize(),
+                        success: (obj) => {
+                            alert(obj.item.msg);
+                            // 화면 새로고침
+                            location.reload();
+                        },
+                        error: (err) => {
+                            if(err.responseJSON.errorCode === 900) {
+                                alert("현재 비밀번호를 잘못 입력하셨습니다.");
+                                $("#curUserPw").focus();
+                                return;
+                            } else {
+                                alert("알 수 없는 에러입니다. 관리자에게 문의하세요");
+                                return;
+                            }
+                        }
+                    });
+                });
             });
         </script>
     </th:block>
@@ -150,15 +173,10 @@
 <body>
     <div layout:fragment="content">
         <div class="form-wrapper">
-            <form id="modifyForm" action="/user/join" method="post">
+            <br><br>
+            <form id="modifyForm" action="/profile/change" method="post">
                 <input type="hidden" id="id" name="id">
                 <h3>회원정보 수정</h3>
-                <div class="label-wrapper">
-                    <label for="userId">아이디</label>
-                </div>
-                <div>
-                    <input type="text" id="userId" name="userId" readonly>
-                </div>
                 <div class="label-wrapper">
                     <label for="userPw">현재 비밀번호</label>
                 </div>
@@ -189,6 +207,7 @@
                 <input type="text" id="userTel" name="userTel" >
                 <div style="display: block; margin: 20px auto;">
                     <button type="button" id="modifyBtn">회원정보 수정</button>
+                    <button type="button" id="resignBtn">회원탈퇴</button>
                 </div>
             </form>
         </div>
