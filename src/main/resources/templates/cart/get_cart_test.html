@@ -7,7 +7,7 @@
 <head>
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/cart/cart.css}">
-        <link rel="stylesheet" th:href="@{/css/cart/list.bundle.css}">
+        <link rel="stylesheet" th:href="@{/css/cart/cart_list_bundle.css}">
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/cart/cart.js}"></script>
@@ -23,15 +23,16 @@
             <div id="cartItemList" class="only_pc" style="min-height: 602px;">
             <div class="">
                 <div class="cart_item">
-                    <div class="cart_select">
-                        <div class="inner_select">
-                            <label class="check">
-                                <input type="checkbox" name="checkAll" class="checkAll" onclick="sel_all(this)">
-                                <span class="ico"></span>전체선택 (1/1)
-                            </label>
-                            <a href="#none" class="btn_delete">선택삭제</a>
-                        </div>
-                    </div>
+                    <!-- 상품 전체 선택, 선택삭제 버튼 비활성화 -->
+<!--                    <div class="cart_select">-->
+<!--                        <div class="inner_select">-->
+<!--                            <label class="check">-->
+<!--                                <input type="checkbox" name="checkAll" class="checkAll" onclick="sel_all(this)">-->
+<!--                                <span class="ico"></span>전체선택 (1/1)-->
+<!--                            </label>-->
+<!--                            <a href="#none" class="btn_delete">선택삭제</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="box cold">
                         <div class="tit_box">
                             <h4 class="tit">
@@ -45,13 +46,15 @@
                                 <!-- cartitem에 담긴 것들 가져올 목록 div -->
                                 <div class="item" th:each="cartItem : ${cartItemList}" th:data-cartItem-id="${cartItem.cartItemId}">
                                     <input type="hidden" name="cartItemId" th:id="cartItemId" th:value="${cartItem.cartItemId}">
-                                    <label class="check" for="chkItem1">
-                                        <!-- 개당 체크박스 -->
-                                        <input onclick="check_sel_all(this)" type="checkbox" id="chkItem1" name="checkOne"
-                                               class="checkOne" data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
-                                               data-item-parent-no="65810">
-                                        <span class="ico"></span>
-                                    </label>
+
+                                    <!-- 상품 왼쪽 체크박스 버튼 비활성화 -->
+<!--                                    <label class="check" for="chkItem1">-->
+<!--                                        &lt;!&ndash; 개당 체크박스 &ndash;&gt;-->
+<!--                                        <input onclick="check_sel_all(this)" type="checkbox" id="chkItem1" name="checkOne"-->
+<!--                                               class="checkOne" data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"-->
+<!--                                               data-item-parent-no="65810">-->
+<!--                                        <span class="ico"></span>-->
+<!--                                    </label>-->
                                     <div class="name">
                                         <div class="inner_name">
                                             <!-- 제목 누르면 해당 상품 페이지로 가지도록 설정 -->
