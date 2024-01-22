@@ -5,6 +5,7 @@ import com.nc.project.dto.ItemDTO;
 import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.entity.Cart;
 import com.nc.project.entity.CartItem;
+import com.nc.project.entity.UserAccount;
 
 import java.util.List;
 import java.util.Map;
@@ -13,8 +14,8 @@ import java.util.Objects;
 
 public interface CartService {
 
-    // 상품 상세페이지에서 수량 정해서 장바구니 넣어주는 기능
-    public void addCart (UserAccountDTO userAccountDTO, ItemDTO itemDTO, int itemCnt);
+    // 상품 상세페이지에서 장바구니 추가 기능
+    public void addCart(UserAccount userAccount, long itemId);
 
     // 유저의 장바구니 상품 목록을 찾아주는 기능
     public List<CartItem> getCartItem (long id);
