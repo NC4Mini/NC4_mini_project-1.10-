@@ -152,7 +152,7 @@
                                 <dd class="price">
                                     <span class="num" ></span>
                                     <!-- product price here-->
-                                    <span class="won">원</span>
+                                    <span class="won">6000원</span>
                                 </dd>
                             </dl>
                             <dl class="amount">
@@ -213,7 +213,7 @@
         <!-- 스크립트 작성 부분 -->
 
         <script th:inline="javascript">
-            // 상품 개수 조절 버튼 기능
+            // 상품 개수 조절 버튼 기능 (버튼 클릭해서 값이 바뀔 때 마다 연관된 값들이 수정됨)
             function updateCartItemCnt (action, cartItemId) {
                 var cartItemCntId = 'cartItemCntId_' + cartItemId;
                 var cartItemPriceId = 'cartItemPriceId_' + cartItemId;
@@ -257,6 +257,7 @@
                     }
                 });
             }
+
         </script>
     </div>
 </body>
