@@ -1,21 +1,26 @@
 package com.nc.project.entity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
-@Data
-public class Board {
+@Getter
+@Setter
+@Table(name="board")
+public class Board extends Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer questionId;
+    private Long id;
 
-    private  String questionCategory;
+    @Column // 크기 255, null 가능
+    private String boardCategory;
 
-    private  String questionTitle;
+    @Column
+    private String boardTitle;
 
-    private  String questionContent;
+    @Column(length = 500)
+    private String boardContents;
+
 }
