@@ -339,7 +339,7 @@ label.label_block {
 }
 
 .only_pc .stamper {
-    width: 88px;
+    width: 90px;
     height: 30px;
     border-radius: 3px
 }
@@ -889,8 +889,8 @@ label.label_block {
 .box .list li .goods .thumb {
     overflow: hidden;
     float: left;
-    width: 60px;
-    height: 78px;
+    width: 90px;
+    height: 90px;
     margin-top: 2px;
     background-repeat: no-repeat;
     background-position: 50% 50%;
@@ -1677,9 +1677,9 @@ label.label_block {
 
 .only_pc .box .list li .goods .thumb {
     position: absolute;
-    left: 56px;
+    left: 10px;
     top: 50%;
-    margin-top: -39px
+    margin-top: -45px
 }
 
 .only_pc .box .list li .goods .price .in_price {

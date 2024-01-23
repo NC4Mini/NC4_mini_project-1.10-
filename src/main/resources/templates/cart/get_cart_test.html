@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html  lang="en"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/layout}"
+>
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/cart/cart.css}">
+        <link rel="stylesheet" th:href="@{/css/cart/cart_list_bundle.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/cart/cart.js}"></script>
+
+    </th:block>
+</head>
+<body>
+    <div layout:fragment="content">
+
+            <div class="tit_page">
+                <h2 class="tit">장바구니</h2>
+            </div>
+            <div id="cartItemList" class="only_pc" style="min-height: 602px;">
+            <div class="">
+                <div class="cart_item">
+                    <!-- 상품 전체 선택, 선택삭제 버튼 비활성화 -->
+<!--                    <div class="cart_select">-->
+<!--                        <div class="inner_select">-->
+<!--                            <label class="check">-->
+<!--                                <input type="checkbox" name="checkAll" class="checkAll" onclick="sel_all(this)">-->
+<!--                                <span class="ico"></span>전체선택 (1/1)-->
+<!--                            </label>-->
+<!--                            <a href="#none" class="btn_delete">선택삭제</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <div class="box cold">
+                        <div class="tit_box">
+                            <h4 class="tit">
+                                <span class="inner_tit">상품 목록</span>
+                            </h4>
+                            <button type="button" id='btn_dropup' class="btn_dropup" onclick="dropup()">접기 / 펼치기</button>
+                        </div>
+                        <ul class="list" id='dropup_list'>
+                            <li>
+                                <!-- 상품 목록 중 1. 추가/삭제될 목록임. -->
+                                <!-- cartitem에 담긴 것들 가져올 목록 div -->
+                                <div class="item" th:each="cartItem : ${cartItemList}" th:data-cartItem-id="${cartItem.cartItemId}">
+                                    <input type="hidden" name="cartItemId" th:id="cartItemId" th:value="${cartItem.cartItemId}">
+
+                                    <!-- 상품 왼쪽 체크박스 버튼 비활성화 -->
+<!--                                    <label class="check" for="chkItem1">-->
+<!--                                        &lt;!&ndash; 개당 체크박스 &ndash;&gt;-->
+<!--                                        <input onclick="check_sel_all(this)" type="checkbox" id="chkItem1" name="checkOne"-->
+<!--                                               class="checkOne" data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"-->
+<!--                                               data-item-parent-no="65810">-->
+<!--                                        <span class="ico"></span>-->
+<!--                                    </label>-->
+                                    <div class="name">
+                                        <div class="inner_name">
+                                            <!-- 제목 누르면 해당 상품 페이지로 가지도록 설정 -->
+                                            <a th:href="@{/item/item-detail(itemId=${cartItem.item.itemId})}" class="package">
+                                                <div th:text="${cartItem.item.itemName}"></div>
+                                            </a>
+                                            <!--<a href="#" class="package" th:text = "${item.itemName}">   </a>-->
+                                            <div class="info">
+
+                                            </div>
+                                        </div>
+                                        <!-- 상품 자리 -->
+                                        <div class="goods">
+                                            <!-- 상품 이미지 누르면 해당 상품 페이지 가지도록 설정 -->
+                                            <!-- 이미지자리 ^-->
+                                            <a th:href="@{/item/item-detail(itemId=${cartItem.item.itemId})}" class="thumb "
+                                               style="background-image: url(&quot;https://img-cf.kurly.com/shop/data/goods/1610599300495i0.jpg&quot;);">상품이미지</a>
+                                            <!-- 가격 자리 -->
+                                            <div class="price">
+                                                <div class="in_price">
+                                                <span class="selling">
+                                                    <span class="won">
+                                                        <div th:id="'cartItemPriceId_' + ${cartItem.cartItemId}" th:text="${cartItem.item.itemPrice * cartItem.cartItemCnt + '원'}"></div>
+                                                    </span>
+                                                </span>
+                                                    <p class="noti"></p>
+                                                </div>
+
+                                                <div class="stamper count">
+
+                                                    <!-- 수량 감소 시키는 버튼 -->
+                                                    <!-- 원래코드 -->
+                                                    <!--<button type="button" class="btn minus off"
+                                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                                            data-opt="decrease">감소</button>-->
+                                                    <!--<button onclick="updateCartItemCnt(${cartItem.cartItemId}, ${cartItem.cartItemCnt - 1})"> - </button>-->
+                                                    <button class="btn minus off"
+                                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                                            data-opt="decrease" th:onclick="updateCartItemCnt('decrease', /*[[${cartItem.cartItemId}]]*/)">감소</button>
+
+                                                    <!-- DB에서 CartItemCnt를 불러올 부분 -->
+                                                    <!-- 원래코드   >>>>>>    <input type="text" id="stepperCounter" class="num" readonly="" value="1">-->
+                                                    <span th:text="${cartItem.cartItemCnt}" th:id="'cartItemCntId_' + ${cartItem.cartItemId}" class="num"></span>
+
+                                                    <!-- 수량 증가 시키는 버튼 -->
+                                                    <!-- 원래 코드 -->
+                                                    <!--<button type="button" class="btn plus"
+                                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                                            data-opt="increase">추가</button>-->
+                                                    <!--<button onclick="updateCartItemCnt(${cartItem.cartItemId}, ${cartItem.cartItemCnt + 1})"> + </button>-->
+                                                    <button class="btn plus off"
+                                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                                            data-opt="increase" th:onclick="updateCartItemCnt('increase', /*[[${cartItem.cartItemId}]]*/)">추가</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 상품 삭제하는 버튼 (X 표시 된거) -->
+                                        <!-- 상품 삭제 시 db반영 (btn_delete)-->
+                                        <button type="button" th:onclick="deleteCartItem(/*[[${cartItem.cartItemId}]]*/)" class="btn_delete"
+                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                            data-type="cold">
+                                        상품 삭제</button>
+
+                                    </div>
+                                    <hr>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 상품 목록 하단 상품 전체 선택, 선택 삭제 버튼 부분 / 기능 구현여부 미정 -->
+<!--                    <div class="cart_select">-->
+<!--                        <div class="inner_select">-->
+<!--                            <label class="check">-->
+<!--                                <input type="checkbox" name="checkAll" onclick="sel_all(this)">-->
+<!--                                <span class="ico"></span>전체선택 (1/1)-->
+<!--                            </label>-->
+<!--                            &lt;!&ndash; 1/n : db&ndash;&gt;-->
+<!--                            <a href="#none" class="btn_delete" id="deleteSelectBtn">선택삭제</a>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
+                <div class="cart_result">
+                    <div class="inner_result" style="top: 60px;">
+                        <div class="cart_delivery">
+                            <h3 class="tit">배송지</h3>
+                            <div class="address">
+                                <p class="addr">인천 연수구 909호</p>
+                                <!-- address here -->
+                                <span class="delivery star">샛별배송</span>
+                                <a href="/cart/addr-select"
+                                   onclick="window.open(this.href,'shipping destination','width=514, height=584');return false;"
+                                   class="btn default">배송지 변경</a>
+                            </div>
+                        </div>
+                        <div class="amount_view">
+                            <dl class="amount">
+                                <dt class="tit">상품금액</dt>
+                                <dd class="price">
+                                    <span class="num" ></span>
+                                    <!-- product price here-->
+                                    <span class="won">6000원</span>
+                                </dd>
+                            </dl>
+                            <dl class="amount">
+                                <dt class="tit">상품할인금액</dt>
+                                <dd class="price">
+                                    <span class="num">0</span>
+                                    <span class="won">원</span>
+                                </dd>
+                            </dl>
+                            <dl class="amount">
+                                <dt class="tit">배송비</dt>
+                                <dd class="price">
+                                    <span class="num">0</span>
+                                    <span class="won">원</span>
+                                </dd>
+                            </dl>
+                            <dl class="amount lst">
+                                <dt class="tit">결제예정금액</dt>
+                                <dd class="price">
+                                    <span class="num">6,000</span>
+                                    <!-- sum of product price here -->
+                                    <span class="won">원</span>
+                                </dd>
+                            </dl>
+                            <div class="reserve">
+                                <span class="bage">적립</span>구매 시
+
+                                <span class="emph">325원 적립</span>
+                                <!-- 계산된 적립금(총금액의 20%)^.-->
+                            </div>
+                        </div>
+                        <!-- 계산 필요 . -->
+                        <div class="btn_submit">
+                            <a href="/order/myorder">
+                            <button type="button" class="btn active" id="orderBtn">주문하기</button>
+                            </a>
+                            <!-- 결제 페이지로 이동 -->
+                        </div>
+
+                        <!-- 겹치게 나오는 부분 삭제 -->
+                        <!--<div class="notice">
+                        <span class="txt">
+                            <span class="ico">·</span>쿠폰/적립금은 주문서에서 사용 가능합니다
+                        </span>
+                            <span class="txt">
+                            <span class="ico">·</span>‘입금확인’ 상태일 때는 주문 내역 상세에서 직접 주문취소가 가능합니다.
+                        </span>
+                            <span class="txt">
+                            <span class="ico">·</span>‘입금확인’ 이후 상태에는 고객센터로 문의해주세요.
+
+                        </span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 스크립트 작성 부분 -->
+
+        <script th:inline="javascript">
+            // 상품 개수 조절 버튼 기능 (버튼 클릭해서 값이 바뀔 때 마다 연관된 값들이 수정됨)
+            function updateCartItemCnt (action, cartItemId) {
+                var cartItemCntId = 'cartItemCntId_' + cartItemId;
+                var cartItemPriceId = 'cartItemPriceId_' + cartItemId;
+                $.ajax({
+                    type: 'POST',
+                    url: '/cart/update-itemCnt',
+                    data: {
+                        cartItemId: cartItemId,
+                        action: action
+                    },
+                    success: function (response) {
+                        var newCartItemCnt = response.newCartItemCnt;
+                        // 수량 업데이트 부분
+                        $('#' + cartItemCntId).text(newCartItemCnt);
+
+                        // 가격 업데이트
+                        var newItemPrice = response.newItemPrice;
+                        var newPrice = newCartItemCnt * newItemPrice;
+                        $('#' + cartItemPriceId).text(newPrice + '원');
+                        console.log("수정 완료")
+                    },
+                    error: function (newCartItemCnt) {
+                        console.log("수정 실패")
+                    }
+                });
+            }
+
+            //  상품 삭제 버튼 기능
+            function deleteCartItem (cartItemId) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/cart/delete-cart-item',
+                    data: {
+                        cartItemId: cartItemId
+                    },
+                    success: function () {
+                        $('[data-cartItem-id="' + cartItemId + '"]').remove();
+                    },
+                    error: function (error) {
+                        console.error('상품 삭제 실패: ', error);
+                    }
+                });
+            }
+
+        </script>
+    </div>
+</body>
+</html>
+

@@ -24,7 +24,7 @@ public class BoardController {
     public ModelAndView board(){
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("board/getBoard.html");
+        mav.setViewName("board/get_board.html");
 
         return mav;
     }
@@ -35,7 +35,7 @@ public class BoardController {
         ModelAndView mav = new ModelAndView();
 
 
-        mav.setViewName("board/getBoardList.html");
+        mav.setViewName("board/get_board_list.html");
 
         return mav;
     }
