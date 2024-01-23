@@ -1,5 +1,7 @@
 package com.nc.project.dto;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.nc.project.entity.UserAccount;
 import com.nc.project.entity.UserShpAddr;
 import lombok.*;
@@ -11,7 +13,6 @@ import lombok.*;
 @Builder
 @ToString
 public class UserShpAddrDTO {
-    //aa
     private int addrId;
     private long id;
     private String addrBasic;

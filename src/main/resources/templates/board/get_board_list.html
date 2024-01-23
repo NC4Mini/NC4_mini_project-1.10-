@@ -35,7 +35,7 @@
             </div>
 
             <div class="list_order">
-                <form action="/board/writedo" method="post">
+                <form action="/board/save" method="post">
                     <div class="size">
                         <div class="p_board">
                             <table width="100%">
@@ -45,7 +45,7 @@
                                     <td colspan="2">
                                         <div>
                                                 <span>
-                                                    <input type="text" name="questionCategory" class="i_text text1" onkeyup="chkword_name(this, 80)">
+                                                    <input type="text" name="boardCategory" class="i_text text1" onkeyup="chkword_name(this, 80)">
                                                 </span>
                                         </div>
                                         <span class="txtByte" title="현재글자수/최대글자수">
@@ -60,7 +60,7 @@
                                     <td colspan="2">
                                         <div>
                                                 <span>
-                                                    <input type="text" class="i_text text2" name="questionTitle" onkeyup="chkword_introduce(this, 150)">
+                                                    <input type="text" class="i_text text2" name="boardTitle" onkeyup="chkword_introduce(this, 150)">
                                                 </span>
 
                                         </div>
@@ -76,7 +76,7 @@
                                     <td>
                                         <div>
                                                 <span>
-                                                    <textarea class="i_text text8" name="questionContent" id="" cols="30" rows="10" onkeyup="chkword_information(this, 550)"></textarea>
+                                                    <textarea class="i_text text8" name="boardContents" id="" cols="30" rows="10" onkeyup="chkword_information(this, 550)"></textarea>
                                                 </span>
                                         </div>
                                         <span class="txtByte_big txtByte" title="현재글자수/최대글자수">
