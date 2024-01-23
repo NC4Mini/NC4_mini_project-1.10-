@@ -25,6 +25,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.*;
@@ -45,11 +46,20 @@ public class CartController {
     // 해당 유저의 장바구니 페이지 이동
     @GetMapping("/mycart")
     public ModelAndView getUserCart (Principal principal) {
+        ModelAndView mav = new ModelAndView();
+
+        // 사용자 정보가 없을 경우 로그인창으로 이동
+        if (principal == null) {
+            RedirectView redirectView = new RedirectView("/login");
+
+            mav.setView(redirectView);
+
+            return mav;
+        }
+
         String userName = principal.getName();
 
         long id = userAccountRepository.findByUserId(userName).get().getId();
-
-        ModelAndView mav = new ModelAndView();
 
         mav.addObject("cartItemList", cartService.getCartItem(id));
 
@@ -116,9 +126,19 @@ public class CartController {
     }
 
     // 상품 상세페이지에서 장바구니에 물건 추가
-    @PostMapping("/add")
-    public void addCartItem (UserAccountDTO userAccountDTO) {
+    @GetMapping("/add/{itemId}")
+    public ResponseEntity<?> addCartItem (Principal principal,@PathVariable Long itemId) {
+        // 사용자 정보가 없을 경우 로그인창으로 이동
+        if (principal == null) {
+            String loginUrl = "/login";
+            return ResponseEntity.status(HttpStatus.FOUND).header("Location", loginUrl).build();
+        }
 
+        UserAccount userAccount = userAccountRepository.findByUserId(principal.getName()).get();
+
+        cartService.addCart(userAccount, itemId);
+
+        return ResponseEntity.ok("장바구니에 추가 되었습니다.");
     }
 
 

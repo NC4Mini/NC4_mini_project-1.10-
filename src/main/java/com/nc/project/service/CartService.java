@@ -15,7 +15,7 @@ import java.util.Objects;
 public interface CartService {
 
     // 상품 상세페이지에서 장바구니 추가 기능
-    public void addCart(UserAccount userAccount, long itemId);
+    public void addCart(UserAccount userAccount, Long itemId);
 
     // 유저의 장바구니 상품 목록을 찾아주는 기능
     public List<CartItem> getCartItem (long id);

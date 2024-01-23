@@ -7,9 +7,11 @@
 <head>
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/item/item_detail.css}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/item/item_detail.js}"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </th:block>
 </head>
 <body>
@@ -17,7 +19,6 @@
                 <div class="section_view">
                     <div id="sectionView">
                         <div class="inner_view">
-                            <input type="hidden" th:id="itemId" th:value="${item.itemId}">
                             <div class="thumb" style="background-image: url(https://res.kurly.com/mobile/img/1808/img_none_x2.png);">
                                 <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAHnCAQAAADpr9U2AAABeUlEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALg0lPQAATTM2xoAAAAASUVORK5CYII=" alt="상품 대표 이미지" class="bg">
 
@@ -102,7 +103,8 @@
                     <div id="cartPut">
                         <div class="cart_option cart_type2">
                             <!-- 장바구니 담을 수 있도록 form데이터로 감싸줌 -->
-                            <form action="">
+                            <form th:object="${item}" th:action="@{'/cart/add/' + ${item.itemId}}" id="add_cart_form" method="get">
+                                <input type="hidden" th:value="${item.itemId}">
                                 <div class="inner_option">
                                     <div class="in_option">
                                         <div class="list_goods">
@@ -141,10 +143,28 @@
                                         <div class="view_function">
                                             <button type="button" class="btn btn_save">늘 사는 것</button>
                                         </div>
-                                        <form th:action="@{/cart/a}"
                                         <span class="btn_type1">
-                                            <button type="submit" class="txt_type">장바구니 담기</button>
+                                            <button type="submit" class="txt_type" onclick="add_to_cart()">장바구니 담기</button>
                                         </span>
+                                        <!-- modal 창 -->
+                                        <div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="addToCartModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="addToCartModalLabel">장바구니 안내</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        장바구니에 상품이 담겼습니다.
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -676,5 +696,15 @@
                     </div>
                 </div>
 </div>
+<script th:inline="javascript">
+    function add_to_cart() {
+        $('#addToCartModal').modal('show');
+        $('#add_cart_form').submit();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+    });
+</script>
 </body>
 </html>
