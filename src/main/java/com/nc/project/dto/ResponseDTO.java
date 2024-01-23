@@ -10,6 +10,8 @@ import java.util.List;
 @Setter
 public class ResponseDTO<T> {
 
+    private List<T> items;
+
     private T item;
 
     private String errorMessage;
