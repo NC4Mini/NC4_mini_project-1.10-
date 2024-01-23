@@ -165,7 +165,7 @@ table {
     padding-bottom: 10px;
 }
 
-.member_join #addressSearch {
+.member_join #addressSearch{
     display: block;
     overflow: hidden;
     width: 332px;
@@ -266,17 +266,17 @@ input::placeholder{
 }
 
 #addrZone {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 #addrBasic {
-    margin-top : 10px;
-    margin-bottom: 10px;
+    margin-top : 20px;
+    margin-bottom: 20px;
 }
 
 #addrDetail {
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 #userGender div { display:flex; width: 332px; justify-content: space-between; }
@@ -291,6 +291,25 @@ input::placeholder{
 
 /* 선택된 라디오 버튼 스타일 꾸미기 */
 #userGender .radio_box input[type="radio"]:checked + .on { background: #5f0081;}
+
 #userGender .on:after { content: ""; position: absolute; display: none; }
 #userGender .radio_box input[type="radio"]:checked + .on:after { display: block; }
+
 #userGender .on:after { width: 10px; height: 10px; background: #fff; border-radius: 50%; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);}
+
+/* 기본배송지 관련 css */
+#addrStandard {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+#checkStandard {
+    margin-bottom: 10px;
+}
+
+#checkStandard label.check_box {
+    cursor: pointer;
+}
+
