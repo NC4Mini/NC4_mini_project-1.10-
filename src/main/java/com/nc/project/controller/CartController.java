@@ -126,19 +126,24 @@ public class CartController {
     }
 
     // 상품 상세페이지에서 장바구니에 물건 추가
-    @GetMapping("/add/{itemId}")
+    @PostMapping("/add/{itemId}")
     public ResponseEntity<?> addCartItem (Principal principal,@PathVariable Long itemId) {
         // 사용자 정보가 없을 경우 로그인창으로 이동
         if (principal == null) {
             String loginUrl = "/login";
-            return ResponseEntity.status(HttpStatus.FOUND).header("Location", loginUrl).build();
+            return ResponseEntity.status(HttpStatus.FOUND).header("Add Fail", loginUrl).build();
         }
 
         UserAccount userAccount = userAccountRepository.findByUserId(principal.getName()).get();
 
         cartService.addCart(userAccount, itemId);
 
-        return ResponseEntity.ok("장바구니에 추가 되었습니다.");
+        String itemUrl = "/item/item-detail?itemId=" + itemId;
+
+        // 다시 해당 페이지로 리다이렉트
+//        return ResponseEntity.status(HttpStatus.OK).header("Add Complete", itemUrl).build();
+        return ResponseEntity.ok("장바구니에 추가되었습니다.");
+
     }
 
 

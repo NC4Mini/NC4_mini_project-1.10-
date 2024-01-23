@@ -7,15 +7,33 @@
 <head>
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/item/item_detail.css}">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/item/item_detail.js}"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </th:block>
 </head>
 <body>
 <div layout:fragment="content">
+
+<!--    &lt;!&ndash; modal 창 &ndash;&gt;-->
+<!--    <div class="modal" tabindex="-1">-->
+<!--        <div class="modal-dialog">-->
+<!--            <div class="modal-content">-->
+<!--                <div class="modal-header">-->
+<!--                    <h5 class="modal-title">Modal title</h5>-->
+<!--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                </div>-->
+<!--                <div class="modal-body">-->
+<!--                    <p>Modal body text goes here.</p>-->
+<!--                </div>-->
+<!--                <div class="modal-footer">-->
+<!--                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                    <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+
                 <div class="section_view">
                     <div id="sectionView">
                         <div class="inner_view">
@@ -103,7 +121,9 @@
                     <div id="cartPut">
                         <div class="cart_option cart_type2">
                             <!-- 장바구니 담을 수 있도록 form데이터로 감싸줌 -->
-                            <form th:object="${item}" th:action="@{'/cart/add/' + ${item.itemId}}" id="add_cart_form" method="get">
+                            <!--<form id="add_cart_form">-->
+                            <form>
+<!--                            <form th:object="${item}" th:action="@{'/cart/add/' + ${item.itemId}}" id="add_cart_form" method="post">-->
                                 <input type="hidden" th:value="${item.itemId}">
                                 <div class="inner_option">
                                     <div class="in_option">
@@ -143,28 +163,10 @@
                                         <div class="view_function">
                                             <button type="button" class="btn btn_save">늘 사는 것</button>
                                         </div>
-                                        <span class="btn_type1">
-                                            <button type="submit" class="txt_type" onclick="add_to_cart()">장바구니 담기</button>
+                                        <span class="btn_type1"> <!--txt_type-->
+                                            <button type="button" class="txt_type" id="add_cart_btn" th:onclick="addToCart(/*[[${item.itemId}]]*/)">장바구니 담기</button>
                                         </span>
-                                        <!-- modal 창 -->
-                                        <div class="modal fade" id="addToCartModal" tabindex="-1" role="dialog" aria-labelledby="addToCartModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="addToCartModalLabel">장바구니 안내</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        장바구니에 상품이 담겼습니다.
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+
                                     </div>
                                 </div>
                             </form>
@@ -689,6 +691,8 @@
                                 </a>
                             </li>
                         </ul>
+
+                        <!-- 고객 리뷰 칸 -->
                         <div class="goods-view-infomation-content" id="goods-review"> <!-- 아래 주소창에 good_review_list.html url 넣어주면 됩니당-->
                             <iframe src="http://127.0.0.1:5500/good_review_list.html" id="inreview" frameborder="0" class="goods-view-infomation-board" height="733"></iframe>
                         </div>
@@ -697,14 +701,71 @@
                 </div>
 </div>
 <script th:inline="javascript">
-    function add_to_cart() {
-        $('#addToCartModal').modal('show');
-        $('#add_cart_form').submit();
+    function addToCart (itemId) {
+
+        $.ajax({
+            type: 'POST',
+            url: "/cart/add/" + itemId,
+            data: {
+                itemId: itemId
+            },
+            success: function (response) {
+                alert(response);
+
+                console.log(response);
+            },
+            error: function (error) {
+                console.log("오류발생");
+                console.log(error);
+            }
+        });
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    // 모달 기능을 위한 설정
+    const myModal = document.getElementById('myModal')
+    const myInput = document.getElementById('myInput')
 
-    });
+    myModal.addEventListener('shown.bs.modal', () => {
+        myInput.focus()
+    })
+
+    // 장바구니 버튼 클릭시 동작할 스크립트
+
+    // $(document).ready(function () {
+    //     $("#add_cart_btn").click(function (event) {
+    //         event.preventDefault();
+    //         console.log("==================버튼 클릭됨===================")
+    //         var sendData =
+    //             $('#add_cart_form').serialize();
+    //
+    //         $.ajax({
+    //             type: "POST",
+    //             url: $('#add_cart_form').attr('action'),
+    //             data: sendData,
+    //             success: function (response) {
+    //                 console.log(response);
+    //             },
+    //             error: function (error) {
+    //                 console.log(error);
+    //             }
+    //         });
+    //     });
+    // });
+
+
+    // function add_to_cart() {
+    //
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: $('#add_cart_form').attr('action'),
+    //         data: $('#add_cart_form').serialize(),
+    //         success: function (response) {
+    //             $('#modalBody').html(response);
+    //             $('#exampleModal').modal('show');
+    //         }
+    //     })
+    // }
+
 </script>
 </body>
 </html>
