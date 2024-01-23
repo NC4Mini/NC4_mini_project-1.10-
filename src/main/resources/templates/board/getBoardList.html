@@ -4,6 +4,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <body>
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/admin/admin_common.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/admin_page_prd_upload.css}">
+</th:block>
 <div layout:fragment="content" id="main">
     <div class="page_aticle aticle_type2">
         <div id="snb" class="snb_my">
