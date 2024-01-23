@@ -25,6 +25,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.security.Principal;
 import java.util.*;
@@ -42,21 +43,23 @@ public class CartController {
 
     private final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
-    // 장바구니 임시 접속용
-    @GetMapping("/mycart")
-    public ModelAndView getUserCart () {
-
-        ModelAndView mav = new ModelAndView();
-
-        mav.setViewName("cart/get_cart.html");
-
-        return mav;
-    }
-
     // 해당 유저의 장바구니 페이지 이동
-    @GetMapping("/mycart/{id}")
-    public ModelAndView getUserCart (@PathVariable("id") long id) {
+    @GetMapping("/mycart")
+    public ModelAndView getUserCart (Principal principal) {
         ModelAndView mav = new ModelAndView();
+
+        // 사용자 정보가 없을 경우 로그인창으로 이동
+        if (principal == null) {
+            RedirectView redirectView = new RedirectView("/login");
+
+            mav.setView(redirectView);
+
+            return mav;
+        }
+
+        String userName = principal.getName();
+
+        long id = userAccountRepository.findByUserId(userName).get().getId();
 
         mav.addObject("cartItemList", cartService.getCartItem(id));
 
@@ -64,21 +67,6 @@ public class CartController {
 
         return mav;
     }
-
-    // 해당 유저의 장바구니 페이지 이동 (spring security 적용 연구)
-//    @GetMapping("/mycart")
-//    public ModelAndView getUserCart (Authentication authentication) {
-//        ModelAndView mav = new ModelAndView();
-//
-//        UserAccount userAccount = (UserAccount)authentication.getPrincipal();
-//        long id = userAccount.getId();
-//
-//        mav.addObject("cartItemList", cartService.getCartItem(id));
-//
-//        mav.setViewName("cart/get_cart_test.html");
-//
-//        return mav;
-//    }
 
      // 장바구니 페이지에서 상품 수량 변경하는 기능 (완료, 01.19)
     @PostMapping("/update-itemCnt")
@@ -137,9 +125,24 @@ public class CartController {
         return mav;
     }
 
-    // 상품 상세페이지에서 장바구니에 물건 추가 (개수 지정)
-    @PostMapping("/add")
-    public void addCartItem (UserAccountDTO userAccountDTO, ItemDTO itemDTO, int itemCount) {
+    // 상품 상세페이지에서 장바구니에 물건 추가
+    @PostMapping("/add/{itemId}")
+    public ResponseEntity<?> addCartItem (Principal principal,@PathVariable Long itemId) {
+        // 사용자 정보가 없을 경우 로그인창으로 이동
+        if (principal == null) {
+            String loginUrl = "/login";
+            return ResponseEntity.status(HttpStatus.FOUND).header("Add Fail", loginUrl).build();
+        }
+
+        UserAccount userAccount = userAccountRepository.findByUserId(principal.getName()).get();
+
+        cartService.addCart(userAccount, itemId);
+
+        String itemUrl = "/item/item-detail?itemId=" + itemId;
+
+        // 다시 해당 페이지로 리다이렉트
+//        return ResponseEntity.status(HttpStatus.OK).header("Add Complete", itemUrl).build();
+        return ResponseEntity.ok("장바구니에 추가되었습니다.");
 
     }
 
