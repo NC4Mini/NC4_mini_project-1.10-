@@ -40,11 +40,14 @@ public class CartItem {
     @Column(name = "cart_item_cnt")
     private int cartItemCnt;
 
-//    @Column(name = "cart_item_price")
-//    private int cartItemPrice;
-
-//    @Column(name = "totalPrice")
-//    private int totalPrice;
+    // CartItem이 저장될 때 마다 부모 Cart의 totalPrice 갱신 해주는 메서드
+    @PrePersist
+    @PreUpdate
+    public void updateCartTotalPrice() {
+        if (cart != null) {
+            cart.calcTotalPrice();
+        }
+    }
 
     public CartItemDTO toDTO() {
         return CartItemDTO.builder()

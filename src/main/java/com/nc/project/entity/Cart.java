@@ -47,6 +47,16 @@ public class Cart {
         return cart;
     }
 
+    // totalPrice를 계산해주는 메서드
+    public void calcTotalPrice() {
+        int calcTotalPrice = 0;
+
+        for (CartItem cartItem : cartItemList) {
+            calcTotalPrice += cartItem.getItem().getItemPrice() * cartItem.getCartItemCnt();
+        }
+        this.totalPrice = calcTotalPrice;
+    }
+
     public CartDTO toDTO() {
         return CartDTO.builder()
                 .id(this.userAccount.getId())

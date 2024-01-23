@@ -113,4 +113,11 @@ public class CartServiceImpl implements CartService {
         cartItemRepository.delete(cartItem);
     }
 
+    @Override
+    public Cart getCart(long id) {
+        Cart cart = cartRepository.findByUserAccountId(id);
+
+        return cart;
+    }
+
 }

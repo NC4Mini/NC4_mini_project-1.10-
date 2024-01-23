@@ -15,6 +15,7 @@ import com.nc.project.service.ItemService;
 import com.nc.project.service.UserService;
 import com.nc.project.service.impl.CartServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,6 +63,7 @@ public class CartController {
         long id = userAccountRepository.findByUserId(userName).get().getId();
 
         mav.addObject("cartItemList", cartService.getCartItem(id));
+        mav.addObject("cart", cartService.getCart(id));
 
         mav.setViewName("cart/get_cart_test.html");
 

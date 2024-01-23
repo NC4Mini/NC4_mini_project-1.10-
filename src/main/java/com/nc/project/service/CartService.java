@@ -25,4 +25,7 @@ public interface CartService {
 
     // 장바구니에서 목록의 장바구니 아이템을 X버튼으로 삭제하는 기능
     public void deleteCartItem (long cartItemId);
+
+    // 유저의 장바구니 객체를 가져오는 기능
+    public Cart getCart (long id);
 }
