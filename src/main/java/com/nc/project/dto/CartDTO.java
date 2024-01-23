@@ -18,13 +18,15 @@ public class CartDTO {
 
     private long id;
     private long cartId;
-//    private List<CartItemDTO> cartItemDTOList;
+    private List<CartItemDTO> cartItemDTOList;
+    private int totalPrice;
 
     public Cart toEntity(UserAccount userAccount) {
         return Cart.builder()
                 .userAccount(userAccount)
                 .cartId(this.cartId)
-//                .cartItemList(new ArrayList<>())
+                .cartItemList(new ArrayList<>())
+                .totalPrice(this.totalPrice)
                 .build();
     }
 }

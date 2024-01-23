@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html  lang="en"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/layout}"
+>
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/item/item_detail.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/item/item_detail.js}"></script>
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content">
+                <div class="section_view">
+                    <div id="sectionView">
+                        <div class="inner_view">
+                            <div class="thumb" style="background-image: url(https://res.kurly.com/mobile/img/1808/img_none_x2.png);">
+                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXcAAAHnCAQAAADpr9U2AAABeUlEQVR42u3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALg0lPQAATTM2xoAAAAASUVORK5CYII=" alt="상품 대표 이미지" class="bg">
+
+                            </div>
+                            <p class="goods_name">
+                                <span class="btn_share">
+                                    <button id="btnShare">공유하기</button>
+                                </span>
+                                <strong class="name">[상품명] 데이터 넣는곳</strong>
+                                <span class="short_desc">[한줄소개] 데이터 넣는곳</span>
+                            </p>
+                            <p class="goods_price">
+                                <span class="position">
+                                    <span class="dc">
+                                        <span class="dc_price">
+                                            [가격]데이터 넣는곳
+                                            <input type="hidden" value=0>  <!-- 여기 벨류에다가 가격데이터 넣어줘야댐-->
+
+                                        </span>
+                                        <span class="won">원</span>
+                                    </span>
+
+                                </span>
+                                <span>
+                                    <span class="txt_benefit">
+                                        <span class="ico_grade grade6">웰컴 5%</span>
+                                        <span class="point">
+                                            개당
+                                            <strong class="emphh">65원 적립(여긴 건들지마세요 제가 계산식 js에 넣어뒀어요)</strong>
+                                        </span>
+                                    </span>
+                                </span>
+                            </p>
+                            <div class="goods_info">
+                                <dl class="list fst">
+                                    <dt class="tit">판매단위</dt>
+                                    <dd class="desc">판매단위 데이터 넣는곳</dd>
+                                </dl>
+                                <dl class="list">
+                                    <dt class="tit">중량/용량</dt>
+                                    <dd class="desc">중량/용량 데이터 넣는곳</dd>
+                                </dl>
+                                <dl class="list">
+                                    <dt class="tit">배송구분</dt>
+                                    <dd class="desc">배송구분 데이터 넣는곳</dd>
+                                </dl>
+                                <dl class="list">
+                                    <dt class="tit">원산지</dt>
+                                    <dd class="desc">원산지 데이터 넣는곳</dd>
+                                </dl>
+                                <dl class="list">
+                                    <dt class="tit">포장타입</dt>
+                                    <dd class="desc">
+                                        포장타입 데이터 넣는곳
+                                        <strong class="emphd">택배배송은 에코포장이 스티로폼으로 대체됩니다.</strong>
+                                    </dd>
+                                </dl>
+                                <dl class="list">
+                                    <dt class="tit">알레르기정보</dt>
+                                    <dd class="desc">알레르기 정보 데이터 넣는곳</dd>
+                                </dl>
+                                <dl class="list">
+                                    <dt class="tit">유통기한</dt>
+                                    <dd class="desc">유통기한 데이터 넣는곳</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="cartPut">
+                        <div class="cart_option cart_type2">
+                            <!-- 장바구니 담을 수 있도록 form데이터로 감싸줌 -->
+                            <form action="">
+                                <div class="inner_option">
+                                    <div class="in_option">
+                                        <div class="list_goods">
+                                            <ul class="list list_nopackage">
+                                                <li class="on">
+                                                    <span class="tit_item">구매수량</span>
+                                                    <div class="option">
+                                                        <span class="count">
+                                                            <button type="button" class="btn down on">수량내리기</button>
+                                                            <input type="number" readonly="readonly" value = 1 class="inp">
+                                                            <button  type="button" class="btn up on">수량올리기</button>
+                                                        </span>
+
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="total">
+                                            <div class="price">
+                                                <strong class="tit">총 상품금액 :</strong>
+                                                <span class="sum">
+                                                    <span class="num">1,300</span>
+                                                    <span class="won">원</span>
+                                                </span>
+                                            </div>
+                                            <p class="txt_point">
+                                                <span class="ico">적립</span>
+                                                <span class="point">
+                                                    구매 시
+                                                    <strong class="emph">65원 적립</strong>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="group_btn off">
+                                        <div class="view_function">
+                                            <button type="button" class="btn btn_save">늘 사는 것</button>
+                                        </div>
+                                        <span class="btn_type1">
+                                            <button type="submit" class="txt_type">장바구니 담기</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="layout-wrapper goods-view-area">
+                    <div class="goods-add-product">
+                        <h3 class="goods-add-product-title">
+                            RELATED PRODUCT
+                        </h3>
+                        <div class="goods-add-product-wrapper __slide-wrapper" data-slide-item="5">
+                            <button class="goods-add-product-move goods-add-product-move-left __slide-go-left">
+                                왼쪽으로 슬라이드 이동
+                            </button>
+                            <button class="goods-add-product-move goods-add-product-move-right __slide-go-right">
+                                오른쪽으로 슬라이드 이동
+                            </button>
+                            <div class="goods-add-product-list-wrapper" style="height:320px;">
+                                <ul class="goods-add-product-list __slide-mover" style="left: 0px;">
+                                    <li class="goods-add-product-item __slide-item">
+                                        <div class="goods-add-product-item-figure">
+                                            <a href="#" target="_blank">
+                                                <img src="https://res.kurly.com/mobile/img/1808/img_none_x2.png" class="goods-add-product-item-image">
+                                            </a>
+                                        </div>
+                                        <div class="goods-add-product-item-content">
+                                            <div class="goods-add-product-item-content-wrapper">
+                                                <p class="goods-add-product-item-name">같은 카테코리 이미지 나오게하는 곳</p>
+                                                <p class="goods-add-product-item-price">0원</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="goods-add-product-item __slide-item">
+                                        <div class="goods-add-product-item-figure">
+                                            <a href="#" target="_blank">
+                                                <img src="https://res.kurly.com/mobile/img/1808/img_none_x2.png" class="goods-add-product-item-image">
+                                            </a>
+                                        </div>
+                                        <div class="goods-add-product-item-content">
+                                            <div class="goods-add-product-item-content-wrapper">
+                                                <p class="goods-add-product-item-name">같은 카테코리 이미지 나오게하는 곳</p>
+                                                <p class="goods-add-product-item-price">0원</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="goods-add-product-item __slide-item">
+                                        <div class="goods-add-product-item-figure">
+                                            <a href="#" target="_blank">
+                                                <img src="https://res.kurly.com/mobile/img/1808/img_none_x2.png" class="goods-add-product-item-image">
+                                            </a>
+                                        </div>
+                                        <div class="goods-add-product-item-content">
+                                            <div class="goods-add-product-item-content-wrapper">
+                                                <p class="goods-add-product-item-name">같은 카테코리 이미지 나오게하는 곳</p>
+                                                <p class="goods-add-product-item-price">0원</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="goods-add-product-item __slide-item">
+                                        <div class="goods-add-product-item-figure">
+                                            <a href="#" target="_blank">
+                                                <img src="https://res.kurly.com/mobile/img/1808/img_none_x2.png" class="goods-add-product-item-image">
+                                            </a>
+                                        </div>
+                                        <div class="goods-add-product-item-content">
+                                            <div class="goods-add-product-item-content-wrapper">
+                                                <p class="goods-add-product-item-name">같은 카테코리 이미지 나오게하는 곳</p>
+                                                <p class="goods-add-product-item-price">0원</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="goods-add-product-item __slide-item">
+                                        <div class="goods-add-product-item-figure">
+                                            <a href="#" target="_blank">
+                                                <img src="https://res.kurly.com/mobile/img/1808/img_none_x2.png" class="goods-add-product-item-image">
+                                            </a>
+                                        </div>
+                                        <div class="goods-add-product-item-content">
+                                            <div class="goods-add-product-item-content-wrapper">
+                                                <p class="goods-add-product-item-name">같은 카테코리 이미지 나오게하는 곳</p>
+                                                <p class="goods-add-product-item-price">0원</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="goods-add-product-item __slide-item">
+                                        <div class="goods-add-product-item-figure">
+                                            <a href="#" target="_blank">
+                                                <img src="https://res.kurly.com/mobile/img/1808/img_none_x2.png" class="goods-add-product-item-image">
+                                            </a>
+                                        </div>
+                                        <div class="goods-add-product-item-content">
+                                            <div class="goods-add-product-item-content-wrapper">
+                                                <p class="goods-add-product-item-name">같은 카테코리 이미지 나오게하는 곳</p>
+                                                <p class="goods-add-product-item-price">0원</p>
+                                            </div>
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="goods-view-infomation detail_wrap_outer" id="goods-view-infomation">
+                        <ul class="goods-view-infomation-tab-group">
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-description" class="goods-view-infomation-tab-anchor __active">상품설명</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-image" class="goods-view-infomation-tab-anchor">상품이미지</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-infomation" class="goods-view-infomation-tab-anchor">상세정보</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-review" class="goods-view-infomation-tab-anchor">
+                                    고객후기
+                                    <span class="count_review">(0)</span>
+                                </a>
+                            </li>
+                            <li class="goods-view-infomation-tab qna-show">
+                                <a href="#goods-qna" class="goods-view-infomation-tab-anchor">
+                                    상품문의
+                                    <span>(0)</span>
+
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="goods-view-infomation-content __active" id="goods-description">
+                            <div class="goods_wrap">
+                                <div class="goods_intro">
+                                    <div class="pic">
+                                        <img src="https://res.kurly.com/mobile/img/1808/img_none_x2.png" style="width:1010px; height:671px;">
+                                    </div>
+                                    <div class="context last">
+                                        <h3>
+                                            <small>
+                                                제목 부연설명
+                                            </small>
+                                            제목
+                                        </h3>
+                                        <p class="words">
+                                            샬라샬라 설명
+                                        </p>
+
+                                    </div>
+                                </div>
+                                <div class="goods_point">
+                                    <h3>
+                                        <span>Kurly's Check Point</span>
+                                    </h3>
+                                    <div class="context last">
+                                        <div class="pic">
+                                            <img src="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="goods_tip">
+                                    <h3>
+                                        <span>Kurly's Tip</span>
+                                    </h3>
+                                    <div class="tip_box">
+                                        <div class="context last">
+                                            <div class="pic">
+                                                <img src="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="goods_pick">
+                                    <h3>
+                                        <span>Kurly`s Pick</span>
+                                    </h3>
+
+                                    <div class="context last">
+                                        <p class="words">
+                                            <strong class="sub_tit">
+                                                <span class="option_tit">상품명</span>
+                                            </strong>
+                                            <b>・중량</b>
+                                            : 중량샬라샬라
+                                            <br>
+                                            <b>・특징</b>
+                                            : 특징샬라샬라
+                                            <br>
+                                            <b>・보관법</b>
+                                            : 보관법샬라샬라
+                                            <br>
+                                            <b>・조리법</b>
+                                            : 조리법샬라샬라
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="goods_tip">
+                                    <h3>
+                                        <span>Kurly's Tip</span>
+                                    </h3>
+                                    <div class="tip_box">
+                                        <div class="context">
+                                            <div class="pic">
+                                                <img src="">
+                                            </div>
+                                            <p class="words">
+                                                <strong>요리 어떻게하는지 적는칸</strong>
+
+                                                자세한설명 적는칸
+
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="about_brand">
+                                    <h3>
+                                        <span>About Brand</span>
+                                    </h3>
+                                    <div class="context last">
+                                        <div class="context_about">
+                                            <div class="pic">
+                                                <img src="">
+                                            </div>
+                                            <p class="words">
+
+                                              브랜드 설명 적는칸
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="goods-view-infomation-tab-group">
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-description" class="goods-view-infomation-tab-anchor">상품설명</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-image" class="goods-view-infomation-tab-anchor __active">상품이미지</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-infomation" class="goods-view-infomation-tab-anchor">상세정보</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-review" class="goods-view-infomation-tab-anchor">
+                                    고객후기
+                                    <span class="count_review">(0)</span>
+                                </a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-qna" class="goods-view-infomation-tab-anchor">상품문의
+                                    <span>(0)</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="goods-view-infomation-content" id="goods-image">
+                            <div id="goods_pi">
+                                <p class="pic">
+                                    <img src="">
+                                </p>
+                            </div>
+                        </div>
+                        <ul class="goods-view-infomation-tab-group">
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-description" class="goods-view-infomation-tab-anchor">상품설명</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-image" class="goods-view-infomation-tab-anchor">상품이미지</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-infomation" class="goods-view-infomation-tab-anchor __active">상세정보</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-review" class="goods-view-infomation-tab-anchor">
+                                    고객후기
+                                    <span class="count_review">(0)</span>
+                                </a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-qna" class="goods-view-infomation-tab-anchor">상품문의
+                                    <span>(0)</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="goods-view-infomation-content" id="goods-infomation">
+                            <table class="extra-information">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="goods-view-form-table-heading">포장단위별 용량(중량), 수량, 크기</th>
+                                        <td>1봉/200g</td>
+                                        <th scope="row" class="goods-view-form-table-heading">관련법상 표시사항</th>
+                                        <td>GAP, 무농약 인증</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="goods-view-form-table-heading">생산자, 수입품의 경우 수입자를 함께 표기</th>
+                                        <td>제품 별도 라벨 표기 참조</td>
+                                        <th scope="row" class="goods-view-form-table-heading">상품구성</th>
+                                        <td>무농약 콩나물</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="goods-view-form-table-heading">농수산물의 원산지 표시에 관한 법률에 따른 원산지</th>
+                                        <td>국산</td>
+                                        <th scope="row" class="goods-view-form-table-heading">보관방법 또는 취급방법</th>
+                                        <td>냉장 보관</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="goods-view-form-table-heading">제조연월일(포장일 또는 생산연도), 유통기한 또는 품질유지기한</th>
+                                        <td>제품 별도 라벨 표기 참조</td>
+                                        <th scope="row" class="goods-view-form-table-heading">소비자상담 관련 전화번호</th>
+                                        <td>마켓컬리 고객행복센터(1644-1107)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="whykurly_area">
+                                <div class="row">
+                                    <strong class="tit_whykurly">WHY KURLY</strong>
+                                    <div id="why_kurly" class="txt_area">
+                                        <div class="why-kurly">
+                                            <div class="col">
+                                                <div class="icon">
+                                                    <img src="https://res.kurly.com/pc/ico/1910/01_check.svg">
+                                                </div>
+                                                <div class="info">
+                                                    <div class="title">깐깐한 상품위원회</div>
+                                                    <div class="desc">
+                                                        <p>
+                                                            나와 내 가족이 먹고 쓸 상품을 고르는
+                                                            <br>
+                                                            마음으로 매주 상품을 직접 먹어보고,
+                                                            <br>
+                                                            경험해보고 성분, 맛, 안정성 등 다각도의
+                                                            <br>
+                                                            기준을 통과한 상품만을 판매합니다.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="icon">
+                                                    <img src="https://res.kurly.com/pc/ico/1910/02_only.svg">
+                                                </div>
+                                                <div class="info">
+                                                    <div class="title">차별화된 Kurly Only 상품</div>
+                                                    <div class="desc">
+                                                        <p>
+                                                            전국 각지와 해외의 훌륭한 생산자가
+                                                            <br>
+                                                            믿고 선택하는 파트너, 마켓컬리.
+                                                            <br>
+                                                            2천여 개가 넘는 컬리 단독 브랜드, 스펙의
+                                                            <br>
+                                                            Kurly Only 상품을 믿고 만나보세요.
+                                                        </p>
+                                                        <span class="etc">
+                                                            (온라인 기준 / 자사몰, 직구 제외)
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="icon">
+                                                    <img src="https://res.kurly.com/pc/ico/1910/03_cold.svg">
+                                                </div>
+                                                <div class="info">
+                                                    <div class="title">신선한 풀콜드체인 배송</div>
+                                                    <div class="desc">
+                                                        <p>
+                                                            온라인 업계 최초로 산지에서 문 앞까지
+                                                            <br>
+                                                            상온, 냉장, 냉동 상품을 분리 포장 후
+                                                            <br>
+                                                            최적의 온도를 유지하는 냉장 배송 시스템,
+                                                            <br>
+                                                            풀콜드체인으로 상품을 신선하게 전해드립니다.
+
+                                                        </p>
+                                                        <span class="etc">(샛별배송에 한함)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="icon">
+                                                    <img src="https://res.kurly.com/pc/ico/1910/04_price.svg">
+                                                </div>
+                                                <div class="info">
+                                                    <div class="title">고객, 생산자를 위한 최선의 가격</div>
+                                                    <div class="desc">
+                                                        <p>
+                                                            매주 대형 마트와 주요 온라인 마트의 가격
+                                                            <br>
+                                                            변동 상황을 확인해 신선식품은 품질을
+                                                            <br>
+                                                            타협하지 않는 선에서 최선의 가격으로,
+                                                            <br>
+                                                            가공식품은 언제나 합리적인 가격으로
+                                                            <br>
+                                                            정기 조정합니다.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="icon">
+                                                    <img src="https://res.kurly.com/pc/ico/1910/05_eco.svg">
+                                                </div>
+                                                <div class="info">
+                                                    <div class="title">환경을 생각하는 지속 가능한 유통</div>
+                                                    <div class="desc">
+                                                        <p>
+                                                            친환경 포장재부터 생산자가 상품에만
+                                                            <br>
+                                                            집중할 수 있는 직매입 유통구조까지,
+                                                            <br>
+                                                            지속 가능한 유통을 고민하며 컬리를 있게
+                                                            <br>
+                                                            하는 모든 환경(생산자, 커뮤니티, 직원)이
+                                                            <br>
+                                                            더 나아질 수 있도록 노력합니다.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="happy_center fst">
+                                <div class="happy">
+                                    <h4 class="tit">고객행복센터</h4>
+                                    <p class="sub">
+                                        <span class="emph">궁금하신 점이나 서비스 이용에 불편한 점이 있으신가요?</span>
+                                        <span class="bar"></span>
+                                        문제가 되는 부분을 사진으로 찍어 아래 중 편하신 방법으로 접수해 주시면 빠르게 도와드리겠습니다.
+                                    </p>
+                                </div>
+                                <ul class="list">
+                                    <li>
+                                        <div class="tit">
+                                            전화 문의 1644-1107
+                                        </div>
+                                        <div class="sub">오전 7시~오후 7시 (연중무휴)</div>
+                                    </li>
+                                    <li>
+                                        <div class="tit">
+                                            카카오톡 문의
+                                        </div>
+                                        <div class="sub">오전 7시~오후 7시 (연중무휴)</div>
+                                        <div class="expend">
+                                            카카오톡에서 '마켓컬리'를 검색 후
+                                            <br>
+                                            대화창에 문의 및 불편사항을
+                                            <br>
+                                            남겨주세요
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="tit">
+                                            홈페이지 문의
+                                        </div>
+                                        <div class="sub">
+                                            24시간 접수 가능
+                                            <br>
+                                            로그인 > 마이컬리 > 1:1문의
+                                        </div>
+                                        <div class="expend">
+                                            고객센터 운영 시간에 순차적으로 답변해드리겠습니다.
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="happy_center order">
+                                <div class="happy unfold">
+                                    <h4 class="tit">주문 취소 안내</h4>
+                                    <ul class="sub">
+                                        <li>
+                                            <strong class="emph">[입금 확인] 단계</strong>
+                                            마이컬리 > 주문 내역 상세페이지에서 직접 취소하실 수 있습니다.
+                                        </li>
+                                        <li>
+                                            <strong class="emph">[입금 확인] 이후 단계</strong>
+                                            고객행복센터로 문의해주세요.
+                                        </li>
+                                        <li>
+                                            <strong class="emph">결제 승인 취소 / 환불</strong>
+                                            결제 수단에 따라 영업일 기준 3~7일 내에 처리해드립니다.
+                                        </li>
+                                    </ul>
+
+                                </div>
+                            </div>
+                            <div class="happy_center lst">
+                                <div class="happy unfold">
+                                    <h4 class="tit">교환 및 환불 안내</h4>
+                                    <p class="sub">
+                                        고객님의 단순 변심으로 인한 반품은 어려울 수 있으니 양해 부탁드립니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="goods-view-infomation-tab-group">
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-description" class="goods-view-infomation-tab-anchor">상품설명</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-image" class="goods-view-infomation-tab-anchor">상품이미지</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-infomation" class="goods-view-infomation-tab-anchor">상세정보</a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-review" class="goods-view-infomation-tab-anchor __active">
+                                    고객후기
+                                    <span class="count_review">(0)</span>
+                                </a>
+                            </li>
+                            <li class="goods-view-infomation-tab">
+                                <a href="#goods-qna" class="goods-view-infomation-tab-anchor">상품문의
+                                    <span>(0)</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="goods-view-infomation-content" id="goods-review"> <!-- 아래 주소창에 good_review_list.html url 넣어주면 됩니당-->
+                            <iframe src="http://127.0.0.1:5500/good_review_list.html" id="inreview" frameborder="0" class="goods-view-infomation-board" height="733"></iframe>
+                        </div>
+
+                    </div>
+                </div>
+</div>
+</body>
+</html>

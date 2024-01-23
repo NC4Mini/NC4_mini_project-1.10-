@@ -3,8 +3,11 @@ package com.nc.project.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nc.project.dto.CartDTO;
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,19 +28,21 @@ public class Cart {
     private long cartId;
 
     // cart와 user OneToOne 관계
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
-    @JsonBackReference
     private UserAccount userAccount;
 
     // cartItem과 OneToMany 관계
-//    @OneToMany (mappedBy = "cart")
-//    @JsonManagedReference
-//    private List<CartItem> cartItemList = new ArrayList<>();
+    @OneToMany (mappedBy = "cart")
+    private List<CartItem> cartItemList = new ArrayList<>();
+
+    @Column (name = "cart_total_price")
+    private int totalPrice;
 
     // user 엔티티를 받아서 장바구니 엔티티를 생성하는 메서드
-    public static Cart createCart(UserAccount userAccount) {
+    public static Cart createNewCart(UserAccount userAccount) {
         Cart cart = new Cart();
+//        cart.setCartId(userAccount.getId());
         cart.setUserAccount(userAccount);
         return cart;
     }
@@ -46,7 +51,8 @@ public class Cart {
         return CartDTO.builder()
                 .id(this.userAccount.getId())
                 .cartId(this.cartId)
-//                .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
+                .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
+                .totalPrice(this.totalPrice)
                 .build();
     }
 }
