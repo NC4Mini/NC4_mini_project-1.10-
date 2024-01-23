@@ -62,8 +62,8 @@ public class CartController {
 
         long id = userAccountRepository.findByUserId(userName).get().getId();
 
-        mav.addObject("cartItemList", cartService.getCartItem(id));
         mav.addObject("cart", cartService.getCart(id));
+        mav.addObject("cartItemList", cartService.getCartItem(id));
 
         mav.setViewName("cart/get_cart_test.html");
 

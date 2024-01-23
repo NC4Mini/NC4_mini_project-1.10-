@@ -115,7 +115,17 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart getCart(long id) {
-        Cart cart = cartRepository.findByUserAccountId(id);
+        UserAccount userAccount = userAccountRepository.getReferenceById(id);
+
+        if (userAccount.getCart() == null) {
+            Cart cart = new Cart();
+            cart.setUserAccount(userAccount);
+            userAccount.setCart(cart);
+
+            cartRepository.save(cart);
+            userAccountRepository.save(userAccount);
+        }
+        Cart cart = userAccount.getCart();
 
         return cart;
     }

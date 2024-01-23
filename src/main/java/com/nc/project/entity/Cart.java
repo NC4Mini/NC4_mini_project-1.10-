@@ -28,8 +28,9 @@ public class Cart {
     private long cartId;
 
     // cart와 user OneToOne 관계
-    @OneToOne (cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id")
+    @JsonBackReference
     private UserAccount userAccount;
 
     // cartItem과 OneToMany 관계
