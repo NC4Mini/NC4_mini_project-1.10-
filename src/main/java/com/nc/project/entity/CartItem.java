@@ -40,6 +40,9 @@ public class CartItem {
     @Column(name = "cart_item_cnt")
     private int cartItemCnt;
 
+//    @Column(name = "cart_item_price")
+//    private int cartItemPrice;
+
 //    @Column(name = "totalPrice")
 //    private int totalPrice;
 

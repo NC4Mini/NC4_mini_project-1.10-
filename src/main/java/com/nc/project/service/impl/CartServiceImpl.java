@@ -14,9 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -31,42 +29,42 @@ public class CartServiceImpl implements CartService {
 
     // 장바구니에 물건 담기
     @Override
-    public void addCart(UserAccountDTO userAccountDTO, ItemDTO itemDTO, int itemCnt) {
+    public void addCart(UserAccount userAccount, Long itemId) {
 
         // 1. body에 담겨있는 userId로 유저의 장바구니가 있는지 확인
-
-        // 받아온 DTO 객체 entity로 변환
-        UserAccount userAccount = userAccountDTO.toEntity();
-
         // 유저 고유 id로 유저의 장바구니 찾기
-        Cart userCart = cartRepository.findByUserAccountId(userAccount.getId());
+        Cart userOwnCart = cartRepository.findByUserAccountId(userAccount.getId());
 
         // 장바구니 없을 시 받아온 유저의 장바구니 생성
-        if (userCart == null) {
-            userCart = Cart.createNewCart(userAccount);
-            cartRepository.save(userCart);
+        if (userOwnCart == null) {
+            userOwnCart = new Cart();
+            userOwnCart.setCartId(userAccount.getId());
+            userOwnCart.setUserAccount(userAccount);
+            cartRepository.save(userOwnCart);
         }
 
         // 2. 장바구니에 받아온 상품 객체 추가
-
         // 받아온 DTO 객체에 해당하는 item entity를 가져옴
-        Item item = itemRepository.getReferenceById(itemDTO.getItemId());
+        Item item = itemRepository.getReferenceById(itemId);
 
         // 장바구니 상품 entity를 찾음
-        CartItem cartItem = cartItemRepository.findCartItemByCart_CartIdAndItem_ItemId(userCart.getCartId(), item.getItemId());
+        CartItem cartItem = cartItemRepository.findCartItemByItem_ItemId(itemId);
 
         // 상품이 장바구니에 없을 때 카트 상품 생성 후 추가
         if (cartItem == null) {
-            cartItem = CartItem.createCartItem(userCart, item, itemCnt);
+            cartItem = new CartItem();
+            cartItem.setItem(item);
+            cartItem.setCart(userOwnCart);
             cartItemRepository.save(cartItem);
         }
         // 이미 있다면 수량만 증가
         else {
-            cartItem.setCartItemCnt(itemCnt);
+            cartItem.setCartItemCnt(cartItem.getCartItemCnt() + 1);
         }
 
     }
 
+    // 해당 사용자의 장바구니를 표출해주는 기능 (완료)
     @Override
     public List<CartItem> getCartItem (long id) {
         // 받아온 id로 cart를 찾기
@@ -87,8 +85,11 @@ public class CartServiceImpl implements CartService {
 
     // 장바구니의 상품목록의 상품 개수를 버튼으로 바꿔주는 기능 (완료)
     @Override
-    public CartItem updateCartItemCount(Long cartItemId, String action) {
+    public Map<String, Integer> updateCartItemCount(Long cartItemId, String action) {
+        Map<String, Integer> newCartItemMap = new HashMap<>();
+
         CartItem cartItem = cartItemRepository.findById(cartItemId).get();
+        Item item = cartItemRepository.findById(cartItemId).get().getItem();
 
         if ("increase".equals(action)) {
             cartItem.setCartItemCnt(cartItem.getCartItemCnt() + 1);
@@ -98,13 +99,18 @@ public class CartServiceImpl implements CartService {
 
         cartItemRepository.save(cartItem);
 
-        return cartItem;
+        newCartItemMap.put("newCartItemCnt", cartItem.getCartItemCnt());
+        newCartItemMap.put("newItemPrice", item.getItemPrice());
+
+        return newCartItemMap;
     }
 
+    // 장바구니의 상품을 지우는 기능 (완료)
     @Override
     public void deleteCartItem(long cartItemId) {
+        CartItem cartItem = cartItemRepository.findById(cartItemId).get();
 
-        cartItemRepository.deleteById(cartItemId);
+        cartItemRepository.delete(cartItem);
     }
 
 }
