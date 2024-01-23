@@ -5,7 +5,7 @@
       layout:decorate="~{layouts/layout2}">
 <head>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" th:href="@{/css/join.css}">
+        <link rel="stylesheet" th:href="@{/css/user/join.css}">
         <link rel="stylesheet" th:href="@{/css/common.css}">
     </th:block>
     <th:block layout:fragment="script">
@@ -26,7 +26,7 @@
                 let validationEmail = false;
 
                 // 모든 엘리먼트 요소 엔터값 방지
-                $(document).on('keydown', function(event) {
+                $(document).on('keydown', function (event) {
                     if (event.which === 13) {
                         event.preventDefault();
                     }
@@ -44,7 +44,7 @@
                     $.ajax({
                         url: '/user/id-check',
                         type: 'post',
-                        data: $("#joinForm").serialize(),
+                        data: {userId: $("#userId").val()},
                         success: (obj) => {
 
                             if (obj.item.idCheckMsg === "idFail") {
@@ -81,7 +81,7 @@
                     $.ajax({
                         url: '/user/email-check',
                         type: 'post',
-                        data: $("#joinForm").serialize(),
+                        data: {userEmail: $("#userEmail").val()},
                         success: (obj) => {
 
                             if (obj.item.emailCheckMsg === "emailFail") {
@@ -111,17 +111,19 @@
                 var doneTypingInterval = 800;  // 입력이 끝난 것으로 판단할 시간 (1초)
 
                 // 사용자가 날짜를 입력할 때 호출되는 함수
-                $("#userBirthYear, #userBirthMonth, #userBirthDay").on("input", function() {
+                $("#userBirthYear, #userBirthMonth, #userBirthDay").on("input", function () {
                     clearTimeout(typingTimer);  // 이전 타이머가 있다면 초기화
 
-                    typingTimer = setTimeout(function() {
+                    typingTimer = setTimeout(function () {
                         updateUserBirth();
                     }, doneTypingInterval);
+                    console.log($("#joinForm").serialize());
                 });
 
                 function nowData() {
                     return new Date();
                 }
+
                 function updateUserBirth() {
                     // 각 입력 필드에서 값 가져오기
                     var year = $("#userBirthYear").val();
@@ -144,7 +146,7 @@
                         $("#userBirthYear, #userBirthMonth, #userBirthDay").val('');
                         $("#userBirth").val('');
                         $("#userBirthYear").focus();
-                        return false; // 폼 제출을 막습니다.
+                        return false; // 폼 제출 제어
                     }
 
                     // 날짜 형식을 yyyy/MM/dd로 가공
@@ -152,8 +154,8 @@
 
                     // 가공된 날짜를 숨겨진 필드에 할당
                     $("#userBirth").val(userBirth);
-                    // console.log($("#joinForm").serialize())
                 }
+
                 // 아이디 유효성 검사 정규식
                 const validateId = (userId) => {
                     return /^[A-Za-z0-9][A-Za-z0-9]{6,12}$/.test(userId);
@@ -168,7 +170,7 @@
                 }
                 // 아이디 입력 시 아이디 유효성 검사
                 $("#userId").on("change", () => {
-                    if(validateId($("#userId").val())) {
+                    if (validateId($("#userId").val())) {
                         validationId = true;
                         $("#idValidation").hide();
                     } else {
@@ -178,7 +180,7 @@
                 });
                 // 비밀번호 입력 시 비밀번호 유효성 검사
                 $("#userPw").on("change", () => {
-                    if(validatePassword($("#userPw").val())) {
+                    if (validatePassword($("#userPw").val())) {
                         validationPw = true;
                         $("#pwValidation").hide();
                     } else {
@@ -188,7 +190,7 @@
                 });
                 // 이메일 입력 시 이메일 유효성 검사
                 $("#userEmail").on("change", () => {
-                    if(validateEmail($("#userEmail").val())) {
+                    if (validateEmail($("#userEmail").val())) {
                         validationEmail = true;
                         $("#emailValidation").hide();
                     } else {
@@ -200,7 +202,7 @@
                 $("#userPwCheck").on("change", () => {
                     $("#pwCheckResult").show();
 
-                    if($("#userPw").val() === $("#userPwCheck").val()) {
+                    if ($("#userPw").val() === $("#userPwCheck").val()) {
                         confirmPw = true;
                         $("#pwCheckResult").text("비밀번호가 일치합니다.");
                         $("#pwCheckResult").css("color", "green");
@@ -210,10 +212,11 @@
                     $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
                     $("#pwCheckResult").css("color", "red");
                 });
+
                 // 주소 API 적용
-                function openZipSearch() {
+                $("#addressSearch").on("click", () => {
                     new daum.Postcode({
-                        oncomplete: function(data) {
+                        oncomplete: function (data) {
                             var addr = '';
                             if (data.userSelectedType === 'R') {
                                 addr = data.roadAddress;
@@ -229,62 +232,51 @@
                             $("#addressSearch").hide();
                             // 주소 입력란 화면 표출
                             $(".field_address input").show().css("margin-top", "0");
+                            $("#checkStandard").show();
+                            $(".txt_guide").hide();
                         }
                     }).open();
-                }
-                $("#addressSearch").on("click", () => {
-                    openZipSearch();
                 });
-                // 주소 배열을 담을 변수
-                const addressArray = [];
-                // 주소 입력 폼이 변경될 때마다 배열에 추가
-                $("#addrZone, #addrBasic, #addrDetail").on("input", function() {
-                    const address = {
-                        zone: $("#addrZone").val(),
-                        basic: $("#addrBasic").val(),
-                        detail: $("#addrDetail").val()
-                    };
-                    addressArray.push(address);
-                });
+
                 // joinForm이 서브밋될 때 유효성 검사가 전부 완료되지 않으면 서브밋 제어
                 $("#joinForm").on("submit", (e) => {
                     // id 중복체크가 되지 않았을 때
-                    if(!checkId) {
+                    if (!checkId) {
                         e.preventDefault();
                         alert("아이디 중복체크를 해주세요.")
-                        $("userId").focus();
+                        $("#userId").focus();
                         return;
                     }
                     // id 유효성 검사가 틀렸을 때
-                    if(!validationId) {
+                    if (!validationId) {
                         e.preventDefault()
                         alert("아이디는 영문자, 숫자 조합의 6자리 이상으로 설정해주세요")
                         $("#userId").focus();
                         return;
                     }
                     // pw 유효성 검사가 틀렸을 때
-                    if(!validationPw) {
+                    if (!validationPw) {
                         e.preventDefault();
                         alert("비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.");
                         $("#userPw").focus();
                         return;
                     }
                     // pw가 pw확인과 일치하지 않을 때
-                    if(!confirmPw) {
+                    if (!confirmPw) {
                         e.preventDefault();
                         alert("비밀번호가 일치하지 않습니다.");
                         $("#userPwCheck").focus();
                         return;
                     }
                     // Email 중복검사가 실행되지 않았을 때
-                    if(!checkEmail) {
+                    if (!checkEmail) {
                         e.preventDefault();
                         alert("이메일 중복체크를 해주세요.")
                         $("#userEmail").focus();
                         return;
                     }
                     // Email 유효성 검사가 틀렸을 때
-                    if(!validationEmail) {
+                    if (!validationEmail) {
                         e.preventDefault();
                         alert("이메일 형식에 맞게 설정해주세요.")
                         $("#userEmail").focus();
@@ -296,147 +288,190 @@
                         alert("주소를 모두 입력해주세요.")
                         return;
                     }
+
+                    // 기본 배송지 설정 여부 확인
+                    if ($("#addrStandard").is(":checked")) {
+                        addrStandard = 'Y';
+                    } else {
+                        addrStandard = 'N';
+                    }
+
+                    // DTO의 값과 맞춰줘야함
+                    let formData = new FormData($("#joinForm")[0]);
+                    let userShpAddrDTO = {"addrBasic": ($("#addrBasic").val()),
+                        "addrDetail": ($("#addrDetail").val()), "addrZone": ($("#addrZone").val()),
+                        "addrStandard": ($("#addrStandard").val()), "addrNickname": null};
+                    formData.append("userShpAddrDTO", userShpAddrDTO);
+                    // 서버로 FormData 전송
+                    $.ajax({
+                        url: '/user/join',
+                        type: 'post',
+                        data: formData,
+                        success: (obj) => {
+                            console.log(obj);
+
+                            alert(obj.item.msg);
+                            location.href = "/user/login"
+                        },
+                        error: (err) => {
+                            console.log(err);
+                            alert(err.responseJSON.errorMessage)
+                        }
+                    })
                 });
             });
         </script>
     </th:block>
 </head>
 <body>
-        <div layout:fragment="content" id="content">
-            <div class="form-wrapper">
-                <div class="type_form member_join">
-                <form id="joinForm" action="/user/join" method="post">
-                    <div class="field_head">
-                        <h3 class="tit">회원가입</h3>
-                        <p class="sub">
-                            <span class="ico">*</span>
-                            필수입력사항
-                        </p>
-                    </div>
+<div layout:fragment="content" id="content">
+    <div class="form-wrapper">
+        <div class="type_form member_join">
+            <form id="joinForm" action="/user/join" method="post">
+                <div class="field_head">
+                    <h3 class="tit">회원가입</h3>
+                    <p class="sub">
+                        <span class="ico">*</span>
+                        필수입력사항
+                    </p>
+                </div>
 
-                    <table class="tbl_comm">
-                        <tbody>
-                        <tr class="fst field_id">
-                            <th>
-                                <label for="userId">아이디</label>
-                                <span class="ico">
+                <table class="tbl_comm">
+                    <tbody>
+                    <tr class="fst field_id">
+                        <th>
+                            <label for="userId">아이디</label>
+                            <span class="ico">
                                                     *
                                                     <span class="screen_out">필수항목</span>
                                                 </span>
-                            </th>
-                            <td>
-                                <input type="text" id="userId" name="userId" maxlength="16" required="" placeholder="6자 이상의 영문 혹은 영문과 숫자를 조합">
-                                <button type="button" id="btnIdCheck" class="btn default">중복확인</button>
-                                <p id="idValidation" class="txt_guide square" style="font-size: 0.8rem; color:red;">
-                                    영문자, 숫자 조합의 6자리 이상으로 설정해주세요.
-                                </p>
-                            </td>
-                        </tr>
+                        </th>
+                        <td>
+                            <input type="text" id="userId" name="userId" maxlength="16" required=""
+                                   placeholder="6자 이상의 영문 혹은 영문과 숫자를 조합">
+                            <button type="button" id="btnIdCheck" class="btn default">중복확인</button>
+                            <p id="idValidation" class="txt_guide square" style="font-size: 0.8rem; color:red;">
+                                영문자, 숫자 조합의 6자리 이상으로 설정해주세요.
+                            </p>
+                        </td>
+                    </tr>
 
-                        <tr class="field_pw">
-                            <th>
-                                <label for="userPw">비밀번호</label>
-                                <span class="ico">*
+                    <tr class="field_pw">
+                        <th>
+                            <label for="userPw">비밀번호</label>
+                            <span class="ico">*
                                                     <span class="screen_out">필수항목</span>
                                                 </span>
-                            </th>
-                            <td>
-                                <input type="password" id="userPw" name="userPw" required="" maxlength="16" class="reg_pw bad" placeholder="비밀번호를 입력해주세요">
-                                <p id="pwValidation" class="txt_guide square" style="font-size: 0.8rem; color:red;">
-                                    영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.
-                                </p>
-                            </td>
-                        </tr>
+                        </th>
+                        <td>
+                            <input type="password" id="userPw" name="userPw" required="" maxlength="16"
+                                   class="reg_pw bad" placeholder="비밀번호를 입력해주세요">
+                            <p id="pwValidation" class="txt_guide square" style="font-size: 0.8rem; color:red;">
+                                영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.
+                            </p>
+                        </td>
+                    </tr>
 
-                        <tr class="member_pwd field_repw">
-                            <th>
-                                <label for="userPwCheck">비밀번호확인</label>
-                                <span class="ico">
+                    <tr class="member_pwd field_repw">
+                        <th>
+                            <label for="userPwCheck">비밀번호확인</label>
+                            <span class="ico">
                                                     *
                                                     <span class="screen_out">필수항목</span>
                                                 </span>
-                            </th>
-                            <td>
-                                <input type="password" required="" id="userPwCheck" name="userPwCheck" maxlength="16" class="confirm_pw" placeholder="비밀번호를 한번 더 입력해주세요">
-                                <p id="pwCheckResult" class="txt_guide square" style="font-size: 0.8rem"></p>
-                            </td>
-                        </tr>
+                        </th>
+                        <td>
+                            <input type="password" required="" id="userPwCheck" name="userPwCheck" maxlength="16"
+                                   class="confirm_pw" placeholder="비밀번호를 한번 더 입력해주세요">
+                            <p id="pwCheckResult" class="txt_guide square" style="font-size: 0.8rem"></p>
+                        </td>
+                    </tr>
 
-                        <tr class="field_name">
-                            <th>
-                                <label for="userName">이름</label>
-                                <span class="ico">
+                    <tr class="field_name">
+                        <th>
+                            <label for="userName">이름</label>
+                            <span class="ico">
                                                     *
                                                     <span class="screen_out">필수항목</span>
                                                 </span>
-                            </th>
-                            <td>
-                                <input type="text" id="userName" name="userName"  required="" placeholder="이름을 입력해주세요">
-                            </td>
-                        </tr>
+                        </th>
+                        <td>
+                            <input type="text" id="userName" name="userName" required="" placeholder="이름을 입력해주세요">
+                        </td>
+                    </tr>
 
-                        <tr class="field_email">
-                            <th>
-                                <label for="userEmail">이메일</label>
-                                <span class="ico">
+                    <tr class="field_email">
+                        <th>
+                            <label for="userEmail">이메일</label>
+                            <span class="ico">
                                                     *
                                                     <span class="screen_out">필수항목</span>
                                                 </span>
-                            </th>
+                        </th>
 
-                            <td>
-                                <input type="text" id="userEmail" name="userEmail" size="30" required="" placeholder="예: marketkurly@kurly.com">
-                                <button type="button" id="btnEmailCheck" class="btn default">중복확인</button>
-                                <p id="emailValidation" class="txt_guide square" style="font-size: 0.8rem; color:red;">
-                                    이메일 형식에 맞도록 설정해주세요.
-                                </p>
-                            </td>
-                        </tr>
+                        <td>
+                            <input type="text" id="userEmail" name="userEmail" size="30" required=""
+                                   placeholder="예: marketkurly@kurly.com">
+                            <button type="button" id="btnEmailCheck" class="btn default">중복확인</button>
+                            <p id="emailValidation" class="txt_guide square" style="font-size: 0.8rem; color:red;">
+                                이메일 형식에 맞도록 설정해주세요.
+                            </p>
+                        </td>
+                    </tr>
 
-                        <tr class="field_phone">
-                            <th>
-                                <label for="userTel">휴대폰</label>
-                                <span class="ico">
+                    <tr class="field_phone">
+                        <th>
+                            <label for="userTel">휴대폰</label>
+                            <span class="ico">
                                                     *
                                                     <span class="screen_out">필수항목</span>
                                                 </span>
-                            </th>
+                        </th>
 
-                            <td>
-                                <div class="phone_num">
-                                    <input type="text" value="" pattern="[0-9]*" id="userTel" name="userTel" required="" placeholder="숫자만 입력해주세요" class="inp">
-                                </div>
-                            </td>
-                        </tr>
+                        <td>
+                            <div class="phone_num">
+                                <input type="text" value="" pattern="[0-9]*" id="userTel" name="userTel" required=""
+                                       placeholder="숫자만 입력해주세요" class="inp">
+                            </div>
+                        </td>
+                    </tr>
 
-                        <tr>
-                            <th>
-                                <label for="addrBasic">주소</label>
-                                <span class="ico">
+                    <tr>
+                        <th>
+                            <label for="addrBasic">주소</label>
+                            <span class="ico">
                                                     *
                                                     <span class="screen_out">필수항목</span>
                                                 </span>
-                            </th>
-                            <td class="field_address">
-                                <button type="button" id="addressSearch" class="search">
-                                    <span id="addressNo" class="address_no">주소검색</span>
-                                </button>
-                                <div>
+                        </th>
+                        <td class="field_address">
+                            <button type="button" id="addressSearch" class="search">
+                                <span id="addressNo" class="address_no">주소검색</span>
+                            </button>
+                            <div>
                                 <input type="text" id="addrZone" name="addrZone" placeholder="우편번호" readonly="readonly">
-                                <input type="text" id="addrBasic" name="addrBasic" placeholder="기본주소" readonly="readonly">
-                                <input type="text" id="addrDetail" name="addrDetail"  placeholder="상세주소" >
-                                </div>
-                                <p class="txt_guide" style="display:block;">
-                                    <span class="txt txt_case1">배송지에 따라 상품 정보가 달라질 수 있습니다.</span>
-                                </p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th class="gender" style="padding-top:10px; vertical-align: top" >
-                                성별
-                            </th>
-                            <td id="userGender" class="userGender">
-                                <div>
+                                <input type="text" id="addrBasic" name="addrBasic" placeholder="기본주소"
+                                       readonly="readonly">
+                                <input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소">
+                            </div>
+                            <p class="txt_guide" style="display:block;">
+                                <span class="txt txt_case1">배송지에 따라 상품 정보가 달라질 수 있습니다.</span>
+                            </p>
+                            <div id="checkStandard" style="display: none">
+                                <label for="addrStandard" class="check_box">
+                                    <input type="checkbox" id="addrStandard" name="addrStandard" value="N">
+                                    <span class="on"></span>
+                                    기본 배송지로 설정
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="gender" style="padding-top:10px; vertical-align: top">
+                            성별
+                        </th>
+                        <td id="userGender" class="userGender">
+                            <div>
                                 <label for="gender-man" class="radio_box">
                                     <input type="radio" id="gender-man" name="userGender" value="MALE">
                                     <span class="on"></span>
@@ -452,31 +487,37 @@
                                     <span class="on"></span>
                                     선택안함
                                 </label>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="birth field_birth">
-                            <th style="padding-top: 30px">생년월일</th>
-                            <td style="padding-top: 20px; padding-bottom: 30px">
-                                <div class="birth_day">
-                                    <label for="userBirthYear"><input type="text" name="userBirthYear" id="userBirthYear" pattern="[0-9]*"  label="생년월일" size="4" maxlength="4" placeholder="YYYY"></label>
-                                    <span class="bar"></span>
-                                    <label for="userBirthMonth"><input type="text" name="userBirthMonth" id="userBirthMonth" pattern="[0-9]*"  label="생년월일" size="2" maxlength="2" placeholder="MM"></label>
-                                    <span class="bar"></span>
-                                    <label for="userBirthDay"><input type="text" name="userBirthDay" id="userBirthDay" pattern="[0-9]*"  label="생년월일" size="2" maxlength="2" placeholder="DD"></label>
-                                </div>
-                                <input type="hidden" name="userBirth" id="userBirth">
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="birth field_birth">
+                        <th style="padding-top: 30px">생년월일</th>
+                        <td style="padding-top: 20px; padding-bottom: 30px">
+                            <div class="birth_day">
+                                <label for="userBirthYear"><input type="text" id="userBirthYear"
+                                                                  pattern="[0-9]*" label="생년월일" size="4" maxlength="4"
+                                                                  placeholder="YYYY"></label>
+                                <span class="bar"></span>
+                                <label for="userBirthMonth"><input type="text" id="userBirthMonth"
+                                                                   pattern="[0-9]*" label="생년월일" size="2" maxlength="2"
+                                                                   placeholder="MM"></label>
+                                <span class="bar"></span>
+                                <label for="userBirthDay"><input type="text" id="userBirthDay"
+                                                                 pattern="[0-9]*" label="생년월일" size="2" maxlength="2"
+                                                                 placeholder="DD"></label>
+                            </div>
+                            <input type="hidden" name="userBirth" id="userBirth">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
 
-                    <div id="formSubmit" class="form_footer" style="border-top: 1px solid #333;">
-                        <button type="submit" class="btn active btn_join" id="btnJoin" >가입하기</button>
-                    </div>
-                </form>
+                <div id="formSubmit" class="form_footer" style="border-top: 1px solid #333;">
+                    <button type="submit" class="btn active btn_join" id="btnJoin">가입하기</button>
                 </div>
-            </div>
+            </form>
         </div>
+    </div>
+</div>
 </body>
 </html>
