@@ -1,4 +1,5 @@
 package com.nc.project.entity;
+import com.nc.project.dto.BoardDTO;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -22,5 +23,15 @@ public class Board extends Base {
 
     @Column(length = 500)
     private String boardContents;
+
+    public static Board toSaveEntity(BoardDTO boardDTO){
+        Board board = new Board();
+        board.setBoardCategory(boardDTO.getBoardCategory());
+        board.setBoardTitle(boardDTO.getBoardTitle());
+        board.setBoardContents(boardDTO.getBoardContents());
+        return board;
+    }
+
+
 
 }
