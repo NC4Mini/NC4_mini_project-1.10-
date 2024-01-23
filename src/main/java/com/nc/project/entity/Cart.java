@@ -3,8 +3,11 @@ package com.nc.project.entity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nc.project.dto.CartDTO;
+import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +36,9 @@ public class Cart {
     @OneToMany (mappedBy = "cart")
     private List<CartItem> cartItemList = new ArrayList<>();
 
+    @Column (name = "cart_total_price")
+    private int totalPrice;
+
     // user 엔티티를 받아서 장바구니 엔티티를 생성하는 메서드
     public static Cart createNewCart(UserAccount userAccount) {
         Cart cart = new Cart();
@@ -46,6 +52,7 @@ public class Cart {
                 .id(this.userAccount.getId())
                 .cartId(this.cartId)
                 .cartItemDTOList(this.cartItemList.stream().map(cartItem -> cartItem.toDTO()).toList())
+                .totalPrice(this.totalPrice)
                 .build();
     }
 }
