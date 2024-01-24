@@ -36,6 +36,10 @@ public class UserAccount {
     @JsonManagedReference
     private List<UserShpAddr> userShpAddrList;
 
+    @OneToOne (mappedBy = "userAccount", cascade = CascadeType.ALL)
+    @JsonManagedReference
+    private Cart cart;
+
     public UserAccountDTO toDTO() {
         return UserAccountDTO.builder()
                 .id(this.id)
