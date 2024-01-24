@@ -1,5 +1,6 @@
 package com.nc.project.service;
 import com.nc.project.dto.UserAccountDTO;
+import com.nc.project.entity.UserAccount;
 
 public interface UserService {
     void join(UserAccountDTO userAccountDTO);
@@ -12,5 +13,7 @@ public interface UserService {
 
     void modifyUser(UserAccountDTO userAccountDTO);
 
+    // User 객체 반환해주는 메서드
+    UserAccount findUser (String userId);
 }
 
