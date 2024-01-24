@@ -27,9 +27,15 @@ public class CartItem {
     @Column(name = "cart_item_id")
     private long cartItemId;
 
-    // cart와 ManyToOne 관계 (fk)
+//    // cart와 ManyToOne 관계 (fk) (원본)
+//    @ManyToOne
+//    @JoinColumn(name = "cart_id")
+//    private Cart cart;
+
+    // cart와 ManyToOne 관계 (fk) (수정본)
     @ManyToOne
     @JoinColumn(name = "cart_id")
+    @JsonBackReference
     private Cart cart;
 
     // item과 ManyToOne 관계 (fk)
@@ -40,11 +46,14 @@ public class CartItem {
     @Column(name = "cart_item_cnt")
     private int cartItemCnt;
 
-//    @Column(name = "cart_item_price")
-//    private int cartItemPrice;
-
-//    @Column(name = "totalPrice")
-//    private int totalPrice;
+    // CartItem이 저장될 때 마다 부모 Cart의 totalPrice 갱신 해주는 메서드
+    @PrePersist
+    @PreUpdate
+    public void updateCartTotalPrice() {
+        if (cart != null) {
+            cart.calcTotalPrice();
+        }
+    }
 
     public CartItemDTO toDTO() {
         return CartItemDTO.builder()

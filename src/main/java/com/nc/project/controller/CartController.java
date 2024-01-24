@@ -15,6 +15,7 @@ import com.nc.project.service.ItemService;
 import com.nc.project.service.UserService;
 import com.nc.project.service.impl.CartServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,6 +62,7 @@ public class CartController {
 
         long id = userAccountRepository.findByUserId(userName).get().getId();
 
+        mav.addObject("cart", cartService.getCart(id));
         mav.addObject("cartItemList", cartService.getCartItem(id));
 
         mav.setViewName("cart/get_cart_test.html");
@@ -70,11 +72,13 @@ public class CartController {
 
      // 장바구니 페이지에서 상품 수량 변경하는 기능 (완료, 01.19)
     @PostMapping("/update-itemCnt")
-    public ResponseEntity<?> updateCartItemCnt (Long cartItemId, String action) {
+    public ResponseEntity<?> updateCartItemCnt (Long cartItemId, String action, Principal principal) {
 
         Map<String, Integer> response = new HashMap<>();
 
-        response = cartService.updateCartItemCount(cartItemId, action);
+        UserAccount userAccount = userService.findUser(principal.getName());
+
+        response = cartService.updateCartItemCount(cartItemId, action, userAccount);
 
         return ResponseEntity.ok(response);
     }
@@ -127,22 +131,19 @@ public class CartController {
 
     // 상품 상세페이지에서 장바구니에 물건 추가
     @PostMapping("/add/{itemId}")
-    public ResponseEntity<?> addCartItem (Principal principal,@PathVariable Long itemId) {
+    public ResponseEntity<?> addCartItem (Principal principal, @PathVariable Long itemId) {
         // 사용자 정보가 없을 경우 로그인창으로 이동
         if (principal == null) {
-            String loginUrl = "/login";
-            return ResponseEntity.status(HttpStatus.FOUND).header("Add Fail", loginUrl).build();
+
+            return ResponseEntity.status(401).body("Redirect:/login");
         }
 
-        UserAccount userAccount = userAccountRepository.findByUserId(principal.getName()).get();
+        // 없으면 null 값 까지도 가져옴
+        UserAccount userAccount = userAccountRepository.findByUserId(principal.getName()).orElse(null);
 
         cartService.addCart(userAccount, itemId);
 
-        String itemUrl = "/item/item-detail?itemId=" + itemId;
-
-        // 다시 해당 페이지로 리다이렉트
-//        return ResponseEntity.status(HttpStatus.OK).header("Add Complete", itemUrl).build();
-        return ResponseEntity.ok("장바구니에 추가되었습니다.");
+        return ResponseEntity.ok("장바구니에 담겼습니다.");
 
     }
 

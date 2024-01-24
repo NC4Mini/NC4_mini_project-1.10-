@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,22 +18,15 @@ public class BoardService {
         Board board = Board.toSaveEntity(boardDTO);
         boardRepository.save(board);
     }
-//    @Autowired
-//    private BoardRepository boardRepository;
-//
-//    //글 작성 처리
-//    public void write(Board board){
-//
-//        boardRepository.save(board);
-//
-//    }
-//
-//    //게시글 리스트 처리
-//    public List<Board> boardList(){
-//        return boardRepository.findAll();
-//    }
 
-
+    public List<BoardDTO> findAll() {
+        List<Board> boardList = boardRepository.findAll();
+        List<BoardDTO> boardDTOList = new ArrayList<>();
+        for (Board board: boardList){
+            boardDTOList.add(BoardDTO.toBoardDTO(board));
+        }
+        return boardDTOList;
+    }
 
 
 }
