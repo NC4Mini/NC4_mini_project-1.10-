@@ -156,7 +156,7 @@
                                 <dd class="price">
                                     <span class="num" ></span>
                                     <!-- 총 금액 적는 곳-->
-                                    <span id="total_price" th:text="${cart.totalPrice + ' 원'}" class="won"></span>
+                                    <span id="total_price_1" th:text="${cart.totalPrice + ' 원'}" class="won"></span>
                                 </dd>
                             </dl>
                             <dl class="amount">
@@ -173,10 +173,11 @@
                                     <span class="won">원</span>
                                 </dd>
                             </dl>
+                            <!-- 최종 결제 금액 칸 -->
                             <dl class="amount lst">
                                 <dt class="tit">결제예정금액</dt>
                                 <dd class="price">
-                                    <span class="num">6,000</span>
+                                    <span class="num" id="total_price_2" th:text="${cart.totalPrice + ' 원'}"></span>
                                     <!-- sum of product price here -->
                                     <span class="won">원</span>
                                 </dd>
@@ -240,7 +241,8 @@
 
                         // 총 상품 가격 업데이트
                         var newTotalPrice = response.newTotalPrice;
-                        $('#total_price').text(newTotalPrice + ' 원');
+                        $('#total_price_1').text(newTotalPrice + ' 원');
+                        $('#total_price_2').text(newTotalPrice + ' 원');
                         console.log("수정 완료")
                     },
                     error: function (newCartItemCnt) {
@@ -258,7 +260,10 @@
                         cartItemId: cartItemId
                     },
                     success: function () {
+                        var deleteItemPrice =
                         $('[data-cartItem-id="' + cartItemId + '"]').remove();
+                        // 결제 예정금액을 변경해주는 구문
+                        $('')
                     },
                     error: function (error) {
                         console.error('상품 삭제 실패: ', error);
