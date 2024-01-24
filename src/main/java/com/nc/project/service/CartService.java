@@ -13,6 +13,9 @@ public interface CartService {
     // 상품 상세페이지에서 장바구니 추가 기능
     public void addCart(UserAccount userAccount, Long itemId);
 
+    // 해당 장바구니를 찾아주는 기능
+    public Cart getCart (Long cartId);
+
     // 유저의 장바구니 상품 목록을 찾아주는 기능
     public List<CartItem> getCartItem (long id);
 

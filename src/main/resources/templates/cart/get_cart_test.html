@@ -16,7 +16,7 @@
 </head>
 <body>
     <div layout:fragment="content">
-
+        <input type="hidden" id="cart_id" th:value="${cart.cartId}">
             <div class="tit_page">
                 <h2 class="tit">장바구니</h2>
             </div>
@@ -113,7 +113,7 @@
                                         </div>
                                         <!-- 상품 삭제하는 버튼 (X 표시 된거) -->
                                         <!-- 상품 삭제 시 db반영 (btn_delete)-->
-                                        <button type="button" th:onclick="deleteCartItem(/*[[${cartItem.cartItemId}]]*/)" class="btn_delete"
+                                        <button type="button" th:onclick="deleteCartItem(/*[[${cartItem.cartItemId}]]*/, /*[[${cart.cartId}]]*/)" class="btn_delete"
                                             data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
                                             data-type="cold">
                                         상품 삭제</button>
@@ -242,7 +242,7 @@
                         // 총 상품 가격 업데이트
                         var newTotalPrice = response.newTotalPrice;
                         $('#total_price_1').text(newTotalPrice + ' 원');
-                        $('#total_price_2').text(newTotalPrice + ' 원');
+                        $('#total_price_2').text(newTotalPrice);
                         console.log("수정 완료")
                     },
                     error: function (newCartItemCnt) {
@@ -252,18 +252,24 @@
             }
 
             //  상품 삭제 버튼 기능
-            function deleteCartItem (cartItemId) {
+            function deleteCartItem (cartItemId, cartId) {
                 $.ajax({
                     type: 'DELETE',
                     url: '/cart/delete-cart-item',
                     data: {
+                        cartId: cartId,
                         cartItemId: cartItemId
                     },
-                    success: function () {
-                        var deleteItemPrice =
+                    success: function (response) {
                         $('[data-cartItem-id="' + cartItemId + '"]').remove();
+
+                        var newTotalPrice = response.newTotalPrice;
+
+                        console.log(newTotalPrice);
+
                         // 결제 예정금액을 변경해주는 구문
-                        $('')
+                        $('#total_price_1').text(newTotalPrice + ' 원');
+                        $('#total_price_2').text(newTotalPrice);
                     },
                     error: function (error) {
                         console.error('상품 삭제 실패: ', error);

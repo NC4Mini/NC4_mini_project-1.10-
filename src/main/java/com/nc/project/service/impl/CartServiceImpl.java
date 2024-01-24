@@ -61,6 +61,13 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Override
+    public Cart getCart(Long cartId) {
+        Cart cart = cartRepository.getReferenceById(cartId);
+
+        return cart;
+    }
+
     // 해당 사용자의 장바구니를 표출해주는 기능 (완료)
     @Override
     public List<CartItem> getCartItem (long id) {
