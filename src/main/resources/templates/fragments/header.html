@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
 <body>
 <header th:fragment="header" id="header">
     <div class="row1">
@@ -9,10 +9,10 @@
             <ul>
                 <li><a th:href="@{/user/join}">회원가입</a></li>
                 <li><i>|</i></li>
-                <li sec:authorize="!isAuthenticated()" ><a th:href="@{/login}">로그인</a></li>
+                <li sec:authorize="!isAuthenticated()" ><a th:href="@{/user/login}">로그인</a></li>
                 <li sec:authorize="isAuthenticated()" ><a th:href="@{/user/profile}">회원정보</a></li>
                 <li sec:authorize="isAuthenticated()" ><i>|</i></li>
-                <li sec:authorize="isAuthenticated()" ><a th:href="@{/logout}">로그아웃</a></li>
+                <li sec:authorize="isAuthenticated()" ><a th:href="@{/user/logout}">로그아웃</a></li>
                 <li><i>|</i></li>
                 <li class="service-box">
                     <a href="board/board-list" class="service-center-btn">고객센터<img src="/img/ico_down_16x10.png" alt=""></a>

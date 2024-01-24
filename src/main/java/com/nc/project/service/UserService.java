@@ -1,4 +1,6 @@
 package com.nc.project.service;
+
+
 import com.nc.project.dto.UserAccountDTO;
 
 public interface UserService {
@@ -11,6 +13,6 @@ public interface UserService {
     void resignUser(UserAccountDTO userAccountDTO);
 
     void modifyUser(UserAccountDTO userAccountDTO);
+    UserAccountDTO login(UserAccountDTO userAccountDTO);
 
 }
-
