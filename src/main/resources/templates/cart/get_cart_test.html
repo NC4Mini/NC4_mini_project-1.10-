@@ -155,8 +155,8 @@
                                 <dt class="tit">상품금액</dt>
                                 <dd class="price">
                                     <span class="num" ></span>
-                                    <!-- product price here-->
-                                    <span th:text="${cart.totalPrice}" class="won">6000원</span>
+                                    <!-- 총 금액 적는 곳-->
+                                    <span id="total_price" th:text="${cart.totalPrice + ' 원'}" class="won"></span>
                                 </dd>
                             </dl>
                             <dl class="amount">
@@ -233,10 +233,14 @@
                         // 수량 업데이트 부분
                         $('#' + cartItemCntId).text(newCartItemCnt);
 
-                        // 가격 업데이트
+                        // 해당 상품 가격 업데이트
                         var newItemPrice = response.newItemPrice;
                         var newPrice = newCartItemCnt * newItemPrice;
                         $('#' + cartItemPriceId).text(newPrice + '원');
+
+                        // 총 상품 가격 업데이트
+                        var newTotalPrice = response.newTotalPrice;
+                        $('#total_price').text(newTotalPrice + ' 원');
                         console.log("수정 완료")
                     },
                     error: function (newCartItemCnt) {

@@ -33,20 +33,17 @@ public class Cart {
     @JsonBackReference
     private UserAccount userAccount;
 
-    // cartItem과 OneToMany 관계
+//    // cartItem과 OneToMany 관계 (원본)
+//    @OneToMany (mappedBy = "cart")
+//    private List<CartItem> cartItemList = new ArrayList<>();
+
+    // cartItem과 OneToMany 관계 (수정본)
     @OneToMany (mappedBy = "cart")
+    @JsonManagedReference
     private List<CartItem> cartItemList = new ArrayList<>();
 
     @Column (name = "cart_total_price")
     private int totalPrice;
-
-    // user 엔티티를 받아서 장바구니 엔티티를 생성하는 메서드
-    public static Cart createNewCart(UserAccount userAccount) {
-        Cart cart = new Cart();
-//        cart.setCartId(userAccount.getId());
-        cart.setUserAccount(userAccount);
-        return cart;
-    }
 
     // totalPrice를 계산해주는 메서드
     public void calcTotalPrice() {

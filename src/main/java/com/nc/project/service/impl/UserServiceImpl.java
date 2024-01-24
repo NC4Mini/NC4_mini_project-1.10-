@@ -41,6 +41,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserAccount findUser(String userId) {
+        UserAccount userAccount = userAccountRepository.findByUserId(userId).get();
+
+        return userAccount;
+    }
+
+    @Override
     public void resignUser(UserAccountDTO userAccountDTO) {
         userAccountRepository.delete(userAccountDTO.toEntity());
     }

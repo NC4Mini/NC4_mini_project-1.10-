@@ -15,25 +15,6 @@
 <body>
 <div layout:fragment="content">
 
-<!--    &lt;!&ndash; modal 창 &ndash;&gt;-->
-<!--    <div class="modal" tabindex="-1">-->
-<!--        <div class="modal-dialog">-->
-<!--            <div class="modal-content">-->
-<!--                <div class="modal-header">-->
-<!--                    <h5 class="modal-title">Modal title</h5>-->
-<!--                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                </div>-->
-<!--                <div class="modal-body">-->
-<!--                    <p>Modal body text goes here.</p>-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                    <button type="button" class="btn btn-primary">Save changes</button>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
                 <div class="section_view">
                     <div id="sectionView">
                         <div class="inner_view">
@@ -699,6 +680,7 @@
 
                     </div>
                 </div>
+
     <script th:inline="javascript">
         function addToCart (itemId) {
 
@@ -708,62 +690,16 @@
                 data: {
                     itemId: itemId
                 },
-                success: function (response) {
-                    alert(response);
-
-                    console.log(response);
+                success: function (data) {
+                    alert(data);
                 },
-                error: function (error) {
-                    console.log("오류발생");
-                    console.log(error);
+                error: function (xhr, status, error) {
+                    alert("로그인을 해주세요");
+
+                    window.location.href = '/login';
                 }
             });
         }
-
-        // 모달 기능을 위한 설정
-        const myModal = document.getElementById('myModal')
-        const myInput = document.getElementById('myInput')
-
-        myModal.addEventListener('shown.bs.modal', () => {
-            myInput.focus()
-        })
-
-        // 장바구니 버튼 클릭시 동작할 스크립트
-
-        // $(document).ready(function () {
-        //     $("#add_cart_btn").click(function (event) {
-        //         event.preventDefault();
-        //         console.log("==================버튼 클릭됨===================")
-        //         var sendData =
-        //             $('#add_cart_form').serialize();
-        //
-        //         $.ajax({
-        //             type: "POST",
-        //             url: $('#add_cart_form').attr('action'),
-        //             data: sendData,
-        //             success: function (response) {
-        //                 console.log(response);
-        //             },
-        //             error: function (error) {
-        //                 console.log(error);
-        //             }
-        //         });
-        //     });
-        // });
-
-
-        // function add_to_cart() {
-        //
-        //     $.ajax({
-        //         type: 'POST',
-        //         url: $('#add_cart_form').attr('action'),
-        //         data: $('#add_cart_form').serialize(),
-        //         success: function (response) {
-        //             $('#modalBody').html(response);
-        //             $('#exampleModal').modal('show');
-        //         }
-        //     })
-        // }
 
     </script>
 </div>
