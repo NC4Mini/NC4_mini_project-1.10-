@@ -9,6 +9,7 @@ import com.nc.project.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.hibernate.sql.model.ModelMutationLogging;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -56,9 +57,14 @@ public class UserJoinController {
     @PostMapping("join")
     public ResponseEntity<?> join(UserAccountDTO userAccountDTO,
                                   UserShpAddrDTO userShpAddrDTO) {
-
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
         try {
+            // 기본타입들은 null값을 가질 수 없다. 0이 기본값임
+
+            if(userShpAddrDTO.getAddrStandard() == 0) {
+                userShpAddrDTO.setAddrStandard('N');
+            }
+
             List<UserShpAddrDTO> userShpAddrDTOList = new ArrayList<>();
             userShpAddrDTOList.add(userShpAddrDTO);
 
@@ -71,7 +77,10 @@ public class UserJoinController {
             response.setItem(returnMap);
             response.setStatusCode(HttpStatus.OK.value());
 
-            return ResponseEntity.ok(response);
+            // 가입 성공 시 /user/join으로 리다이렉션
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .header(HttpHeaders.LOCATION, "/login")
+                    .body(response);
 
         } catch (Exception e) {
             response.setErrorCode(605);
