@@ -4,8 +4,10 @@ import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.entity.UserAccount;
 import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.service.impl.UserServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,4 +81,33 @@ public class UserController {
         userService.resignUser(userAccountDto);
     }
 
+
+    @GetMapping("/login")
+    public String loginView() {
+        return "user/login.html";
+    }
+
+    @PostMapping("/login")
+    public String login(UserAccountDTO userAccountDTO, HttpSession session, Model model) {
+        int idCheck = userService.idCheck(userAccountDTO.getUserId());
+
+        if (idCheck == 0) {
+            model.addAttribute("close", "userId");
+            return "user/login.html";
+        }
+
+        UserAccountDTO loginUser = userService.login(userAccountDTO);
+
+        if (loginUser == null) {
+            model.addAttribute("close", "userPw");
+            return "user/login.html";
+        }
+
+        session.setAttribute("loginUser", loginUser);
+
+        System.out.println(session.getAttribute("loginUser"));
+        return "redirect:/";
+
+    }
 }
+
