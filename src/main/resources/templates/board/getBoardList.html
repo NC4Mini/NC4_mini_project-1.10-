@@ -4,6 +4,11 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <body>
+
+<th:block layout:fragment="css">
+    <link rel="stylesheet" th:href="@{/css/admin/admin_common.css}">
+    <link rel="stylesheet" th:href="@{/css/admin/admin_page_prd_upload.css}">
+</th:block>
 <div layout:fragment="content" id="main">
     <div class="page_aticle aticle_type2">
         <div id="snb" class="snb_my">
@@ -46,6 +51,21 @@
                                         <div>
                                                 <span>
                                                     <input type="text" name="boardCategory" class="i_text text1" onkeyup="chkword_name(this, 80)">
+                                                </span>
+                                        </div>
+                                        <span class="txtByte" title="현재글자수/최대글자수">
+                                              [
+                                              <strong class="txt_count_name">0</strong>
+                                               / 80 ]
+                                            </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th >작성자</th>
+                                    <td colspan="2">
+                                        <div>
+                                                <span>
+                                                    <input type="text" name="boardWriter" class="i_text text1" onkeyup="chkword_name(this, 80)">
                                                 </span>
                                         </div>
                                         <span class="txtByte" title="현재글자수/최대글자수">
@@ -161,7 +181,7 @@
                         </div>
 
                         <div id="product_submit" class="pd_submit">
-                            <button type="submit" >등록하기</button>
+                            <button type="submit"  onclick="listReq()">등록하기</button>
                         </div>
 
                     </div>
@@ -183,4 +203,9 @@
 
 
 </body>
+<script>
+    const listReq = () => {
+        location.href = "/getBoardList.html";
+    }
+</script>
 </html>
