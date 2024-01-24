@@ -147,7 +147,9 @@
                         $("#userBirthYear").focus();
                         return false; // 폼 제출 제어
                     }
-
+                    // 입력한 일자가 10보다 작으면 값이 앞에 '0'이붙도록 셋팅
+                    month = parseInt(month) < 10 ? '0' + day : day;
+                    day = parseInt(day) < 10 ? '0' + day : day;
                     // 날짜 형식을 yyyy/MM/dd로 가공
                     var userBirth = year + '-' + month + '-' + day;
 
@@ -257,7 +259,7 @@
                     if (!validationId) {
                         e.preventDefault()
                         alert("아이디는 영문자, 숫자 조합의 6자리 이상으로 설정해주세요")
-                        $("#userId").focus();
+                        $("#userId").val('').focus();
                         return;
                     }
                     // pw 유효성 검사가 틀렸을 때
