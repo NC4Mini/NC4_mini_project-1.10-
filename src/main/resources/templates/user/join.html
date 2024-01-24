@@ -117,7 +117,6 @@
                     typingTimer = setTimeout(function () {
                         updateUserBirth();
                     }, doneTypingInterval);
-                    console.log($("#joinForm").serialize());
                 });
 
                 function nowData() {
@@ -147,6 +146,16 @@
                         $("#userBirth").val('');
                         $("#userBirthYear").focus();
                         return false; // 폼 제출 제어
+                    }
+                    // 입력한 월이나 일자가 10보다 작으면 값이 앞에 '0'이붙도록 셋팅
+                    if (parseInt(month) < 10) {
+                        month = '0' + month;
+                        $("#userBirthMonth").val(month);
+                    }
+
+                    if (parseInt(day) < 10) {
+                        day = '0' + day;
+                        $("#userBirthDay").val(day);
                     }
 
                     // 날짜 형식을 yyyy/MM/dd로 가공
@@ -234,8 +243,36 @@
                             $(".field_address input").show().css("margin-top", "0");
                             $("#checkStandard").show();
                             $(".txt_guide").hide();
+                            $("#btnReSearch").show();
                         }
                     }).open();
+                });
+
+                $("#btnReSearch").on("click", () => {
+                    new daum.Postcode({
+                        oncomplete: function (data) {
+                            var addr = '';
+                            if (data.userSelectedType === 'R') {
+                                addr = data.roadAddress;
+                            } else {
+                                addr = data.jibunAddress;
+                            }
+
+                            $("#addrZone").val(data.zonecode);
+                            $("#addrBasic").val(addr);
+                            $("#addrDetail").val("").focus();
+                        }
+                    }).open();
+                    if ($("#addrStandard").prop("checked")) {
+                        $("#addrStandard").prop("checked", false);
+                    }
+                });
+
+                // 기본배송지 체크박스 선택값 부여 (N의 관한건 controller에서처리)
+                $("#addrStandard").on("change", () => {
+                    if ($("#addrStandard").is(":checked")) {
+                        $("#addrStandard").prop("value", "Y");
+                    }
                 });
 
                 // joinForm이 서브밋될 때 유효성 검사가 전부 완료되지 않으면 서브밋 제어
@@ -251,7 +288,7 @@
                     if (!validationId) {
                         e.preventDefault()
                         alert("아이디는 영문자, 숫자 조합의 6자리 이상으로 설정해주세요")
-                        $("#userId").focus();
+                        $("#userId").val('').focus();
                         return;
                     }
                     // pw 유효성 검사가 틀렸을 때
@@ -288,36 +325,6 @@
                         alert("주소를 모두 입력해주세요.")
                         return;
                     }
-
-                    // 기본 배송지 설정 여부 확인
-                    if ($("#addrStandard").is(":checked")) {
-                        addrStandard = 'Y';
-                    } else {
-                        addrStandard = 'N';
-                    }
-
-                    // DTO의 값과 맞춰줘야함
-                    let formData = new FormData($("#joinForm")[0]);
-                    let userShpAddrDTO = {"addrBasic": ($("#addrBasic").val()),
-                        "addrDetail": ($("#addrDetail").val()), "addrZone": ($("#addrZone").val()),
-                        "addrStandard": ($("#addrStandard").val()), "addrNickname": null};
-                    formData.append("userShpAddrDTO", userShpAddrDTO);
-                    // 서버로 FormData 전송
-                    $.ajax({
-                        url: '/user/join',
-                        type: 'post',
-                        data: formData,
-                        success: (obj) => {
-                            console.log(obj);
-
-                            alert(obj.item.msg);
-                            location.href = "/user/login"
-                        },
-                        error: (err) => {
-                            console.log(err);
-                            alert(err.responseJSON.errorMessage)
-                        }
-                    })
                 });
             });
         </script>
@@ -450,6 +457,7 @@
                             </button>
                             <div>
                                 <input type="text" id="addrZone" name="addrZone" placeholder="우편번호" readonly="readonly">
+                                <button type="button" id="btnReSearch" class="btn default">재검색</button>
                                 <input type="text" id="addrBasic" name="addrBasic" placeholder="기본주소"
                                        readonly="readonly">
                                 <input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소">
@@ -483,7 +491,7 @@
                                     여자
                                 </label>
                                 <label for="gender-none" class="radio_box">
-                                    <input type="radio" id="gender-none" name="userGender" value="NONE">
+                                    <input type="radio" id="gender-none" name="userGender" value="NONE" checked>
                                     <span class="on"></span>
                                     선택안함
                                 </label>
