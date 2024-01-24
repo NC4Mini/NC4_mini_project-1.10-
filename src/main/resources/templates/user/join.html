@@ -117,7 +117,6 @@
                     typingTimer = setTimeout(function () {
                         updateUserBirth();
                     }, doneTypingInterval);
-                    console.log($("#joinForm").serialize());
                 });
 
                 function nowData() {
@@ -238,6 +237,13 @@
                     }).open();
                 });
 
+                // 기본배송지 체크박스 선택값 부여 (N의 관한건 controller에서처리)
+                $("#addrStandard").on("change", () => {
+                    if ($("#addrStandard").is(":checked")) {
+                        $("#addrStandard").prop("value", "Y");
+                    }
+                });
+
                 // joinForm이 서브밋될 때 유효성 검사가 전부 완료되지 않으면 서브밋 제어
                 $("#joinForm").on("submit", (e) => {
                     // id 중복체크가 되지 않았을 때
@@ -288,36 +294,6 @@
                         alert("주소를 모두 입력해주세요.")
                         return;
                     }
-
-                    // 기본 배송지 설정 여부 확인
-                    if ($("#addrStandard").is(":checked")) {
-                        addrStandard = 'Y';
-                    } else {
-                        addrStandard = 'N';
-                    }
-
-                    // DTO의 값과 맞춰줘야함
-                    let formData = new FormData($("#joinForm")[0]);
-                    let userShpAddrDTO = {"addrBasic": ($("#addrBasic").val()),
-                        "addrDetail": ($("#addrDetail").val()), "addrZone": ($("#addrZone").val()),
-                        "addrStandard": ($("#addrStandard").val()), "addrNickname": null};
-                    formData.append("userShpAddrDTO", userShpAddrDTO);
-                    // 서버로 FormData 전송
-                    $.ajax({
-                        url: '/user/join',
-                        type: 'post',
-                        data: formData,
-                        success: (obj) => {
-                            console.log(obj);
-
-                            alert(obj.item.msg);
-                            location.href = "/user/login"
-                        },
-                        error: (err) => {
-                            console.log(err);
-                            alert(err.responseJSON.errorMessage)
-                        }
-                    })
                 });
             });
         </script>
@@ -483,7 +459,7 @@
                                     여자
                                 </label>
                                 <label for="gender-none" class="radio_box">
-                                    <input type="radio" id="gender-none" name="userGender" value="NONE">
+                                    <input type="radio" id="gender-none" name="userGender" value="NONE" checked>
                                     <span class="on"></span>
                                     선택안함
                                 </label>
