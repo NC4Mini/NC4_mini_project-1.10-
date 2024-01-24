@@ -147,9 +147,17 @@
                         $("#userBirthYear").focus();
                         return false; // 폼 제출 제어
                     }
-                    // 입력한 일자가 10보다 작으면 값이 앞에 '0'이붙도록 셋팅
-                    month = parseInt(month) < 10 ? '0' + day : day;
-                    day = parseInt(day) < 10 ? '0' + day : day;
+                    // 입력한 월이나 일자가 10보다 작으면 값이 앞에 '0'이붙도록 셋팅
+                    if (parseInt(month) < 10) {
+                        month = '0' + month;
+                        $("#userBirthMonth").val(month);
+                    }
+
+                    if (parseInt(day) < 10) {
+                        day = '0' + day;
+                        $("#userBirthDay").val(day);
+                    }
+
                     // 날짜 형식을 yyyy/MM/dd로 가공
                     var userBirth = year + '-' + month + '-' + day;
 
@@ -235,8 +243,29 @@
                             $(".field_address input").show().css("margin-top", "0");
                             $("#checkStandard").show();
                             $(".txt_guide").hide();
+                            $("#btnReSearch").show();
                         }
                     }).open();
+                });
+
+                $("#btnReSearch").on("click", () => {
+                    new daum.Postcode({
+                        oncomplete: function (data) {
+                            var addr = '';
+                            if (data.userSelectedType === 'R') {
+                                addr = data.roadAddress;
+                            } else {
+                                addr = data.jibunAddress;
+                            }
+
+                            $("#addrZone").val(data.zonecode);
+                            $("#addrBasic").val(addr);
+                            $("#addrDetail").val("").focus();
+                        }
+                    }).open();
+                    if ($("#addrStandard").prop("checked")) {
+                        $("#addrStandard").prop("checked", false);
+                    }
                 });
 
                 // 기본배송지 체크박스 선택값 부여 (N의 관한건 controller에서처리)
@@ -428,6 +457,7 @@
                             </button>
                             <div>
                                 <input type="text" id="addrZone" name="addrZone" placeholder="우편번호" readonly="readonly">
+                                <button type="button" id="btnReSearch" class="btn default">재검색</button>
                                 <input type="text" id="addrBasic" name="addrBasic" placeholder="기본주소"
                                        readonly="readonly">
                                 <input type="text" id="addrDetail" name="addrDetail" placeholder="상세주소">
