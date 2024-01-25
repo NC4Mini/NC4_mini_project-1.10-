@@ -64,9 +64,10 @@ public class CartController {
 
         long id = userAccount.getId();
 
-//        UserShpAddr userDefaultShpAddr = cartService.bringDefaultAddr(id);
-//
-//        mav.addObject("defaultAddr", userDefaultShpAddr);
+        UserShpAddr userDefaultShpAddr = cartService.bringDefaultAddr(id);
+
+        System.out.println("===========================" + userDefaultShpAddr.toDTO().toString());
+        mav.addObject("defaultAddr", userDefaultShpAddr);
         mav.addObject("cart", cartService.getCart(id));
         mav.addObject("cartItemList", cartService.getCartItem(id));
 

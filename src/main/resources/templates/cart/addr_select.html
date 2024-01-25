@@ -32,12 +32,12 @@
                                 <span class="screen_out">선택하기</span><!--여러개있을경우가능 향후수정필요-->
                             </label>
                             <!-- 기본 배송지 설정값을 조건문으로 주기위한 구문-->
-                            <div class="address" th:switch="${userShpAddr.addrBasic}">
+                            <div class="address" th:switch="${userShpAddr.addrStandard}">
                                 <!-- 기본 배송지로 설정 되어있을 때만 기본 배송지 표출 -->
                                 <span class="badge_default" th:case="'Y'">기본 배송지</span>
                                 <span class="badge_default" th:case="'N'"></span>
-                                <p class="addr" th:text="${userShpAddr.addrBasic}"></p>
-<!--                                <p class="addr" th:text="${userShpAddr.addrBasic} + ${userShpAddr.addrDetail}"></p>-->
+<!--                                <p class="addr" th:text="${userShpAddr.addrBasic}"></p>-->
+                                <p class="addr" th:text="${userShpAddr.addrBasic} + ${userShpAddr.addrDetail}"></p>
                             </div>
                             <div class="user">
                                 <span class="delivery star">샛별배송</span>
