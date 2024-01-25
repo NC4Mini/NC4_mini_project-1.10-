@@ -1,9 +1,6 @@
 package com.nc.project.service.impl;//package com.example.tempproject.service.impl;
 
-import com.nc.project.entity.Cart;
-import com.nc.project.entity.CartItem;
-import com.nc.project.entity.Item;
-import com.nc.project.entity.UserAccount;
+import com.nc.project.entity.*;
 import com.nc.project.repository.*;
 import com.nc.project.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +18,7 @@ public class CartServiceImpl implements CartService {
     private final CartItemRepository cartItemRepository;
     private final ItemRepository itemRepository;
     private final UserAccountRepository userAccountRepository;
+    private final UserShpAddrRepository userShpAddrRepository;
 
 
     // 장바구니에 물건 담기 기능 (완료)
@@ -59,6 +57,13 @@ public class CartServiceImpl implements CartService {
             cartItem.setCartItemCnt(cartItem.getCartItemCnt() + 1);
         }
 
+    }
+
+    @Override
+    public Cart getCart(Long cartId) {
+        Cart cart = cartRepository.getReferenceById(cartId);
+
+        return cart;
     }
 
     // 해당 사용자의 장바구니를 표출해주는 기능 (완료)
@@ -136,5 +141,23 @@ public class CartServiceImpl implements CartService {
 
         return cart;
     }
+
+    @Override
+    public List<UserShpAddr> bringUserShpAddrList(long id) {
+        UserAccount userAccount = userAccountRepository.getReferenceById(id);
+
+        List<UserShpAddr> userShpAddrList = userAccount.getUserShpAddrList();
+
+        return userShpAddrList;
+    }
+
+//    @Override
+//    public UserShpAddr bringDefaultAddr(long id) {
+//        UserShpAddr userShpAddr = userShpAddrRepository.findByUserAccount_Id(id);
+//
+//
+//
+//        return userShpAddr;
+//    }
 
 }
