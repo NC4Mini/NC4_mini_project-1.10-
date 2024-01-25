@@ -29,7 +29,7 @@
                             <!-- 배송지를 체크하는 radio 부분 -->
                             <label class="skin_checkbox">
                                 <!-- 배송지가 기본 배송지일 경우 체크됨 -->
-                                <input id="check_box_id" type="radio" name="addrNo" data-delivery-type="direct" value="7260215" th:checked="${userShpAddr.addrStandard} == 'Y'">
+                                <input type="radio" name="addrNo" data-delivery-type="direct" value="7260215" th:checked="${userShpAddr.addrStandard} == 'Y'">
                                 <span class="ico"></span>
                                 <span class="screen_out">선택하기</span><!--여러개있을경우가능 향후수정필요-->
                             </label>
