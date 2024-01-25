@@ -46,6 +46,12 @@ public class SecurityConfig {
                 })
                 // 로그아웃 처리
                 .logout((logout) -> {
+                    // 로그아웃 요청 url 지정
+                    logout.logoutUrl("/logout");
+                    // 사용자 인증정보가 저장된 security context가
+                    // HttpSession에 저장되기 때문에 세션을 만료시켜서
+                    // security contest를 제거한다.
+                    logout.invalidateHttpSession(true);
                     // 로그아웃 성공 시 요청을 보낼 url 지정
                     logout.logoutSuccessUrl("/");
                 })
