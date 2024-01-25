@@ -3,6 +3,8 @@ package com.nc.project.service;
 import com.nc.project.entity.Cart;
 import com.nc.project.entity.CartItem;
 import com.nc.project.entity.UserAccount;
+import com.nc.project.entity.UserShpAddr;
+import jakarta.persistence.Id;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,9 @@ public interface CartService {
 
     // 상품 상세페이지에서 장바구니 추가 기능
     public void addCart(UserAccount userAccount, Long itemId);
+
+    // 해당 장바구니를 찾아주는 기능
+    public Cart getCart (Long cartId);
 
     // 유저의 장바구니 상품 목록을 찾아주는 기능
     public List<CartItem> getCartItem (long id);
@@ -24,4 +29,10 @@ public interface CartService {
 
     // 유저의 장바구니 객체를 가져오는 기능
     public Cart getCart (long id);
+
+    // 배송지 목록을 가져오는 기능
+    public List<UserShpAddr> bringUserShpAddrList (long id);
+
+    // 기본 배송지 객체를 가져오는 기능
+//    public UserShpAddr bringDefaultAddr (long id);
 }
