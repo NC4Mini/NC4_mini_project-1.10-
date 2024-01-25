@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Optional;
 
@@ -71,7 +72,8 @@ public class UserController {
 
     @Transactional
     @PostMapping("/resign")
-    public void resign() {
+    @ResponseBody
+    public void resign(HttpSession session) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         UserDetails userDetails = (UserDetails)principal;
@@ -81,6 +83,8 @@ public class UserController {
 
         userAccountDto = userService.findUser(userId).toDTO();
         userService.resignUser(userAccountDto);
+
+        session.setAttribute("SPRING_SECURITY_CONTEXT", null);
     }
 
 
