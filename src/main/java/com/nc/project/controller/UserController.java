@@ -6,7 +6,10 @@ import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,9 +32,10 @@ public class UserController {
     }
 
 
-    @PostMapping("/profile/change")
+    @PostMapping("/change")
 //    public void change(UserAccountDto newUuserAccountDto) {
     public void change() {
+
         //테스트용 데이터
         Long id = 1L;
 
@@ -58,26 +62,24 @@ public class UserController {
 //                .userEmail(newUuserAccountDto.getUserEmail())
                 .build();
 
-        System.out.println("결과");
+
 
         originalUserAccountDTO = aaa;
         System.out.println(originalUserAccountDTO);
         userService.modifyUser(originalUserAccountDTO);
     }
 
-    @PostMapping("/profile/resign")
-//    public void resign(UserAccountDto userAccountDto) {
+    @Transactional
+    @PostMapping("/resign")
     public void resign() {
 
-        UserAccountDTO userAccountDto = new UserAccountDTO();
-        //테스트용 데이터
-        Long id = 1L;
-        Optional<UserAccount> userAccount = userAccountRepository.findById(id);
-        if(userAccount != null){
-            userAccountDto = userAccount.get().toDTO();
-        }
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String userId = userDetails.getUsername();
 
-//        UserAccountDto userAccountDto = new UserAccountDto();
+        UserAccountDTO userAccountDto = new UserAccountDTO();
+
+        userAccountDto = userService.findUser(userId).toDTO();
         userService.resignUser(userAccountDto);
     }
 

@@ -102,7 +102,7 @@ $(() => {
 
     $("#resignBtn").on("click", (e) => {
         $.ajax({
-            url: '/profile/resign',
+            url: '/user/resign',
             type: 'post',
             data: $("#modifyForm").serialize(),
             success: (obj) => {
