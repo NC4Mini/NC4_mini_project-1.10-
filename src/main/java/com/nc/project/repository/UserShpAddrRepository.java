@@ -7,6 +7,4 @@ import java.util.Optional;
 
 public interface UserShpAddrRepository extends JpaRepository <UserShpAddr, Long> {
     UserShpAddr findByUserAccount_Id(Long id);
-
-    UserShpAddr findByUserAccount_IdAndAddrStandard (long userAccount_id, char addrStandard);
 }

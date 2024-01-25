@@ -34,5 +34,5 @@ public interface CartService {
     public List<UserShpAddr> bringUserShpAddrList (long id);
 
     // 기본 배송지 객체를 가져오는 기능
-    public UserShpAddr bringDefaultAddr (long id);
+//    public UserShpAddr bringDefaultAddr (long id);
 }
