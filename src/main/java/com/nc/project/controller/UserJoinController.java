@@ -79,7 +79,7 @@ public class UserJoinController {
 
             // 가입 성공 시 /user/join으로 리다이렉션
             return ResponseEntity.status(HttpStatus.FOUND)
-                    .header(HttpHeaders.LOCATION, "/login")
+                    .header(HttpHeaders.LOCATION, "/user/login")
                     .body(response);
 
         } catch (Exception e) {
