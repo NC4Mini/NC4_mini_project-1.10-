@@ -177,16 +177,6 @@
                         $("#userBirthday").val('');
                         return false; // 폼 제출 제어
                     }
-
-                    // 0이 아니면서 한 자리 수일 경우 앞에 0을 붙이기
-                    month = (month.length === 1 && month !== '0') ? '0' + month : month;
-                    day = (day.length === 1 && day !== '0') ? '0' + day : day;
-
-                    // 날짜 형식을 yyyy/MM/dd로 가공
-                    var userBirth = year + '-' + month + '-' + day;
-
-                    // 가공된 날짜를 숨겨진 필드에 할당
-                    $("#userBirth").val(userBirth);
                 }
 
                 // 아이디 유효성 검사 정규식
@@ -300,7 +290,25 @@
                 });
 
                 // joinForm이 서브밋될 때 유효성 검사가 전부 완료되지 않으면 서브밋 제어
-                $("#joinForm").on("submit", (e) => {
+                $("#btnJoin").on("click", (e) => {
+                    var year = $("#userBirthYear").val();
+                    var month = $("#userBirthMonth").val();
+                    var day = $("#userBirthDay").val();
+
+                    // 0이 아니면서 한 자리 수일 경우 앞에 0을 붙이기
+                    month = (month.length === 1 && month !== '0') ? '0' + month : month;
+                    day = (day.length === 1 && day !== '0') ? '0' + day : day;
+
+                    // 날짜 형식을 yyyy/MM/dd로 가공
+                    var userBirth = year + '-' + month + '-' + day;
+
+                    console.log(userBirth);
+
+                    // 가공된 날짜를 숨겨진 필드에 할당
+                    $("#userBirth").val(userBirth);
+
+                    console.log($("#userBirth").val());
+
                     // id 중복체크가 되지 않았을 때
                     if (!checkId) {
                         e.preventDefault();
@@ -349,9 +357,25 @@
                         alert("주소를 모두 입력해주세요.")
                         return;
                     }
+
+                    $.ajax({
+                        url: '/user/join',
+                        type: 'post',
+                        data: $("#joinForm").serialize(),
+                        success: (obj) => {
+                            console.log(obj.item.msg)
+                            alert("회원가입 성공, 로그인페이지로 이동합니다.")
+                            window.location.href = "/user/login";
+                        },
+                        error: () => {
+                            alert("에러발생, 관리자에게 문의하세요.")
+                            window.location.href = "/";
+                        }
+
+                    })
+
                 });
-            })
-            ;
+            });
         </script>
     </th:block>
 </head>
@@ -546,7 +570,7 @@
                 </table>
 
                 <div id="formSubmit" class="form_footer" style="border-top: 1px solid #333;">
-                    <button type="submit" class="btn active btn_join" id="btnJoin">가입하기</button>
+                    <button type="button" class="btn active btn_join" id="btnJoin">가입하기</button>
                 </div>
             </form>
         </div>
