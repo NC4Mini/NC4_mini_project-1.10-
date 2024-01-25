@@ -64,9 +64,9 @@ public class CartController {
 
         long id = userAccount.getId();
 
-        UserShpAddr userDefaultShpAddr = cartService.bringDefaultAddr(id, 'Y');
-
-        mav.addObject("defaultAddr", userDefaultShpAddr);
+//        UserShpAddr userDefaultShpAddr = cartService.bringDefaultAddr(id);
+//
+//        mav.addObject("defaultAddr", userDefaultShpAddr);
         mav.addObject("cart", cartService.getCart(id));
         mav.addObject("cartItemList", cartService.getCartItem(id));
 
@@ -126,11 +126,18 @@ public class CartController {
     }
 
 
-    // 장바구니 페이지에서 배송지 변경 이동
+    // 장바구니 페이지에서 배송지 변경 페이지 이동
     @GetMapping("/addr-select")
-    public ModelAndView changeAddr() {
+    public ModelAndView changeAddr(Principal principal) {
         ModelAndView mav = new ModelAndView();
 
+        UserAccount userAccount = userService.findUser(principal.getName());
+
+        long id = userAccount.getId();
+
+        List<UserShpAddr> userShpAddrList = cartService.bringUserShpAddrList(id);
+
+        mav.addObject("userShpAddrList", userShpAddrList);
         mav.setViewName("cart/addr_select.html");
 
         return mav;

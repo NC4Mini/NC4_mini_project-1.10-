@@ -4,6 +4,7 @@ import com.nc.project.entity.Cart;
 import com.nc.project.entity.CartItem;
 import com.nc.project.entity.UserAccount;
 import com.nc.project.entity.UserShpAddr;
+import jakarta.persistence.Id;
 
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,9 @@ public interface CartService {
     // 유저의 장바구니 객체를 가져오는 기능
     public Cart getCart (long id);
 
+    // 배송지 목록을 가져오는 기능
+    public List<UserShpAddr> bringUserShpAddrList (long id);
+
     // 기본 배송지 객체를 가져오는 기능
-    public UserShpAddr bringDefaultAddr (long id, char addrStandard);
+//    public UserShpAddr bringDefaultAddr (long id);
 }

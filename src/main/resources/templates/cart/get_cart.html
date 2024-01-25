@@ -142,11 +142,11 @@
                         <div class="cart_delivery">
                             <h3 class="tit">배송지</h3>
                             <div class="address">
-                                <p class="addr" th:text="${defaultAddr.addrBasic}">인천 연수구 909호</p>
+                                <p class="addr" th:text="${defaultAddr.addrBasic}"><!--배송지 명 표출--></p>
                                 <!-- address here -->
                                 <span class="delivery star">샛별배송</span>
                                 <a href="/cart/addr-select"
-                                   onclick="window.open(this.href,'shipping destination','width=514, height=584');return false;"
+                                   onclick="window.open(this.href,'shipping destination','width=530, height=584');return false;"
                                    class="btn default">배송지 변경</a>
                             </div>
                         </div>

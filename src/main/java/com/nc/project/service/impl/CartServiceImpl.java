@@ -143,10 +143,21 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public UserShpAddr bringDefaultAddr(long id, char addrStandard) {
-        UserShpAddr userShpAddr = userShpAddrRepository.findByUserAccount_IdAndAddrStandardEquals(id, addrStandard).get();
+    public List<UserShpAddr> bringUserShpAddrList(long id) {
+        UserAccount userAccount = userAccountRepository.getReferenceById(id);
 
-        return userShpAddr;
+        List<UserShpAddr> userShpAddrList = userAccount.getUserShpAddrList();
+
+        return userShpAddrList;
     }
+
+//    @Override
+//    public UserShpAddr bringDefaultAddr(long id) {
+//        UserShpAddr userShpAddr = userShpAddrRepository.findByUserAccount_Id(id);
+//
+//
+//
+//        return userShpAddr;
+//    }
 
 }
