@@ -1,9 +1,6 @@
 package com.nc.project.service.impl;//package com.example.tempproject.service.impl;
 
-import com.nc.project.entity.Cart;
-import com.nc.project.entity.CartItem;
-import com.nc.project.entity.Item;
-import com.nc.project.entity.UserAccount;
+import com.nc.project.entity.*;
 import com.nc.project.repository.*;
 import com.nc.project.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +18,7 @@ public class CartServiceImpl implements CartService {
     private final CartItemRepository cartItemRepository;
     private final ItemRepository itemRepository;
     private final UserAccountRepository userAccountRepository;
+    private final UserShpAddrRepository userShpAddrRepository;
 
 
     // 장바구니에 물건 담기 기능 (완료)
@@ -142,6 +140,13 @@ public class CartServiceImpl implements CartService {
         cart.calcTotalPrice();
 
         return cart;
+    }
+
+    @Override
+    public UserShpAddr bringDefaultAddr(long id, char addrStandard) {
+        UserShpAddr userShpAddr = userShpAddrRepository.findByUserAccount_IdAndAddrStandardEquals(id, addrStandard).get();
+
+        return userShpAddr;
     }
 
 }

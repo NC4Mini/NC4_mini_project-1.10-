@@ -4,10 +4,7 @@ import com.nc.project.dto.CartItemDTO;
 import com.nc.project.dto.ItemDTO;
 import com.nc.project.dto.ResponseDTO;
 import com.nc.project.dto.UserAccountDTO;
-import com.nc.project.entity.Cart;
-import com.nc.project.entity.CartItem;
-import com.nc.project.entity.Item;
-import com.nc.project.entity.UserAccount;
+import com.nc.project.entity.*;
 import com.nc.project.repository.CartRepository;
 import com.nc.project.repository.ItemRepository;
 import com.nc.project.repository.UserAccountRepository;
@@ -61,14 +58,19 @@ public class CartController {
             return mav;
         }
 
-        String userName = principal.getName();
+        String userId = principal.getName();
 
-        long id = userAccountRepository.findByUserId(userName).get().getId();
+        UserAccount userAccount = userService.findUser(userId);
 
+        long id = userAccount.getId();
+
+        UserShpAddr userDefaultShpAddr = cartService.bringDefaultAddr(id, 'Y');
+
+        mav.addObject("defaultAddr", userDefaultShpAddr);
         mav.addObject("cart", cartService.getCart(id));
         mav.addObject("cartItemList", cartService.getCartItem(id));
 
-        mav.setViewName("cart/get_cart_test.html");
+        mav.setViewName("cart/get_cart.html");
 
         return mav;
     }
