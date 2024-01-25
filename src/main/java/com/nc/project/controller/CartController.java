@@ -4,9 +4,8 @@ import com.nc.project.dto.CartItemDTO;
 import com.nc.project.dto.ItemDTO;
 import com.nc.project.dto.ResponseDTO;
 import com.nc.project.dto.UserAccountDTO;
-import com.nc.project.entity.CartItem;
-import com.nc.project.entity.Item;
-import com.nc.project.entity.UserAccount;
+import com.nc.project.entity.*;
+import com.nc.project.repository.CartRepository;
 import com.nc.project.repository.ItemRepository;
 import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.repository.UserDetailRepository;
@@ -41,6 +40,7 @@ public class CartController {
     private final UserService userService;
     private final UserAccountRepository userAccountRepository;
     private final ItemRepository itemRepository;
+    private final CartRepository cartRepository;
 
     private final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
@@ -58,14 +58,19 @@ public class CartController {
             return mav;
         }
 
-        String userName = principal.getName();
+        String userId = principal.getName();
 
-        long id = userAccountRepository.findByUserId(userName).get().getId();
+        UserAccount userAccount = userService.findUser(userId);
 
+        long id = userAccount.getId();
+
+//        UserShpAddr userDefaultShpAddr = cartService.bringDefaultAddr(id);
+//
+//        mav.addObject("defaultAddr", userDefaultShpAddr);
         mav.addObject("cart", cartService.getCart(id));
         mav.addObject("cartItemList", cartService.getCartItem(id));
 
-        mav.setViewName("cart/get_cart_test.html");
+        mav.setViewName("cart/get_cart.html");
 
         return mav;
     }
@@ -82,27 +87,57 @@ public class CartController {
 
         return ResponseEntity.ok(response);
     }
+
     // 장바구니 페이지에서 상품목록 삭제하는 기능
     @DeleteMapping("/delete-cart-item")
-    public ResponseEntity<?> deleteCartItem (Long cartItemId) {
-        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
-        Map<String, String> returnMap = new HashMap<>();
+    public ResponseEntity<?> deleteCartItem (Long cartItemId, Long cartId) {
+        Map<String, String> response = new HashMap<>();
+
+        Cart cart = cartService.getCart(cartId);
 
         cartService.deleteCartItem(cartItemId);
 
-        returnMap.put("msg", "삭제 되었습니다.");
+        cart.calcTotalPrice();
+        cartRepository.save(cart);
 
-        response.setItem(returnMap);
-        response.setStatusCode(HttpStatus.OK.value());
+        response.put("msg", "삭제 되었습니다.");
+        response.put("newTotalPrice", String.valueOf(cart.getTotalPrice()));
+
         return ResponseEntity.ok(response);
+
+//        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
+//        Map<String, String> returnMap = new HashMap<>();
+//
+//        Cart cart = cartService.getCart(cartId);
+//
+//        cartService.deleteCartItem(cartItemId);
+//
+//        cart.calcTotalPrice();
+//        cartRepository.save(cart);
+//
+//        returnMap.put("msg", "삭제 되었습니다.");
+//        returnMap.put("newTotalPrice", String.valueOf(cart.getTotalPrice()));
+//
+//        System.out.println("=====================" + returnMap.get("newTotalPrice"));
+//
+//        response.setItem(returnMap);
+//        response.setStatusCode(HttpStatus.OK.value());
+//        return ResponseEntity.ok(response);
     }
 
 
-    // 장바구니 페이지에서 배송지 변경 이동
+    // 장바구니 페이지에서 배송지 변경 페이지 이동
     @GetMapping("/addr-select")
-    public ModelAndView changeAddr() {
+    public ModelAndView changeAddr(Principal principal) {
         ModelAndView mav = new ModelAndView();
 
+        UserAccount userAccount = userService.findUser(principal.getName());
+
+        long id = userAccount.getId();
+
+        List<UserShpAddr> userShpAddrList = cartService.bringUserShpAddrList(id);
+
+        mav.addObject("userShpAddrList", userShpAddrList);
         mav.setViewName("cart/addr_select.html");
 
         return mav;
