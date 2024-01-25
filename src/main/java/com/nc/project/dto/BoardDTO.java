@@ -18,7 +18,7 @@ public class BoardDTO {
   private String boardCategory;
   private String boardTitle;
   private String boardContents;
-//  private int  boardHits;
+  private int  boardHits;
   private LocalDateTime boardCreatedTime;
   private LocalDateTime boardUpdatedTime;
   public static  BoardDTO toBoardDTO(Board board){
@@ -26,7 +26,7 @@ public class BoardDTO {
       boardDTO.setId(board.getId());
       boardDTO.setBoardWriter(board.getBoardWriter());
       boardDTO.setBoardTitle(board.getBoardTitle());
-//      boardDTO.setBoardHits(board.getBoardHits());
+      boardDTO.setBoardHits(board.getBoardHits());
       boardDTO.setBoardCategory(board.getBoardCategory());
       boardDTO.setBoardContents(board.getBoardContents());
       boardDTO.setBoardCreatedTime(board.getCreatedTime());
