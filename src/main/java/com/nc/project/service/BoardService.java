@@ -6,9 +6,11 @@ import com.nc.project.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,4 +31,19 @@ public class BoardService {
     }
 
 
+    @Transactional
+    public void updateHits(Long id) {
+        boardRepository.updateHits(id);
+    }
+
+    public BoardDTO findById(Long id) {
+        Optional<Board> optionalBoard = boardRepository.findById(id);
+        if(optionalBoard.isPresent()){
+            Board board = optionalBoard.get();
+            BoardDTO boardDTO= BoardDTO.toBoardDTO(board);
+            return  boardDTO;
+        }else{
+            return null;
+        }
+    }
 }
