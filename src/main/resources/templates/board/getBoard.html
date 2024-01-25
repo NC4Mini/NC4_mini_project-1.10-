@@ -70,8 +70,8 @@
                         <td class="phone" th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}">
                             <span></span>
                         </td>
-                        <td>
-
+                        <td th:text="${board.boardHits}">
+                            <span></span>
                         </td>
                         <td class="delete_position">
                             <span class="delivery star">Y</span>
