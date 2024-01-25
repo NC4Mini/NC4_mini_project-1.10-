@@ -9,51 +9,61 @@
 </head>
 <body onresize="parent.resizeTo(560,584)" onload="parent.resizeTo(560,584)">
 
-<div class="only_pc" layout:fragment="cart_content">
-    <!-- 창크기 고정.-->
-    <div class="only_pc fixed_head">
-        <h2 class="pop_head">배송지
-            <span class="sub">배송지에 따라 상품 정보가 달라질 수 있습니다.</span>
-        </h2>
+    <div class="only_pc" layout:fragment="cart_content">
+        <!-- 창크기 고정.-->
+        <div class="only_pc fixed_head">
+            <h2 class="pop_head">배송지
+                <span class="sub">배송지에 따라 상품 정보가 달라질 수 있습니다.</span>
+            </h2>
 
-        <div class="pop_list">
-            <span class="select">선택</span>
-            <span class="delivery">배송 정보</span>
-            <span class="modify">수정</span>
-        </div>
+            <div class="pop_list">
+                <span class="select">선택</span>
+                <span class="delivery">배송 정보</span>
+                <span class="modify">수정</span>
+            </div>
 
-        <div class="section_destination">
-            <div class="only_pc">
-                <ul id="addrList" class="list type_select">
-                    <li th:each="userShpAddr : ${userShpAddrList}">
-                        <label class="skin_checkbox">
-                            <input type="radio" name="addrNo" data-delivery-type="direct" value="7260215" checked="">
-                            <span class="ico"></span>
-                            <span class="screen_out">선택하기</span><!--여러개있을경우가능 향후수정필요-->
-                        </label>
-                        <!-- 기본 배송지 설정값을 조건문으로 주기위한 구문-->
-                        <div class="address" th:switch="${userShpAddr.addrStandard}">
-                            <!-- 기본 배송지로 설정 되어있을 때만 기본 배송지 표출 -->
-                            <span class="badge_default" th:case="'Y'">기본 배송지</span>
-                            <p class="addr" th:text="${userShpAddr.addrBasic} + ${userShpAddr.addrDetail}"></p>
-                        </div>
-                        <div class="user">
-                            <span class="delivery star">샛별배송</span>
-                        </div>
-                        <div class="btn_modify">
-                            <a href="/cart/addr-modify">
-                                <button type="button" class="ico modify" data-addr-no="7260215"
-                                        data-addr-type="D" data-is-current-addr="true">수정하기</button>
-                            </a>
-                        </div>
-                    </li>   <!-- 수정하기 페이지 넘어가야함 기본 주소 db와 함께 .-->
-                </ul>
-                <a id="newAddressAddBtn" class="new_address" href="/cart/addr-add">
-                    <img src="https://res.kurly.com/pc/ico/2006/ico_add_16x16.svg" alt="" class="ico">새 배송지 추가</a>
+            <div class="section_destination">
+                <div class="only_pc">
+                    <ul id="addrList" class="list type_select">
+                        <li th:each="userShpAddr : ${userShpAddrList}">
+                            <!-- 배송지를 체크하는 radio 부분 -->
+                            <label class="skin_checkbox">
+                                <!-- 배송지가 기본 배송지일 경우 체크됨 -->
+                                <input id="check_box_id" type="radio" name="addrNo" data-delivery-type="direct" value="7260215" th:checked="${userShpAddr.addrStandard} == 'Y'">
+                                <span class="ico"></span>
+                                <span class="screen_out">선택하기</span><!--여러개있을경우가능 향후수정필요-->
+                            </label>
+                            <!-- 기본 배송지 설정값을 조건문으로 주기위한 구문-->
+                            <div class="address" th:switch="${userShpAddr.addrStandard}">
+                                <!-- 기본 배송지로 설정 되어있을 때만 기본 배송지 표출 -->
+                                <span class="badge_default" th:case="'Y'">기본 배송지</span>
+                                <p class="addr" th:text="${userShpAddr.addrBasic} + ' ' + ${userShpAddr.addrDetail}"></p>
+                            </div>
+                            <div class="user">
+                                <span class="delivery star">샛별배송</span>
+                            </div>
+                            <div class="btn_modify">
+                                <a href="/cart/addr-modify">
+                                    <button type="button" class="ico modify" data-addr-no="7260215"
+                                            data-addr-type="D" data-is-current-addr="true">수정하기</button>
+                                </a>
+                            </div>
+                        </li>   <!-- 수정하기 페이지 넘어가야함 기본 주소 db와 함께 .-->
+                    </ul>
+                    <a id="newAddressAddBtn" class="new_address" href="/cart/addr-add">
+                        <img src="https://res.kurly.com/pc/ico/2006/ico_add_16x16.svg" alt="" class="ico">새 배송지 추가</a>
+                </div>
             </div>
         </div>
+        <script th:inline="javascript">
+            var testVar = document.getElementById('check_box_id');
+            if (testVar.checked) {
+                console.log("체크됨")
+            } else {
+                console.log("체크안됨")
+            }
+        </script>
     </div>
-</div>
 </body>
 </html>
 
