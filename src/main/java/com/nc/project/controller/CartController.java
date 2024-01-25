@@ -64,9 +64,10 @@ public class CartController {
 
         long id = userAccount.getId();
 
-//        UserShpAddr userDefaultShpAddr = cartService.bringDefaultAddr(id);
-//
-//        mav.addObject("defaultAddr", userDefaultShpAddr);
+        UserShpAddr userDefaultShpAddr = cartService.bringDefaultAddr(id);
+
+        System.out.println("===========================" + userDefaultShpAddr.toDTO().toString());
+        mav.addObject("defaultAddr", userDefaultShpAddr);
         mav.addObject("cart", cartService.getCart(id));
         mav.addObject("cartItemList", cartService.getCartItem(id));
 
@@ -75,7 +76,7 @@ public class CartController {
         return mav;
     }
 
-     // 장바구니 페이지에서 상품 수량 변경하는 기능 (완료, 01.19)
+    // 장바구니 페이지에서 상품 수량 변경하는 기능 (완료, 01.19)
     @PostMapping("/update-itemCnt")
     public ResponseEntity<?> updateCartItemCnt (Long cartItemId, String action, Principal principal) {
 
