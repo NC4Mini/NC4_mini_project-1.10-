@@ -6,6 +6,7 @@ import com.nc.project.dto.ResponseDTO;
 import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.dto.UserShpAddrDTO;
 import com.nc.project.service.UserService;
+import com.nc.project.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.hibernate.sql.model.ModelMutationLogging;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
@@ -41,7 +43,6 @@ public class UserJoinController {
         return mav;
     }
 
-
     // 회원가입 화면으로 이동(GET - header.html)
     @GetMapping("/join")
     public ModelAndView joinView() {
@@ -54,7 +55,7 @@ public class UserJoinController {
     }
 
     // 회원가입 로직 (POST - join.html)
-    @PostMapping("join")
+    @PostMapping("/join")
     public ResponseEntity<?> join(UserAccountDTO userAccountDTO,
                                   UserShpAddrDTO userShpAddrDTO) {
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
@@ -69,7 +70,7 @@ public class UserJoinController {
             userShpAddrDTOList.add(userShpAddrDTO);
 
             userAccountDTO.setUserShpAddrDTOList(userShpAddrDTOList);
-
+            userAccountDTO.setUserPw(passwordEncoder.encode(userAccountDTO.getUserPw()));
             userService.join(userAccountDTO);
 
             Map<String, String> returnMap = new HashMap<>();
@@ -77,10 +78,7 @@ public class UserJoinController {
             response.setItem(returnMap);
             response.setStatusCode(HttpStatus.OK.value());
 
-            // 가입 성공 시 /user/join으로 리다이렉션
-            return ResponseEntity.status(HttpStatus.FOUND)
-                    .header(HttpHeaders.LOCATION, "/user/login")
-                    .body(response);
+            return ResponseEntity.ok(response);
 
         } catch (Exception e) {
             response.setErrorCode(605);
@@ -95,7 +93,6 @@ public class UserJoinController {
     // 아이디 중복체크
     @PostMapping("/id-check")
     public ResponseEntity<?> idCheck(UserAccountDTO userAccountDTO) {
-//        System.out.println(userAccountDTO.getUserId());
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
 
         Map<String, String> returnMap = new HashMap<>();
