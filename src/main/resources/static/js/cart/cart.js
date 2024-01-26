@@ -117,11 +117,11 @@ function sel_all(selectAll){ /* 전체선택버튼 활성화 */
     });
 }
 
-function del_row(this){
-    var ths = $(this);
-
-    ths.parents("li").remove();
-}
+// function del_row(this) {
+//     var ths = $(this);
+//
+//     ths.parents("li").remove();
+// }
 
 
 

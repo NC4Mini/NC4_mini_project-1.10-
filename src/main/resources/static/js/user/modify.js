@@ -79,7 +79,7 @@ $(() => {
 
 
         $.ajax({
-            url: '/profile/change',
+            url: '/user/change',
             type: 'post',
             data: $("#modifyForm").serialize(),
             success: (obj) => {
@@ -102,24 +102,12 @@ $(() => {
 
     $("#resignBtn").on("click", (e) => {
         $.ajax({
-            url: '/profile/resign',
-            type: 'post',
-            data: $("#modifyForm").serialize(),
-            success: (obj) => {
-                alert(obj.item.msg);
-                // 화면 새로고침
-                location.reload();
-            },
-            error: (err) => {
-                if(err.responseJSON.errorCode === 900) {
-                    alert("현재 비밀번호를 잘못 입력하셨습니다.");
-                    $("#curUserPw").focus();
-                    return;
-                } else {
-                    alert("알 수 없는 에러입니다. 관리자에게 문의하세요");
-                    return;
-                }
-            }
+            url: '/user/resign',
+            type: 'post'
+        }).done(function(){
+            alert("회원탈퇴 성공");
+        }).fail(function(){
+            alert("알 수 없는 에러입니다.");
         });
     });
 });

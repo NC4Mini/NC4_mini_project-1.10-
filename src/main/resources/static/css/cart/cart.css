@@ -8,9 +8,9 @@
 /*#container, #content {*/
 /*    position: relative;*/
 /*}*/
-#qnb {
-    display: none;
-}
+/*#qnb {*/
+/*    display: none;*/
+/*}*/
 link {
     display: none;
 }
@@ -250,7 +250,7 @@ element.style {
     position:absolute;
     width: 470px;
     margin: 0 auto;
-    padding: 0px 0 59px;
+    padding: 0 0 2px;
 }
 .section_destination .only_pc * {
     font-family: Noto Sans;
@@ -433,7 +433,7 @@ element.style {
     font-weight: 600;
 }
 .section_destination .list .address .addr {
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
     line-height: 0px;
     letter-spacing: -.3px;
@@ -467,7 +467,7 @@ element.style {
     line-height: 16px;
 }
 .section_destination .list .address .addr {
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
     line-height: 20px;
     letter-spacing: -.3px;
@@ -499,12 +499,15 @@ input[type=checkbox], input[type=radio] {
     box-sizing: border-box;
     padding: 0;
 }
+/* radio 버튼 체크 안 되었을 때 */
 input[type=radio]:checked+.ico, input[type=radio]:checked {
+
     border: 1px solid #5f0081;
     background-color: #5f0080;
 }
+/* 라디오 버튼 체크 되었을 때*/
 input[type=radio]:checked+.ico:after, input[type=radio]:checked:after {
-    content: "";
+
     position: absolute;
     left: 50%;
     top: 50%;
