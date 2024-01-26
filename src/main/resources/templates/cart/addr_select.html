@@ -29,7 +29,8 @@
                             <!-- 배송지를 체크하는 radio 부분 -->
                             <label class="skin_checkbox">
                                 <!-- 배송지가 기본 배송지일 경우 체크됨 -->
-                                <input type="radio" name="addrNo" data-delivery-type="direct" value="7260215" th:checked="${userShpAddr.addrStandard} == 'Y'">
+                                <input type="hidden" id="testId" th:value="${userShpAddr.addrId}">
+                                <input id="addrSelecter"type="radio" name="addrNo" data-delivery-type="direct" value="7260215" th:checked="${userShpAddr.addrStandard} == 'Y'" th:data-addr-id="${userShpAddr.addrId}" th:data-id="${userShpAddr.userAccount.id}">
                                 <span class="ico"></span>
                                 <span class="screen_out">선택하기</span><!--여러개있을경우가능 향후수정필요-->
                             </label>
@@ -43,10 +44,11 @@
                                 <span class="delivery star">샛별배송</span>
                             </div>
                             <div class="btn_modify">
-                                <a href="/cart/addr-modify">
+                                <!-- 배송지 수정하기 버튼 삭제 -->
+                                <!-- <a href="/cart/addr-modify">
                                     <button type="button" class="ico modify" data-addr-no="7260215"
                                             data-addr-type="D" data-is-current-addr="true">수정하기</button>
-                                </a>
+                                </a> -->
                             </div>
                         </li>   <!-- 수정하기 페이지 넘어가야함 기본 주소 db와 함께 .-->
                     </ul>
@@ -56,12 +58,30 @@
             </div>
         </div>
         <script th:inline="javascript">
-            var testVar = document.getElementById('check_box_id');
-            if (testVar.checked) {
-                console.log("체크됨")
-            } else {
-                console.log("체크안됨")
-            }
+            
+                var checkedAddr = document.querySelector('input[type="radio"]:checked');
+
+                var userId = checkedAddr.dataset.id;
+                var addrId = checkedAddr.dataset.addrId;
+
+                // $('#addrSelecter').click(function() {
+
+                //     $.ajax({
+                //         url: '/cart/addr-select',
+                //         type: 'POST',
+                //         data: {
+                //             userId: userId,
+                //             addrId: addrId
+                //         },
+                //         success: function (response) {
+                //             console.log(response);
+                //             window.close();
+                //         },
+                //         error: function (error) {
+                //             console.log(error);
+                //         }
+                        
+                // });
         </script>
     </div>
 </body>

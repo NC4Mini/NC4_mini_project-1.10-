@@ -35,4 +35,7 @@ public interface CartService {
 
     // 기본 배송지 객체를 가져오는 기능
     public UserShpAddr bringDefaultAddr (long id);
+
+    // 배송지를 수정해주는 기능
+    public void updateShpAddr (long id, int shpAddrId);
 }

@@ -78,7 +78,7 @@ public class CartController {
 
     // 장바구니 페이지에서 상품 수량 변경하는 기능 (완료, 01.19)
     @PostMapping("/update-itemCnt")
-    public ResponseEntity<?> updateCartItemCnt (Long cartItemId, String action, Principal principal) {
+    public ResponseEntity<?> updateCartItemCnt (@RequestParam("cartItemId") Long cartItemId, @RequestParam("action") String action, Principal principal) {
 
         Map<String, Integer> response = new HashMap<>();
 
@@ -91,7 +91,7 @@ public class CartController {
 
     // 장바구니 페이지에서 상품목록 삭제하는 기능
     @DeleteMapping("/delete-cart-item")
-    public ResponseEntity<?> deleteCartItem (Long cartItemId, Long cartId) {
+    public ResponseEntity<?> deleteCartItem (@RequestParam ("cartItemId") Long cartItemId, @RequestParam("cartId") Long cartId) {
         Map<String, String> response = new HashMap<>();
 
         Cart cart = cartService.getCart(cartId);
@@ -180,7 +180,21 @@ public class CartController {
         cartService.addCart(userAccount, itemId);
 
         return ResponseEntity.ok("장바구니에 담겼습니다.");
+    }
 
+    // 배송지 선택 페이지에서 기본 배송지 변경
+    @PostMapping("/addr-select")
+    public ResponseEntity<?> changeDefaultAddr (Long id, int shpAddrId) {
+        Map<String, String> response = new HashMap<>();
+
+        try {
+            cartService.updateShpAddr(id, shpAddrId);
+            response.put("msg", "변경되었습니다.");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            response.put("msg", "변경에 실패했습니다.");
+            return ResponseEntity.status(500).body(response);
+        }
     }
 
 
