@@ -19,7 +19,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item getItem(Long itemId) {
+    public Item getItem(long itemId) {
         return itemRepository.findById(itemId).get();
     }
 
