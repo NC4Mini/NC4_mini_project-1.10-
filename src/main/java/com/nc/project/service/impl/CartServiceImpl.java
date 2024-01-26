@@ -151,13 +151,20 @@ public class CartServiceImpl implements CartService {
         return userShpAddrList;
     }
 
-//    @Override
-//    public UserShpAddr bringDefaultAddr(long id) {
-//        UserShpAddr userShpAddr = userShpAddrRepository.findByUserAccount_Id(id);
-//
-//
-//
-//        return userShpAddr;
-//    }
+    @Override
+    public UserShpAddr bringDefaultAddr(long id) {
+        UserShpAddr defaultUserShpAddr = userShpAddrRepository.findByUserAccount_IdAndAddrStandard(id, 'Y');
 
+        return defaultUserShpAddr;
+    }
+
+    @Override
+    public void updateShpAddr(long id, int shpAddrId) {
+        // TODO Auto-generated method stub
+        UserShpAddr userShpAddr = userShpAddrRepository.findByUserAccount_IdAndAddrId(id, shpAddrId);
+
+        userShpAddr.setAddrStandard('Y');
+    }
+
+    
 }

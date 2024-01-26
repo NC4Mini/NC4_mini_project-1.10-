@@ -7,7 +7,6 @@
 
 <th:block layout:fragment="css">
     <link rel="stylesheet" th:href="@{/css/admin/admin_common.css}">
-    <link rel="stylesheet" th:href="@{/css/admin/admin_page_prd_upload.css}">
 </th:block>
 <div layout:fragment="content" id="main">
     <div class="page_aticle aticle_type2">
@@ -22,7 +21,7 @@
                         <a href="#">자주하는 질문</a>
                     </li>
                     <li>
-                        <a href="/board/getBoardList">1:1 문의</a>
+                        <a href="/board/board-list">1:1 문의</a>
                     </li>
                     <li>
                         <a href="#">대량주문 문의</a>
@@ -32,164 +31,256 @@
             </div>
         </div>
 
-        <div id="viewOrderList" class="page_section section_orderlist">
+        <div id="viewOrderList" class="page_section section_destination">
             <div class="head_aticle">
                 <h2 class="tit">
                     1:1문의
                 </h2>
             </div>
 
-            <div class="list_order">
-                <form action="/board/save" method="post">
-                    <div class="size">
-                        <div class="p_board">
-                            <table width="100%">
-                                <tbody>
-                                <tr>
-                                    <th >유형</th>
-                                    <td colspan="2">
-                                        <div>
-                                                <span>
-                                                    <input type="text" name="boardCategory" class="i_text text1" onkeyup="chkword_name(this, 80)">
-                                                </span>
-                                        </div>
-                                        <span class="txtByte" title="현재글자수/최대글자수">
-                                              [
-                                              <strong class="txt_count_name">0</strong>
-                                               / 80 ]
-                                            </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th >작성자</th>
-                                    <td colspan="2">
-                                        <div>
-                                                <span>
-                                                    <input type="text" name="boardWriter" class="i_text text1" onkeyup="chkword_name(this, 80)">
-                                                </span>
-                                        </div>
-                                        <span class="txtByte" title="현재글자수/최대글자수">
-                                              [
-                                              <strong class="txt_count_name">0</strong>
-                                               / 80 ]
-                                            </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>제목</th>
-                                    <td colspan="2">
-                                        <div>
-                                                <span>
-                                                    <input type="text" class="i_text text2" name="boardTitle" onkeyup="chkword_introduce(this, 150)">
-                                                </span>
 
-                                        </div>
-                                        <span class="txtByte" title="현재글자수/최대글자수">
-                                              [
-                                              <strong class="txt_count_introduce">0</strong>
-                                               / 150 ]
-                                            </span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>내용</th>
-                                    <td>
-                                        <div>
-                                                <span>
-                                                    <textarea class="i_text text8" name="boardContents" id="" cols="30" rows="10" onkeyup="chkword_information(this, 550)"></textarea>
-                                                </span>
-                                        </div>
-                                        <span class="txtByte_big txtByte" title="현재글자수/최대글자수">
-                                              [
-                                              <strong class="txt_count_information">0</strong>
-                                               / 550 ]
-                                            </span>
-                                    </td>
-                                </tr>
+            <div id="tblParent" class="type_select">
+                <table class="tbl tbl_type1">
+                    <thead>
+                    <tr>
+                        <th class="tit_select">번호</th>
+                        <th class="tit_address">제목</th>
+                        <th class="tit_receive">작성자</th>
+                        <th class="tit_phone">등록일</th>
+                        <th class="tit_delivery">조회수</th>
+                        <th class="tit_modify">상태</th>
+                    </tr>
+                    </thead>
+                    <tbody id="addrList">
+                    <tr th:each="board: ${boardList}">
+                        <td class="select type_radio" th:text="${board.id}">
+<!--                            <label class="skin_checkbox">-->
+<!--                                <p>3</p>-->
+<!--                            </label>-->
+                        </td>
+                        <td class="address">
 
-                                <tr>
-                                    <th>이미지</th>
-                                    <td class="img_upload">
-                                        <div>
-                                            <span>대표 이미지</span>
+                            <p class="addr">
+                                <a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a>
+                            </p>
+                        </td>
+                        <td class="name" th:text="${board.boardWriter}" >
+                            <span></span>
+                        </td>
+                        <td class="phone" th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}">
+                            <span></span>
+                        </td>
+                        <td th:text="${board.boardHits}">
+                            <span></span>
+                        </td>
+                        <td class="delete_position">
+                            <span class="delivery star">Y</span>
+                        </td>
+                    </tr>
+<!--                    <tr>-->
+<!--                        <td class="select type_radio">-->
+<!--                            <label class="skin_checkbox">-->
+<!--                                <p>3</p>-->
+<!--                            </label>-->
+<!--                        </td>-->
+<!--                        <td class="address">-->
 
-                                            <div class="image_box">
+<!--                            <p class="addr">-->
+<!--                                제품에 하자가 있어요-->
+<!--                            </p>-->
+<!--                        </td>-->
+<!--                        <td class="name">-->
+<!--                            <span>admin</span>-->
+<!--                        </td>-->
+<!--                        <td class="phone">-->
+<!--                            <span>2023-11-27T16:44</span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <span class="delivery star">13</span>-->
+<!--                        </td>-->
+<!--                        <td class="delete_position">-->
+<!--                            <span class="delivery star">N</span>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td class="select type_radio">-->
+<!--                            <label class="skin_checkbox">-->
+<!--                                <p>3</p>-->
+<!--                            </label>-->
+<!--                        </td>-->
+<!--                        <td class="address">-->
 
+<!--                            <p class="addr">-->
+<!--                                제품에 하자가 있어요-->
+<!--                            </p>-->
+<!--                        </td>-->
+<!--                        <td class="name">-->
+<!--                            <span>admin</span>-->
+<!--                        </td>-->
+<!--                        <td class="phone">-->
+<!--                            <span>2023-11-27T16:44</span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <span class="delivery star">13</span>-->
+<!--                        </td>-->
+<!--                        <td class="delete_position">-->
+<!--                            <span class="delivery star">Y</span>-->
+<!--                        </td>-->
+<!--                    </tr>        <tr>-->
+<!--                        <td class="select type_radio">-->
+<!--                            <label class="skin_checkbox">-->
+<!--                                <p>3</p>-->
+<!--                            </label>-->
+<!--                        </td>-->
+<!--                        <td class="address">-->
 
-                                                <div class="image_add">
+<!--                            <p class="addr">-->
+<!--                                제품에 하자가 있어요-->
+<!--                            </p>-->
+<!--                        </td>-->
+<!--                        <td class="name">-->
+<!--                            <span>admin</span>-->
+<!--                        </td>-->
+<!--                        <td class="phone">-->
+<!--                            <span>2023-11-27T16:44</span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <span class="delivery star">13</span>-->
+<!--                        </td>-->
+<!--                        <td class="delete_position">-->
+<!--                            <span class="delivery star">N</span>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td class="select type_radio">-->
+<!--                            <label class="skin_checkbox">-->
+<!--                                <p>3</p>-->
+<!--                            </label>-->
+<!--                        </td>-->
+<!--                        <td class="address">-->
 
-                                                    <input type="file" name="product_main_image" accept="image/*" id="image_input" onchange="set_image(event);">
-                                                    <button type="button" class="image_input_button"></button>
-                                                    <div id="image_container"></div>
+<!--                            <p class="addr">-->
+<!--                                제품에 하자가 있어요-->
+<!--                            </p>-->
+<!--                        </td>-->
+<!--                        <td class="name">-->
+<!--                            <span>admin</span>-->
+<!--                        </td>-->
+<!--                        <td class="phone">-->
+<!--                            <span>2023-11-27T16:44</span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <span class="delivery star">13</span>-->
+<!--                        </td>-->
+<!--                        <td class="delete_position">-->
+<!--                            <span class="delivery star">Y</span>-->
+<!--                        </td>-->
+<!--                    </tr>        <tr>-->
+<!--                        <td class="select type_radio">-->
+<!--                            <label class="skin_checkbox">-->
+<!--                                <p>3</p>-->
+<!--                            </label>-->
+<!--                        </td>-->
+<!--                        <td class="address">-->
 
-                                                    <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
-                                                    <script>
-                                                        function set_image(){
+<!--                            <p class="addr">-->
+<!--                                제품에 하자가 있어요-->
+<!--                            </p>-->
+<!--                        </td>-->
+<!--                        <td class="name">-->
+<!--                            <span>admin</span>-->
+<!--                        </td>-->
+<!--                        <td class="phone">-->
+<!--                            <span>2023-11-27T16:44</span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <span class="delivery star">13</span>-->
+<!--                        </td>-->
+<!--                        <td class="delete_position">-->
+<!--                            <span class="delivery star">N</span>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td class="select type_radio">-->
+<!--                            <label class="skin_checkbox">-->
+<!--                                <p>3</p>-->
+<!--                            </label>-->
+<!--                        </td>-->
+<!--                        <td class="address">-->
 
-                                                            var reader = new FileReader();
+<!--                            <p class="addr">-->
+<!--                                제품에 하자가 있어요-->
+<!--                            </p>-->
+<!--                        </td>-->
+<!--                        <td class="name">-->
+<!--                            <span>admin</span>-->
+<!--                        </td>-->
+<!--                        <td class="phone">-->
+<!--                            <span>2023-11-27T16:44</span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <span class="delivery star">13</span>-->
+<!--                        </td>-->
+<!--                        <td class="delete_position">-->
+<!--                            <span class="delivery star">Y</span>-->
+<!--                        </td>-->
+<!--                    </tr>        <tr>-->
+<!--                        <td class="select type_radio">-->
+<!--                            <label class="skin_checkbox">-->
+<!--                                <p>3</p>-->
+<!--                            </label>-->
+<!--                        </td>-->
+<!--                        <td class="address">-->
 
-                                                            reader.onload = function(event) {
-                                                                var img = document.createElement("img");
-                                                                img.setAttribute("src", event.target.result);
-                                                                document.querySelector("div#image_container").appendChild(img);
-                                                            };
+<!--                            <p class="addr">-->
+<!--                                제품에 하자가 있어요-->
+<!--                            </p>-->
+<!--                        </td>-->
+<!--                        <td class="name">-->
+<!--                            <span>admin</span>-->
+<!--                        </td>-->
+<!--                        <td class="phone">-->
+<!--                            <span>2023-11-27T16:44</span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <span class="delivery star">13</span>-->
+<!--                        </td>-->
+<!--                        <td class="delete_position">-->
+<!--                            <span class="delivery star">N</span>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    <tr>-->
+<!--                        <td class="select type_radio">-->
+<!--                            <label class="skin_checkbox">-->
+<!--                                <p>3</p>-->
+<!--                            </label>-->
+<!--                        </td>-->
+<!--                        <td class="address">-->
 
-                                                            reader.readAsDataURL(event.target.files[0]);
-                                                        }
+<!--                            <p class="addr">-->
+<!--                                제품에 하자가 있어요-->
+<!--                            </p>-->
+<!--                        </td>-->
+<!--                        <td class="name">-->
+<!--                            <span>admin</span>-->
+<!--                        </td>-->
+<!--                        <td class="phone">-->
+<!--                            <span>2023-11-27T16:44</span>-->
+<!--                        </td>-->
+<!--                        <td>-->
+<!--                            <span class="delivery star">13</span>-->
+<!--                        </td>-->
+<!--                        <td class="delete_position">-->
+<!--                            <span class="delivery star">Y</span>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+                    </tbody>
 
-                                                    </script>
-
-
-
-<!--                                                    <button type="button" class="re_upload">-->
-<!--                                                            <span>-->
-<!--                                                                수정-->
-<!--                                                            </span></button>-->
-<!--                                                    <button type="button" class="remove">-->
-<!--                                                            <span>-->
-<!--                                                                삭제-->
-<!--                                                            </span>-->
-<!--                                                    </button>-->
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div>
-
-                                        </div>
-
-
-
-
-
-
-
-
-
-
-
-                                    </td>
-
-
-
-
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div id="product_submit" class="pd_submit">
-                            <button type="submit"  onclick="listReq()">등록하기</button>
-                        </div>
-
-                    </div>
-                </form>
-
-
-
+                </table>
+                <a href="/board/insert-board"><button class="delete_button" onclick="saveReq()">등록</button></a>
             </div>
+
+
 
 
         </div>
@@ -204,8 +295,8 @@
 
 </body>
 <script>
-    const listReq = () => {
-        location.href = "/getBoardList.html";
+    const saveReq= () =>{
+        location.href = "/board/save";
     }
 </script>
 </html>

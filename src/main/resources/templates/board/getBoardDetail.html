@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/admin/admin_common.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            const listReq = () => {
+                console.log("상세조회 목록");
+                location.href = "/board/board-list";
+            }
+            const updateReq = () => {
+                console.log("수정 요청");
+                const id = [[${board.id}]];
+                location.href = "/board/update/" + id;
+            }
+            const deleteReq = () => {
+                console.log("삭제 요청");
+                const id = [[${board.id}]];
+                location.href = "/board/delete/" + id;
+            }
+        </script>
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content" id="main">
+    <div class="page_aticle aticle_type2">
+
+        <div id="viewOrderList" class="page_section section_destination">
+            <div class="head_aticle">
+                <h2 class="tit">
+                    1:1문의
+                </h2>
+            </div>
+
+
+            <div id="tblParent" class="type_select">
+                <table class="tbl tbl_type1">
+                    <thead>
+<!--                    <tr>-->
+<!--                        <th class="tit_select">번호</th>-->
+<!--                        <th class="tit_delivery">유형</th>-->
+<!--                        <th class="tit_receive">작성자</th>-->
+<!--                        <th class="tit_address">제목</th>-->
+<!--                        <th class="tit_modify">내용</th>-->
+<!--                    </tr>-->
+                    </thead>
+<!--                    <tbody id="addrList">-->
+<!--                    <tr th:each="board: ${boardList}">-->
+<!--                        <td th:text="${board.id}"></td>-->
+<!--                        <td th:text="${board.boardTitle}"></td>-->
+<!--                        <td th:text="${board.boardWriter}"></td>-->
+<!--                        <td th:text="${board.boardContents}"></td>-->
+<!--                    </tr>-->
+<!--                    <tbody id="addrList">-->
+<!--                    <tr>-->
+<!--                        <td class="select type_radio" th:text="${board.id}">-->
+<!--                            &lt;!&ndash;                            <label class="skin_checkbox">&ndash;&gt;-->
+<!--                            &lt;!&ndash;                                <p>3</p>&ndash;&gt;-->
+<!--                            &lt;!&ndash;                            </label>&ndash;&gt;-->
+<!--                        </td>-->
+<!--                        <td class="address">-->
+
+<!--                            <p class="addr">-->
+<!--                                <a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a>-->
+<!--                            </p>-->
+<!--                        </td>-->
+<!--                        <td class="name" th:text="${board.boardWriter}" >-->
+<!--                            <span></span>-->
+<!--                        </td>-->
+<!--                        <td class="phone" th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}">-->
+<!--                            <span></span>-->
+<!--                        </td>-->
+<!--                        <td th:text="${board.boardHits}">-->
+<!--                            <span></span>-->
+<!--                        </td>-->
+<!--&lt;!&ndash;                        <td class="delete_position">&ndash;&gt;-->
+<!--&lt;!&ndash;                            <span class="delivery star">Y</span>&ndash;&gt;-->
+<!--&lt;!&ndash;                        </td>&ndash;&gt;-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+                    <!--여기-->
+                    <tbody>
+                    <tr>
+                        <th >유형</th>
+                        <td th:text="${board.boardCategory}">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <th >작성자</th>
+                        <td th:text="${board.boardWriter}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>제목</th>
+                        <td>
+                            <a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>내용</th>
+                         <td th:text="${board.boardContents}">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>이미지</th>
+                        <td class="img_upload">
+                            <div>
+                                <span>대표 이미지</span>
+
+                                <div class="image_box">
+
+
+                                    <div class="image_add">
+
+                                        <input type="file" name="product_main_image" accept="image/*" id="image_input" onchange="set_image(event);">
+                                        <button type="button" class="image_input_button"></button>
+                                        <div id="image_container"></div>
+
+                                        <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
+                                        <script>
+                                            function set_image(){
+
+                                                var reader = new FileReader();
+
+                                                reader.onload = function(event) {
+                                                    var img = document.createElement("img");
+                                                    img.setAttribute("src", event.target.result);
+                                                    document.querySelector("div#image_container").appendChild(img);
+                                                };
+
+                                                reader.readAsDataURL(event.target.files[0]);
+                                            }
+
+                                        </script>
+
+
+
+                                        <!--                                                    <button type="button" class="re_upload">-->
+                                        <!--                                                            <span>-->
+                                        <!--                                                                수정-->
+                                        <!--                                                            </span></button>-->
+                                        <!--                                                    <button type="button" class="remove">-->
+                                        <!--                                                            <span>-->
+                                        <!--                                                                삭제-->
+                                        <!--                                                            </span>-->
+                                        <!--                                                    </button>-->
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div>
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+                        </td>
+
+
+
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button onclick="listReq()">목록</button>
+            <button onclick="updateReq()">수정</button>
+            <button onclick="deleteReq()">삭제</button>
+        </div>
+    </div>
+
+</div>
+
+</body>
+
+
+</html>
