@@ -38,4 +38,8 @@ public interface CartService {
 
     // 배송지를 수정해주는 기능
     public void updateShpAddr (long id, int shpAddrId);
+
+    // 배송지를 추가해주는 기능
+    public void addShpAddr (long id, UserShpAddr userShpAddr);
+    
 }

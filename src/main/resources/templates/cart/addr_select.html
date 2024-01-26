@@ -5,21 +5,21 @@
       layout:decorate="~{layouts/layout_cart}"
 >
 <head>
-
+    
 </head>
 <body onresize="parent.resizeTo(560,584)" onload="parent.resizeTo(560,584)">
 
-    <div class="only_pc" layout:fragment="cart_content">
+    <div class="only_pc" layout:fragment="cart_content" style="display: flex; justify-content: center; flex-direction: column;">
         <!-- 창크기 고정.-->
         <div class="only_pc fixed_head">
             <h2 class="pop_head">배송지
-                <span class="sub">배송지에 따라 상품 정보가 달라질 수 있습니다.</span>
+                <span class="sub">배송지 옆의 버튼을 누르고 선택완료를 눌러주세요.</span>
             </h2>
 
             <div class="pop_list">
                 <span class="select">선택</span>
                 <span class="delivery">배송 정보</span>
-                <span class="modify">수정</span>
+                <!-- <span class="modify">수정</span> -->
             </div>
 
             <div class="section_destination">
@@ -52,36 +52,41 @@
                             </div>
                         </li>   <!-- 수정하기 페이지 넘어가야함 기본 주소 db와 함께 .-->
                     </ul>
+                    <button type="button" id="selectionCompleteButton">선택완료</button>
                     <a id="newAddressAddBtn" class="new_address" href="/cart/addr-add">
                         <img src="https://res.kurly.com/pc/ico/2006/ico_add_16x16.svg" alt="" class="ico">새 배송지 추가</a>
                 </div>
             </div>
         </div>
         <script th:inline="javascript">
+            console.log("ddd");
             
-                var checkedAddr = document.querySelector('input[type="radio"]:checked');
-                document.get
-                var userId = checkedAddr.dataset.id;
-                var addrId = checkedAddr.dataset.addrId;
-                
-                // $('#addrSelecter').click(function() {
+            // 선택완료 버튼 클릭 시 선택된 배송지 정보를 부모창에 반영하고 현재 창을 닫음
+            $(document).ready(function(){
+                $('#selectionCompleteButton').click(function(){
+                    var addrId = $('input[name=addrNo]:checked').attr('data-addr-id');
+                    var userId = $('input[name=addrNo]:checked').attr('data-id');
+                    var data = {
+                        addrId: addrId,
+                        userId: userId
+                    };
+                    console.log(data);
+                    $.ajax({
+                        type: "POST",
+                        url: "/cart/addr-select",
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function (response) {
+                            console.log(response);
+                            window.opener.location.reload();
+                            window.close();
+                        }
+                    });
+                });
+            });
 
-                //     $.ajax({
-                //         url: '/cart/addr-select',
-                //         type: 'POST',
-                //         data: {
-                //             userId: userId,
-                //             addrId: addrId
-                //         },
-                //         success: function (response) {
-                //             console.log(response);
-                //             window.close();
-                //         },
-                //         error: function (error) {
-                //             console.log(error);
-                //         }
-                        
-                // });
+            
         </script>
     </div>
 </body>
