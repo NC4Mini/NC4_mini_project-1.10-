@@ -28,9 +28,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return null;
         }
 
-        String password = passwordEncoder.encode(userOptional.get().getUserPw());
-        userOptional.get().setUserPw(password);
-
         return CustomUserDetails.builder()
                 .user(userOptional.get())
                 .build();
