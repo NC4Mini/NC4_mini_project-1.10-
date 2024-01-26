@@ -270,7 +270,7 @@ element.style {
     padding-left: 64px;
 }
 .section_destination .only_pc .list li {
-    padding: 24px 64px 24px 0;
+    padding: 8px 64px 16px 0;
     margin: 0 0 0 15px;
 }
 .section_destination .only_pc .list label {

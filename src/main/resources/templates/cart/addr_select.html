@@ -5,14 +5,13 @@
       layout:decorate="~{layouts/layout_cart}"
 >
 <head>
-    <!--    <th:block layout:fragment="cart_css"></th:block>-->
 
 </head>
-<body onresize="parent.resizeTo(514,584)" onload="parent.resizeTo(514,584)"> <!-- -->
+<body onresize="parent.resizeTo(560,584)" onload="parent.resizeTo(560,584)">
 
     <div class="only_pc" layout:fragment="cart_content">
         <!-- 창크기 고정.-->
-        <div class="only_pc fixed_head">
+        <div class="only_pc fixed_head" th:each="userShpAddr : ${userShpAddrList}">
             <h2 class="pop_head">배송지
                 <span class="sub">배송지에 따라 상품 정보가 달라질 수 있습니다.</span>
             </h2>
@@ -32,9 +31,13 @@
                                 <span class="ico"></span>
                                 <span class="screen_out">선택하기</span><!--여러개있을경우가능 향후수정필요-->
                             </label>
-                            <div class="address">
-                                <span class="badge_default">기본 배송지</span>
-                                <p class="addr"><!-- address value here -->인천광역시 연수구 송도동</p>
+                            <!-- 기본 배송지 설정값을 조건문으로 주기위한 구문-->
+                            <div class="address" th:switch="${userShpAddr.addrBasic}">
+                                <!-- 기본 배송지로 설정 되어있을 때만 기본 배송지 표출 -->
+                                <span class="badge_default" th:case="'Y'">기본 배송지</span>
+                                <span class="badge_default" th:case="'N'"></span>
+                                <p class="addr" th:text="${userShpAddr.addrBasic}"></p>
+<!--                                <p class="addr" th:text="${userShpAddr.addrBasic} + ${userShpAddr.addrDetail}"></p>-->
                             </div>
                             <div class="user">
                                 <span class="delivery star">샛별배송</span>

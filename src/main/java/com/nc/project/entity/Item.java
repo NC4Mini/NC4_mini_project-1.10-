@@ -28,17 +28,17 @@ public class Item {
     @Column(name="item_description")
     private String itemDescription;
 
-    @Column(name="item_stock")
-    private int itemStock;
-
-    @Column (name="item_status")
-    private char itemStatus;
-
-    @Column (name="item_category")
-    private String itemCategory;
-
     @Column (name="item_price")
     private int itemPrice;
+
+//    @Column(name="item_stock")
+//    private int itemStock;
+
+//    @Column (name="item_status")
+//    private char itemStatus;
+
+//    @Column (name="item_category")
+//    private String itemCategory;
 
 //    @Column (name="cart_item_id")
 //    private Long cartItemId;
@@ -51,9 +51,6 @@ public class Item {
                 .itemId(this.itemId)
                 .itemName(this.itemName)
                 .itemDescription(this.itemDescription)
-                .itemStock(this.itemStock)
-                .itemStatus(this.itemStatus)
-                .itemCategory(this.itemCategory)
                 .itemPrice(this.itemPrice)
                 .build();
     }

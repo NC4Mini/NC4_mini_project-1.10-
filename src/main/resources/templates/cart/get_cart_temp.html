@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html  lang="en"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/layout}"
+>
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/cart/cart.css}">
+        <link rel="stylesheet" th:href="@{/css/cart/cart_list_bundle.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{/js/cart/cart.js}"></script>
+    </th:block>
+</head>
+<body>
+    <div layout:fragment="content">
+
+            <div class="tit_page">
+                <h2 class="tit">장바구니</h2>
+            </div>
+            <div id="cartItemList" class="only_pc" style="min-height: 602px;">
+            <div class="">
+                <div class="cart_item ">
+                    <div class="cart_select">
+                        <div class="inner_select">
+                            <label class="check">
+                                <input type="checkbox" name="checkAll" class="checkAll" onclick="sel_all(this)">
+                                <span class="ico"></span>전체선택 (1/1)
+                            </label>
+                            <a href="#none" class="btn_delete">선택삭제</a>
+                        </div>
+                    </div>
+                    <div class="box cold">
+                        <div class="tit_box">
+                            <h4 class="tit">
+                                <span class="inner_tit">상품 목록</span>
+                            </h4>
+                            <button type="button" id='btn_dropup' class="btn_dropup" onclick="dropup()">접기 / 펼치기</button>
+                        </div>
+                        <ul class="list" id='dropup_list'>
+                            <li>
+                                <!-- 상품 목록 중 1. 추가/삭제될 목록임. -->
+                                <div class="item">
+                                    <label class="check" for="chkItem1">
+                                        <!-- 개당 체크박스 -->
+                                        <input onclick='check_sel_all(this)' type="checkbox" id="chkItem1" name="checkOne"
+                                               class="checkOne" data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                               data-item-parent-no="65810">
+                                        <span class="ico"></span>
+                                    </label>
+                                    <div class="name">
+                                        <div class="inner_name">
+                                            <!-- 제목 누르면 해당 상품 페이지로 가지도록 설정 -->
+                                            <a href="#" class="package">[채소] 감자</a>
+                                                <!--<a href="#" class="package" th:text = "${item.itemName}">   </a>-->
+                                                <div class="info">
+
+                                                </div>
+                                        </div>
+                                        <div class="goods">
+                                            <!-- 상품 이미지 누르면 해당 상품 페이지 가지도록 설정 -->
+                                            <a href="#" class="thumb "
+                                               style="background-image: url(&quot;https://img-cf.kurly.com/shop/data/goods/1610599300495i0.jpg&quot;);">상품이미지</a>
+                                            <!-- 이미지자리 ^-->
+                                            <div class="price">
+                                                <div class="in_price">
+                                                <span class="selling">6,000
+                                                    <span class="won">원</span>
+                                                </span>
+                                                    <p class="noti"></p>
+                                                </div>
+                                                <!-- 개수 조정 부분. -->
+                                                <div class="stamper count">
+                                                    <button type="button" class="btn minus off"
+                                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                                            data-opt="decrease">감소</button>
+                                                    <input type="text" id="stepperCounter" class="num" readonly="" value="1">
+                                                    <button type="button" class="btn plus"
+                                                            data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                                            data-opt="increase">추가</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- 상품 삭제 시 db반영 (btn_delete)-->
+                                            <button type="button" onclick="del_row(this)" class="btn_delete" id="deleteBtn"
+                                                data-item-id="c7b3a4e1-4517-416c-9b3e-d41c0e7592f2" data-item-no="65810"
+                                                data-type="cold">
+                                            상품 삭제</button>
+                                    </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 여긴 고정. -->
+                    <div class="cart_select">
+                        <div class="inner_select">
+                            <label class="check">
+                                <input type="checkbox" name="checkAll" onclick="sel_all(this)">
+                                <span class="ico"></span>전체선택 (1/1)
+                            </label>
+                            <!-- 1/n : db-->
+                            <a href="#none" class="btn_delete" id="deleteSelectBtn">선택삭제</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart_result">
+                    <div class="inner_result" style="top: 60px;">
+                        <div class="cart_delivery">
+                            <h3 class="tit">배송지</h3>
+                            <div class="address">
+                                <p class="addr">인천 연수구 909호</p>
+                                <!-- address here -->
+                                <span class="delivery star">샛별배송</span>
+                                <a href="/cart/addr-select"
+                                   onclick="window.open(this.href,'shipping destination','width=514, height=584');return false;"
+                                   class="btn default">배송지 변경</a>
+                            </div>
+                        </div>
+                        <div class="amount_view">
+                            <dl class="amount">
+                                <dt class="tit">상품금액</dt>
+                                <dd class="price">
+                                    <span class="num">6,000</span>
+                                    <!-- product price here-->
+                                    <span class="won">원</span>
+                                </dd>
+                            </dl>
+                            <dl class="amount">
+                                <dt class="tit">상품할인금액</dt>
+                                <dd class="price">
+                                    <span class="num">0</span>
+                                    <span class="won">원</span>
+                                </dd>
+                            </dl>
+                            <dl class="amount">
+                                <dt class="tit">배송비</dt>
+                                <dd class="price">
+                                    <span class="num">0</span>
+                                    <span class="won">원</span>
+                                </dd>
+                            </dl>
+                            <dl class="amount lst">
+                                <dt class="tit">결제예정금액</dt>
+                                <dd class="price">
+                                    <span class="num">6,000</span>
+                                    <!-- sum of product price here -->
+                                    <span class="won">원</span>
+                                </dd>
+                            </dl>
+                            <div class="reserve">
+                                <span class="bage">적립</span>구매 시
+
+                                <span class="emph">325원 적립</span>
+                                <!-- 계산된 적립금(총금액의 20%)^.-->
+                            </div>
+                        </div>
+                        <!-- 계산 필요 . -->
+                        <div class="btn_submit">
+                            <a href="/order/myorder">
+                            <button type="button" class="btn active" id="orderBtn">주문하기</button>
+                            </a>
+                            <!-- 결제 페이지로 이동 -->
+                        </div>
+                        <div class="notice">
+                        <span class="txt">
+                            <span class="ico">·</span>쿠폰/적립금은 주문서에서 사용 가능합니다
+                        </span>
+                            <span class="txt">
+                            <span class="ico">·</span>‘입금확인’ 상태일 때는 주문 내역 상세에서 직접 주문취소가 가능합니다.
+                        </span>
+                            <span class="txt">
+                            <span class="ico">·</span>‘입금확인’ 이후 상태에는 고객센터로 문의해주세요.
+
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--        </form>-->
+    </div>
+</body>
+</html>
+

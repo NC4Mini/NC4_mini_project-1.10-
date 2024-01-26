@@ -15,6 +15,9 @@ public class Board extends Base {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 20, nullable = false) // 크기 20, not null
+    private String boardWriter;
+
     @Column // 크기 255, null 가능
     private String boardCategory;
 
@@ -23,15 +26,18 @@ public class Board extends Base {
 
     @Column(length = 500)
     private String boardContents;
-
+//
+    @Column
+    private int boardHits;
     public static Board toSaveEntity(BoardDTO boardDTO){
         Board board = new Board();
+        board.setBoardHits(0);
+        board.setBoardWriter(boardDTO.getBoardWriter());
         board.setBoardCategory(boardDTO.getBoardCategory());
         board.setBoardTitle(boardDTO.getBoardTitle());
         board.setBoardContents(boardDTO.getBoardContents());
         return board;
     }
-
 
 
 }

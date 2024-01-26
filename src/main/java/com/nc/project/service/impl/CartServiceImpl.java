@@ -1,13 +1,6 @@
 package com.nc.project.service.impl;//package com.example.tempproject.service.impl;
 
-import com.nc.project.dto.CartDTO;
-import com.nc.project.dto.CartItemDTO;
-import com.nc.project.dto.ItemDTO;
-import com.nc.project.dto.UserAccountDTO;
-import com.nc.project.entity.Cart;
-import com.nc.project.entity.CartItem;
-import com.nc.project.entity.Item;
-import com.nc.project.entity.UserAccount;
+import com.nc.project.entity.*;
 import com.nc.project.repository.*;
 import com.nc.project.service.CartService;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +18,10 @@ public class CartServiceImpl implements CartService {
     private final CartItemRepository cartItemRepository;
     private final ItemRepository itemRepository;
     private final UserAccountRepository userAccountRepository;
+    private final UserShpAddrRepository userShpAddrRepository;
 
 
-    // 장바구니에 물건 담기
+    // 장바구니에 물건 담기 기능 (완료)
     @Override
     public void addCart(UserAccount userAccount, Long itemId) {
 
@@ -55,6 +49,7 @@ public class CartServiceImpl implements CartService {
             cartItem = new CartItem();
             cartItem.setItem(item);
             cartItem.setCart(userOwnCart);
+            cartItem.setCartItemCnt(1);
             cartItemRepository.save(cartItem);
         }
         // 이미 있다면 수량만 증가
@@ -62,6 +57,13 @@ public class CartServiceImpl implements CartService {
             cartItem.setCartItemCnt(cartItem.getCartItemCnt() + 1);
         }
 
+    }
+
+    @Override
+    public Cart getCart(Long cartId) {
+        Cart cart = cartRepository.getReferenceById(cartId);
+
+        return cart;
     }
 
     // 해당 사용자의 장바구니를 표출해주는 기능 (완료)
@@ -85,11 +87,12 @@ public class CartServiceImpl implements CartService {
 
     // 장바구니의 상품목록의 상품 개수를 버튼으로 바꿔주는 기능 (완료)
     @Override
-    public Map<String, Integer> updateCartItemCount(Long cartItemId, String action) {
+    public Map<String, Integer> updateCartItemCount(Long cartItemId, String action, UserAccount userAccount) {
         Map<String, Integer> newCartItemMap = new HashMap<>();
 
         CartItem cartItem = cartItemRepository.findById(cartItemId).get();
         Item item = cartItemRepository.findById(cartItemId).get().getItem();
+        Cart cart =cartRepository.findByUserAccountId(userAccount.getId());
 
         if ("increase".equals(action)) {
             cartItem.setCartItemCnt(cartItem.getCartItemCnt() + 1);
@@ -97,10 +100,16 @@ public class CartServiceImpl implements CartService {
             cartItem.setCartItemCnt(cartItem.getCartItemCnt() - 1);
         }
 
+        // 총 상품금액을 최신화 하기위한 메서드 호출
+
+        cart.calcTotalPrice();
+
         cartItemRepository.save(cartItem);
+        cartRepository.save(cart);
 
         newCartItemMap.put("newCartItemCnt", cartItem.getCartItemCnt());
         newCartItemMap.put("newItemPrice", item.getItemPrice());
+        newCartItemMap.put("newTotalPrice", cart.getTotalPrice());
 
         return newCartItemMap;
     }
@@ -112,5 +121,43 @@ public class CartServiceImpl implements CartService {
 
         cartItemRepository.delete(cartItem);
     }
+
+    // 장바구니 불러올 때 cart를 불러오는 기능
+    @Override
+    public Cart getCart(long id) {
+        UserAccount userAccount = userAccountRepository.getReferenceById(id);
+
+        // 장바구니 없으면 새로운 장바구니 만들어줌
+        if (userAccount.getCart() == null) {
+            Cart cart = new Cart();
+            cart.setUserAccount(userAccount);
+            userAccount.setCart(cart);
+
+            cartRepository.save(cart);
+            userAccountRepository.save(userAccount);
+        }
+        Cart cart = userAccount.getCart();
+        cart.calcTotalPrice();
+
+        return cart;
+    }
+
+    @Override
+    public List<UserShpAddr> bringUserShpAddrList(long id) {
+        UserAccount userAccount = userAccountRepository.getReferenceById(id);
+
+        List<UserShpAddr> userShpAddrList = userAccount.getUserShpAddrList();
+
+        return userShpAddrList;
+    }
+
+//    @Override
+//    public UserShpAddr bringDefaultAddr(long id) {
+//        UserShpAddr userShpAddr = userShpAddrRepository.findByUserAccount_Id(id);
+//
+//
+//
+//        return userShpAddr;
+//    }
 
 }
