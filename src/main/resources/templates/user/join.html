@@ -107,16 +107,38 @@
                     $("#btnEmailCheck").attr("disabled", false);
                 });
 
-                var typingTimer;  // 타이핑 타이머
-                var doneTypingInterval = 800;  // 입력이 끝난 것으로 판단할 시간 (1초)
-
                 // 사용자가 날짜를 입력할 때 호출되는 함수
-                $("#userBirthYear, #userBirthMonth, #userBirthDay").on("input", function () {
-                    clearTimeout(typingTimer);  // 이전 타이머가 있다면 초기화
+                $("#userBirthYear").on("keydown", (e) => {
+                    if (e.keyCode !== 8) {
+                        if ($("#userBirthYear").val().length === 4) {
+                            $("#userBirthMonth").focus();
+                            updateUserBirth();
+                        }
+                    }
+                });
 
-                    typingTimer = setTimeout(function () {
-                        updateUserBirth();
-                    }, doneTypingInterval);
+                $("#userBirthMonth").on("keydown", (e) => {
+                    var month = $("#userBirthMonth").val();
+
+                    if (e.keyCode !== 8) {
+                        if (month.length === 2) {
+                            $("#userBirthDay").focus();
+                            updateUserBirth();
+                        }
+                    }
+                });
+
+                $("#userBirthDay").on("keydown", (e) => {
+                    var day = $("#userBirthDay").val();
+
+                    if (e.keyCode !== 8) {
+                        // Backspace 키가 아닌 경우 실행
+                        if (day.length === 2) {
+                            // 일자가 2자리인 경우
+                            $("#userBirthDay").blur();  // 포커스 잃기
+                        }
+                    }
+                    updateUserBirth();
                 });
 
                 function nowData() {
@@ -131,38 +153,30 @@
                     var currentYear = nowData().getFullYear();
 
                     // 입력된 연도가 0으로 시작하거나 잘못된 값이 입력되면 경고 표시 및 값 초기화
-
                     if (year.startsWith('0') || isNaN(year) || parseInt(year) > currentYear || parseInt(year) < 1900) {
                         alert("올바른 연도를 입력하세요.");
-                        $("#userBirthYear, #userBirthMonth, #userBirthDay").val('');
+                        $("#userBirthYear").val('').focus();
+                        $("#userBirthMonth, #userBirthDay").val('');
                         $("#userBirth").val('');
                         return false; // 폼 제출 제어
                     }
 
-                    // 월이 12월을 넘어가거나 일이 31일을 초과하면 경고 표시 및 값 초기화
-                    if (parseInt(month) > 12 || parseInt(day) > 31) {
+                    // 월이 12월을 초과하면 경고 표시 및 값 초기화
+                    if (parseInt(month) > 12 || parseInt(month) === 0 || month === '00') {
+                        alert("올바른 달을 입력하세요.");
+                        $("#userBirthMonth").val('').focus();
+                        $("#userBirthDay").val('');
+                        $("#userBirth").val('');
+                        return false; // 폼 제출 제어
+                    }
+
+                    // 일이 31일을 초과하면 경고 표시 및 값 초기화
+                    if (parseInt(day) > 31 || parseInt(day) === 0 || day === '00') {
                         alert("올바른 날짜를 입력하세요.");
                         $("#userBirthYear, #userBirthMonth, #userBirthDay").val('');
-                        $("#userBirth").val('');
-                        $("#userBirthYear").focus();
+                        $("#userBirthday").val('');
                         return false; // 폼 제출 제어
                     }
-                    // 입력한 월이나 일자가 10보다 작으면 값이 앞에 '0'이붙도록 셋팅
-                    if (parseInt(month) < 10) {
-                        month = '0' + month;
-                        $("#userBirthMonth").val(month);
-                    }
-
-                    if (parseInt(day) < 10) {
-                        day = '0' + day;
-                        $("#userBirthDay").val(day);
-                    }
-
-                    // 날짜 형식을 yyyy/MM/dd로 가공
-                    var userBirth = year + '-' + month + '-' + day;
-
-                    // 가공된 날짜를 숨겨진 필드에 할당
-                    $("#userBirth").val(userBirth);
                 }
 
                 // 아이디 유효성 검사 정규식
@@ -276,7 +290,25 @@
                 });
 
                 // joinForm이 서브밋될 때 유효성 검사가 전부 완료되지 않으면 서브밋 제어
-                $("#joinForm").on("submit", (e) => {
+                $("#btnJoin").on("click", (e) => {
+                    var year = $("#userBirthYear").val();
+                    var month = $("#userBirthMonth").val();
+                    var day = $("#userBirthDay").val();
+
+                    // 0이 아니면서 한 자리 수일 경우 앞에 0을 붙이기
+                    month = (month.length === 1 && month !== '0') ? '0' + month : month;
+                    day = (day.length === 1 && day !== '0') ? '0' + day : day;
+
+                    // 날짜 형식을 yyyy/MM/dd로 가공
+                    var userBirth = year + '-' + month + '-' + day;
+
+                    console.log(userBirth);
+
+                    // 가공된 날짜를 숨겨진 필드에 할당
+                    $("#userBirth").val(userBirth);
+
+                    console.log($("#userBirth").val());
+
                     // id 중복체크가 되지 않았을 때
                     if (!checkId) {
                         e.preventDefault();
@@ -325,6 +357,23 @@
                         alert("주소를 모두 입력해주세요.")
                         return;
                     }
+
+                    $.ajax({
+                        url: '/user/join',
+                        type: 'post',
+                        data: $("#joinForm").serialize(),
+                        success: (obj) => {
+                            console.log(obj.item.msg)
+                            alert("회원가입 성공, 로그인페이지로 이동합니다.")
+                            window.location.href = "/user/login";
+                        },
+                        error: () => {
+                            alert("에러발생, 관리자에게 문의하세요.")
+                            window.location.href = "/";
+                        }
+
+                    })
+
                 });
             });
         </script>
@@ -521,7 +570,7 @@
                 </table>
 
                 <div id="formSubmit" class="form_footer" style="border-top: 1px solid #333;">
-                    <button type="submit" class="btn active btn_join" id="btnJoin">가입하기</button>
+                    <button type="button" class="btn active btn_join" id="btnJoin">가입하기</button>
                 </div>
             </form>
         </div>

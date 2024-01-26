@@ -11,7 +11,7 @@ public interface ItemService {
     public void addItem (Item item);
 
     // 해당 상품 읽어오기 (1개) - 상세 페이지
-    public Item getItem(Long itemId);
+    public Item getItem(long itemId);
 
     // 상품 읽어오기 (모두)
     public List<Item> getItemList ();
