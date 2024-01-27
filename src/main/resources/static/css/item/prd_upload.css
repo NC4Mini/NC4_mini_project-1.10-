@@ -120,7 +120,7 @@ table .text8 {
     resize: none;
 }
 
-#image_input {
+#image_input, #image_detail_input {
     width: 100%;
     height: 100%;
     cursor: pointer;
