@@ -20,7 +20,7 @@ public class Item {
     @Id
     @Column (name="item_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long itemId;
+    private long itemId;
 
     @Column(name="item_name")
     private String itemName;

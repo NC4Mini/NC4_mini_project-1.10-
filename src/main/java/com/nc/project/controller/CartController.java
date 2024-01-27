@@ -174,6 +174,7 @@ public class CartController {
             return ResponseEntity.status(401).body("Redirect:/login");
         }
 
+
         // 없으면 null 값 까지도 가져옴
         UserAccount userAccount = userAccountRepository.findByUserId(principal.getName()).orElse(null);
 
