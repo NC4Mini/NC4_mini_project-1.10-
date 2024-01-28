@@ -38,7 +38,7 @@
                                     <span class="dc">
                                         <span class="dc_price" th:text="${item.itemPrice}">
                                             [가격]데이터 넣는곳
-                                            <input type="hidden" th:value="${item.itemPrice}">  <!-- 여기 벨류에다가 가격데이터 넣어줘야댐-->
+                                            <input type="hidden" th:value="${item.itemPrice}">  
 
                                         </span>
                                         <span class="won">원</span>
@@ -104,7 +104,7 @@
                             <!-- 장바구니 담을 수 있도록 form데이터로 감싸줌 -->
                             <!--<form id="add_cart_form">-->
                             <form>
-<!--                            <form th:object="${item}" th:action="@{'/cart/add/' + ${item.itemId}}" id="add_cart_form" method="post">-->
+                           <form th:object="${item}" th:action="@{'/cart/add/' + ${item.itemId}}" id="add_cart_form" method="post">
                                 <input type="hidden" th:value="${item.itemId}">
                                 <div class="inner_option">
                                     <div class="in_option">
@@ -693,10 +693,9 @@
                 success: function (data) {
                     alert(data);
                 },
-                error: function (xhr, status, error) {
+                error: function (error) {
                     alert("로그인을 해주세요");
 
-                    window.location.href = '/login';
                 }
             });
         }

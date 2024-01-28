@@ -1,10 +1,7 @@
 package com.nc.project.entity;
 
-import javax.persistence.*;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,24 +18,23 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Setter;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import lombok.ToString;
 import lombok.Builder;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Builder
-public class Order {
+public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
-    private Long orderId;
+    @Column(name = "orders_id")
+    private Long ordersId;
 
     @ManyToOne
     @JoinColumn(name = "id")
@@ -52,10 +48,10 @@ public class Order {
     @Column(name = "total_price")
     private double totalPrice;
     
-    @Column(name = "order_time")
+    @Column(name = "orders_time")
     private LocalDateTime orderTime;
 
-    @Column(name = "order_status")  // 0 - 주문중, 1 - 주문완료, 2 - 주문취소
+    @Column(name = "orders_status")  // 0 - 주문중, 1 - 주문완료, 2 - 주문취소
     private int orderStatus;
 
 
