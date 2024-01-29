@@ -10,6 +10,7 @@
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/item/item_detail.js}"></script>
+        <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
     </th:block>
 </head>
 <body>
@@ -104,7 +105,7 @@
                             <!-- 장바구니 담을 수 있도록 form데이터로 감싸줌 -->
                             <!--<form id="add_cart_form">-->
                             <form>
-                           <form th:object="${item}" th:action="@{'/cart/add/' + ${item.itemId}}" id="add_cart_form" method="post">
+                           <!-- <form th:object="${item}" th:action="@{'/cart/add/' + ${item.itemId}}" id="add_cart_form" method="post"> -->
                                 <input type="hidden" th:value="${item.itemId}">
                                 <div class="inner_option">
                                     <div class="in_option">
@@ -683,6 +684,7 @@
 
     <script th:inline="javascript">
         function addToCart (itemId) {
+            console.log(itemId);
 
             $.ajax({
                 type: 'POST',
@@ -691,10 +693,12 @@
                     itemId: itemId
                 },
                 success: function (data) {
-                    alert(data);
+                    alert(data.msg);
                 },
                 error: function (error) {
-                    alert("로그인을 해주세요");
+                    alert(error.responseJSON.msg);
+                    // 로그인 페이지로 리다이렉트
+                    window.location.href = "/login";
 
                 }
             });

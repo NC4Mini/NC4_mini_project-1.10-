@@ -167,24 +167,26 @@ public class CartController {
 
     // 상품 상세페이지에서 장바구니에 물건 추가
     @PostMapping("/add/{itemId}")
-    public ResponseEntity<?> addCartItem(Principal principal, @PathVariable Long itemId) {
+    public ResponseEntity<?> addCartItem(Principal principal, @RequestParam("itemId") long itemId) {
+        Map<String, String> response = new HashMap<>();
+
         System.out.println(
                 "=========================================" +
                         "\n" +
-                        "CartController.addCartItem" +
+                        itemId +
                         "\n" +
                         "========================================="
         );
 
-        Map<String, String> response = new HashMap<>();
-
         // 사용자 정보가 없을 경우 로그인창으로 이동
         if (principal == null) {
-            RedirectView redirectView = new RedirectView("/login");
-            redirectView.setStatusCode(HttpStatus.UNAUTHORIZED);
-            return new ResponseEntity<>(redirectView, HttpStatus.UNAUTHORIZED);
-        }
+            
+            response.put("msg", "로그인이 필요합니다.");
 
+            // 로그인 페이지로 리다이렉트
+            return ResponseEntity.status(401).body(response);
+        }
+        
         // 없으면 null 값 까지도 가져옴
         UserAccount userAccount = userAccountRepository.findByUserId(principal.getName()).orElse(null);
 

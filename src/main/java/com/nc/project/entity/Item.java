@@ -46,6 +46,7 @@ public class Item {
 //    @OneToMany(mappedBy = "item")
 //    private List<CartItem> itemList = new ArrayList<>();
 
+
     public ItemDTO toDTO() {
         return ItemDTO.builder()
                 .itemId(this.itemId)

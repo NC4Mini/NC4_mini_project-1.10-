@@ -22,7 +22,7 @@ public class ItemController {
         return mav;
     }
 
-    // 메인에서 상품 상세페이지 이동 (임시작업)
+    // 메인에서 상품 상세페이지 이동
     @GetMapping("/item-detail")
     public ModelAndView getItemDetail (@RequestParam("itemId") long itemId) {
         Item item = itemService.getItem(itemId);

@@ -23,7 +23,7 @@ public class CartServiceImpl implements CartService {
 
     // 장바구니에 물건 담기 기능 (완료)
     @Override
-    public void addCart(UserAccount userAccount, Long itemId) {
+    public void addCart(UserAccount userAccount, long itemId) {
 
         // 1. body에 담겨있는 userId로 유저의 장바구니가 있는지 확인
         // 유저 고유 id로 유저의 장바구니 찾기

@@ -41,9 +41,10 @@ public class Orders {
     @JsonBackReference
     private UserAccount userAccount;
 
-    @OneToMany
+    @ManyToOne
     @JoinColumn(name = "item_id")
-    private List<Item> orderItemList;
+    @JsonBackReference
+    private Item item;
     
     @Column(name = "total_price")
     private double totalPrice;
