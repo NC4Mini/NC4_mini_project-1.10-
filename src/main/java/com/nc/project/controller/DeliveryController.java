@@ -18,6 +18,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import com.nc.project.entity.Delivery;
 import com.nc.project.entity.UserAccount;
+import com.nc.project.entity.UserShpAddr;
 import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.service.CartService;
 import com.nc.project.service.DeliveryService;
@@ -34,15 +35,24 @@ public class DeliveryController {
 
     // 장바구니에서 주문하기 기능
     @PostMapping("/to-delivery")
-    public ModelAndView getDelivery(@RequestParam ("cartId") long cartId) {
+    public ModelAndView getDelivery(Principal Principal, @RequestParam ("cartId") long cartId) {
         ModelAndView mav = new ModelAndView();
+
+        // 로그인 하지 않은 경우
+        if (Principal == null) {
+            mav.setViewName("redirect:/login");
+            return mav;
+        }
 
         long id = cartService.getUserAccountByCartId(cartId).getId();
 
         Delivery delivery = new Delivery();
         delivery = deliveryService.deliveryFromCart(id, cartId);
-
+        
+        UserShpAddr defaultUserShpAddr = cartService.bringDefaultAddr(id);
+        
         mav.addObject("delivery", delivery);
+        mav.addObject("defaultUserShpAddr", defaultUserShpAddr);
         mav.setViewName("delivery/get_delivery.html");
 
         return mav;
