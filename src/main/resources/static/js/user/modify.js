@@ -6,10 +6,28 @@ $(() => {
     let validationPw = false;
     //비밀번호 일치 여부
     let confirmPw = false;
+    //비밀번호 인증 여부
+    let checkPw = false;
+
+    $("#password_check").on("click", (e) => {
+        $.ajax({
+            url: '/user/password-check',
+            type: 'post',
+            data: {curUserPw:$("#curUserPw").val(),
+                checkPw:checkPw}
+        }).done(function(data){
+            console.log(data);
+                alert("본인인증이 완료되었습니다.");
+                checkPw = true;
+        }).fail(function(){
+        alert("본인인증을 실패하였습니다.");
+        });
+    });
+
 
     // 비밀번호 유효성 검사 정규식
-    const validatePassword = (userPw) => {
-        return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=-]).{9,}$/.test(userPw);
+    const validatePassword = (UserPw) => {
+        return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=-]).{9,}$/.test(UserPw);
     }
 
     // 비밀번호 입력 시 비밀번호 유효성 검사
@@ -51,6 +69,7 @@ $(() => {
     });
 
     $("#modifyBtn").on("click", (e) => {
+
         if($("#userPw").val() === "" || $("#userPw").val() === null) {
             validationPw = true;
             confirmPw = true;
@@ -58,8 +77,8 @@ $(() => {
             $("#pwCheckResult").hide();
         }
 
-        if($("#userPw").val() === $("#curUserPw").val()) {
-            alert("현재 비밀번호와 동일한 비밀번호로 설정할 수 없습니다.");
+        if(checkPw == false) {
+            alert("비밀번호 인증을 완료하세요.");
             return;
         }
 
@@ -77,37 +96,65 @@ $(() => {
             return;
         }
 
+        const formData = new FormData($("#modifyForm")[0]);
+
+        const addrArr = [];
+
+        addrArr.push({
+            addrZone: $("#addrZone").val(),
+            addrBasic: $("#addrBasic").val(),
+            addrDetail: $("#addrDetail").val()
+        });
+
+        formData.append("addrList", JSON.stringify(addrArr));
 
         $.ajax({
             url: '/user/change',
             type: 'post',
-            data: $("#modifyForm").serialize(),
-            success: (obj) => {
-                alert(obj.item.msg);
-                // 화면 새로고침
-                location.reload();
-            },
-            error: (err) => {
-                if(err.responseJSON.errorCode === 900) {
-                    alert("현재 비밀번호를 잘못 입력하셨습니다.");
-                    $("#curUserPw").focus();
-                    return;
-                } else {
-                    alert("알 수 없는 에러입니다. 관리자에게 문의하세요");
-                    return;
-                }
-            }
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false
+        }).done(function(){
+            alert("회원정보를 변경하였습니다.");
+        }).fail(function(){
+            alert("비밀번호가 다릅니다.");
         });
     });
 
     $("#resignBtn").on("click", (e) => {
+        if(checkPw == false) {
+            alert("비밀번호 인증을 완료하세요.");
+            return;
+        }
+
         $.ajax({
             url: '/user/resign',
             type: 'post'
         }).done(function(){
             alert("회원탈퇴 성공");
+            location.href = "/";
         }).fail(function(){
             alert("알 수 없는 에러입니다.");
         });
     });
+
+    // 주소 API 적용
+    $("#addressSearch").on("click", () => {
+        new daum.Postcode({
+            oncomplete: function (data) {
+                var addr = '';
+                if (data.userSelectedType === 'R') {
+                    addr = data.roadAddress;
+                } else {
+                    addr = data.jibunAddress;
+                }
+                $("#addrZone").val(data.zonecode);
+                $("#addrBasic").val(addr);
+                $("#addrDetail").val("").focus();
+
+            }
+        }).open();
+    });
+
 });

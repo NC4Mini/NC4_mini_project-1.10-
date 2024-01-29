@@ -7,6 +7,8 @@ import com.nc.project.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +36,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void modifyUser(UserAccountDTO userAccountDTO) {
-        userAccountRepository.save(userAccountDTO.toEntity());
+        UserAccount userAccount = userAccountRepository.findByUserId(userAccountDTO.getUserId()).get();
+        UserAccountDTO newUserAccountDto = userAccount.toDTO();
+
+        if(!userAccountDTO.getUserPw().isBlank()) {
+        userAccount.setUserPw(userAccountDTO.getUserPw());
+        }
+
+        userAccount.setUserName(userAccountDTO.getUserName());
+        userAccount.setUserBirth(LocalDate.parse(userAccountDTO.getUserBirth()));
+        userAccount.setUserEmail(userAccountDTO.getUserEmail());
+        userAccount.setUserTel(userAccountDTO.getUserTel());
+        userAccount.setUserGender(userAccountDTO.getUserGender());
+
+        userAccount.getUserShpAddrList().get(0).setAddrZone(userAccountDTO.getUserShpAddrDTOList().get(0).getAddrZone());
+        userAccount.getUserShpAddrList().get(0).setAddrBasic(userAccountDTO.getUserShpAddrDTOList().get(0).getAddrBasic());
+        userAccount.getUserShpAddrList().get(0).setAddrDetail(userAccountDTO.getUserShpAddrDTOList().get(0).getAddrDetail());
     }
 
     @Override
@@ -46,6 +63,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void resignUser(UserAccountDTO userAccountDTO) {
+        userAccountDTO.toEntity().getUserShpAddrList().clear();
         userAccountRepository.delete(userAccountDTO.toEntity());
     }
 

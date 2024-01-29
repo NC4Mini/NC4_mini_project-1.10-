@@ -1,21 +1,32 @@
 package com.nc.project.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.nc.project.dto.UserAccountDTO;
+import com.nc.project.dto.UserShpAddrDTO;
+import com.nc.project.entity.CustomUserDetails;
 import com.nc.project.entity.UserAccount;
 import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.service.impl.UserServiceImpl;
+import com.nc.project.service.impl.UserShpAddrServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -25,49 +36,51 @@ public class UserController {
 
     private final UserServiceImpl userService;
     private final UserAccountRepository userAccountRepository;
+    private final UserShpAddrServiceImpl userShpAddrServiceImpl;
 
-
+    @Transactional
     @GetMapping("/profile")
-    public String editProfile() {
+    public String editProfile(Model model,UserAccountDTO userAccountDto) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String userId = userDetails.getUsername();
+
+        userAccountDto = userService.findUser(userId).toDTO();
+
+        model.addAttribute("userAccountDto",userAccountDto);
+
+
         return "/user/modify";
     }
 
 
+    @Transactional
     @PostMapping("/change")
-//    public void change(UserAccountDto newUuserAccountDto) {
-    public void change() {
+    @ResponseBody
+    public void change(UserAccountDTO userAccountDto,
+                       @AuthenticationPrincipal CustomUserDetails customUserDetails,
+                       @RequestParam("addrList") String addrList) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        //테스트용 데이터
-        Long id = 1L;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String userId = userDetails.getUsername();
 
-        UserAccountDTO originalUserAccountDTO = userAccountRepository.findById(id).get().toDTO();
+        List<UserShpAddrDTO> userShpAddrDTOList = objectMapper.readValue(addrList, new TypeReference<List<UserShpAddrDTO>>() {});
+        UserAccountDTO originalUserAccountDTO = userService.findUser(userId).toDTO();
 
-        UserAccountDTO aaa= UserAccountDTO.builder()
-                .id(id)
-                .userId("11")
-                .userPw("12341234")
-                .userName("12341234")
-                .userTel("12341234")
-                .userBirth(originalUserAccountDTO.getUserBirth())
-                .userGender("12341234")
-                .userProfile("12341234")
-                .userEmail("12341234")
-//                .userId(newUuserAccountDto.getUserId())
-//                .userPw(newUuserAccountDto.getUserPw())
-//                .userName(newUuserAccountDto.getUserName())
-//                .userTel(newUuserAccountDto.getUserTel())
-//                .userAddr(newUuserAccountDto.getUserAddr())
-//                .userBirth(newUuserAccountDto.getUserBirth())
-//                .userGender(newUuserAccountDto.getUserGender())
-//                .userProfile(newUuserAccountDto.getUserProfile())
-//                .userEmail(newUuserAccountDto.getUserEmail())
-                .build();
+        userShpAddrDTOList.get(0).setId(originalUserAccountDTO.getId());
+        userShpAddrDTOList.get(0).setAddrId(1);
+
+
+        userAccountDto.setUserShpAddrDTOList(userShpAddrDTOList);
 
 
 
-        originalUserAccountDTO = aaa;
-        System.out.println(originalUserAccountDTO);
-        userService.modifyUser(originalUserAccountDTO);
+        userAccountDto.setUserId(originalUserAccountDTO.getUserId());
+
+        userService.modifyUser(userAccountDto);
     }
 
     @Transactional
@@ -79,14 +92,36 @@ public class UserController {
         UserDetails userDetails = (UserDetails)principal;
         String userId = userDetails.getUsername();
 
-        UserAccountDTO userAccountDto = new UserAccountDTO();
+        UserAccountDTO userAccountDto = userService.findUser(userId).toDTO();
 
-        userAccountDto = userService.findUser(userId).toDTO();
         userService.resignUser(userAccountDto);
 
         session.setAttribute("SPRING_SECURITY_CONTEXT", null);
     }
 
+    @Transactional
+    @PostMapping("/password-check")
+    @ResponseBody
+    public ResponseEntity<Boolean> passwordcheck(Model model, @RequestParam("curUserPw") String curUserPw, @RequestParam("checkPw") Boolean checkPw) {
+
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetails userDetails = (UserDetails)principal;
+        String userId = userDetails.getUsername();
+
+        UserAccountDTO userAccountDto = new UserAccountDTO();
+        userAccountDto = userService.findUser(userId).toDTO();
+
+        System.out.println(curUserPw);
+        System.out.println(userAccountDto.getUserPw());
+
+        if(Objects.equals(curUserPw, userAccountDto.getUserPw())) {
+            checkPw = true;
+            return new ResponseEntity<>(checkPw, HttpStatus.OK);
+        } else {
+            checkPw = false;
+            return new ResponseEntity<>(checkPw, HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 
     @GetMapping("/login")
     public String loginView() {
