@@ -43,7 +43,7 @@ public class ItemFile {
 
     public ItemFileDTO toDTO() {
         return ItemFileDTO.builder()
-                .itemId(item.getItemId())
+                .itemId(this.item.getItemId())
                 .itemFileId(this.itemFileId)
                 .itemFileName(this.itemFileName)
                 .itemFilePath(this.itemFilePath)
