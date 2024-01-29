@@ -183,7 +183,7 @@ public class CartController {
             
             response.put("msg", "로그인이 필요합니다.");
 
-            // 로그인 페이지로 리다이렉트
+            // 응답코드 401 띄우고 메세지 보내기
             return ResponseEntity.status(401).body(response);
         }
         

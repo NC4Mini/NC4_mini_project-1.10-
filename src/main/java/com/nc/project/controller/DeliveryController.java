@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping("/order")
+@RequestMapping("/delivery")
 @RequiredArgsConstructor
-public class OrderController {
+public class DeliveryController {
     // 주문서 페이지로 이동
-    @GetMapping("/myorder")
-    public ModelAndView getOrder() {
+    @GetMapping("/my_delivery")
+    public ModelAndView getDelivery() {
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("/order/get_order.html");
+        mav.setViewName("/delivery/get_delivery.html");
 
         return mav;
     }

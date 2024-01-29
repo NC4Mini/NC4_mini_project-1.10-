@@ -22,18 +22,18 @@ import lombok.ToString;
 import lombok.Builder;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "delivery")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Builder
-public class Orders {
+public class Delivery {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "orders_id")
+    @Column(name = "delivery_id")
     private Long ordersId;
 
     @ManyToOne
@@ -49,10 +49,10 @@ public class Orders {
     @Column(name = "total_price")
     private double totalPrice;
     
-    @Column(name = "orders_time")
+    @Column(name = "delivery_time")
     private LocalDateTime orderTime;
 
-    @Column(name = "orders_status")  // 0 - 주문중, 1 - 주문완료, 2 - 주문취소
+    @Column(name = "delivery_status")  // 0 - 주문중, 1 - 주문완료, 2 - 주문취소
     private int orderStatus;
 
 

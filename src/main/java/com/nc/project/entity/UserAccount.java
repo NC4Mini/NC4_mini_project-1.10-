@@ -44,7 +44,7 @@ public class UserAccount {
 
     @OneToMany(mappedBy = "userAccount")
     @JsonManagedReference
-    private List<Orders> ordersList;
+    private List<Delivery> deliveryList;
 
     public UserAccountDTO toDTO() {
         return UserAccountDTO.builder()
