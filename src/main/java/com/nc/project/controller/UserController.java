@@ -3,18 +3,13 @@ package com.nc.project.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.dto.UserShpAddrDTO;
 import com.nc.project.entity.CustomUserDetails;
-import com.nc.project.entity.UserAccount;
 import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.service.impl.UserServiceImpl;
-import com.nc.project.service.impl.UserShpAddrServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -27,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -36,7 +30,6 @@ public class UserController {
 
     private final UserServiceImpl userService;
     private final UserAccountRepository userAccountRepository;
-    private final UserShpAddrServiceImpl userShpAddrServiceImpl;
 
     @Transactional
     @GetMapping("/profile")
