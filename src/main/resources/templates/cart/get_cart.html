@@ -192,8 +192,10 @@
                     <!-- 계산 필요 . -->
                     <div class="btn_submit">
                         <!-- 주문 버튼 -->
-                        <button type="button" class="btn active" id="deliveryBtn" onclick="">주문하기</button>
-                        
+                        <form id="deliveryForm" action = "/delivery/to-delivery" method="post">
+                            <input type="hidden" name="cartId" value="">
+                            <button type="submit" class="btn active" id="deliveryBtn" onclick="">주문하기</button>
+                        </form>
                         <!-- 결제 페이지로 이동 -->
                     </div>
 
@@ -277,8 +279,33 @@
             });
         }
 
+        $('#deliveryBtn').click(function () {
+            var cartId = $('#cart_id').val();
+            
+            $('#deliveryForm input[name=cartId]').val(cartId);
+        });
+
+
+        // 주문하기 버튼 기능
+        // $('#deliveryBtn').click(function () {
+        //     var cartId = $('#cart_id').val();
+            
+        //     console.log(cartId);
+
+        //     $.ajax({
+        //         type: 'GET',
+        //         url: '/delivery/to-delivery',
+        //         data: {
+        //             cartId: cartId
+        //         },
+        //         success: function (data) {
+        //             alert('주문서로 이동합니다.');
+        //             window.location.href = data.viewName;
+        //         }
+        //     });
+        // });
+
     </script>
 </div>
 </body>
 </html>
-

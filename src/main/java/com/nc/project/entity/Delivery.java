@@ -44,7 +44,7 @@ public class Delivery {
 
     // 장바구니의 상품들을 담는 리스트
     @OneToMany(mappedBy = "delivery")
-    private List<CartItem> deliveryItems;
+    private List<CartItem> deliveryItemList;
 
     @Column(name = "total_price")
     private double totalPrice;

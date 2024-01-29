@@ -202,8 +202,14 @@ public class CartServiceImpl implements CartService {
 
     }
 
-    // 
+    // 장바구니번호로 유저정보를 가져오는 기능
+    @Override
+    public UserAccount getUserAccountByCartId(long cartId) {
+        Cart cart = cartRepository.getReferenceById(cartId);
 
-    
+        UserAccount userAccount = cart.getUserAccount();
+
+        return userAccount;
+    }
 
 }
