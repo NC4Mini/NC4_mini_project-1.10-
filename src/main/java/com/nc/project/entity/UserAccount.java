@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.aspectj.weaver.ast.Or;
+
 @Entity
 @Table(name = "user_account")
 @Getter
@@ -39,6 +41,10 @@ public class UserAccount {
     @OneToOne (mappedBy = "userAccount", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Cart cart;
+
+    @OneToMany(mappedBy = "userAccount")
+    @JsonManagedReference
+    private List<Delivery> deliveryList;
 
     public UserAccountDTO toDTO() {
         return UserAccountDTO.builder()

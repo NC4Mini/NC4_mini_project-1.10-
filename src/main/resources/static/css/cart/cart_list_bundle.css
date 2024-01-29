@@ -1180,7 +1180,7 @@ label.label_block {
 }
 
 .only_pc {
-    width: 1050px;
+    /* width: 1050px; */
     margin: 0 auto
 }
 
@@ -1759,4 +1759,16 @@ label.label_block {
 
 .only_pc .box.sold_out .list li .thumb {
     left: 0
+}
+
+#selectionCompleteButton {
+    position: fixed;
+    width: 100px;
+    height: 40px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #fff;
+    border: none;
+    margin-top: 5px;
+    margin-left: 40%;
 }

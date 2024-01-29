@@ -28,7 +28,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-
 public class UserJoinController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;

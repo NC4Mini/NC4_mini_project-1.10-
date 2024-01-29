@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/layout_sidebar}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout_sidebar}">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block layout:fragment="css">
         <link rel="stylesheet" th:href="@{/css/user/modify.css}">
@@ -12,11 +12,11 @@
     </th:block>
 </head>
 <body>
-    <div class="content" layout:fragment="content">
-        <div class="form-wrapper">
-        <table>
-            <br><br>
-            <form id="modifyForm" action="/profile/change" method="post">
+<div class="content" layout:fragment="content">
+    <div class="form-wrapper">
+        <br><br>
+        <form id="modifyForm" action="/user/change" th:method="post">
+            <table>
                 <div class="modify_title">
                     회원정보 수정
                 </div>
@@ -25,133 +25,150 @@
                     필수입력사항
                 </p>
 
-                <table class="tbl_comm"><tbody>
-                <tr>
-                    <th>
-                    <label class="label-wrapper " for="userPw">현재 비밀번호</label>
-                    <span class="ico">*</span>
-                    </th>
-                    <td>
-                    <input type="password" id="userPw" name="curUserPw" required>
-                    <button type="button" class="btn_default">확인</button>
-                    </td>
-                </tr>
+                <table class="tbl_comm" th:object="${userAccountDto}">
+                    <tbody>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper " for="userPw">현재 비밀번호</label>
+                            <span class="ico">*</span>
+                        </th>
+                        <td>
+                            <input id="curUserPw" name="curUserPw" type="password">
+                            <button class="btn_default" id="password_check" type="button">확인</button>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <th>
-                    <label class="label-wrapper" for="newUserPw">비밀번호</label>
-                    </th>
-                    <td>
-                    <input type="password" id="newUserPw" name="userPw">
-                    <p id="pwValidation" style="color: red; font-size: 0.8rem;"> 비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요. </p>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                    <label class="label-wrapper" for="userPwCheck">비밀번호 확인</label>
-                    </th>
-                    <td>
-                    <input type="password" id="userPwCheck" name="userPwCheck">
-                    <p id="pwCheckResult" style="font-size: 0.8rem;"></p>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                    <label class="label-wrapper" for="userName">이름</label>
-                    </th>
-                    <td>
-                    <input type="text" id="userName" name="userName"  placeholder="이름">
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                    <label class="label-wrapper" for="userEmail">이메일</label>
-                    </th>
-                    <td>
-                    <input type="email" id="userEmail" name="userEmail"  placeholder="이메일">
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                    <label class="label-wrapper" for="userTel">휴대폰</label>
-                    </th>
-                    <td>
-                    <input type="text" id="userTel" name="userTel" placeholder="휴대폰">
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                    <label class="label-wrapper" for="userAddr">주소</label>
-                    </th>
-                    <td>
-                    <input type="text" id="userAddr" name="userTel" placeholder="주소">
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                    </th>
-                    <td>
-                        <button type="button" id="addressSearch" class="search">
-                            <span id="addressNo" class="address_no">주소검색</span>
-                        </button>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                    <label class="label-wrapper" for="userGender">성별</label>
-                    </th>
-                    <td id="userGender" class="userGender">
-                        <div>
-                            <label for="gender-man" class="radio_box">
-                                <input type="radio" id="gender-man" name="userGender" value="MALE">
-                                <span class="on"></span>
-                                남자
-                            </label>
-                            <label for="gender-woman" class="radio_box">
-                                <input type="radio" id="gender-woman" name="userGender" value="WOMAN">
-                                <span class="on"></span>
-                                여자
-                            </label>
-                            <label for="gender-none" class="radio_box">
-                                <input type="radio" id="gender-none" name="userGender" value="NONE" checked>
-                                <span class="on"></span>
-                                선택안함
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                        <label class="label-wrapper" for="userBirth">생년월일</label>
-                    </th>
-                    <td>
-                        <input id="userBirth" type="text">
-                    </td>
-                </tr>
-                <tr>
-                    <th>
-                    </th>
-                    <td>
-                        <input type="date" min="1950-01-01" max="2024-01-01">
-                    </td>
-                </tr>
-                </tbody>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userPw">비밀번호</label>
+                        </th>
+                        <td>
+                            <input id="userPw" name="userPw" type="password">
+                            <p id="pwValidation" style="color: red; font-size: 0.8rem;"> 비밀번호는 영문자, 숫자, 특수문자 조합의 9자리
+                                이상으로 설정해주세요. </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userPwCheck">비밀번호 확인</label>
+                        </th>
+                        <td>
+                            <input id="userPwCheck" name="userPwCheck" type="password">
+                            <p id="pwCheckResult" style="font-size: 0.8rem;"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userName">이름</label>
+                        </th>
+                        <td>
+                            <input id="userName" name="userName" th:value="*{userName}" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userEmail">이메일</label>
+                        </th>
+                        <td>
+                            <input id="userEmail" name="userEmail" th:value="*{userEmail}" type="email">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userTel">휴대폰</label>
+                        </th>
+                        <td>
+                            <input id="userTel" name="userTel" th:value="*{userTel}" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="addrZone">주소</label>
+                        </th>
+                        <td>
+                            <input id="addrZone" name="addrZone" readonly="readonly"
+                                   th:value="*{userShpAddrDTOList.get(0).getAddrZone()}" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                        </th>
+                        <td>
+                            <input id="addrBasic" name="addrBasic" readonly="readonly"
+                                   th:value="*{userShpAddrDTOList.get(0).getAddrBasic()}" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                        </th>
+                        <td>
+                            <input id="addrDetail" name="addrDetail" th:value="*{userShpAddrDTOList.get(0).getAddrDetail()}"
+                                   type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                        </th>
+                        <td>
+                            <button class="search" id="addressSearch" type="button">
+                                <span class="address_no" id="addressNo">주소 재검색</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userGender">성별</label>
+                        </th>
+                        <td class="userGender" id="userGender">
+                            <div>
+                                <label class="radio_box" for="gender-man">
+                                    <input id="gender-man" name="userGender" th:checked="*{userGender} eq 'MALE'" type="radio"
+                                           value="MALE">
+                                    <span class="on"></span>
+                                    남자
+                                </label>
+                                <label class="radio_box" for="gender-woman">
+                                    <input id="gender-woman" name="userGender" th:checked="*{userGender} eq 'WOMAN'" type="radio"
+                                           value="WOMAN">
+                                    <span class="on"></span>
+                                    여자
+                                </label>
+                                <label class="radio_box" for="gender-none">
+                                    <input id="gender-none" name="userGender" th:checked="*{userGender} eq 'NONE'" type="radio"
+                                           value="NONE">
+                                    <span class="on"></span>
+                                    선택안함
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userBirth">생년월일</label>
+                        </th>
+                        <td>
+                            <input id="userBirth" name="userBirth" max="2024-01-01" min="1950-01-01" th:value="*{userBirth}" type="date">
+                        </td>
+                    </tr>
+                    </tbody>
                 </table>
-                    <br>
+                <br>
                 <div style="border-top: 1px solid #333;">
                     <br>
                 </div>
-                    <div class="form_footer modify_button_position">
-                        <button class="modify_button" type="button" id="modifyBtn">회원정보 수정</button>
-                        <button class="modify_button" type="button" id="resignBtn">회원탈퇴</button>
-                    </div>
-            </form>
-        </table>
-        </div>
+                <div class="form_footer modify_button_position">
+                    <button class="modify_button modifyBtn" id="modifyBtn" type="button">회원정보 수정</button>
+                    <button class="modify_button resignBtn" id="resignBtn" type="button">회원탈퇴</button>
+                    <br><br><br><br><br><br>
+                </div>
+            </table>
+        </form>
     </div>
-    </div>
-    <th:block layout:fragment="script">
-        <script th:src="@{/js/user/modify.js}"></script>
-    </th:block>
+</div>
+</div>
+<th:block layout:fragment="script">
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/user/modify.js}"></script>
+</th:block>
 </body>
 </html>
