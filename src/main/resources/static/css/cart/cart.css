@@ -247,9 +247,9 @@ element.style {
     position: static;
 }
 .section_destination .only_pc .list {
-    position:absolute;
+    /* position:absolute; */
     width: 470px;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     padding: 0 0 2px;
 }
 .section_destination .only_pc * {

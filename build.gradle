@@ -39,6 +39,8 @@ dependencies {
 	implementation 'com.zaxxer:HikariCP:5.1.0'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	// https://mvnrepository.com/artifact/org.json/json
+	implementation 'org.json:json:20231013'
 }
 
 tasks.named('test') {

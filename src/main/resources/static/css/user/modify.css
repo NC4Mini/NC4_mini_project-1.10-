@@ -9,6 +9,7 @@
 
 .content {
     display: flex;
+    margin-right: 300px;
     justify-content: center;
 }
 
