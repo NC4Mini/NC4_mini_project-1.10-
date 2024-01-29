@@ -29,13 +29,19 @@ public class Board extends Base {
 //
     @Column
     private int boardHits;
+
+    @Column
+    private  int fileAttached; //1 or 0
+
+    //파일이 없을때 호출
     public static Board toSaveEntity(BoardDTO boardDTO){
         Board board = new Board();
-        board.setBoardHits(0);
         board.setBoardWriter(boardDTO.getBoardWriter());
         board.setBoardCategory(boardDTO.getBoardCategory());
         board.setBoardTitle(boardDTO.getBoardTitle());
         board.setBoardContents(boardDTO.getBoardContents());
+        board.setBoardHits(0);
+        board.setFileAttached(0); //파일 없음.
         return board;
     }
 
