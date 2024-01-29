@@ -23,7 +23,7 @@ public class CartServiceImpl implements CartService {
 
     // 장바구니에 물건 담기 기능 (완료)
     @Override
-    public void addCart(UserAccount userAccount, Long itemId) {
+    public void addCart(UserAccount userAccount, long itemId) {
 
         // 1. body에 담겨있는 userId로 유저의 장바구니가 있는지 확인
         // 유저 고유 id로 유저의 장바구니 찾기
@@ -158,13 +158,58 @@ public class CartServiceImpl implements CartService {
         return defaultUserShpAddr;
     }
 
+    // 배송지 수정 기능
     @Override
     public void updateShpAddr(long id, int shpAddrId) {
         // TODO Auto-generated method stub
         UserShpAddr userShpAddr = userShpAddrRepository.findByUserAccount_IdAndAddrId(id, shpAddrId);
 
         userShpAddr.setAddrStandard('Y');
+        userShpAddrRepository.save(userShpAddr);
+
+        // 나머지 배송지들은 기본 배송지가 아니므로 N으로 변경
+        List<UserShpAddr> userShpAddrList = new ArrayList<>();
+        userShpAddrList = userShpAddrRepository.findAllByUserAccount_Id(id);
+        for (UserShpAddr addr : userShpAddrList) {
+            if (addr.getAddrId() != shpAddrId) { // 현재 기본 배송지를 제외한 나머지 배송지
+                addr.setAddrStandard('N');
+                userShpAddrRepository.save(addr); // 변경된 배송지 정보 저장
+            }
+        }
     }
 
-    
+    // 배송지 추가 기능
+    @Override
+    public void addShpAddr(long id, UserShpAddr userShpAddr) {
+        // TODO Auto-generated method stub
+        UserAccount userAccount = userAccountRepository.getReferenceById(id);
+
+        userShpAddr.setUserAccount(userAccount);
+
+        userShpAddrRepository.save(userShpAddr);
+
+        // 만약 추가한 배송지가 기본 배송지라면 나머지 배송지들은 기본 배송지가 아니므로 N으로 변경
+        if (userShpAddr.getAddrStandard() == 'Y') {
+            List<UserShpAddr> userShpAddrList = new ArrayList<>();
+            userShpAddrList = userShpAddrRepository.findAllByUserAccount_Id(id);
+            for (UserShpAddr addr : userShpAddrList) {
+                if (addr.getAddrId() != userShpAddr.getAddrId()) { // 현재 기본 배송지를 제외한 나머지 배송지
+                    addr.setAddrStandard('N');
+                    userShpAddrRepository.save(addr); // 변경된 배송지 정보 저장
+                }
+            }
+        }
+
+    }
+
+    // 장바구니번호로 유저정보를 가져오는 기능
+    @Override
+    public UserAccount getUserAccountByCartId(long cartId) {
+        Cart cart = cartRepository.getReferenceById(cartId);
+
+        UserAccount userAccount = cart.getUserAccount();
+
+        return userAccount;
+    }
+
 }
