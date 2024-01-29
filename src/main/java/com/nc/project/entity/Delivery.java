@@ -1,6 +1,7 @@
 package com.nc.project.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -34,26 +35,25 @@ public class Delivery {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "delivery_id")
-    private Long ordersId;
+    private Long deliveryId;
 
     @ManyToOne
     @JoinColumn(name = "id")
     @JsonBackReference
     private UserAccount userAccount;
 
-    @ManyToOne
-    @JoinColumn(name = "item_id")
-    @JsonBackReference
-    private Item item;
-    
+    // 장바구니의 상품들을 담는 리스트
+    @OneToMany(mappedBy = "delivery")
+    private List<CartItem> deliveryItems;
+
     @Column(name = "total_price")
     private double totalPrice;
     
     @Column(name = "delivery_time")
-    private LocalDateTime orderTime;
+    private LocalDateTime deliveryTime;
 
     @Column(name = "delivery_status")  // 0 - 주문중, 1 - 주문완료, 2 - 주문취소
-    private int orderStatus;
+    private int deliveryStatus;
 
 
 }
