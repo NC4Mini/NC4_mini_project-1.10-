@@ -1,5 +1,5 @@
 // 배송지추가에 쓰일 api : problem 
-window.addEventListener('DOMContentLoaded',function(){
+window.addEventListener('DOMContentLoaded',function() {
 
     const juso = document.querySelector('#juso');
     const user_address = document.querySelector('#addrMain');

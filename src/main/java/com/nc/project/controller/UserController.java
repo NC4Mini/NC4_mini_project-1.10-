@@ -108,12 +108,10 @@ public class UserController {
         System.out.println(userAccountDto.getUserPw());
 
         if(Objects.equals(curUserPw, userAccountDto.getUserPw())) {
-            System.out.println("비밀번호 일치");
             checkPw = true;
             return new ResponseEntity<>(checkPw, HttpStatus.OK);
         } else {
             checkPw = false;
-            System.out.println("비밀번호 실패");
             return new ResponseEntity<>(checkPw, HttpStatus.NOT_ACCEPTABLE);
         }
     }

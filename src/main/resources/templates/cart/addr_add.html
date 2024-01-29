@@ -5,10 +5,14 @@
       layout:decorate="~{layouts/layout_cart}"
 >
 <head>
-
+    <th:block layout:fragment="script">
+        <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </th:block>
 </head>
-<body onresize="parent.resizeTo(514,584)" onload="parent.resizeTo(514,584)">
+<body onresize="parent.resizeTo(560,584)" onload="parent.resizeTo(560,584)">
     <div class="section_destination" layout:fragment="cart_content">
+
         <div id="inputForm" class>
             <div class="modify only_pc">
                 <input type="hidden" name="addrNo" value="">
@@ -19,30 +23,76 @@
                 </p>
                 <div class="field">
                     <div class="address_search">
-                        <input onclick="sel_addr()" id="addrMain" class="address" type="text" placeholder="주소를 검색해주세요.">
-                        <!-- text창을 누르면 검색버튼이 눌리도록 함.-->
+                        <!-- value값에 입력한 주소가 담김 -->
+                        <input onclick="sel_addr()" id="addrMain" class="address" type="text" placeholder="주소를 검색해주세요." value="" readonly>
+                        <!-- 주소 검색 버튼 -->
                         <button type="button" id="juso" class="btn">
                             <span class="ico"></span>검색<!-- 검색kakao api -->
                         </button>
                     </div>
                     <input type="text" id="addrSub" name="addrSub" placeholder="나머지 주소를 입력해주세요" data-max-length="75" data-format="text" value="">
                 </div>
+                <input type="hidden" id="isDefault_value" value="">
                 <label class="label_default"><br>
                     <input type="checkbox" id="isDefault" name="isDefault">
                     <span class="ico"></span>기본 배송지로 저장</label>
-                    <!-- db에 반영해야할 요소로 보임.(기본배송지)-->
-                    <button type="button" class="btn active">저장</button>
+                    <button id="button" type="button" class="btn active">저장</button>
                     <!-- 저장시 db에 반영됨. 기본배송지 체크 시 반영해야함.-->
                     
             </div>
         </div>
+        <script th:inline="javascript">
+            
+            // 저장 버튼 클릭 시 위에 담긴 정보를 db에 반영하고 현재 창을 특정 페이지로 리다이렉트
+            $(document).ready(function(){
+                $('#button').click(function(){
+                    var addrMain = $("#addrMain").val();
+                    var addrSub = $("#addrSub").val();
+                    var isDefault = $("#isDefault_value").val();
+                    var addr = addrMain + addrSub;
+                    var data = {
+                        addrBasic: addrMain,
+                        addrDetail: addrSub,
+                        addrStandard: isDefault
+                    };
+
+                    console.log(data);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/cart/addr-add",
+                        data: JSON.stringify(data),
+                        contentType: "application/json; charset=utf-8",
+                        success: function(response){
+                            alert("배송지가 추가되었습니다.");
+                            window.opener.location.reload();
+                            window.close();
+                        },
+                        error: function(response){
+                            alert("배송지 추가에 실패하였습니다.");
+
+                        }
+                    });
+                });
+            });
+
+            // 기본 배송지로 저장 체크 시 isDefault에 'Y'를 담음
+            $(document).ready(function(){
+                $("#isDefault").click(function(){
+                    if($("#isDefault").is(":checked")){
+                        $("#isDefault_value").val('Y');
+                    }else{
+                        $("#isDefault_value").val('N');
+                    }
+                });
+            });
+            console.log($("#isDefault_value").val());
+            
+
+
+        </script>
     </div>
-    <script>
-        function sel_addr(){
-            document.getElementById('juso').click();
-        }
     
-    </script>
     </body>
 </html>
 

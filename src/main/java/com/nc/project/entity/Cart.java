@@ -38,11 +38,12 @@ public class Cart {
 //    private List<CartItem> cartItemList = new ArrayList<>();
 
     // cartItem과 OneToMany 관계 (수정본)
-    @OneToMany (mappedBy = "cart")
+    @OneToMany(mappedBy = "cart")
     @JsonManagedReference
+    @Builder.Default
     private List<CartItem> cartItemList = new ArrayList<>();
 
-    @Column (name = "cart_total_price")
+    @Column(name = "cart_total_price")
     private int totalPrice;
 
     // totalPrice를 계산해주는 메서드
