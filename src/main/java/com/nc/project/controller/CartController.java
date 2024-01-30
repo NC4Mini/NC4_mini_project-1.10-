@@ -52,7 +52,7 @@ public class CartController {
 
         // 사용자 정보가 없을 경우 로그인창으로 이동
         if (principal == null) {
-            RedirectView redirectView = new RedirectView("/login");
+            RedirectView redirectView = new RedirectView("/user/login");
 
             mav.setView(redirectView);
 
@@ -169,14 +169,6 @@ public class CartController {
     @PostMapping("/add/{itemId}")
     public ResponseEntity<?> addCartItem(Principal principal, @RequestParam("itemId") long itemId) {
         Map<String, String> response = new HashMap<>();
-
-        System.out.println(
-                "=========================================" +
-                        "\n" +
-                        itemId +
-                        "\n" +
-                        "========================================="
-        );
 
         // 사용자 정보가 없을 경우 로그인창으로 이동
         if (principal == null) {

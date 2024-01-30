@@ -23,7 +23,7 @@
                     주문상품
                 </h2>
 
-                <div id="itemList" class="page_aticle order_goodslist" th:each="cartItem : ${delivery.deliveryItemList}">
+                <div id="itemList" class="page_aticle order_goodslist" th:each="cartItem : ${cart.cartItemList}">
                     <ul class="list_product">
                         <li>
                             <div class="thumb">
@@ -55,30 +55,32 @@
                     </ul>
                 </div>
 
-                <form action="">
+                <!-- 결제하기 기능 form 태그 -->
+                <form action="confirm-delivery" method="POST" id="confirm_delivery" name="delivery">
                     <h2 class="tit_section" id="titFocusOrderer">주문자 정보</h2>
-
+                    <!-- 데이터 넘겨줄 input 태그 -->
+                    <input type="hidden" id="cartId" th:value="${cart.cartId}" name="cartId">
                     <div class="order_section data_orderer">
                         <table class="goodsinfo_table">
                             <tbody>
                                 <tr class="fst">
                                     <th>보내는 분</th>
                                     <td>
-                                        <input type="hidden" name="orderer_name" value="userName" th:text="${delivery.userAccount.userName}">
+                                        <input type="hidden" name="orderer_name" value="userName" th:text="${cart.userAccount.userName}">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <th>휴대폰</th>
                                     <td>
-                                        <input type="hidden" name="orderer_phone" value="userTel"  th:text="${delivery.userAccount.userTel}">
+                                        <input type="hidden" name="orderer_phone" value="userTel"  th:text="${cart.userAccount.userTel}">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <th>이메일</th>
                                     <td>
-                                        <input type="hidden" id="email" name="orderer_email" value="userEmail" option="regEmail" th:text="${delivery.userAccount.userEmail}">
+                                        <input type="hidden" id="email" name="orderer_email" value="userEmail" option="regEmail" th:text="${cart.userAccount.userEmail}">
                                         <p class="txt_guide">
                                             <span class="txt txt_case1">이메일을 통해 주문처리과정을 보내드립니다.</span>
                                             <span class="txt txt_case2">정보 변경은 <span class="txt_desc">마이컬리 &gt; 개인정보 수정</span> 메뉴에서 가능합니다.</span>
@@ -119,7 +121,7 @@
                                 <dl class="amount fst">
                                     <dt class="tit">주문금액</dt>
                                     <dd class="price">
-                                        <span id="productsTotalPrice" th:text="${#numbers.formatInteger(delivery.totalPrice, 0)}"></span> 
+                                        <span id="productsTotalPrice" th:text="${#numbers.formatInteger(cart.totalPrice, 0)}"></span> 
                                         원
                                     </dd>
                                 </dl>
@@ -149,7 +151,7 @@
                                 <dl class="amount lst">
                                     <dt class="tit">최종결제금액</dt>
                                     <dd class="price">
-                                        <span id="paper_settlement" th:text="${#numbers.formatInteger(delivery.totalPrice, 0)}"></span>
+                                        <span id="paper_settlement" th:text="${#numbers.formatInteger(cart.totalPrice, 0)}"></span>
                                         <input type="hidden" id="product_price_value" name="product_price_value" value="">
                                         <span class="won">원</span>
                                     </dd>
@@ -220,7 +222,7 @@
                         </table>
                     </div>
                     <div class="tit_section"> 
-                        <input type="submit" value="결제하기" class="btn_payment">
+                        <input type="submit" value="결제하기" class="btn_payment" id="pay_btn">
                     </div>
                     
                 </form>
@@ -228,9 +230,7 @@
         </div>
 
         <script th:inline="javascript">
-            var testId = $('#deliveryTestId').val;
-
-            console.log(testId);
+            
         </script>
     </div>
 
