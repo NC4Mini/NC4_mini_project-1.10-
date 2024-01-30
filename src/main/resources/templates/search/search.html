@@ -15,7 +15,7 @@
     <main id="main">
         <section id="section2" class="section-slide-public">
             <div class="title">
-                <h2 th:if="${search.isBlank()} ">모든 상품</h2>
+                <h2 th:if="${search.isBlank()} ">이 상품 어때요?</h2>
                 <h2 th:if="${!search.isBlank()} " th:text="|${search}에 대한 검색결과|">검색결과</h2>
             </div>
             <div class="search-total" th:text="|총 ${itemList.content.size()}건|">건수</div>
