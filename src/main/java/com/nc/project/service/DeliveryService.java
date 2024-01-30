@@ -4,7 +4,10 @@ import com.nc.project.entity.Delivery;
 
 public interface DeliveryService {
     
-    // 장바구니에서 주문하기 기능
-    public Delivery deliveryFromCart(long id, long cartId);
-    
+    // 결제하기 기능
+    public void confirmDelivery(long cartId);
+
+    // // 주문 찾기 기능
+    // public Delivery findDelivery(long deliveryId);
+
 }

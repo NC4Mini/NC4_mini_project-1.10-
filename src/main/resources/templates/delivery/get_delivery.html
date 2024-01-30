@@ -23,7 +23,7 @@
                     주문상품
                 </h2>
 
-                <div id="itemList" class="page_aticle order_goodslist" th:each="cartItem : ${delivery.deliveryItemList}">
+                <div id="itemList" class="page_aticle order_goodslist" th:each="cartItem : ${cart.cartItemList}">
                     <ul class="list_product">
                         <li>
                             <div class="thumb">
@@ -34,13 +34,13 @@
                                 <div class="inner_name" th:text="${cartItem.Item.itemName}">[김구원선생] 무농약 콩나물 200g</div>
                             </div>
 
-                            <div class="ea">
+                            <div class="ea" th:text="${cartItem.cartItemCnt} + '개'">
                                 1개
                             </div>
 
                             <div class="info_price">
                                 <span class="num">
-                                    <span class="price">
+                                    <span class="price" th:text="${cartItem.Item.itemPrice} * ${cartItem.cartItemCnt} + '원'">
                                         1,300
                                         원
                                     </span>
@@ -55,33 +55,32 @@
                     </ul>
                 </div>
 
-                <form action="">
+                <!-- 결제하기 기능 form 태그 -->
+                <form action="confirm-delivery" method="POST" id="confirm_delivery" name="delivery">
                     <h2 class="tit_section" id="titFocusOrderer">주문자 정보</h2>
-
+                    <!-- 데이터 넘겨줄 input 태그 -->
+                    <input type="hidden" id="cartId" th:value="${cart.cartId}" name="cartId">
                     <div class="order_section data_orderer">
                         <table class="goodsinfo_table">
                             <tbody>
                                 <tr class="fst">
                                     <th>보내는 분</th>
                                     <td>
-                                        이도현
-                                        <input type="hidden" name="orderer_name" value="이도현">
+                                        <input type="hidden" name="orderer_name" value="userName" th:text="${cart.userAccount.userName}">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <th>휴대폰</th>
                                     <td>
-                                        01011111111
-                                        <input type="hidden" name="orderer_phone" value="01011111111">
+                                        <input type="hidden" name="orderer_phone" value="userTel"  th:text="${cart.userAccount.userTel}">
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <th>이메일</th>
                                     <td>
-                                        <input type="hidden" id="email" name="orderer_email" value="ksmfou98@naver.com" option="regEmail">
-                                        ksmfou98@naver.com
+                                        <input type="hidden" id="email" name="orderer_email" value="userEmail" option="regEmail" th:text="${cart.userAccount.userEmail}">
                                         <p class="txt_guide">
                                             <span class="txt txt_case1">이메일을 통해 주문처리과정을 보내드립니다.</span>
                                             <span class="txt txt_case2">정보 변경은 <span class="txt_desc">마이컬리 &gt; 개인정보 수정</span> 메뉴에서 가능합니다.</span>
@@ -103,7 +102,7 @@
                         </h3>
                         <div class="section_full">
                             <span class="address" id="divDesination">
-                                <span class="addr" id="addrInfo">인천 대학교</span>
+                                <span class="addr" id="addrInfo" th:utext="${defaultUserShpAddr.addrBasic} + '<br>' + ${defaultUserShpAddr.addrDetail}">인천 대학교</span>
                                 <span class="tag" id="addrTags">
                                     <span class="badge star" id="addrBadge">샛별배송</span>
                                     <span style="display:block; margin-top:5px;">배송지 수정은 마이컬리  > 배송지 관리에서 변경할 수 있어요</span>
@@ -122,14 +121,14 @@
                                 <dl class="amount fst">
                                     <dt class="tit">주문금액</dt>
                                     <dd class="price">
-                                        <span id="productsTotalPrice"></span> 
+                                        <span id="productsTotalPrice" th:text="${#numbers.formatInteger(cart.totalPrice, 0)}"></span> 
                                         원
                                     </dd>
                                 </dl>
 
 
-
-                                <dl class="amount">
+                                <!-- 배송비, 비활성화 (01.29) -->
+                                <!-- <dl class="amount">
                                     <dt class="tit">배송비</dt>
                                     <dd class="price delivery_area">
                                         <div id="paper_delivery_msg1" style="display: block;">
@@ -138,20 +137,21 @@
                                             원
                                         </div>
                                     </dd>
-                                </dl>
-
-                                <dl class="amount">
+                                </dl> -->
+                                
+                                <!-- 결제금액 - 적립금, 임시 비활성화 (01.29) -->
+                                <!-- <dl class="amount">
                                     <dt class="tit">적립금사용</dt>
                                     <dd class="price">
                                         <span class="num pay_sum" id="paper_reserves">0 원</span>
                                         <input type="hidden" class="emoney_point" value="">
                                     </dd>
-                                </dl>
+                                </dl> -->
 
                                 <dl class="amount lst">
                                     <dt class="tit">최종결제금액</dt>
                                     <dd class="price">
-                                        <span id="paper_settlement">5,000</span>
+                                        <span id="paper_settlement" th:text="${#numbers.formatInteger(cart.totalPrice, 0)}"></span>
                                         <input type="hidden" id="product_price_value" name="product_price_value" value="">
                                         <span class="won">원</span>
                                     </dd>
@@ -222,7 +222,7 @@
                         </table>
                     </div>
                     <div class="tit_section"> 
-                        <input type="submit" value="결제하기" class="btn_payment">
+                        <input type="submit" value="결제하기" class="btn_payment" id="pay_btn">
                     </div>
                     
                 </form>
@@ -230,9 +230,7 @@
         </div>
 
         <script th:inline="javascript">
-            var testId = $('#deliveryTestId').val;
-
-            console.log(testId);
+            
         </script>
     </div>
 
