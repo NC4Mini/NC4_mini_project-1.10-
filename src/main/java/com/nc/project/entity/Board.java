@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -33,6 +36,8 @@ public class Board extends Base {
     @Column
     private  int fileAttached; //1 or 0
 
+    @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BoardFile> boardFileList = new ArrayList<>();
     //파일이 없을때 호출
     public static Board toSaveEntity(BoardDTO boardDTO){
         Board board = new Board();
@@ -54,6 +59,17 @@ public class Board extends Base {
         board.setBoardCategory(boardDTO.getBoardCategory());
         board.setBoardTitle(boardDTO.getBoardTitle());
         board.setBoardContents(boardDTO.getBoardContents());
+        return board;
+    }
+
+    public static Board toSaveFileEntity(BoardDTO boardDTO) {
+        Board board = new Board();
+        board.setBoardWriter(boardDTO.getBoardWriter());
+        board.setBoardCategory(boardDTO.getBoardCategory());
+        board.setBoardTitle(boardDTO.getBoardTitle());
+        board.setBoardContents(boardDTO.getBoardContents());
+        board.setBoardHits(0);
+        board.setFileAttached(1); //파일 있음.
         return board;
     }
 }
