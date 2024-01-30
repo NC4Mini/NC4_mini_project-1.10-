@@ -285,24 +285,50 @@
 
 <th:block layout:fragment="script">
     <script>
-        function check_input(){
-        if (!document.login_form.userId.value){
-            alert("아이디를 입력하세요");
-            document.login_form.userId.focus();
-            return;
-        }
-        if (!document.login_form.userPw.value){
-            alert("비밀번호를 입력하세요");
-            document.login_form.userPw.focus();
-            return;
-        }
-        if (document.login_form.userId.value === id || document.login_form.userPw.value === pw){
-            alert("아이디 또는 비밀번호가 틀렸습니다.");
-            history.go(0);
-            return;
+        function check_input() {
+            var userId = document.login_form.userId.value;
+            var userPw = document.login_form.userPw.value;
 
+            if (!userId) {
+                alert("아이디를 입력하세요");
+                document.login_form.userId.focus();
+                return;
+            }
+
+            if (!userPw) {
+                alert("비밀번호를 입력하세요");
+                document.login_form.userPw.focus();
+                return;
+            }
+
+            // 서버에게 자격 증명을 확인하도록 AJAX 요청보내기.
+            validateCredentials(userId, userPw);
         }
-            document.login_form.submit();
+
+        function validateCredentials(userId, userPw) {
+            $.ajax({
+                type: "POST",
+                url: "/user/login",  // 서버 측 엔드포인트와 일치하도록 URL 업데이트
+                data: {
+                    userId: userId,
+                    userPw: userPw
+                },
+                success: function (response) {
+                    if (response.success) {
+                        // 자격 증명이 올바르면 폼 제출
+                        document.login_form.submit();
+                    } else {
+                        alert("아이디 또는 비밀번호가 틀렸습니다.");
+                        // 선택적으로 비밀번호 필드를 지우거나 페이지를 다시 로드하기.
+                        // document.login_form.userPw.value = "";
+                        // history.go(0);
+                    }
+                },
+                error: function () {
+                    alert("오류가 발생했습니다 다시 시도해주세요.");
+                    // history.go(0);
+                }
+            });
         }
 </script>
 </th:block>

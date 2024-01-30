@@ -6,7 +6,6 @@ import com.nc.project.dto.ResponseDTO;
 import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.dto.UserShpAddrDTO;
 import com.nc.project.service.UserService;
-import com.nc.project.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.hibernate.sql.model.ModelMutationLogging;
