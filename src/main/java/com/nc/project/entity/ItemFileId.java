@@ -7,8 +7,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-public class UserShpAddrId implements Serializable {
-    private int addrId;
-    private long userAccount;
+public class ItemFileId implements Serializable {
+    private long item;
+    private long itemFileId;
 }
-

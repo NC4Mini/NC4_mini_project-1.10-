@@ -3,6 +3,9 @@ package com.nc.project.dto;
 import com.nc.project.entity.Item;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,6 +17,7 @@ public class ItemDTO {
     private String itemName;
     private String itemDescription;
     private int itemPrice;
+    private List<ItemFileDTO> itemFileDTOList;
 
     public Item toEntity() {
         return Item.builder()
@@ -21,6 +25,7 @@ public class ItemDTO {
                 .itemName(this.itemName)
                 .itemDescription(this.itemDescription)
                 .itemPrice(this.itemPrice)
+                .itemFileList(new ArrayList<>())
                 .build();
     }
 }

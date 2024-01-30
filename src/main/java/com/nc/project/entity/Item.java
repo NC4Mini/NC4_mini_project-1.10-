@@ -1,10 +1,10 @@
 package com.nc.project.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nc.project.dto.ItemDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,14 +31,9 @@ public class Item {
     @Column (name="item_price")
     private int itemPrice;
 
-//    @Column(name="item_stock")
-//    private int itemStock;
-
-//    @Column (name="item_status")
-//    private char itemStatus;
-
-//    @Column (name="item_category")
-//    private String itemCategory;
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ItemFile> itemFileList;
 
 //    @Column (name="cart_item_id")
 //    private Long cartItemId;
@@ -53,7 +48,12 @@ public class Item {
                 .itemName(this.itemName)
                 .itemDescription(this.itemDescription)
                 .itemPrice(this.itemPrice)
+                .itemFileDTOList(this.itemFileList.stream().map(ItemFile::toDTO).toList())
                 .build();
+    }
+
+    public void addItemFileList(ItemFile itemFile) {
+        this.itemFileList.add(itemFile);
     }
 
 }

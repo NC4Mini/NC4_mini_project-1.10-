@@ -14,9 +14,7 @@
         <section id="section1">
             <div class="slide-container">
                 <div class="slide-view">
-                    <ul class="slide-wrap">
-                        <!-- li*20>a[href=#]>img[src=/img/main_slide$$.jpg] -->
-                        <li class="slide slide20"><a href="#"><img src="/img/main_slide20.jpg" alt=""></a></li>
+                    <ul class="slide-wrap promotions" id="promotions">
                         <li class="slide slide01"><a href="#"><img src="/img/main_slide01.jpg" alt=""></a></li>
                         <li class="slide slide02"><a href="#"><img src="/img/main_slide02.jpg" alt=""></a></li>
                         <li class="slide slide03"><a href="#"><img src="/img/main_slide03.jpg" alt=""></a></li>
@@ -361,5 +359,9 @@
     </main>
 </div>
 </div>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/main/visual.js}"></script>
+    <script th:src="@{/js/main/contents.js}"></script>
+</th:block>
 </body>
 </html>
