@@ -4,14 +4,13 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 
-<head th:replace="~{fragments/config :: config}">
+<head th:replace="~{/fragments/config :: config}">
 
 </head>
 <body>
 <div id="wrap">
-    <header th:replace="~{fragments/header :: header}"></header>
+    <header th:replace="~{/fragments/header :: header}"></header>
     <div layout:fragment="content"></div>
-    <footer th:replace="~{fragments/footer :: footer}"></footer>
 </div>
 
 </body>
