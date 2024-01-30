@@ -2,7 +2,8 @@ package com.nc.project.service;
 
 import com.nc.project.dto.ItemDTO;
 import com.nc.project.entity.Item;
-import com.nc.project.repository.ItemRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -19,4 +20,8 @@ public interface ItemService {
     // 상품 읽어오기 (모두)
     public List<Item> getItemList ();
 
+    // 상품 검색하기
+    public Page<Item> ItemSearchList(String searchKeyword, Pageable pageable);
+
+    public Page<Item> ItemList(Pageable pageable);
 }
