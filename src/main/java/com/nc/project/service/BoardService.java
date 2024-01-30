@@ -51,10 +51,10 @@ public class BoardService {
             String storedFileName = System.currentTimeMillis() + "_" + originalFilename;//3
            // System.out.println("3. storedFileName " + storedFileName);
 
-            String savePath = "C:/board_img/" + storedFileName; //c:/board_img/9802398403948_내사진.jpg//4
+            String filePath = "C:/board_img/" + storedFileName; //c:/board_img/9802398403948_내사진.jpg//4
            // System.out.println("4. savePath" + savePath);
 
-            boardFile.transferTo(new File(savePath));//5.여기까지가 파일저장
+            boardFile.transferTo(new File(filePath));//5.여기까지가 파일저장
             Board board = Board.toSaveFileEntity(boardDTO);
             Long savedId = boardRepository.save(board).getId();
             Board boardEntity = boardRepository.findById(savedId).get();
