@@ -1,11 +1,14 @@
 package com.nc.project.service;
 
+import com.nc.project.dto.ItemDTO;
 import com.nc.project.entity.Item;
 import com.nc.project.repository.ItemRepository;
 
 import java.util.List;
 
 public interface ItemService {
+
+    void insertItem(ItemDTO itemDTO);
 
     // 상품 등록
     public void addItem (Item item);
