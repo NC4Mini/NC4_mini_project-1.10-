@@ -2,16 +2,19 @@
 
 package com.nc.project.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nc.project.entity.Cart;
 import com.nc.project.entity.CartItem;
 import com.nc.project.entity.Delivery;
 import com.nc.project.entity.UserAccount;
 import com.nc.project.repository.CartRepository;
+import com.nc.project.repository.DeliveryRepository;
 import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.service.DeliveryService;
 
@@ -24,34 +27,26 @@ public class DeliveryServiceImpl implements DeliveryService{
     
     public final CartRepository cartRepository;
     public final UserAccountRepository userAccountRepository;
+    public final DeliveryRepository deliveryRepository;
 
-    // 장바구니에서 주문하기 기능
-    @Override
-    public Delivery deliveryFromCart(long id, long cartId) {
-        Delivery delivery = new Delivery();
+    // 결제하기 기능
+    public void confirmDelivery(long cartId) {
+        Cart cart = cartRepository.findById(cartId).orElseThrow();
+        UserAccount userAccount = cart.getUserAccount();
+        List<CartItem> cartItemList = new ArrayList<>(cart.getCartItemList());
+        double totalPrice = cart.getTotalPrice();
+        Delivery delivery = Delivery.builder()
+            .userAccount(userAccount)
+            .deliveryItemList(cartItemList)
+            .totalPrice(totalPrice)
+            .deliveryStatus(1)
+            .build();
+        deliveryRepository.save(delivery);
 
-        UserAccount userAccount = userAccountRepository.findById(id).get();
-        
-        Cart cart = cartRepository.findById(cartId).get();
-        
-        List<CartItem> cartItemList = cart.getCartItemList();
-        
-        delivery.setUserAccount(userAccount);
-        delivery.setDeliveryItemList(cartItemList);
-        delivery.setTotalPrice(cart.getTotalPrice());
-        delivery.setDeliveryTime(java.time.LocalDateTime.now());
-        delivery.setDeliveryStatus(0);
-
-
-        return delivery;
-
+        // 장바구니 비우기
+        cartRepository.delete(cart);
     }
 
     
-    
 
-    
-        
-        
-    
 }
