@@ -13,7 +13,7 @@ import java.util.Map;
 public interface CartService {
 
     // 상품 상세페이지에서 장바구니 추가 기능
-    public void addCart(UserAccount userAccount, Long itemId);
+    public void addCart(UserAccount userAccount, long itemId);
 
     // 해당 장바구니를 찾아주는 기능
     public Cart getCart (Long cartId);
@@ -38,4 +38,11 @@ public interface CartService {
 
     // 배송지를 수정해주는 기능
     public void updateShpAddr (long id, int shpAddrId);
+
+    // 배송지를 추가해주는 기능
+    public void addShpAddr (long id, UserShpAddr userShpAddr);
+
+    // 장바구니번호로 유저정보를 가져오는 기능
+    public UserAccount getUserAccountByCartId (long cartId);
+    
 }

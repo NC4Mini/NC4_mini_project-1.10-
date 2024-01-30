@@ -4,462 +4,316 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상품등록</title>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" th:href="@{/css/admin/admin_common.css}">
-<!--        <link rel="stylesheet" th:href="@{/css/admin/admin_page_order_manage.css.css}">-->
-<!--        <link rel="stylesheet" th:href="@{/css/admin/admin_page_prd_manage.css.css}">-->
-<!--        <link rel="stylesheet" th:href="@{/css/admin/admin_page_prd_modify.css.css}">-->
-        <link rel="stylesheet" th:href="@{/css/admin/admin_page_prd_upload.css.css}">
+        <link rel="stylesheet" th:href="@{/css/item/prd_common.css}">
+        <link rel="stylesheet" th:href="@{/css/item/prd_upload.css}">
     </th:block>
     <th:block layout:fragment="script">
-        <script th:src="@{/js/item/admin_prd_manage.js}"></script>
-        <script th:src="@{/js/common.js}"></script>
-        <script th:src="@{/js/admin_common.js}"></script>
+        <script>
+            // 이미지 업로드하면 메인 이미지 미리보기 나오기
+            function set_main_image(event) {
+                var reader = new FileReader();
+                var inputFile = document.querySelector("#image_input");
+
+                reader.onload = function (event) {
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.style.maxWidth = "100%";
+                    img.style.height = "auto";
+                    var container = document.querySelector("div#image_main_container");
+                    container.innerHTML = '';
+                    container.appendChild(img);
+                    // 파일선택 활성화/비활성화
+                    var inputFile = document.querySelector("#image_input");
+                    inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
+                };
+
+                reader.readAsDataURL(inputFile.files[0]);
+            }
+
+            // 이미지 업로드하면 상세 이미지 미리보기 나오기
+            function set_detail_image(event) {
+                var reader = new FileReader();
+                var inputFile = document.querySelector("#image_detail_input");
+
+                reader.onload = function (event) {
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.style.maxWidth = "100%";
+                    img.style.height = "auto";
+                    var container = document.querySelector("div#image_detail_container");
+                    container.innerHTML = '';
+                    container.appendChild(img);
+                    // 파일선택 활성화/비활성화
+                    var inputFile = document.querySelector("#image_input");
+                    inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
+                };
+
+                reader.readAsDataURL(inputFile.files[0]);
+            }
+
+            // 이미지 업로드하면 썸네일 미리보기 나오기
+            function set_image(event) {
+                var reader = new FileReader();
+                var inputFile = document.querySelector("#image_thumb_input");
+
+                reader.onload = function (event) {
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.style.maxWidth = "100%";
+                    img.style.height = "auto";
+                    var container = document.querySelector("div#image_container");
+                    container.innerHTML = '';
+                    container.appendChild(img);
+                    // 파일선택 활성화/비활성화
+                    var inputFile = document.querySelector("#image_input");
+                    inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
+                };
+
+                reader.readAsDataURL(inputFile.files[0]);
+            }
+
+            // 업로드 이미지 삭제
+            function img_remove(button) {
+                var container = button.closest(".image_add").querySelector("div");
+                container.innerHTML = '';
+                var inputFile = button.closest(".image_add").querySelector("input[type=file]");
+                inputFile.value = '';
+            }
+        </script>
     </th:block>
 </head>
 <body>
-    <div layout:fragment="content">
-        <div id="main">
-            <div id="content">
-                <div class="page_aticle aticle_type2">
-                    <!--왼쪽 카테고리-->
-                    <div id="snb" class="snb_my">
-                        <h2 class="tit_snb">관리자 메뉴</h2>
-                        <div class="inner_snb">
-                            <ul class="list_menu">
-                                <li>
-                                    <a href="#">상품 등록</a>
-                                </li>
-                                <li>
-                                    <a href="#">상품 관리</a>
-                                </li>
-                                <li>
-                                    <a href="#">주문 관리</a>
-                                </li>
-                                <li>
-                                    <a href="#">후기 관리</a>
-                                </li>
-                                <li>
-                                    <a href="#">1:1문의 관리</a>
-                                </li>
+<div class="content" layout:fragment="content">
+    <div id="main">
+        <div id="content">
+            <div class="page_aticle aticle_type2">
+                <!--왼쪽 카테고리-->
+                <div id="snb" class="snb_my">
+                    <h2 class="tit_snb">관리자 메뉴</h2>
+                    <div class="inner_snb">
+                        <ul class="list_menu">
+                            <li>
+                                <a href="#">상품 등록</a>
+                            </li>
+                            <li>
+                                <a href="#">상품 관리</a>
+                            </li>
+                            <li>
+                                <a href="#">주문 관리</a>
+                            </li>
+                            <li>
+                                <a href="#">후기 관리</a>
+                            </li>
+                            <li>
+                                <a href="#">1:1문의 관리</a>
+                            </li>
 
-                            </ul>
-                        </div>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="viewOrderList" class="page_section section_orderlist">
+                    <div class="head_aticle">
+                        <h2 class="tit">
+                            상품 등록
+                        </h2>
                     </div>
 
-                    <div id="viewOrderList" class="page_section section_orderlist">
-                        <div class="head_aticle">
-                            <h2 class="tit">
-                                상품 등록
-                            </h2>
-                        </div>
-
-                        <div class="list_order">
-                            <form action="" class="">
-                                <div class="size">
-                                    <div class="p_board">
-                                        <table width="100%">
-                                            <tbody>
-                                            <tr>
-                                                <th >상품명</th>
-                                                <td colspan="2">
-                                                    <div>
+                    <div class="list_order">
+                        <form action="" class="">
+                            <div class="size">
+                                <div class="p_board">
+                                    <table width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <th>상품명</th>
+                                            <td colspan="2">
+                                                <div>
                                             <span>
-                                                <input type="text" name="product_name" class="i_text text1" onkeyup="chkword_name(this, 80)">
+                                                <input type="text" name="product_name" class="i_text text1"
+                                                       onkeyup="chkword_name(this, 80)">
                                             </span>
-                                                    </div>
-                                                    <span class="txtByte" title="현재글자수/최대글자수">
+                                                </div>
+                                                <span class="txtByte" title="현재글자수/최대글자수">
                                           [
                                           <strong class="txt_count_name">0</strong>
                                            / 80 ]
                                         </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>한줄 소개</th>
-                                                <td colspan="2">
-                                                    <div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>한줄 소개</th>
+                                            <td colspan="2">
+                                                <div>
                                             <span>
-                                                <input type="text" class="i_text text2" name="product_introduce" onkeyup="chkword_introduce(this, 150)">
+                                                <input type="text" class="i_text text2" name="product_introduce"
+                                                       onkeyup="chkword_introduce(this, 150)">
                                             </span>
 
-                                                    </div>
-                                                    <span class="txtByte" title="현재글자수/최대글자수">
+                                                </div>
+                                                <span class="txtByte" title="현재글자수/최대글자수">
                                           [
                                           <strong class="txt_count_introduce">0</strong>
                                            / 150 ]
                                         </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>가격</th>
-                                                <td colspan="2">
-                                                    <div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>가격</th>
+                                            <td colspan="2">
+                                                <div>
                                             <span>
                                                 <input type="text" name="product_price" class="i_text text3">
                                             </span>
-                                                    </div>
-                                                    <span class="won">
+                                                </div>
+                                                <span class="won">
                                           원
                                         </span>
-                                                    <span class="won_type">
+                                                <span class="won_type">
                                           숫자만 입력해주세요 !
                                         </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>판매단위</th>
-                                                <td colspan="2">
-                                                    <div>
-                                            <span>
-                                                <input type="text" name="product_unit" class="i_text text4">
-                                            </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr class="product_detail">
+                                            <th>상품설명</th>
+
+
+                                            <td>
+                                                <div class="product_main">
+                                                    <span class="product_tit">상품 메인 이미지</span>
+                                                </div>
+
+
+                                                <div>
+                                                    <div class="image_box">
+
+                                                        <div class="image_add">
+
+                                                            <input type="file" name="product_main_image"
+                                                                   accept="image/*" id="image_input"
+                                                                   onchange="set_main_image(event);">
+                                                            <button type="button" class="image_input_button"></button>
+                                                            <div id="image_main_container"></div>
+
+                                                            <div style="margin-bottom:20px;">
+
+                                                                <button type="button" name="image_main_container"
+                                                                        class="remove" onclick="img_remove(this)">
+                                                            <span>
+                                                                삭제
+                                                            </span>
+                                                                </button>
+                                                            </div>
+
+
+                                                        </div>
                                                     </div>
-                                                    <span class="input_ex">
-                                          예) 1봉, 1통, 1개
-                                        </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>수량</th>
-                                                <td colspan="2">
-                                                    <div>
-                                            <span>
-                                                <input type="number" name="product_count" class="i_text num1" placeholder="0">
-                                            </span>
-                                                    </div>
+                                                </div>
 
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>중량/용량</th>
-                                                <td>
-                                                    <div>
-                                            <span>
-                                                <input type="text" name="product_weight" class="i_text text5">
-                                            </span>
-                                                    </div>
-                                                    <span class="input_ex">
-                                          예) 60g , 1/4통
-                                        </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>배송구분</th>
-                                                <td>
-                                                    <div>
-                                            <span>
-                                                <select name="product_delivery" id="delivery_type">
-                                                    <option value="">-- 선택하세요 --</option>
-                                                    <optgroup label="배송구분">
-                                                        <option value="샛별 배송">
-                                                            샛별 배송
-                                                        </option>
-                                                        <option value="일반 배송">
-                                                            일반 배송
-                                                        </option>
-
-                                                    </optgroup>
-                                                </select>
-                                            </span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>원산지</th>
-                                                <td>
-                                                    <div>
-                                            <span>
-                                                <input type="text" name="product_origin" class="i_text text6">
-                                            </span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>포장타입</th>
-                                                <td>
-                                                    <div>
-                                            <span>
-                                                <select name="product_packing" id="packing_type">
-                                                    <option value="">-- 선택하세요 --</option>
-                                                    <optgroup label="포장타입">
-                                                        <option value="냉장/종이포장">
-                                                            냉장/종이포장
-                                                        </option>
-                                                        <option value="상온/종이포장">
-                                                            상온/종이포장
-                                                        </option>
-
-                                                    </optgroup>
-                                                </select>
-                                            </span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>카테고리</th>
-                                                <td>
-                                                    <div>
-                                            <span>
-                                                <select name="product_category" class="product_category">
-                                                    <option value="">------- 선택하세요 -------</option>
-                                                    <optgroup label="채소">
-                                                        <option value="A-1">-고구마·감자·당근</option>
-                                                        <option value="A-2">-시금치·쌈채소·나물</option>
-                                                        <option value="A-3">-브로콜리·파프리카·양배추</option>
-                                                        <option value="A-4">-양파·대파·마늘·배추</option>
-                                                        <option value="A-5">-오이·호박·고추</option>
-                                                        <option value="A-6">-냉동·이색·간편채소</option>
-                                                        <option value="A-7">-콩나물·버섯</option>
-                                                    </optgroup>
-                                                    <optgroup label="과일·견과·쌀">
-                                                        <option value="B-1">-제철과일</option>
-                                                        <option value="B-2">-국산과일</option>
-                                                        <option value="B-3">-수입과일</option>
-                                                        <option value="B-4">-간편과일</option>
-                                                        <option value="B-5">-냉동·건과일</option>
-                                                        <option value="B-6">-견과류</option>
-                                                        <option value="B-7">-쌀·잡곡</option>
-                                                    </optgroup>
-                                                    <optgroup label="수산·해산·건어물">
-                                                        <option value="C-1">-제철수산</option>
-                                                        <option value="C-2">-생선류</option>
-                                                        <option value="C-3">-굴비·반건류</option>
-                                                        <option value="C-4">-오징어·낙지·문어</option>
-                                                        <option value="C-5">-새우·게·랍스터</option>
-                                                        <option value="C-6">-해산물·조개류</option>
-                                                        <option value="C-7">-수산가공품</option>
-                                                        <option value="C-8">-김·미역·해조류</option>
-                                                        <option value="C-9">-건어물·다시팩</option>
-                                                    </optgroup>
-
-
-                                                  </select>
-                                            </span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>유통기한</th>
-                                                <td>
-                                                    <div>
-                                            <span>
-                                                <input type="text" name="product_life" class="i_text text7">
-                                            </span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-
-                                            <tr>
-                                                <th>안내사항</th>
-                                                <td>
-                                                    <div>
-                                            <span>
-                                                <textarea class="i_text text8" name="product_information" id="" cols="30" rows="10" onkeyup="chkword_information(this, 550)"></textarea>
-                                            </span>
-                                                    </div>
-                                                    <span class="txtByte_big txtByte" title="현재글자수/최대글자수">
-                                          [
-                                          <strong class="txt_count_information">0</strong>
-                                           / 550 ]
-                                        </span>
-                                                </td>
-                                            </tr>
-
-                                            <tr class="product_detail">
-                                                <th>상품설명</th>
-
-
-                                                <td>
+                                                <div style="margin-top: 70px;">
                                                     <div class="product_main">
-                                                        <span class="product_tit">상품 메인 이미지</span>
+                                                        <span class="product_tit">상품 설명</span>
                                                     </div>
+                                                    <span>
+
+                                                <textarea class="i_text main_description" name="main_description" id=""
+                                                          cols="30" rows="10"></textarea>
+                                            </span>
+                                                </div>
 
 
-                                                    <div>
-                                                        <div class="image_box">
+                                                <div class="product_main" style="margin-top:30px;">
+                                                    <span class="product_tit">상품 상세 이미지</span>
+                                                </div>
 
 
-                                                            <div class="image_add">
+                                                <div>
+                                                    <div class="image_box">
 
 
-                                                                <input type="file" name="product_main_image" accept="image/*" id="image_input" onchange="set_main_image(event);">
-                                                                <button type="button" class="image_input_button"></button>
-                                                                <div id="image_main_container"></div>
-
-                                                                <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
-                                                                <script>
-                                                                    function set_main_image(){
-
-                                                                        var reader = new FileReader();
-
-                                                                        reader.onload = function(event) {
-                                                                            var img = document.createElement("img");
-                                                                            img.setAttribute("src", event.target.result);
-                                                                            document.querySelector("div#image_main_container").appendChild(img);
-                                                                        };
-
-                                                                        reader.readAsDataURL(event.target.files[0]);
-                                                                    }
-
-                                                                </script>
+                                                        <div class="image_add">
 
 
-                                                                <div style="margin-bottom:20px;">
+                                                            <input type="file" name="product_detail_image"
+                                                                   accept="image/*" id="image_detail_input"
+                                                                   onchange="set_detail_image(event);">
+                                                            <button type="button" class="image_input_button"></button>
+                                                            <div id="image_detail_container"></div>
 
-                                                                    <button type="button" name="image_main_container" class="remove" onclick="img_remove(this)">
+                                                            <div style="margin-bottom:20px;">
+
+                                                                <button type="button" name="image_detail_container"
+                                                                        class="remove" onclick="img_remove(this)">
                                                             <span>
                                                                 삭제
                                                             </span>
-                                                                    </button>
-                                                                </div>
-
-
+                                                                </button>
                                                             </div>
+
+
                                                         </div>
                                                     </div>
+                                                </div>
 
-                                                    <div style="margin-top: 70px;">
-                                                        <div class="product_main">
-                                                            <span class="product_tit">상품 설명</span>
-                                                        </div>
-                                                        <span>
+                                                <div style="margin-top: 70px;">
+                                                    <div class="product_main">
+                                                        <span class="product_tit">상품 상세 설명</span>
+                                                    </div>
+                                                    <span>
 
-                                                <textarea class="i_text main_description" name="main_description"  id="" cols="30" rows="10"></textarea>
+                                                <textarea class="i_text main_description" name="detail_description"
+                                                          id="" cols="30" rows="10"
+                                                          onkeyup="chkword_information(this, 550)"></textarea>
                                             </span>
-                                                    </div>
+                                                </div>
+
+                                            </td>
+                                        </tr>
 
 
-                                                    <div class="product_main" style="margin-top:30px;">
-                                                        <span class="product_tit">상품 상세 이미지</span>
-                                                    </div>
+                                        <tr>
+                                            <th>기타 이미지</th>
+                                            <td class="img_upload">
+                                                <div>
+                                                    <span>상품 썸네일</span>
+
+                                                    <div class="image_box">
 
 
-                                                    <div>
-                                                        <div class="image_box">
+                                                        <div class="image_add">
 
 
-                                                            <div class="image_add">
-
-
-                                                                <input type="file" name="product_detail_image" accept="image/*" id="image_input" onchange="set_detail_image(event);">
-                                                                <button type="button" class="image_input_button"></button>
-                                                                <div id="image_detail_container"></div>
-
-                                                                <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
-                                                                <script>
-                                                                    function set_detail_image(){
-
-                                                                        var reader = new FileReader();
-
-                                                                        reader.onload = function(event) {
-                                                                            var img = document.createElement("img");
-                                                                            img.setAttribute("src", event.target.result);
-                                                                            document.querySelector("div#image_detail_container").appendChild(img);
-                                                                        };
-
-                                                                        reader.readAsDataURL(event.target.files[0]);
-                                                                    }
-
-                                                                </script>
-
-
-                                                                <div style="margin-bottom:20px;">
-
-                                                                    <button type="button" name="image_detail_container" class="remove" onclick="img_remove(this)">
-                                                            <span>
-                                                                삭제
-                                                            </span>
-                                                                    </button>
-                                                                </div>
-
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div style="margin-top: 70px;">
-                                                        <div class="product_main">
-                                                            <span class="product_tit">상품 상세 설명</span>
-                                                        </div>
-                                                        <span>
-
-                                                <textarea class="i_text main_description" name="detail_description"  id="" cols="30" rows="10" onkeyup="chkword_information(this, 550)"></textarea>
-                                            </span>
-                                                    </div>
-
-
-
-
-
-
-
-                                                </td>
-                                            </tr>
-
-
-
-
-                                            <tr>
-                                                <th>기타 이미지</th>
-                                                <td class="img_upload">
-                                                    <div>
-                                                        <span>상품 썸네일</span>
-
-                                                        <div class="image_box">
-
-
-                                                            <div class="image_add">
-
-
-                                                                <input type="file" name="product_main_image" accept="image/*" id="image_input" onchange="set_image(event);">
-                                                                <button type="button" class="image_input_button"></button>
-                                                                <div id="image_container"></div>
-
-                                                                <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
-                                                                <script>
-                                                                    function set_image(){
-
-                                                                        var reader = new FileReader();
-
-                                                                        reader.onload = function(event) {
-                                                                            var img = document.createElement("img");
-                                                                            img.setAttribute("src", event.target.result);
-                                                                            document.querySelector("div#image_container").appendChild(img);
-                                                                        };
-
-                                                                        reader.readAsDataURL(event.target.files[0]);
-                                                                    }
-
-                                                                </script>
-
-                                                                <button type="button" name="image_container" class="remove" onclick="img_remove(this)">
+                                                            <input type="file" name="product_main_image"
+                                                                   accept="image/*" id="image_thumb_input"
+                                                                   onchange="set_image(event);">
+                                                            <button type="button" class="image_input_button"></button>
+                                                            <div id="image_container"></div>
+                                                            <button type="button" name="image_container" class="remove"
+                                                                    onclick="img_remove(this)">
                                                         <span>
                                                             삭제
                                                         </span>
-                                                                </button>
-                                                            </div>
+                                                            </button>
                                                         </div>
                                                     </div>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div id="product_submit" class="pd_submit">
-                                        <button type="submit" >등록하기</button>
-                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </form>
-                        </div>
+                                <div id="product_submit" class="pd_submit">
+                                    <button type="submit">등록하기</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
