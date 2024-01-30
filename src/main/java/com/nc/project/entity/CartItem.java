@@ -48,6 +48,7 @@ public class CartItem {
 
     @ManyToOne
     @JoinColumn(name = "delivery_id")
+    // @JsonBackReference
     private Delivery delivery;
 
     // CartItem이 저장될 때 마다 부모 Cart의 totalPrice 갱신 해주는 메서드

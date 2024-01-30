@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html  lang="en"
+       xmlns:th="http://www.thymeleaf.org"
+       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+       layout:decorate="~{layouts/layout}"
+>
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/delivery/delivery.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:src="@{js/delivery/delivery.js}"></script>
+    </th:block>
+</head>
+<body>
+    <div id="container" layout:fragment="content">
+        
+        <div id="main" class="order_complete" style="height: 100%;">
+            <div id="content">
+                <div class="page_aticle aticle_type2">
+                    <div class="section_orderview">
+                        <div class="head_aticle" style="text-align: center; border: none;">
+                            <h2 class="tit" style="font-size: 60px;">결제가 완료 되었습니다 !!</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+</body>
+</html>

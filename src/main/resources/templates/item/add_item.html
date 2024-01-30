@@ -13,19 +13,37 @@
             // 이미지 업로드하면 메인 이미지 미리보기 나오기
             function set_main_image(event) {
                 var reader = new FileReader();
-                var inputFile = document.querySelector("#image_input");
+                var inputFile = document.querySelector("#image_main_input");
 
                 reader.onload = function (event) {
+                    // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
                     var img = document.createElement("img");
                     img.setAttribute("src", event.target.result);
                     img.style.maxWidth = "100%";
                     img.style.height = "auto";
+
+                    // 파일 이름을 나타낼 p 요소 생성
+                    let fileNameP = document.createElement("p");
+                    fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold;");
+
+                    // inputFile 변수 받아오기
+                    if (inputFile && inputFile.files.length > 0) {
+                        fileNameP.textContent = inputFile.files[0].name;
+                    }
+
+                    // 이미지와 파일 이름을 담을 컨테이너 div 요소
                     var container = document.querySelector("div#image_main_container");
                     container.innerHTML = '';
                     container.appendChild(img);
+                    container.appendChild(fileNameP);
+
                     // 파일선택 활성화/비활성화
-                    var inputFile = document.querySelector("#image_input");
                     inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
+
+                    // + 버튼 감추기
+                    var addButton = document.querySelector(".image_add .image_main_input_button");
+                    addButton.style.display = "none";
+
                 };
 
                 reader.readAsDataURL(inputFile.files[0]);
@@ -37,37 +55,71 @@
                 var inputFile = document.querySelector("#image_detail_input");
 
                 reader.onload = function (event) {
+                    // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
                     var img = document.createElement("img");
                     img.setAttribute("src", event.target.result);
                     img.style.maxWidth = "100%";
                     img.style.height = "auto";
+
+                    // 파일 이름을 나타낼 p 요소 생성
+                    let fileNameP = document.createElement("p");
+                    fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold;");
+
+                    // inputFile 변수 받아오기
+                    if (inputFile && inputFile.files.length > 0) {
+                        fileNameP.textContent = inputFile.files[0].name;
+                    }
+
+                    // 이미지와 파일 이름을 담을 컨테이너 div 요소
                     var container = document.querySelector("div#image_detail_container");
                     container.innerHTML = '';
                     container.appendChild(img);
+                    container.appendChild(fileNameP);
+
                     // 파일선택 활성화/비활성화
-                    var inputFile = document.querySelector("#image_input");
                     inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
+
+                    // + 버튼 감추기
+                    var addButton = document.querySelector(".image_add .image_detail_input_button");
+                    addButton.style.display = "none";
                 };
 
                 reader.readAsDataURL(inputFile.files[0]);
             }
 
             // 이미지 업로드하면 썸네일 미리보기 나오기
-            function set_image(event) {
+            function set_thumbnail_image(event) {
                 var reader = new FileReader();
-                var inputFile = document.querySelector("#image_thumb_input");
+                var inputFile = document.querySelector("#image_thumbnail_input");
 
                 reader.onload = function (event) {
+                    // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
                     var img = document.createElement("img");
                     img.setAttribute("src", event.target.result);
                     img.style.maxWidth = "100%";
                     img.style.height = "auto";
-                    var container = document.querySelector("div#image_container");
+
+                    // 파일 이름을 나타낼 p 요소 생성
+                    let fileNameP = document.createElement("p");
+                    fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold;");
+
+                    // inputFile 변수 받아오기
+                    if (inputFile && inputFile.files.length > 0) {
+                        fileNameP.textContent = inputFile.files[0].name;
+                    }
+
+                    // 이미지와 파일 이름을 담을 컨테이너 div 요소
+                    var container = document.querySelector("div#image_thumbnail_container");
                     container.innerHTML = '';
                     container.appendChild(img);
+                    container.appendChild(fileNameP);
+
                     // 파일선택 활성화/비활성화
-                    var inputFile = document.querySelector("#image_input");
                     inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
+
+                    // + 버튼 감추기
+                    var addButton = document.querySelector(".image_add .image_thumbnail_input_button");
+                    addButton.style.display = "none";
                 };
 
                 reader.readAsDataURL(inputFile.files[0]);
@@ -77,9 +129,32 @@
             function img_remove(button) {
                 var container = button.closest(".image_add").querySelector("div");
                 container.innerHTML = '';
+
                 var inputFile = button.closest(".image_add").querySelector("input[type=file]");
                 inputFile.value = '';
+
+                inputFile.disabled = false;
             }
+
+            $(() => {
+                $("#btn_insert").on("click", () => {
+
+                    $.ajax({
+                        url: '/item/add-item',
+                        type: 'post',
+                        data: formData,
+                        success: (obj) => {
+                            console.log(obj.items.msg)
+                            alert("상품등록 성공")
+                            window.location.reload();
+                        },
+                        error: () => {
+                            alert("에러발생, 관리자에게 문의하세요. ")
+                            window.location.href = "/";
+                        }
+                    });
+                });
+            });
         </script>
     </th:block>
 </head>
@@ -94,7 +169,7 @@
                     <div class="inner_snb">
                         <ul class="list_menu">
                             <li>
-                                <a href="#">상품 등록</a>
+                                <a th:href="@{/item/add-item}">상품 등록</a>
                             </li>
                             <li>
                                 <a href="#">상품 관리</a>
@@ -106,7 +181,7 @@
                                 <a href="#">후기 관리</a>
                             </li>
                             <li>
-                                <a href="#">1:1문의 관리</a>
+                                <a th:href="@{/board/board-list}">1:1문의 관리</a>
                             </li>
 
                         </ul>
@@ -121,7 +196,7 @@
                     </div>
 
                     <div class="list_order">
-                        <form action="" class="">
+                        <form id="itemForm" th:action="@{/item/addItem}" method="post" enctype="multipart/form-data">
                             <div class="size">
                                 <div class="p_board">
                                     <table width="100%">
@@ -176,121 +251,88 @@
                                             </td>
                                         </tr>
 
-                                        <tr class="product_detail">
-                                            <th>상품설명</th>
-
-
-                                            <td>
-                                                <div class="product_main">
-                                                    <span class="product_tit">상품 메인 이미지</span>
-                                                </div>
-
-
+                                        <tr>
+                                            <th>메인</th>
+                                            <td class="img_upload">
                                                 <div>
+                                                    <span>상품 메인 이미지</span>
+
                                                     <div class="image_box">
 
                                                         <div class="image_add">
 
                                                             <input type="file" name="product_main_image"
-                                                                   accept="image/*" id="image_input"
+                                                                   accept="image/*" id="image_main_input"
                                                                    onchange="set_main_image(event);">
-                                                            <button type="button" class="image_input_button"></button>
+                                                            <button type="button"
+                                                                    class="image_main_input_button"></button>
                                                             <div id="image_main_container"></div>
 
                                                             <div style="margin-bottom:20px;">
 
                                                                 <button type="button" name="image_main_container"
                                                                         class="remove" onclick="img_remove(this)">
-                                                            <span>
-                                                                삭제
-                                                            </span>
+                                                        <span>
+                                                            삭제
+                                                        </span>
                                                                 </button>
                                                             </div>
-
-
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </td>
+                                        </tr>
 
-                                                <div style="margin-top: 70px;">
-                                                    <div class="product_main">
-                                                        <span class="product_tit">상품 설명</span>
-                                                    </div>
-                                                    <span>
-
-                                                <textarea class="i_text main_description" name="main_description" id=""
-                                                          cols="30" rows="10"></textarea>
-                                            </span>
-                                                </div>
-
-
-                                                <div class="product_main" style="margin-top:30px;">
-                                                    <span class="product_tit">상품 상세 이미지</span>
-                                                </div>
-
-
+                                        <tr>
+                                            <th>디테일</th>
+                                            <td class="img_upload">
                                                 <div>
+                                                    <span>상품 디테일 이미지</span>
+
                                                     <div class="image_box">
 
-
                                                         <div class="image_add">
-
 
                                                             <input type="file" name="product_detail_image"
                                                                    accept="image/*" id="image_detail_input"
                                                                    onchange="set_detail_image(event);">
-                                                            <button type="button" class="image_input_button"></button>
+                                                            <button type="button"
+                                                                    class="image_detail_input_button"></button>
                                                             <div id="image_detail_container"></div>
 
                                                             <div style="margin-bottom:20px;">
 
                                                                 <button type="button" name="image_detail_container"
                                                                         class="remove" onclick="img_remove(this)">
-                                                            <span>
-                                                                삭제
-                                                            </span>
+                                                        <span>
+                                                            삭제
+                                                        </span>
                                                                 </button>
                                                             </div>
-
-
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div style="margin-top: 70px;">
-                                                    <div class="product_main">
-                                                        <span class="product_tit">상품 상세 설명</span>
-                                                    </div>
-                                                    <span>
-
-                                                <textarea class="i_text main_description" name="detail_description"
-                                                          id="" cols="30" rows="10"
-                                                          onkeyup="chkword_information(this, 550)"></textarea>
-                                            </span>
-                                                </div>
-
                                             </td>
                                         </tr>
 
-
                                         <tr>
-                                            <th>기타 이미지</th>
+                                            <th>썸네일</th>
                                             <td class="img_upload">
                                                 <div>
                                                     <span>상품 썸네일</span>
 
                                                     <div class="image_box">
 
-
                                                         <div class="image_add">
 
-
-                                                            <input type="file" name="product_main_image"
-                                                                   accept="image/*" id="image_thumb_input"
-                                                                   onchange="set_image(event);">
-                                                            <button type="button" class="image_input_button"></button>
-                                                            <div id="image_container"></div>
-                                                            <button type="button" name="image_container" class="remove"
+                                                            <input type="file" name="product_thumbnail_image"
+                                                                   accept="image/*" id="image_thumbnail_input"
+                                                                   onchange="set_thumbnail_image(event);">
+                                                            <button type="button"
+                                                                    class="image_thumbnail_input_button"></button>
+                                                            <div id="image_thumbnail_container"></div>
+                                                            <button type="button" name="image_thumbnail_container"
+                                                                    class="remove"
                                                                     onclick="img_remove(this)">
                                                         <span>
                                                             삭제
@@ -305,7 +347,7 @@
                                     </table>
                                 </div>
                                 <div id="product_submit" class="pd_submit">
-                                    <button type="submit">등록하기</button>
+                                    <button type="submit" id="btn_insert">등록하기</button>
                                 </div>
                             </div>
                         </form>

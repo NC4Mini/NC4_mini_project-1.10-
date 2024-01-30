@@ -41,48 +41,48 @@
             <div id="tblParent" class="type_select">
                 <table class="tbl tbl_type1">
                     <thead>
-<!--                    <tr>-->
-<!--                        <th class="tit_select">번호</th>-->
-<!--                        <th class="tit_delivery">유형</th>-->
-<!--                        <th class="tit_receive">작성자</th>-->
-<!--                        <th class="tit_address">제목</th>-->
-<!--                        <th class="tit_modify">내용</th>-->
-<!--                    </tr>-->
+                    <!--                    <tr>-->
+                    <!--                        <th class="tit_select">번호</th>-->
+                    <!--                        <th class="tit_delivery">유형</th>-->
+                    <!--                        <th class="tit_receive">작성자</th>-->
+                    <!--                        <th class="tit_address">제목</th>-->
+                    <!--                        <th class="tit_modify">내용</th>-->
+                    <!--                    </tr>-->
                     </thead>
-<!--                    <tbody id="addrList">-->
-<!--                    <tr th:each="board: ${boardList}">-->
-<!--                        <td th:text="${board.id}"></td>-->
-<!--                        <td th:text="${board.boardTitle}"></td>-->
-<!--                        <td th:text="${board.boardWriter}"></td>-->
-<!--                        <td th:text="${board.boardContents}"></td>-->
-<!--                    </tr>-->
-<!--                    <tbody id="addrList">-->
-<!--                    <tr>-->
-<!--                        <td class="select type_radio" th:text="${board.id}">-->
-<!--                            &lt;!&ndash;                            <label class="skin_checkbox">&ndash;&gt;-->
-<!--                            &lt;!&ndash;                                <p>3</p>&ndash;&gt;-->
-<!--                            &lt;!&ndash;                            </label>&ndash;&gt;-->
-<!--                        </td>-->
-<!--                        <td class="address">-->
+                    <!--                    <tbody id="addrList">-->
+                    <!--                    <tr th:each="board: ${boardList}">-->
+                    <!--                        <td th:text="${board.id}"></td>-->
+                    <!--                        <td th:text="${board.boardTitle}"></td>-->
+                    <!--                        <td th:text="${board.boardWriter}"></td>-->
+                    <!--                        <td th:text="${board.boardContents}"></td>-->
+                    <!--                    </tr>-->
+                    <!--                    <tbody id="addrList">-->
+                    <!--                    <tr>-->
+                    <!--                        <td class="select type_radio" th:text="${board.id}">-->
+                    <!--                            &lt;!&ndash;                            <label class="skin_checkbox">&ndash;&gt;-->
+                    <!--                            &lt;!&ndash;                                <p>3</p>&ndash;&gt;-->
+                    <!--                            &lt;!&ndash;                            </label>&ndash;&gt;-->
+                    <!--                        </td>-->
+                    <!--                        <td class="address">-->
 
-<!--                            <p class="addr">-->
-<!--                                <a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a>-->
-<!--                            </p>-->
-<!--                        </td>-->
-<!--                        <td class="name" th:text="${board.boardWriter}" >-->
-<!--                            <span></span>-->
-<!--                        </td>-->
-<!--                        <td class="phone" th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}">-->
-<!--                            <span></span>-->
-<!--                        </td>-->
-<!--                        <td th:text="${board.boardHits}">-->
-<!--                            <span></span>-->
-<!--                        </td>-->
-<!--&lt;!&ndash;                        <td class="delete_position">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="delivery star">Y</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </td>&ndash;&gt;-->
-<!--                    </tr>-->
-<!--                    </tbody>-->
+                    <!--                            <p class="addr">-->
+                    <!--                                <a th:href="@{|/board/${board.id}|}" th:text="${board.boardTitle}"></a>-->
+                    <!--                            </p>-->
+                    <!--                        </td>-->
+                    <!--                        <td class="name" th:text="${board.boardWriter}" >-->
+                    <!--                            <span></span>-->
+                    <!--                        </td>-->
+                    <!--                        <td class="phone" th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}">-->
+                    <!--                            <span></span>-->
+                    <!--                        </td>-->
+                    <!--                        <td th:text="${board.boardHits}">-->
+                    <!--                            <span></span>-->
+                    <!--                        </td>-->
+                    <!--&lt;!&ndash;                        <td class="delete_position">&ndash;&gt;-->
+                    <!--&lt;!&ndash;                            <span class="delivery star">Y</span>&ndash;&gt;-->
+                    <!--&lt;!&ndash;                        </td>&ndash;&gt;-->
+                    <!--                    </tr>-->
+                    <!--                    </tbody>-->
                     <!--여기-->
                     <tbody>
                     <tr>
@@ -104,11 +104,11 @@
                     </tr>
                     <tr>
                         <th>내용</th>
-                         <td th:text="${board.boardContents}">
+                        <td th:text="${board.boardContents}">
                         </td>
                     </tr>
 
-                    <tr>
+                    <tr th:if="${board.fileAttached == 1}">
                         <th>이미지</th>
                         <td class="img_upload">
                             <div>
@@ -122,7 +122,7 @@
                                         <input type="file" name="product_main_image" accept="image/*" id="image_input" onchange="set_image(event);">
                                         <button type="button" class="image_input_button"></button>
                                         <div id="image_container"></div>
-
+                                        <img th:src="@{|/upload/${board.storedFileName}|}" alt="">
                                         <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
                                         <script>
                                             function set_image(){
