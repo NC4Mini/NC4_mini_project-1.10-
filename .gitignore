@@ -394,3 +394,5 @@ application.properties
 
 #log files
 *.log
+
+data.sql
