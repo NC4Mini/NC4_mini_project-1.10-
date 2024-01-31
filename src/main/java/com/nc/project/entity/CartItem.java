@@ -46,6 +46,10 @@ public class CartItem {
     @Column(name = "cart_item_cnt")
     private int cartItemCnt;
 
+//    public void setCartItemCnt(int cartItemCnt) {
+//        this.cartItemCnt = Math.max(cartItemCnt, 1);
+//    }
+
     // @ManyToOne
     // @JoinColumn(name = "delivery_id")
     // private Delivery delivery;
@@ -75,7 +79,6 @@ public class CartItem {
         cartItem.setCartItemCnt(cartItemCnt);
         return cartItem;
     }
-
 
     // 기존 담겨있는 상품을 추가로 담으면 기존수량에 + 됨
     public void addCount(int cartItemCnt) {

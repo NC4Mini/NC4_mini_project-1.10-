@@ -22,6 +22,7 @@ public class CartServiceImpl implements CartService {
 
 
     // 장바구니에 물건 담기 기능 (완료)
+    @Transactional
     @Override
     public void addCart(UserAccount userAccount, long itemId) {
 
@@ -55,6 +56,7 @@ public class CartServiceImpl implements CartService {
         // 이미 있다면 수량만 증가
         else {
             cartItem.setCartItemCnt(cartItem.getCartItemCnt() + 1);
+            cartItemRepository.save(cartItem);
         }
 
     }
@@ -161,7 +163,6 @@ public class CartServiceImpl implements CartService {
     // 배송지 수정 기능
     @Override
     public void updateShpAddr(long id, int shpAddrId) {
-        // TODO Auto-generated method stub
         UserShpAddr userShpAddr = userShpAddrRepository.findByUserAccount_IdAndAddrId(id, shpAddrId);
 
         userShpAddr.setAddrStandard('Y');
@@ -181,7 +182,6 @@ public class CartServiceImpl implements CartService {
     // 배송지 추가 기능
     @Override
     public void addShpAddr(long id, UserShpAddr userShpAddr) {
-        // TODO Auto-generated method stub
         UserAccount userAccount = userAccountRepository.getReferenceById(id);
 
         userShpAddr.setUserAccount(userAccount);
@@ -202,14 +202,32 @@ public class CartServiceImpl implements CartService {
 
     }
 
-    // 장바구니번호로 유저정보를 가져오는 기능
-    @Override
-    public UserAccount getUserAccountByCartId(long cartId) {
-        Cart cart = cartRepository.getReferenceById(cartId);
-
-        UserAccount userAccount = cart.getUserAccount();
-
-        return userAccount;
-    }
+//    // 장바구니번호로 유저정보를 가져오는 기능
+//    @Override
+//    public UserAccount getUserAccountByCartId(long cartId) {
+//        Cart cart = cartRepository.getReferenceById(cartId);
+//
+//        long id = cart.getUserAccount().getId();
+//
+//        System.out.println("================================");
+//        System.out.println("================================");
+//        System.out.println("================================");
+//        System.out.println(id);
+//        System.out.println("================================");
+//        System.out.println("================================");
+//        System.out.println("================================");
+//
+//        UserAccount userAccount = userAccountRepository.getReferenceById(id);
+//
+//        System.out.println("================================");
+//        System.out.println("================================");
+//        System.out.println("================================");
+//        System.out.println(userAccount.toString());
+//        System.out.println("================================");
+//        System.out.println("================================");
+//        System.out.println("================================");
+//
+//        return userAccount;
+//    }
 
 }

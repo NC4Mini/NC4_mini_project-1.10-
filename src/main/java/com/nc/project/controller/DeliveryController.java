@@ -1,13 +1,16 @@
 package com.nc.project.controller;
 
+import groovy.util.logging.Slf4j;
 import lombok.RequiredArgsConstructor;
 
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.boot.actuate.web.exchanges.HttpExchange.Principal;
+import org.slf4j.Logger;
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/delivery")
 @RequiredArgsConstructor
+@Slf4j
 public class DeliveryController {
 
     public final DeliveryService deliveryService;
@@ -78,18 +82,24 @@ public class DeliveryController {
     
     // 장바구니에서 주문하기 기능
     @PostMapping("/to-delivery")
-    public ModelAndView getDelivery (Principal Principal, @RequestParam ("cartId") long cartId) {
+    public ModelAndView getDelivery (Principal principal, @RequestParam ("cartId") long cartId) {
         ModelAndView mav = new ModelAndView();
 
         // 로그인 하지 않은 경우
-        if (Principal == null) {
+        if (principal == null) {
             mav.setViewName("redirect:/login");
             return mav;
         }
 
         Cart cart = cartService.getCart(cartId);
 
-        UserAccount userAccount = cartService.getUserAccountByCartId(cartId);
+        String userName = principal.getName();
+
+        System.out.println("================================");
+        System.out.println(userName);
+        System.out.println("================================");
+
+        UserAccount userAccount = userService.findUser(userName);
 
         UserShpAddr defaultUserShpAddr = cartService.bringDefaultAddr(userAccount.getId());
 

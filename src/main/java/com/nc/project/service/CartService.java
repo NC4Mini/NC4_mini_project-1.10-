@@ -42,7 +42,7 @@ public interface CartService {
     // 배송지를 추가해주는 기능
     public void addShpAddr (long id, UserShpAddr userShpAddr);
 
-    // 장바구니번호로 유저정보를 가져오는 기능
-    public UserAccount getUserAccountByCartId (long cartId);
+//    // 장바구니번호로 유저정보를 가져오는 기능
+//    public UserAccount getUserAccountByCartId (long cartId);
     
 }
