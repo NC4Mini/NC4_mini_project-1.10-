@@ -38,10 +38,9 @@ public class Cart {
 //    private List<CartItem> cartItemList = new ArrayList<>();
 
     // cartItem과 OneToMany 관계 (수정본)
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    @Builder.Default
-    private List<CartItem> cartItemList = new ArrayList<>();
+    private List<CartItem> cartItemList;
 
     @Column(name = "cart_total_price")
     private int totalPrice;

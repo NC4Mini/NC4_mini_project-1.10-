@@ -30,23 +30,23 @@ public class DeliveryServiceImpl implements DeliveryService{
     public final DeliveryRepository deliveryRepository;
 
     // 결제하기 기능
+    @Transactional
     public void confirmDelivery(long cartId) {
         Cart cart = cartRepository.findById(cartId).orElseThrow();
         UserAccount userAccount = cart.getUserAccount();
-        List<CartItem> cartItemList = new ArrayList<>(cart.getCartItemList());
+        // List<CartItem> cartItemList = new ArrayList<>(cart.getCartItemList());
         double totalPrice = cart.getTotalPrice();
         Delivery delivery = Delivery.builder()
             .userAccount(userAccount)
-            .deliveryItemList(cartItemList)
+            // .deliveryItemList(cartItemList)
             .totalPrice(totalPrice)
             .deliveryStatus(1)
             .build();
         deliveryRepository.save(delivery);
 
-        // 장바구니 비우기
+        // 유저의 장바구니 비우기
+        cart.getCartItemList().clear();
+        // cartItemList.clear();
         cartRepository.delete(cart);
     }
-
-    
-
 }
