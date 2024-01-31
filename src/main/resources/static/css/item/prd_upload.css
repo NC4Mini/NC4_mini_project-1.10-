@@ -127,11 +127,10 @@ table .text8 {
 
 }
 
-.image_box {
+.image_main_box, .image_detail_box, .image_thumbnail_box {
     width: 268px;
     height: 268px;
     position: relative;
-    /*overflow: hidden;*/
 }
 
 .image_add {
