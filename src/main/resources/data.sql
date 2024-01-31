@@ -11,3 +11,9 @@ insert into board (created_time, updated_time, board_contents, board_category, b
 ('2024-01-01', '2024-01-01', '사이즈가 작아요', 'test2', '교환신청합니다', '0', '김종범'),
 ('2024-01-01', '2024-01-01', 'ㅇㄴㅇㄴㅇㄴㅇ', 'test3', '환불신청합니다', '0', '아무개')
 ;
+
+insert into item (item_name, item_price, item_description) VALUES
+('아이템1', '10000', '아이템1입니다'),
+('아이템2', '20000', '아이템2입니다'),
+('아이템3', '30000', '아이템3입니다'),
+('아이템4', '40000', '아이템4입니다');
