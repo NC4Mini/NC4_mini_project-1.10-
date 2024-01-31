@@ -29,7 +29,7 @@ public class ItemController {
     public ModelAndView addItemView() {
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("item/add_item.html");
+        mav.setViewName("item/item_add.html");
 
         return mav;
     }
