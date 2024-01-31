@@ -22,7 +22,7 @@
         <div class="item-list">
             <div class="item-box" th:each="itemList : ${itemList}">
                 <div class="img-box">
-                    <a th:href="@{/item/item-detail?(itemId=${itemList.getItemId()})}">
+                    <a th:href="@{/item/item-modify?(itemId=${itemList.getItemId()})}">
                         <img class="img-size" src="/img/1657616036799l0.jpg" alt="">
                     </a>
                 </div>
