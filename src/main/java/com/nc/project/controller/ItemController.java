@@ -36,13 +36,9 @@ public class ItemController {
 
     @PostMapping("/add-item")
     public ResponseEntity<?> addItem(ItemDTO itemDTO,
-                                     @RequestParam(value = "item_main_image") MultipartFile itemMainImage,
+                                     @RequestParam(value = "item_main_image", required = false) MultipartFile itemMainImage,
                                      @RequestParam(value = "item_detail_image") MultipartFile itemDetailImage,
                                      @RequestParam(value = "item_thumbnail_image") MultipartFile itemThumbnailImage) {
-        System.out.println(itemDTO);
-        System.out.println(itemMainImage);
-        System.out.println(itemDetailImage);
-        System.out.println(itemThumbnailImage);
 
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
 
@@ -54,21 +50,21 @@ public class ItemController {
 
 
 
-                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemMainImage, "C:/tmp/upload/");
+                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemMainImage, "C:/tmp/upload/item/");
                 itemFileDTO.setItemType("Main");
                 itemFileDTOList.add(itemFileDTO);
             }
             if (itemDetailImage.getOriginalFilename() != null &&
                     !itemDetailImage.getOriginalFilename().isEmpty()) {
                 // item이라는 디렉토리에 저장 (클라우드 버켓에서 자동으로 인식해줌)
-                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemDetailImage, "C:/tmp/upload/");
+                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemDetailImage, "C:/tmp/upload/item/");
                 itemFileDTO.setItemType("Detail");
                 itemFileDTOList.add(itemFileDTO);
             }
             if (itemThumbnailImage.getOriginalFilename() != null &&
                     !itemThumbnailImage.getOriginalFilename().isEmpty()) {
 
-                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemThumbnailImage, "C:/tmp/upload/");
+                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemThumbnailImage, "C:/tmp/upload/item/");
                 itemFileDTO.setItemType("Thumbnail");
                 itemFileDTOList.add(itemFileDTO);
             }
