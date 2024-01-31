@@ -95,10 +95,6 @@ public class DeliveryController {
 
         String userName = principal.getName();
 
-        System.out.println("================================");
-        System.out.println(userName);
-        System.out.println("================================");
-
         UserAccount userAccount = userService.findUser(userName);
 
         UserShpAddr defaultUserShpAddr = cartService.bringDefaultAddr(userAccount.getId());

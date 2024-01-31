@@ -28,16 +28,12 @@ public class Cart {
     private long cartId;
 
     // cart와 user OneToOne 관계
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id")
     @JsonBackReference
     private UserAccount userAccount;
 
-//    // cartItem과 OneToMany 관계 (원본)
-//    @OneToMany (mappedBy = "cart")
-//    private List<CartItem> cartItemList = new ArrayList<>();
-
-    // cartItem과 OneToMany 관계 (수정본)
+    // cartItem과 OneToMany 관계
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<CartItem> cartItemList = new ArrayList<>();
