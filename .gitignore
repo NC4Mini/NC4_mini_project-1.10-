@@ -395,5 +395,4 @@ application.properties
 #log files
 *.log
 
-# sql
-src/main/resources/data.sql
+data.sql
