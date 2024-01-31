@@ -5,6 +5,7 @@ import com.nc.project.dto.ItemDTO;
 import com.nc.project.dto.ItemFileDTO;
 import com.nc.project.dto.ResponseDTO;
 import com.nc.project.entity.Item;
+import com.nc.project.entity.ItemFile;
 import com.nc.project.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -116,6 +117,22 @@ public class ItemController {
         mav.addObject("totalItemCount", totalItemCount);
 
         mav.setViewName("item/item_manage.html");
+
+        return mav;
+    }
+
+    @GetMapping("/item-modify")
+    public ModelAndView itemModifyView(@RequestParam("itemId") long itemId) {
+
+        ModelAndView mav = new ModelAndView();
+
+        Item item = itemService.getItem(itemId);
+        List<ItemFile> itemFileList = item.getItemFileList();
+
+        mav.addObject("item", item);
+        mav.addObject("itemFileList", itemFileList);
+
+        mav.setViewName("item/item_modify.html");
 
         return mav;
     }
