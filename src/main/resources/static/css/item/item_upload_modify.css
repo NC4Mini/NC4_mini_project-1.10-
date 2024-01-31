@@ -304,11 +304,20 @@ table .text8 {
 }
 
 
-#product_submit {
+#item_submit {
     border: 1px solid #d4d4d4;
     position: absolute;
     bottom: -20px;
-    left: 44%;
+    left: 25%;
+    height: 44px;
+    width: 134.5px;
+}
+
+#item_delete {
+    border: 1px solid #d4d4d4;
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
     height: 44px;
     width: 134.5px;
 }
@@ -354,7 +363,7 @@ span.txtByte {
     margin-left: 5px;
 }
 
-#product_submit button {
+#item_submit button, #item_delete button {
     width: 100%;
     height: 100%;
 }
