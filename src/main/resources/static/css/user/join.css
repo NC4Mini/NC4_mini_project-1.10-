@@ -265,6 +265,10 @@ input::placeholder{
     cursor: pointer;
 }
 
+.field_address #btnReSearch {
+    display: none;
+}
+
 #addrZone {
     margin-bottom: 20px;
 }

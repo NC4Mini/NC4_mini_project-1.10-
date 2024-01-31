@@ -1,5 +1,5 @@
 // 배송지추가에 쓰일 api : problem 
-window.addEventListener('DOMContentLoaded',function(){
+window.addEventListener('DOMContentLoaded',function() {
 
     const juso = document.querySelector('#juso');
     const user_address = document.querySelector('#addrMain');
@@ -117,11 +117,11 @@ function sel_all(selectAll){ /* 전체선택버튼 활성화 */
     });
 }
 
-function del_row(this){
-    var ths = $(this);
-
-    ths.parents("li").remove();
-}
+// function del_row(this) {
+//     var ths = $(this);
+//
+//     ths.parents("li").remove();
+// }
 
 
 

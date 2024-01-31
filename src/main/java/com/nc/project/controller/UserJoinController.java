@@ -6,14 +6,17 @@ import com.nc.project.dto.ResponseDTO;
 import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.dto.UserShpAddrDTO;
 import com.nc.project.service.UserService;
+import com.nc.project.service.impl.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import org.hibernate.sql.model.ModelMutationLogging;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.ArrayList;
@@ -25,7 +28,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-
 public class UserJoinController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
@@ -40,7 +42,6 @@ public class UserJoinController {
         return mav;
     }
 
-
     // 회원가입 화면으로 이동(GET - header.html)
     @GetMapping("/join")
     public ModelAndView joinView() {
@@ -53,17 +54,22 @@ public class UserJoinController {
     }
 
     // 회원가입 로직 (POST - join.html)
-    @PostMapping("join")
+    @PostMapping("/join")
     public ResponseEntity<?> join(UserAccountDTO userAccountDTO,
                                   UserShpAddrDTO userShpAddrDTO) {
-
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
         try {
+            // 기본타입들은 null값을 가질 수 없다. 0이 기본값임
+
+            if(userShpAddrDTO.getAddrStandard() == 0) {
+                userShpAddrDTO.setAddrStandard('N');
+            }
+
             List<UserShpAddrDTO> userShpAddrDTOList = new ArrayList<>();
             userShpAddrDTOList.add(userShpAddrDTO);
 
             userAccountDTO.setUserShpAddrDTOList(userShpAddrDTOList);
-
+            userAccountDTO.setUserPw(passwordEncoder.encode(userAccountDTO.getUserPw()));
             userService.join(userAccountDTO);
 
             Map<String, String> returnMap = new HashMap<>();
@@ -86,7 +92,6 @@ public class UserJoinController {
     // 아이디 중복체크
     @PostMapping("/id-check")
     public ResponseEntity<?> idCheck(UserAccountDTO userAccountDTO) {
-//        System.out.println(userAccountDTO.getUserId());
         ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
 
         Map<String, String> returnMap = new HashMap<>();

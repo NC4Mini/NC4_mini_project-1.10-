@@ -1,0 +1,41 @@
+<!-- 메인 홈페이지 -->
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout_no_footer}"
+      >
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/search/search.css}">
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content" class="search-main">
+    <main id="main">
+        <section id="section2" class="section-slide-public">
+            <div class="title">
+                <h2 th:if="${search.isBlank()} ">이 상품 어때요?</h2>
+                <h2 th:if="${!search.isBlank()} " th:text="|${search}에 대한 검색결과|">검색결과</h2>
+            </div>
+            <div class="search-total" th:text="|총 ${itemList.content.size()}건|">건수</div>
+        </section>
+        <div class="search-list">
+                <div class="item-box" th:each="itemList : ${itemList}">
+                    <div class="img-box" >
+                        <a th:href="@{/item/item-detail?(itemId=${itemList.getItemId()})}">
+                            <img class="img-size" src="/img/1657616036799l0.jpg" alt="">
+                        </a>
+                    </div>
+                    <div class="caption-box">
+                        <p class="letter-delivery">판매자 배송</p>
+                        <h2 class="letter-item-title" th:text="${itemList.getItemName()}">상품제목 </h2>
+                        <h2 class="letter-item-desc" th:text="${itemList.getItemDescription()}">상세설명 </h2>
+                        <h3 class="letter-item-price" th:text="|${#numbers.formatInteger(itemList.getItemPrice(), 3, 'COMMA') + '원'}|"><em>원</em></h3>
+                    </div>
+                </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

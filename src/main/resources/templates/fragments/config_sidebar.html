@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="config_sidebar">
+    <meta charset="UTF-8">
+    <title>Bit Kurly</title>
+
+    <link rel="stylesheet" th:href="@{/css/style_sidebar.css}">
+
+<!--    layout_sidebar.html에 css를 직접 담을 수가 없어서 이 파일에 담아두었음. -->
+    <link rel="stylesheet" th:href="@{/css/admin/admin_common.css}">
+
+    <script th:src="@{/js/intro.js}"></script>
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+
+    <th:block layout:fragment="css">
+        <!-- <style></style>
+        <link rel="stylesheet" th:href=""> -->
+    </th:block>
+
+    <th:block layout:fragment="script">
+        <!--<script></script>
+        <script th:src="@{}"></script>-->
+    </th:block>
+</head>
+<body>
+
+</body>
+</html>

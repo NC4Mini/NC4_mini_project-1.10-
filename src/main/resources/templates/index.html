@@ -3,10 +3,12 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout}"
+      layout:decorate="~{layouts/layout_no_footer}"
       >
 <head>
-
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/search/search.css}">
+    </th:block>
 </head>
 <body>
 <div layout:fragment="content">
@@ -14,9 +16,7 @@
         <section id="section1">
             <div class="slide-container">
                 <div class="slide-view">
-                    <ul class="slide-wrap">
-                        <!-- li*20>a[href=#]>img[src=/img/main_slide$$.jpg] -->
-                        <li class="slide slide20"><a href="#"><img src="/img/main_slide20.jpg" alt=""></a></li>
+                    <ul class="slide-wrap promotions" id="promotions">
                         <li class="slide slide01"><a href="#"><img src="/img/main_slide01.jpg" alt=""></a></li>
                         <li class="slide slide02"><a href="#"><img src="/img/main_slide02.jpg" alt=""></a></li>
                         <li class="slide slide03"><a href="#"><img src="/img/main_slide03.jpg" alt=""></a></li>
@@ -49,331 +49,348 @@
                 <span class="page-box">
                    <em class="current-page">1</em> <i>/</i> <em class="total-page">20</em>
                 </span>
-
             </div>
         </section>
-        <section id="section2" class="section-slide-public">
-        <a href="/item/item-detail?itemId=1">
-            <div class="title"><h2>이 상품 어때요?</h2></div>
-        </a>
-        <div class="slide-container">
-            <div class="slide-view">
-                <ul class="slide-wrap">
-                    <!-- li.slide.slide$*20 -->
-                    <li class="slide slide1">
-                        <!--임시 수정한 부분-->
-                        <a href="/item/item-detail">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/152895850366l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <!-- 상품 제목 위치-->
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <!-- 상품 가격 위치 -->
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <!-- 상품 원 가격 위치-->
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
+
+
+        <div class="search-main">
+            <section id="section2" class="section-slide-public">
+                <div class="title">
+                    <h2 th:if="${search}==null">이 상품 어때요?</h2>
+                    <h2 th:if="!${search}==null" th:text="|${search}에 대한 검색결과|">검색결과</h2>
+                </div>
+                <div class="search-total" th:text="|총 ${itemList.content.size()}건|">건수</div>
+            </section>
+            <div class="search-list">
+                <div class="item-box" th:each="itemList : ${itemList}">
+                    <div class="img-box" >
+                        <a th:href="@{/item/item-detail?(itemId=${itemList.getItemId()})}">
+                            <img class="img-size" src="/img/1657616036799l0.jpg" alt="">
                         </a>
-                    </li>
-                    <li class="slide slide2">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1657616036799l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><em>48,000원</em></h3>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide3">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1658112947680l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide4">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1657692098340l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide1">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/152895850366l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide2">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1657616036799l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide3">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1658112947680l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide4">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1657692098340l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide1">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/152895850366l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide2">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1657616036799l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide3">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1658112947680l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide4">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1657692098340l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide1">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/152895850366l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide2">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1657616036799l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide3">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1658112947680l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide4">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1657692098340l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide1">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/152895850366l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide2">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1657616036799l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide3">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1658112947680l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="slide slide4">
-                        <div class="gap">
-                            <div class="img-box">
-                                <a href="/item/item-detail">
-                                    <img src="/img/1657692098340l0.jpg" alt="">
-                                    <span><img src="/img/cart_fill.svg" alt=""></span>
-                                </a>
-                            </div>
-                            <div class="caption-box">
-                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>
-                                <h3><strong>25%</strong><em>36,000원</em></h3>
-                                <h4><s>48,000</s></h4>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="caption-box">
+                        <p class="letter-delivery">판매자 배송</p>
+                        <h2 class="letter-item-title" th:text="${itemList.getItemName()}">상품제목 </h2>
+                        <h2 class="letter-item-desc" th:text="${itemList.getItemDescription()}">상세설명 </h2>
+                        <h3 class="letter-item-price" th:text="|${#numbers.formatInteger(itemList.getItemPrice(), 3, 'COMMA') + '원'}|"><em>원</em></h3>
+                    </div>
+                </div>
             </div>
 
-            <a href="#" class="arrow-btn  arrow-right"><img src="/img/arrow_fill_white_btn.svg" alt=""></a>
-            <a href="#" class="arrow-btn  arrow-left"><img src="/img/arrow_fill_white_btn.svg" alt=""></a>
         </div>
-    </section>
+
+<!--        <section id="section2" class="section-slide-public">-->
+<!--        <a href="/item/item-detail?itemId=1">-->
+<!--            <div class="title"><h2>이 상품 어때요?</h2></div>-->
+<!--        </a>-->
+<!--        <div class="slide-container">-->
+<!--            <div class="slide-view">-->
+<!--                <ul class="slide-wrap">-->
+<!--                    &lt;!&ndash; li.slide.slide$*20 &ndash;&gt;-->
+<!--                    <li class="slide slide1">-->
+<!--                        &lt;!&ndash;임시 수정한 부분&ndash;&gt;-->
+<!--                        <a href="/item/item-detail">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/152895850366l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                &lt;!&ndash; 상품 제목 위치&ndash;&gt;-->
+<!--                                <h2>상품제목1 </h2>-->
+<!--                                &lt;!&ndash; 상품 가격 위치 &ndash;&gt;-->
+<!--                                <h3>-->
+<!--                                    &lt;!&ndash;할인율&ndash;&gt;-->
+<!--&lt;!&ndash;                                <strong>25%</strong> &ndash;&gt;-->
+<!--                                    &lt;!&ndash; 상품 최종가 &ndash;&gt;-->
+<!--                                    <em>원</em></h3>-->
+<!--                                &lt;!&ndash; 상품 원 가격 위치&ndash;&gt;-->
+<!--&lt;!&ndash;                            <h4><s>48,000</s></h4>&ndash;&gt;-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide2">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1657616036799l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>상품제목2 </h2>-->
+<!--                                <h3><em>원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide3">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1658112947680l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>상품 제목3 </h2>-->
+<!--                                <h3><em>원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide4">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1657692098340l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>상품 제목4</h2>-->
+<!--                                <h3><em>원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide1">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/152895850366l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide2">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1657616036799l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide3">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1658112947680l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide4">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1657692098340l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide1">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/152895850366l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide2">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1657616036799l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide3">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1658112947680l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide4">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1657692098340l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide1">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/152895850366l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide2">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1657616036799l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide3">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1658112947680l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide4">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1657692098340l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide1">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/152895850366l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide2">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1657616036799l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide3">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1658112947680l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                    <li class="slide slide4">-->
+<!--                        <div class="gap">-->
+<!--                            <div class="img-box">-->
+<!--                                <a href="/item/item-detail">-->
+<!--                                    <img src="/img/1657692098340l0.jpg" alt="">-->
+<!--                                    <span><img src="/img/cart_fill.svg" alt=""></span>-->
+<!--                                </a>-->
+<!--                            </div>-->
+<!--                            <div class="caption-box">-->
+<!--                                <h2>[1등급 한우] 채끝 스테이크 300g (냉장)</h2>-->
+<!--                                <h3><em>36,000원</em></h3>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+<!--                </ul>-->
+<!--            </div>-->
+
+<!--            <a href="#" class="arrow-btn  arrow-right"><img src="/img/arrow_fill_white_btn.svg" alt=""></a>-->
+<!--            <a href="#" class="arrow-btn  arrow-left"><img src="/img/arrow_fill_white_btn.svg" alt=""></a>-->
+<!--        </div>-->
+<!--    </section>-->
     </main>
 </div>
 </div>
+<th:block layout:fragment="script">
+    <script th:src="@{/js/main/visual.js}"></script>
+    <script th:src="@{/js/main/contents.js}"></script>
+</th:block>
 </body>
 </html>

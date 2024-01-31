@@ -1,216 +1,174 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
+<html lang="ko"
+      layout:decorate="~{layouts/layout_sidebar}"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layoutSidebar}">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block layout:fragment="css">
-        <style>
-            .form-wrapper {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-            }
-
-            #modifyForm {
-                width: 250px;
-                text-align: center;
-            }
-
-            #modifyForm .label-wrapper {
-                margin-top: 20px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            #modifyForm input {
-                width: 100%;
-            }
-
-            #modifyForm div {
-                display: flex;
-                align-items: center;
-            }
-
-            #btnIdCheck {
-                width: 50px;
-            }
-        </style>
-    </th:block>
-
-    <th:block layout:fragment="script">
-        <script>
-            $(() => {
-                $("#pwValidation").hide();
-                $("#pwCheckResult").hide();
-
-                //비밀번호 유효성 검사 여부
-                let validationPw = false;
-                //비밀번호 일치 여부
-                let confirmPw = false;
-
-                // 비밀번호 유효성 검사 정규식
-                const validatePassword = (userPw) => {
-                    return /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*+=-]).{9,}$/.test(userPw);
-                }
-
-                // 비밀번호 입력 시 비밀번호 유효성 검사
-                $("#userPw").on("change", () => {
-                    if(validatePassword($("#userPw").val())) {
-                        validationPw = true;
-                        $("#pwValidation").hide();
-                    }else {
-                        validationPw = false;
-                        $("#pwValidation").show();
-                    }
-
-                    if($("#userPw").val() === $("#userPwCheck").val()) {
-                        confirmPw = true;
-                        $("#pwCheckResult").text("비밀번호가 일치합니다.");
-                        $("#pwCheckResult").css("color", "green");
-                    } else {
-                        confirmPw = false;
-                        $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
-                        $("#pwCheckResult").css("color", "red");
-                    }
-                });
-
-
-                // 비밀번호 확인과 비밀번호가 일치하는 지 검사
-                $("#userPwCheck").on("change", () => {
-                    $("#pwCheckResult").show();
-
-                    if($("#userPw").val() === $("#userPwCheck").val()) {
-                        confirmPw = true;
-                        $("#pwCheckResult").text("비밀번호가 일치합니다.");
-                        $("#pwCheckResult").css("color", "green");
-                        return;
-                    }
-
-                    confirmPw = false;
-                    $("#pwCheckResult").text("비밀번호가 일치하지 않습니다.");
-                    $("#pwCheckResult").css("color", "red");
-                });
-
-                $("#modifyBtn").on("click", (e) => {
-                    if($("#userPw").val() === "" || $("#userPw").val() === null) {
-                        validationPw = true;
-                        confirmPw = true;
-                        $("#pwValidation").hide();
-                        $("#pwCheckResult").hide();
-                    }
-
-                    if($("#userPw").val() === $("#curUserPw").val()) {
-                        alert("현재 비밀번호와 동일한 비밀번호로 설정할 수 없습니다.");
-                        return;
-                    }
-
-                    // pw 유효성 검사가 틀렸을 때
-                    if(!validationPw) {
-                        alert("비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정하세요.");
-                        $("#userPw").focus();
-                        return;
-                    }
-
-                    // pw가 일치하지 않을 때
-                    if(!confirmPw) {
-                        alert("비밀번호가 일치하지 않습니다.");
-                        $("#userPwCheck").focus();
-                        return;
-                    }
-
-
-                    $.ajax({
-                       url: '/profile/change',
-                       type: 'post',
-                       data: $("#modifyForm").serialize(),
-                       success: (obj) => {
-                           alert(obj.item.msg);
-                           // 화면 새로고침
-                           location.reload();
-                       },
-                       error: (err) => {
-                           if(err.responseJSON.errorCode === 900) {
-                               alert("현재 비밀번호를 잘못 입력하셨습니다.");
-                               $("#curUserPw").focus();
-                               return;
-                           } else {
-                               alert("알 수 없는 에러입니다. 관리자에게 문의하세요");
-                               return;
-                           }
-                       }
-                    });
-                });
-
-                $("#resignBtn").on("click", (e) => {
-                    $.ajax({
-                        url: '/profile/resign',
-                        type: 'post',
-                        data: $("#modifyForm").serialize(),
-                        success: (obj) => {
-                            alert(obj.item.msg);
-                            // 화면 새로고침
-                            location.reload();
-                        },
-                        error: (err) => {
-                            if(err.responseJSON.errorCode === 900) {
-                                alert("현재 비밀번호를 잘못 입력하셨습니다.");
-                                $("#curUserPw").focus();
-                                return;
-                            } else {
-                                alert("알 수 없는 에러입니다. 관리자에게 문의하세요");
-                                return;
-                            }
-                        }
-                    });
-                });
-            });
-        </script>
+        <link rel="stylesheet" th:href="@{/css/user/modify.css}">
+        <link rel="stylesheet" th:href="@{/css/common.css}">
+        <link rel="stylesheet" th:href="@{/css/fonts.css}">
+        <link rel="stylesheet" th:href="@{/css/reset.css}">
     </th:block>
 </head>
 <body>
-    <div layout:fragment="content">
-        <div class="form-wrapper">
-            <br><br>
-            <form id="modifyForm" action="/profile/change" method="post">
-                <input type="hidden" id="id" name="id">
-                <h3>회원정보 수정</h3>
-                <div class="label-wrapper">
-                    <label for="userPw">현재 비밀번호</label>
+<div class="content" layout:fragment="content">
+    <div class="form-wrapper">
+        <br><br>
+        <form id="modifyForm" action="/user/change" th:method="post">
+            <table>
+                <div class="modify_title">
+                    회원정보 수정
                 </div>
-                <input type="password" id="curUserPw" name="curUserPw" required>
-                <div class="label-wrapper">
-                    <label for="userPw">비밀번호</label>
-                </div>
-                <input type="password" id="userPw" name="userPw">
-                <p id="pwValidation" style="color: red; font-size: 0.8rem;">
-                    비밀번호는 영문자, 숫자, 특수문자 조합의 9자리 이상으로 설정해주세요.
+                <p class="sub">
+                    <span class="ico">*</span>
+                    필수입력사항
                 </p>
-                <div class="label-wrapper">
-                    <label for="userPwCheck">비밀번호 확인</label>
+
+                <table class="tbl_comm" th:object="${userAccountDto}">
+                    <tbody>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper " for="userPw">현재 비밀번호</label>
+                            <span class="ico">*</span>
+                        </th>
+                        <td>
+                            <input id="curUserPw" name="curUserPw" type="password">
+                            <button class="btn_default" id="password_check" type="button">확인</button>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userPw">비밀번호</label>
+                        </th>
+                        <td>
+                            <input id="userPw" name="userPw" type="password">
+                            <p id="pwValidation" style="color: red; font-size: 0.8rem;"> 비밀번호는 영문자, 숫자, 특수문자 조합의 9자리
+                                이상으로 설정해주세요. </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userPwCheck">비밀번호 확인</label>
+                        </th>
+                        <td>
+                            <input id="userPwCheck" name="userPwCheck" type="password">
+                            <p id="pwCheckResult" style="font-size: 0.8rem;"></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userName">이름</label>
+                        </th>
+                        <td>
+                            <input id="userName" name="userName" th:value="*{userName}" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userEmail">이메일</label>
+                        </th>
+                        <td>
+                            <input id="userEmail" name="userEmail" th:value="*{userEmail}" type="email">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userTel">휴대폰</label>
+                        </th>
+                        <td>
+                            <input id="userTel" name="userTel" th:value="*{userTel}" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="addrZone">주소</label>
+                        </th>
+                        <td>
+                            <input id="addrZone" name="addrZone" readonly="readonly"
+                                   th:value="*{userShpAddrDTOList.get(0).getAddrZone()}" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                        </th>
+                        <td>
+                            <input id="addrBasic" name="addrBasic" readonly="readonly"
+                                   th:value="*{userShpAddrDTOList.get(0).getAddrBasic()}" type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                        </th>
+                        <td>
+                            <input id="addrDetail" name="addrDetail" th:value="*{userShpAddrDTOList.get(0).getAddrDetail()}"
+                                   type="text">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                        </th>
+                        <td>
+                            <button class="search" id="addressSearch" type="button">
+                                <span class="address_no" id="addressNo">주소 재검색</span>
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userGender">성별</label>
+                        </th>
+                        <td class="userGender" id="userGender">
+                            <div>
+                                <label class="radio_box" for="gender-man">
+                                    <input id="gender-man" name="userGender" th:checked="*{userGender} eq 'MALE'" type="radio"
+                                           value="MALE">
+                                    <span class="on"></span>
+                                    남자
+                                </label>
+                                <label class="radio_box" for="gender-woman">
+                                    <input id="gender-woman" name="userGender" th:checked="*{userGender} eq 'WOMAN'" type="radio"
+                                           value="WOMAN">
+                                    <span class="on"></span>
+                                    여자
+                                </label>
+                                <label class="radio_box" for="gender-none">
+                                    <input id="gender-none" name="userGender" th:checked="*{userGender} eq 'NONE'" type="radio"
+                                           value="NONE">
+                                    <span class="on"></span>
+                                    선택안함
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label class="label-wrapper" for="userBirth">생년월일</label>
+                        </th>
+                        <td>
+                            <input id="userBirth" name="userBirth" max="2024-01-01" min="1950-01-01" th:value="*{userBirth}" type="date">
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div style="border-top: 1px solid #333;">
+                    <br>
                 </div>
-                <input type="password" id="userPwCheck" name="userPwCheck">
-                <p id="pwCheckResult" style="font-size: 0.8rem;"></p>
-                <div class="label-wrapper">
-                    <label for="userName">이름</label>
+                <div class="form_footer modify_button_position">
+                    <button class="modify_button modifyBtn" id="modifyBtn" type="button">회원정보 수정</button>
+                    <button class="modify_button resignBtn" id="resignBtn" type="button">회원탈퇴</button>
+                    <br><br><br><br><br><br>
                 </div>
-                <input type="text" id="userName" name="userName">
-                <div class="label-wrapper">
-                    <label for="userEmail">이메일</label>
-                </div>
-                <input type="email" id="userEmail" name="userEmail">
-                <div class="label-wrapper">
-                    <label for="userTel">전화번호</label>
-                </div>
-                <input type="text" id="userTel" name="userTel" >
-                <div style="display: block; margin: 20px auto;">
-                    <button type="button" id="modifyBtn">회원정보 수정</button>
-                    <button type="button" id="resignBtn">회원탈퇴</button>
-                </div>
-            </form>
-        </div>
+            </table>
+        </form>
     </div>
+</div>
+</div>
+<th:block layout:fragment="script">
+    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/user/modify.js}"></script>
+</th:block>
 </body>
 </html>

@@ -1,0 +1,222 @@
+.modify_title {
+    font-weight: 900;
+    font-size: 30px;
+    color: #333;
+    line-height: 40px;
+    text-align: center;
+    letter-spacing: -.5px;
+}
+
+.content {
+    display: flex;
+    margin-right: 300px;
+    justify-content: center;
+}
+
+.form-wrapper {
+    width: 640px;
+    display: table;
+}
+
+th {
+    width: 159px;
+    padding: 20px 0 0 20px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #333;
+    line-height: 20px;
+    vertical-align: top;
+    text-align: left;
+}
+
+td {
+    padding: 10px;
+    border-top: 0;
+    font-size: 14px;
+    vertical-align: top;
+    text-align: left;
+    display: table-cell;
+}
+
+.sub {
+    padding: 23px 0 10px;
+    width: 640px;
+    font-size: 12px;
+    color: #666;
+    line-height: 17px;
+    text-align: right;
+}
+
+.btn_default {
+    border: 1px solid #5f0080;
+    background-color: #fff;
+    color: #5f0080;
+    width: 120px;
+    margin-right: 20px;
+    vertical-align: top;
+    display: block;
+    height: 44px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 40px;
+    text-align: center;
+    outline: none;
+    float: right;
+}
+.ico {
+    padding-right: 2px;
+    color: #ee6a7b;
+}
+.tbl_comm {
+    width: 640px;
+    border-top: 2px solid #333;
+}
+
+table {
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: gray;
+}
+
+.label-wrapper {
+    width: 159px;
+    padding: 20px 0 0 20px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #333;
+    line-height: 20px;
+    vertical-align: top;
+    text-align: left;
+}
+
+.modify_button {
+    right: 10px;
+    padding: 0px 10px;
+    text-align: center;
+    display: inline-block;
+    overflow: hidden;
+    width: 120px;
+    height: 44px;
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(95, 0, 128);
+    border: 0px none;
+    cursor: pointer;
+}
+
+.modify_button_position {
+    margin-left: 200px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+input {
+    height: 44px;
+    width: 300px;
+    padding: 0 14px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    color: #333;
+    line-height: 20px;
+    border-radius: 3px;
+    background: #fff;
+    outline: none;
+    vertical-align: top;
+}
+
+#addressSearch {
+    display: block;
+    width: 300px;
+    background: white;
+    overflow: hidden;
+    height: 44px;
+    border: 1px solid #5f0080;
+    border-radius: 3px;
+    text-align: center;
+}
+
+#addressNo {
+    display: inline-block;
+    height: 100%;
+    margin-left: -14px;
+    padding-left: 24px;
+    font-weight: 700;
+    font-size: 14px;
+    color: #5f0080;
+    line-height: 40px;
+    background: url(https://res.kurly.com/pc/service/common/2006/ico_search.svg) no-repeat 0 50%;
+    background-size: 25px 24px;
+    vertical-align: top;
+}
+
+#userGender .radio_box {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    position: relative;
+    padding-left: 10%;
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#userGender div {
+    display: flex;
+    width: 300px;
+    justify-content: space-between;
+}
+
+#userGender .radio_box input[type="radio"] {
+    display: none;
+}
+
+#userGender .on {
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    border: 1px solid #a5a0a0;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translateY(-20%);
+}
+
+#userGender .on:after {
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    content: "";
+}
+
+#userGender .radio_box input[type="radio"]:checked + .on {
+    background: #5f0081;
+}
+
+.birth .birth_day {
+    overflow: hidden;
+    width: 300px;
+    padding-left: 18px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.member_join .birth .birth_day input[type=text] {
+    float: left;
+    width: 84px;
+    height: 40px;
+    border: 0;
+    text-align: center;
+}

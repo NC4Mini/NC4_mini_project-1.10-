@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
 <body>
 <header th:fragment="header" id="header">
     <div class="row1">
@@ -9,7 +9,7 @@
             <ul>
                 <li><a th:href="@{/user/join}">회원가입</a></li>
                 <li><i>|</i></li>
-                <li sec:authorize="!isAuthenticated()" ><a th:href="@{/login}">로그인</a></li>
+                <li sec:authorize="!isAuthenticated()" ><a th:href="@{/user/login}">로그인</a></li>
                 <li sec:authorize="isAuthenticated()" ><a th:href="@{/user/profile}">회원정보</a></li>
                 <li sec:authorize="isAuthenticated()" ><i>|</i></li>
                 <li sec:authorize="isAuthenticated()" ><a th:href="@{/logout}">로그아웃</a></li>
@@ -51,10 +51,12 @@
                 </ul>
             </div>
             <div class="center">
-                <form name="search_form" id="searchForm" method="post" action="./search.php">
+                <form name="search_form" id="searchForm" method="get" action="/search">
                     <div class="search-box">
                         <input type="text" name="search" id="search" placeholder="검색어를 입력해주세요">
-                        <a href="#" class="search-btn" title="search"><img src="/img/search.svg" alt=""></a>
+                        <button type="submit" class="search-btn" title="search" >
+                            <a class="search-btn" title="search" ><img src="/img/search.svg" alt=""></a>
+                        </button>
                     </div>
                 </form>
             </div>

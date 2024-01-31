@@ -4,9 +4,13 @@ import com.nc.project.entity.UserAccount;
 import com.nc.project.entity.UserShpAddr;
 import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,22 +32,60 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int idCheck(String userId) {
-        return userAccountRepository.countByUserId(userId);
-    }
-
-    @Override
     public int emailCheck(String userEmail) { return userAccountRepository.countByUserEmail(userEmail);}
 
     @Override
     public void modifyUser(UserAccountDTO userAccountDTO) {
-        userAccountRepository.save(userAccountDTO.toEntity());
+        UserAccount userAccount = userAccountRepository.findByUserId(userAccountDTO.getUserId()).get();
+        UserAccountDTO newUserAccountDto = userAccount.toDTO();
+
+        if(!userAccountDTO.getUserPw().isBlank()) {
+        userAccount.setUserPw(userAccountDTO.getUserPw());
+        }
+
+        userAccount.setUserName(userAccountDTO.getUserName());
+        userAccount.setUserBirth(LocalDate.parse(userAccountDTO.getUserBirth()));
+        userAccount.setUserEmail(userAccountDTO.getUserEmail());
+        userAccount.setUserTel(userAccountDTO.getUserTel());
+        userAccount.setUserGender(userAccountDTO.getUserGender());
+
+        userAccount.getUserShpAddrList().get(0).setAddrZone(userAccountDTO.getUserShpAddrDTOList().get(0).getAddrZone());
+        userAccount.getUserShpAddrList().get(0).setAddrBasic(userAccountDTO.getUserShpAddrDTOList().get(0).getAddrBasic());
+        userAccount.getUserShpAddrList().get(0).setAddrDetail(userAccountDTO.getUserShpAddrDTOList().get(0).getAddrDetail());
+    }
+
+    @Override
+    public UserAccount findUser(String userId) {
+        UserAccount userAccount = userAccountRepository.findByUserId(userId).get();
+
+        return userAccount;
     }
 
     @Override
     public void resignUser(UserAccountDTO userAccountDTO) {
+        userAccountDTO.toEntity().getUserShpAddrList().clear();
         userAccountRepository.delete(userAccountDTO.toEntity());
     }
 
 
+    @Transactional
+    @Override
+    public UserAccountDTO login(UserAccountDTO userAccountDTO) {
+        // 아이디와 비밀번호로 사용자 조회
+        Optional<UserAccount> userOptional = userAccountRepository.findByUserIdAndUserPw(userAccountDTO.getUserId(), userAccountDTO.getUserPw());
+
+        // 사용자가 존재하지 않으면 로그인 실패
+        if(userOptional.isEmpty()) {
+            return null;
+        }
+
+        // 사용자가 존재하면 User 엔티티를 DTO로 변환하여 반환
+        return userOptional.map(UserAccount::toDTO).orElse(null);
+    }
+
+    @Transactional
+    @Override
+    public int idCheck(String userId) {
+        return userAccountRepository.countByUserId(userId);
+    }
 }

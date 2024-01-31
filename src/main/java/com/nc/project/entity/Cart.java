@@ -28,23 +28,31 @@ public class Cart {
     private long cartId;
 
     // cart와 user OneToOne 관계
-    @OneToOne (cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "id")
+    @JsonBackReference
     private UserAccount userAccount;
 
-    // cartItem과 OneToMany 관계
-    @OneToMany (mappedBy = "cart")
-    private List<CartItem> cartItemList = new ArrayList<>();
+//    // cartItem과 OneToMany 관계 (원본)
+//    @OneToMany (mappedBy = "cart")
+//    private List<CartItem> cartItemList = new ArrayList<>();
 
-    @Column (name = "cart_total_price")
+    // cartItem과 OneToMany 관계 (수정본)
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<CartItem> cartItemList;
+
+    @Column(name = "cart_total_price")
     private int totalPrice;
 
-    // user 엔티티를 받아서 장바구니 엔티티를 생성하는 메서드
-    public static Cart createNewCart(UserAccount userAccount) {
-        Cart cart = new Cart();
-//        cart.setCartId(userAccount.getId());
-        cart.setUserAccount(userAccount);
-        return cart;
+    // totalPrice를 계산해주는 메서드
+    public void calcTotalPrice() {
+        int calcTotalPrice = 0;
+
+        for (CartItem cartItem : cartItemList) {
+            calcTotalPrice += cartItem.getItem().getItemPrice() * cartItem.getCartItemCnt();
+        }
+        this.totalPrice = calcTotalPrice;
     }
 
     public CartDTO toDTO() {
