@@ -52,7 +52,6 @@
                     // + 버튼 감추기
                     var addButton = document.querySelector(".image_add .image_main_input_button");
                     addButton.style.display = "none";
-
                 };
 
                 reader.readAsDataURL(inputFile.files[0]);
@@ -190,6 +189,7 @@
                     } else if (imageType === "thumbnail") {
 
                     }
+
                 }
             }
 
@@ -204,8 +204,66 @@
 
             $(() => {
                 $("#btn_insert").on("click", () => {
+                    // 상품관련정보는 필수입력정보
+                    if($("#itemName").val() === "" || ($("#itemDescription").val() === "") || ($("#itemPrice").val() === "")) {
+                        alert("상품 이름, 상품 설명, 상품 가격은 필수 입력사항입니다. ")
+                        if($("#itemName").val() === "") {
+                            $("#itemName").focus();
+                            $('html, body').animate({
+                                scrollTop: $("#itemName").offset().top - 50  // 조절 가능한 값으로 필요에 따라 조절
+                            }, 100);  // 애니메이션 속도, 필요에 따라 조절
+                        } else if ($("#itemDescription").val() === "") {
+                            $("#itemDescription").focus();
+                            $('html, body').animate({
+                                scrollTop: $("#itemDescription").offset().top - 50
+                            }, 100);
+                        } else if ($("#itemPrice").val() === "") {
+                            $("#itemPrice").focus();
+                            $('html, body').animate({
+                                scrollTop: $("#itemPrice").offset().top - 50
+                            }, 100);
+                        }
+                        return false;
+                    }
+
+                    // 숫자 체크 정규식
+                    var numericRegex = /^[0-9]+$/;
+
+                    // 가격의 값이 숫자가 아니면 제출 제어
+                    if(!numericRegex.test($("#itemPrice").val())) {
+                        alert("가격은 숫자 형태만 입력해주세요.")
+                        $("#itemPrice").val("").focus();
+
+                        // 스크롤을 해당 필드로 이동시킴
+                        $('html, body').animate({
+                            scrollTop: $("#itemPrice").offset().top - 200
+                        }, 100);
+
+                        return false;
+                    }
+
+                    if($("#image_main_input").val() === "") {
+                        alert("메인이미지 등록은 필수입니다.")
+                        $('html, body').animate({
+                            scrollTop: $("#itemPrice").offset().top - 200
+                        }, 100);
+                        return false;
+                    }
+
                     // 폼 데이터에 #Selector를 사용하면 배열안에 (K:V)로 담기게된다.
                     const formData = new FormData($("#itemForm")[0]);
+
+                    // const image_main_input = $("#image_main_input")[0];
+                    // const image_detail_input = $("#image_detail_input")[0];
+                    // const image_thumbnail_input = $("#image_thumbnail_input")[0];
+
+                    // Key : name값, Value : id에서 추출해온 값, 사진은 여러정보를 담고있는 객체이므로 [0] 처리.
+                    formData.append("item_main_image", $("#image_main_input")[0].files[0]);
+                    formData.append("item_detail_image", $("#image_detail_input")[0].files[0]);
+                    formData.append("item_thumbnail_image", $("#image_thumbnail_input")[0].files[0]);
+                    // console.log(...formData);
+
+
                     $.ajax({
                         enctype: "multipart/form-data",
                         url: '/item/add-item',
@@ -213,12 +271,14 @@
                         data: formData,
                         contentType: false,
                         processData: false,
+                        cache: false,
                         success: (obj) => {
-                            console.log(obj.items.msg)
-                            alert("상품등록 성공")
+                            console.log(obj.item.msg);
+                            alert("상품등록 성공");
                             window.location.reload();
                         },
-                        error: () => {
+                        error: (error) => {
+                            console.log(error);
                             alert("에러발생, 관리자에게 문의하세요. ")
                             window.location.href = "/";
                         }
@@ -266,7 +326,7 @@
                     </div>
 
                     <div class="list_order">
-                        <form id="itemForm" th:action="@{/item/addItem}" method="post" enctype="multipart/form-data">
+                        <form id="itemForm" action="/item/add-item" method="post" enctype="multipart/form-data">
                             <div class="size">
                                 <div class="p_board">
                                     <table width="100%">
@@ -276,8 +336,8 @@
                                             <td colspan="2">
                                                 <div>
                                             <span>
-                                                <input type="text" name="itemName" class="i_text text1"
-                                                       onkeyup="chkword_name(this, 80)">
+                                                <input type="text" id="itemName" name="itemName" class="i_text text1"
+                                                       required>
                                             </span>
                                                 </div>
                                                 <span class="txtByte" title="현재글자수/최대글자수">
@@ -292,8 +352,9 @@
                                             <td colspan="2">
                                                 <div>
                                             <span>
-                                                <input type="text" class="i_text text2" name="itemDescription"
-                                                       onkeyup="chkword_introduce(this, 150)">
+                                                <input type="text" class="i_text text2" id="itemDescription"
+                                                       name="itemDescription"
+                                                       required>
                                             </span>
 
                                                 </div>
@@ -309,7 +370,8 @@
                                             <td colspan="2">
                                                 <div>
                                             <span>
-                                                <input type="text" name="itemPrice" class="i_text text3">
+                                                <input type="text" id="itemPrice" name="itemPrice" class="i_text text3"
+                                                       required>
                                             </span>
                                                 </div>
                                                 <span class="won">
@@ -421,7 +483,7 @@
                                     </table>
                                 </div>
                                 <div id="product_submit" class="pd_submit">
-                                    <button type="submit" id="btn_insert">등록하기</button>
+                                    <button type="button" id="btn_insert">등록하기</button>
                                 </div>
                             </div>
                         </form>
