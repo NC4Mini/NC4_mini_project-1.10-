@@ -266,7 +266,7 @@
 
                     $.ajax({
                         enctype: "multipart/form-data",
-                        url: '/item/add-item',
+                        url: '/item/item-add',
                         type: 'post',
                         data: formData,
                         contentType: false,
@@ -298,11 +298,11 @@
                     <h2 class="tit_snb">관리자 메뉴</h2>
                     <div class="inner_snb">
                         <ul class="list_menu">
-                            <li sec:authorize="!isAuthenticated()">
-                                <a th:href="@{/item/add-item}">상품 등록</a>
+                            <li>
+                                <a th:href="@{/item/item-add}">상품 등록</a>
                             </li>
                             <li>
-                                <a href="#">상품 관리</a>
+                                <a th:href="@{/item/item-manage}">상품 관리</a>
                             </li>
                             <li>
                                 <a href="#">주문 관리</a>
@@ -310,7 +310,7 @@
                             <li>
                                 <a href="#">후기 관리</a>
                             </li>
-                            <li sec:authorize="!isAuthenticated()">
+                            <li>
                                 <a th:href="@{/board/board-list}">1:1문의 관리</a>
                             </li>
 
@@ -326,7 +326,7 @@
                     </div>
 
                     <div class="list_order">
-                        <form id="itemForm" action="/item/add-item" method="post" enctype="multipart/form-data">
+                        <form id="itemForm" action="/item/item-add" method="post" enctype="multipart/form-data">
                             <div class="size">
                                 <div class="p_board">
                                     <table width="100%">
