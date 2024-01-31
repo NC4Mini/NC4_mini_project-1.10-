@@ -61,10 +61,18 @@ public class CartServiceImpl implements CartService {
 
     }
 
+    @Transactional
     @Override
     public Cart getCart(Long cartId) {
         Cart cart = cartRepository.getReferenceById(cartId);
-
+        if (cart == null) {
+            cart = new Cart();
+            cart.setCartId(cartId);
+            cartRepository.save(cart);
+        } else if (cart.getCartItemList() == null) {
+            cart.setCartItemList(new ArrayList<>());
+            cartRepository.save(cart);
+        }
         return cart;
     }
 
@@ -118,11 +126,30 @@ public class CartServiceImpl implements CartService {
 
     // 장바구니의 상품을 지우는 기능 (완료)
     @Override
-    public void deleteCartItem(long cartItemId) {
+    public Cart deleteCartItem(long cartId, long cartItemId) {
+        Cart cart = cartRepository.findById(cartId).get();
+
         CartItem cartItem = cartItemRepository.findById(cartItemId).get();
 
+        // 현재 장바구니의 총액
+        int totalPrice = cart.getTotalPrice();
+
+        // 현재 지우려는 상품의 가격
+        int cartItemPrice = cartItem.getItem().getItemPrice() * cartItem.getCartItemCnt();
+
+        // 장바구니의 총액에서 지우려는 상품의 가격을 빼줌
+        totalPrice -= cartItemPrice;
+
+        // 장바구니의 총액을 업데이트
+        cart.setTotalPrice(totalPrice);
+
         cartItemRepository.delete(cartItem);
+
+        cartRepository.save(cart);
+
+        return cart;
     }
+
 
     // 장바구니 불러올 때 cart를 불러오는 기능
     @Override
@@ -153,9 +180,16 @@ public class CartServiceImpl implements CartService {
         return userShpAddrList;
     }
 
+    // 기본 배송지를 가져오는 기능
     @Override
     public UserShpAddr bringDefaultAddr(long id) {
         UserShpAddr defaultUserShpAddr = userShpAddrRepository.findByUserAccount_IdAndAddrStandard(id, 'Y');
+
+        if (defaultUserShpAddr == null) {
+            defaultUserShpAddr = userShpAddrRepository.findByUserAccount_Id(id);
+
+            defaultUserShpAddr.setAddrStandard('Y');
+        }
 
         return defaultUserShpAddr;
     }
@@ -202,32 +236,15 @@ public class CartServiceImpl implements CartService {
 
     }
 
-//    // 장바구니번호로 유저정보를 가져오는 기능
-//    @Override
-//    public UserAccount getUserAccountByCartId(long cartId) {
-//        Cart cart = cartRepository.getReferenceById(cartId);
-//
-//        long id = cart.getUserAccount().getId();
-//
-//        System.out.println("================================");
-//        System.out.println("================================");
-//        System.out.println("================================");
-//        System.out.println(id);
-//        System.out.println("================================");
-//        System.out.println("================================");
-//        System.out.println("================================");
-//
-//        UserAccount userAccount = userAccountRepository.getReferenceById(id);
-//
-//        System.out.println("================================");
-//        System.out.println("================================");
-//        System.out.println("================================");
-//        System.out.println(userAccount.toString());
-//        System.out.println("================================");
-//        System.out.println("================================");
-//        System.out.println("================================");
-//
-//        return userAccount;
-//    }
+    @Override
+    public int calcTotalPrice(long cartId) {
+        Cart cart = cartRepository.getReferenceById(cartId);
+
+        cart.calcTotalPrice();
+
+        int totalPrice = cart.getTotalPrice();
+
+        return totalPrice;
+    }
 
 }

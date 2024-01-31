@@ -25,7 +25,7 @@ public interface CartService {
     public Map<String, Integer> updateCartItemCount (Long cartItemId, String action, UserAccount userAccount);
 
     // 장바구니에서 목록의 장바구니 아이템을 X버튼으로 삭제하는 기능
-    public void deleteCartItem (long cartItemId);
+    public Cart deleteCartItem (long cartId, long cartItemId);
 
     // 유저의 장바구니 객체를 가져오는 기능
     public Cart getCart (long id);
@@ -44,5 +44,7 @@ public interface CartService {
 
 //    // 장바구니번호로 유저정보를 가져오는 기능
 //    public UserAccount getUserAccountByCartId (long cartId);
-    
+
+    // 장바구니의 총액을 업데이트 해주는 기능
+    public int calcTotalPrice (long cartId);
 }

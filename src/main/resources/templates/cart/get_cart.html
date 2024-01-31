@@ -255,6 +255,10 @@
 
         //  상품 삭제 버튼 기능
         function deleteCartItem (cartItemId, cartId) {
+
+            console.log(cartItemId);
+            console.log(cartId);
+
             $.ajax({
                 type: 'DELETE',
                 url: '/cart/delete-cart-item',
