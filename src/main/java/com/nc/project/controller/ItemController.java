@@ -7,6 +7,9 @@ import com.nc.project.dto.ResponseDTO;
 import com.nc.project.entity.Item;
 import com.nc.project.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +28,8 @@ public class ItemController {
     private final ItemService itemService;
 
     // 상품 등록 페이지 이동
-    @GetMapping("/add-item")
-    public ModelAndView addItemView() {
+    @GetMapping("/item-add")
+    public ModelAndView itemAddView() {
         ModelAndView mav = new ModelAndView();
 
         mav.setViewName("item/item_add.html");
@@ -34,8 +37,8 @@ public class ItemController {
         return mav;
     }
 
-    @PostMapping("/add-item")
-    public ResponseEntity<?> addItem(ItemDTO itemDTO,
+    @PostMapping("/item-add")
+    public ResponseEntity<?> itemAdd(ItemDTO itemDTO,
                                      @RequestParam(value = "item_main_image", required = false) MultipartFile itemMainImage,
                                      @RequestParam(value = "item_detail_image") MultipartFile itemDetailImage,
                                      @RequestParam(value = "item_thumbnail_image") MultipartFile itemThumbnailImage) {
@@ -96,6 +99,25 @@ public class ItemController {
             response.setStatusCode(HttpStatus.BAD_REQUEST.value());
             return ResponseEntity.badRequest().body(response);
         }
+    }
+
+    // 상품 관리창으로 이동
+    @GetMapping("/item-manage")
+    public ModelAndView itemManageView(@PageableDefault(page = 0, size = 12) Pageable pageable,
+                                       ItemDTO itemDTO) {
+        ModelAndView mav = new ModelAndView();
+        
+        // 페이지리스트에 아이템리스트 모든 요소 추가
+        Page<Item> pageList = itemService.ItemList(pageable);
+        mav.addObject("itemList", pageList);
+        
+        // 리스트에 속한 총 엘리먼트 갯수 호출
+        long totalItemCount = pageList.getTotalElements();
+        mav.addObject("totalItemCount", totalItemCount);
+
+        mav.setViewName("item/item_manage.html");
+
+        return mav;
     }
 
     // 메인에서 상품 상세페이지 이동
