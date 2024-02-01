@@ -295,7 +295,7 @@
                             <div class="goods_wrap">
                                 <div class="goods_intro">
                                     <div class="pic">
-                                        <img src="https://res.kurly.com/mobile/img/1808/img_none_x2.png" style="width:1010px; height:671px;">
+                                        <img th:src="@{'/upload/' + ${detailFile.itemFileName}}" style="width:1010px; height:671px;">
                                     </div>
                                     <div class="context last">
                                         <!-- 필요없는 칸 비활성화 (02.01) -->
@@ -305,13 +305,14 @@
                                             </small>
                                             제목
                                         </h3>-->
-                                        <p class="words">
-                                            샬라샬라 설명
+                                        <p class="words" th:text="${item.itemDescription}">
+                                            상품 설명란
                                         </p>
 
                                     </div>
                                 </div>
-                                <div class="goods_point">
+                                <!-- 컬리 체크포인트, 비활성화 (02.01) -->
+                                <!-- <div class="goods_point">
                                     <h3>
                                         <span>Kurly's Check Point</span>
                                     </h3>
@@ -320,8 +321,8 @@
                                             <img src="">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="goods_tip">
+                                </div> -->
+                                <!-- <div class="goods_tip">
                                     <h3>
                                         <span>Kurly's Tip</span>
                                     </h3>
@@ -332,8 +333,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="goods_pick">
+                                </div> -->
+                                <!-- <div class="goods_pick">
                                     <h3>
                                         <span>Kurly`s Pick</span>
                                     </h3>
@@ -374,8 +375,8 @@
                                             </p>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="about_brand">
+                                </div> -->
+                                <!-- <div class="about_brand">
                                     <h3>
                                         <span>About Brand</span>
                                     </h3>
@@ -390,7 +391,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -421,7 +422,7 @@
                         <div class="goods-view-infomation-content" id="goods-image">
                             <div id="goods_pi">
                                 <p class="pic">
-                                    <img src="">
+                                    <img th:src="@{'/upload/' + ${thumbnailFile.itemFileName}}">
                                 </p>
                             </div>
                         </div>
