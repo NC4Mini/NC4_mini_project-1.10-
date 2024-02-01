@@ -163,8 +163,11 @@ public class ItemController {
 
         ModelAndView mav = new ModelAndView();
         mav.addObject("item", item);
-        mav.setViewName("item/item_detail_test.html");
+        mav.setViewName("item/item_detail.html");
 
         return mav;
     }
+
+
+
 }

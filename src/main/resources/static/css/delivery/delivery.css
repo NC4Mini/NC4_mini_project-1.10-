@@ -1,5 +1,5 @@
 .user_form {
-    width: 1050px;
+    width: 850px;
     margin: 0 auto;
     font-family: noto sans;
     font-weight: 400;
@@ -42,7 +42,7 @@ body .tit_section {
 }
 
 .page_aticle {
-    width: 1050px;
+    width: 850px;
     margin: 0 auto;
 }
 
@@ -327,9 +327,9 @@ body .tit_section {
 }
 
 .tax_absolute .inner_sticky {
-    position: absolute;
-    right: 0;
-    top: 0;
+    position: fixed;
+    right: auto;
+    top: 20px;
     width: 100%;
 }
 
@@ -358,7 +358,7 @@ body #orderitem_money_info .fst {
 }
 
 #orderitem_money_info {
-    width: 100%;
+    width: 15%;
     padding: 17px 16px 18px 18px;
     background: #fafafa;
     border: 2px solid #f2f2f2;

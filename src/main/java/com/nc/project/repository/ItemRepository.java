@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -19,4 +20,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     //검색 기능을 위한 메소드
     Page<Item> findByItemNameContaining(String searchKeyword, Pageable pageable);
 
+    @Query(value = "select a" +
+            "           from Item a" +
+            "           left join a.itemFileList" +
+            "           order by rand()")
+    Page<Item> findAllOrderByRandom(Pageable pageable);
 }
