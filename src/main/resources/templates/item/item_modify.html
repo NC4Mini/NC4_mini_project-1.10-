@@ -203,11 +203,23 @@
             }
 
             $(() => {
-                $("#btn_insert").on("click", () => {
+                const mainInput = $("#image_main_input")[0];
+                const detailInput = $("#image_detail_input")[0];
+                const thumbnailInput = $("#image_thumbnail_input")[0];
+
+                const mainContainer = $("div#image_main_container");
+                const detailContainer = $("div#image_detail_container");
+                const thumbnailContainer = $("div#image_thumbnail_container");
+
+
+            });
+
+            $(() => {
+                $("#btn_update").on("click", () => {
                     // 상품관련정보는 필수입력정보
-                    if($("#itemName").val() === "" || ($("#itemDescription").val() === "") || ($("#itemPrice").val() === "")) {
+                    if ($("#itemName").val() === "" || ($("#itemDescription").val() === "") || ($("#itemPrice").val() === "")) {
                         alert("상품 이름, 상품 설명, 상품 가격은 필수 입력사항입니다. ")
-                        if($("#itemName").val() === "") {
+                        if ($("#itemName").val() === "") {
                             $("#itemName").focus();
                             $('html, body').animate({
                                 scrollTop: $("#itemName").offset().top - 50  // 조절 가능한 값으로 필요에 따라 조절
@@ -230,7 +242,7 @@
                     var numericRegex = /^[0-9]+$/;
 
                     // 가격의 값이 숫자가 아니면 제출 제어
-                    if(!numericRegex.test($("#itemPrice").val())) {
+                    if (!numericRegex.test($("#itemPrice").val())) {
                         alert("가격은 숫자 형태만 입력해주세요.")
                         $("#itemPrice").val("").focus();
 
@@ -242,16 +254,16 @@
                         return false;
                     }
 
-                    if($("#image_main_input").val() === "") {
-                        alert("메인이미지 등록은 필수입니다.")
-                        $('html, body').animate({
-                            scrollTop: $("#itemPrice").offset().top - 200
-                        }, 100);
-                        return false;
-                    }
+                    // if($("#image_main_input").val() === "") {
+                    //     alert("메인이미지 등록은 필수입니다.")
+                    //     $('html, body').animate({
+                    //         scrollTop: $("#itemPrice").offset().top - 200
+                    //     }, 100);
+                    //     return false;
+                    // }
 
                     // 폼 데이터에 #Selector를 사용하면 배열안에 (K:V)로 담기게된다.
-                    const formData = new FormData($("#itemForm")[0]);
+                    const formData = new FormData($("modifyForm")[0]);
 
                     // const image_main_input = $("#image_main_input")[0];
                     // const image_detail_input = $("#image_detail_input")[0];
@@ -266,21 +278,40 @@
 
                     $.ajax({
                         enctype: "multipart/form-data",
-                        url: '/item/add-item',
-                        type: 'post',
+                        url: '/item/item-modify',
+                        type: 'put',
                         data: formData,
                         contentType: false,
                         processData: false,
                         cache: false,
                         success: (obj) => {
                             console.log(obj.item.msg);
-                            alert("상품등록 성공");
-                            window.location.reload();
+                            alert(obj.item.msg);
+                            location.href = `/item/item-modify/${$("#itemId").val()}`;
                         },
                         error: (error) => {
                             console.log(error);
                             alert("에러발생, 관리자에게 문의하세요. ")
-                            window.location.href = "/";
+                            window.location.reload();
+                        }
+                    });
+                });
+                var itemId = [[${item.itemId}]];
+                $("#btn_delete").on("click", () => {
+                    console.log(itemId);
+                    $.ajax({
+                        url: '/item/item-delete',
+                        type: 'post',
+                        data: {"itemId" : itemId},
+                        success: (obj) => {
+                            console.log(obj.item.msg);
+                            alert(obj.item.msg);
+                            location.href = "/item/item-manage"
+                        },
+                        error: (error) => {
+                            console.log(error);
+                            alert("에러발생, 관리자에게 문의하세요. ")
+                            window.location.reload();
                         }
                     });
                 });
@@ -298,11 +329,11 @@
                     <h2 class="tit_snb">관리자 메뉴</h2>
                     <div class="inner_snb">
                         <ul class="list_menu">
-                            <li sec:authorize="!isAuthenticated()">
-                                <a th:href="@{/item/add-item}">상품 등록</a>
+                            <li>
+                                <a th:href="@{/item/item-add}">상품 등록</a>
                             </li>
                             <li>
-                                <a href="#">상품 관리</a>
+                                <a th:href="@{/item/item-manage}">상품 관리</a>
                             </li>
                             <li>
                                 <a href="#">주문 관리</a>
@@ -310,10 +341,9 @@
                             <li>
                                 <a href="#">후기 관리</a>
                             </li>
-                            <li sec:authorize="!isAuthenticated()">
+                            <li>
                                 <a th:href="@{/board/board-list}">1:1문의 관리</a>
                             </li>
-
                         </ul>
                     </div>
                 </div>
@@ -321,14 +351,15 @@
                 <div id="viewOrderList" class="page_section section_orderlist">
                     <div class="head_aticle">
                         <h2 class="tit">
-                            상품 등록
+                            상품 수정
                         </h2>
                     </div>
 
                     <div class="list_order">
-                        <form th:object="${item}" id="modifyForm" action="/item/item-modify" method="post" enctype="multipart/form-data">
+                        <form th:object="${item}" id="modifyForm" action="/item/item-modify" method="post"
+                              enctype="multipart/form-data">
                             <div class="size">
-                                <div class="p_board" >
+                                <div class="p_board">
                                     <table width="100%">
                                         <tbody>
                                         <tr>
@@ -386,7 +417,7 @@
                                         <tr>
                                             <th>메인</th>
                                             <td class="img_upload">
-                                                <div th:object="${mainFile}">
+                                                <div>
                                                     <span>상품 메인 이미지</span>
 
                                                     <div class="image_main_box">
@@ -398,8 +429,11 @@
                                                                    onchange="set_main_image(event);">
                                                             <button type="button"
                                                                     class="image_main_input_button"></button>
-                                                            <div id="image_main_container">
-                                                                <img th:src="@{'/upload/' + ${mainFile.itemFileName}}">
+                                                            <div id="image_main_container" th:if="${mainFile != null}">
+                                                                <img class=image_main
+                                                                     th:src="@{'/upload/' + ${mainFile.itemFileName}}">
+                                                                <p style="display: inline-block; font-size: 10px; font-weight: bold;"
+                                                                   th:text="${mainFile.itemFileOrigin}"></p>
                                                             </div>
                                                             <div style="margin-bottom:40px;">
 
@@ -419,7 +453,7 @@
                                         <tr>
                                             <th>디테일</th>
                                             <td class="img_upload">
-                                                <div th:object="${detailFile}">
+                                                <div>
                                                     <span>상품 디테일 이미지</span>
 
                                                     <div class="image_detail_box">
@@ -431,8 +465,11 @@
                                                                    onchange="set_detail_image(event);">
                                                             <button type="button"
                                                                     class="image_detail_input_button"></button>
-                                                            <div id="image_detail_container">
+                                                            <div id="image_detail_container"
+                                                                 th:if="${detailFile != null}">
                                                                 <img th:src="@{'/upload/' + ${detailFile.itemFileName}}">
+                                                                <p style="display: inline-block; font-size: 10px; font-weight: bold;"
+                                                                   th:text="${detailFile.itemFileOrigin}"></p>
                                                             </div>
 
                                                             <div style="margin-bottom:40px;">
@@ -453,7 +490,7 @@
                                         <tr>
                                             <th>썸네일</th>
                                             <td class="img_upload">
-                                                <div th:object="${thumbnailFile}">
+                                                <div>
                                                     <span>상품 썸네일</span>
 
                                                     <div class="image_thumbnail_box">
@@ -465,8 +502,11 @@
                                                                    onchange="set_thumbnail_image(event);">
                                                             <button type="button"
                                                                     class="image_thumbnail_input_button"></button>
-                                                            <div id="image_thumbnail_container">
+                                                            <div id="image_thumbnail_container"
+                                                                 th:if="${thumbnailFile != null}">
                                                                 <img th:src="@{'/upload/' + ${thumbnailFile.itemFileName}}">
+                                                                <p style="display: inline-block; font-size: 10px; font-weight: bold;"
+                                                                   th:text="${thumbnailFile.itemFileOrigin}"></p>
                                                             </div>
 
                                                             <div style="margin-bottom:40px;">
@@ -487,8 +527,8 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div id="item_submit" class="item_submit">
-                                    <button type="button" id="btn_insert">등록하기</button>
+                                <div id="item_update" class="item_update">
+                                    <button type="button" id="btn_update">수정하기</button>
                                 </div>
                                 <div id="item_delete" class="item_delete">
                                     <button type="button" id="btn_delete">삭제하기</button>

@@ -35,10 +35,26 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.save(item);
     }
 
+    @Override
+    public void modifyItem(ItemDTO itemDTO) {
+
+        Item item = itemDTO.toEntity();
+
+        List<ItemFile> itemFileList = itemDTO.getItemFileDTOList().stream()
+                .map(itemFileDTO -> itemFileDTO.toEntity(item)).toList();
+
+        itemFileList.forEach(
+                item::addItemFileList
+        );
+
+        itemRepository.save(item);
+
+    }
 
     @Override
-    public void addItem(Item item) {
-        itemRepository.save(item);
+    public void deleteItem(long itemId) {
+        Item item = itemRepository.findById(itemId).get();
+        itemRepository.delete(item);
     }
 
     @Override

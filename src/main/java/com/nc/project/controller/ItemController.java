@@ -103,6 +103,68 @@ public class ItemController {
         }
     }
 
+    @PutMapping("/item-modify")
+    public ResponseEntity<?> itemModify(ItemDTO itemDTO,
+                                        @RequestParam(value = "item_main_image", required = false) MultipartFile itemMainImage,
+                                        @RequestParam(value = "item_detail_image") MultipartFile itemDetailImage,
+                                        @RequestParam(value = "item_thumbnail_image") MultipartFile itemThumbnailImage) {
+
+        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
+
+        try {
+            List<ItemFileDTO> itemFileDTOList = new ArrayList<>();
+
+            if (itemMainImage.getOriginalFilename() != null &&
+                    !itemMainImage.getOriginalFilename().isEmpty()) {
+
+                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemMainImage, "C:/tmp/upload/item/");
+                itemFileDTO.setItemType("Main");
+                itemFileDTOList.add(itemFileDTO);
+            }
+            if (itemDetailImage.getOriginalFilename() != null &&
+                    !itemDetailImage.getOriginalFilename().isEmpty()) {
+                // item이라는 디렉토리에 저장 (클라우드 버켓에서 자동으로 인식해줌)
+                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemDetailImage, "C:/tmp/upload/item/");
+                itemFileDTO.setItemType("Detail");
+                itemFileDTOList.add(itemFileDTO);
+            }
+            if (itemThumbnailImage.getOriginalFilename() != null &&
+                    !itemThumbnailImage.getOriginalFilename().isEmpty()) {
+
+                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemThumbnailImage, "C:/tmp/upload/item/");
+                itemFileDTO.setItemType("Thumbnail");
+                itemFileDTOList.add(itemFileDTO);
+            }
+
+            itemDTO.setItemFileDTOList(itemFileDTOList);
+            itemService.modifyItem(itemDTO);
+            Map<String, String> returnMap = new HashMap<>();
+
+            returnMap.put("msg", "정상적으로 수정되었습니다.");
+
+            response.setItem(returnMap);
+            response.setStatusCode(HttpStatus.OK.value());
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            if (itemDTO.getItemName().equals("")) {
+                response.setErrorCode(602);
+                response.setErrorMessage("상품 이름을 입력하세요.");
+            } else if (itemDTO.getItemDescription().equals("")) {
+                response.setErrorCode(603);
+                response.setErrorMessage("상품 설명을 입력해주세요.");
+            } else if (itemDTO.getItemPrice() == 0) {
+                response.setErrorCode(604);
+                response.setErrorMessage("상품 가격을 입력해주세요.");
+            } else {
+                response.setErrorCode(605);
+                response.setErrorMessage(e.getMessage());
+            }
+            response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
+
     // 상품 관리창으로 이동
     @GetMapping("/item-manage")
     public ModelAndView itemManageView(@PageableDefault(page = 0, size = 12) Pageable pageable,
@@ -156,6 +218,8 @@ public class ItemController {
         return mav;
     }
 
+
+
     // 메인에서 상품 상세페이지 이동
     @GetMapping("/item-detail")
     public ModelAndView getItemDetail(@RequestParam("itemId") long itemId) {
@@ -168,6 +232,29 @@ public class ItemController {
         return mav;
     }
 
+    @PostMapping("/item-delete")
+    public ResponseEntity<?> itemDelete(@RequestParam("itemId") long itemId) {
+        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
+        System.out.println(itemId);
+        try {
+            itemService.deleteItem(itemId);
 
+            Map<String, String> returnMap = new HashMap<>();
 
+            returnMap.put("msg", "정상적으로 삭제되었습니다.");
+
+            response.setItem(returnMap);
+            response.setStatusCode(HttpStatus.OK.value());
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+            response.setErrorCode(801);
+            response.setErrorMessage(e.getMessage());
+            response.setStatusCode(HttpStatus.BAD_REQUEST.value());
+
+            return ResponseEntity.badRequest().body(response);
+        }
+    }
 }
