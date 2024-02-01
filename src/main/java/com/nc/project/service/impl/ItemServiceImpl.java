@@ -57,6 +57,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public Page<Item> ItemListRandom(Pageable pageable) {
+        return itemRepository.findAllOrderByRandom(pageable);
+    }
+
+    @Override
     public Page<Item> ItemList(Pageable pageable) {
         return itemRepository.findAll(pageable);
     }

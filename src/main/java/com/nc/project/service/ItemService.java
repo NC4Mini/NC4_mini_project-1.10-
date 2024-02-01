@@ -23,5 +23,6 @@ public interface ItemService {
     // 상품 검색하기
     public Page<Item> ItemSearchList(String searchKeyword, Pageable pageable);
 
+    public Page<Item> ItemListRandom(Pageable pageable);
     public Page<Item> ItemList(Pageable pageable);
 }

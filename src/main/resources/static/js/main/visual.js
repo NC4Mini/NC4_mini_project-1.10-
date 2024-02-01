@@ -76,7 +76,6 @@ $(document).ready(function(){                                  // 브라우저�
 				ul.style.transform = "translate3d(0px, 0px, 0px)"; //현재 위치에서 이동 없음
 			}, 601) //복사본이 자리잡은 0.601초 뒤 transition, transform 끔
 			curIndex = 0; //index 1로 되돌림
-			console.log(curIndex);
 		}
 	}
 
@@ -92,7 +91,6 @@ $(document).ready(function(){                                  // 브라우저�
 		var $bannerLength = $banner.children().length;//배너 이미지의 갯수
 
 		$banner.css("width", $bannerWidth * $bannerLength + "px");
-		console.log("rollingStart 로드");
 		//배너의 좌측 위치를 옮겨 준다.
 		$banner.animate({left: - $bannerWidth + "px"}, 1500, function() {
 			//숫자는 롤링 진행되는 시간이다.
@@ -117,8 +115,6 @@ $(document).ready(function(){                                  // 브라우저�
 		});
 
 		// move 대체
-
-		console.log("move 대체 로드");
 		var size = 1900;
 		if ($(window).width() <= 1900){
 			size = $(window).width()
