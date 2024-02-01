@@ -8,6 +8,7 @@ import com.nc.project.entity.Item;
 import com.nc.project.entity.ItemFile;
 import com.nc.project.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -127,10 +128,28 @@ public class ItemController {
         ModelAndView mav = new ModelAndView();
 
         Item item = itemService.getItem(itemId);
+
         List<ItemFile> itemFileList = item.getItemFileList();
 
+        ItemFile mainFile = null;
+        ItemFile detailFile = null;
+        ItemFile thumbnailFile = null;
+        
+        // for-each를 통한 리스트 순회로 코드 줄이기
+        for(ItemFile itemFile : itemFileList) {
+            if(itemFile.getItemType().equalsIgnoreCase("main")) {
+                mainFile = itemFile;
+            } else if(itemFile.getItemType().equalsIgnoreCase("detail")) {
+                detailFile = itemFile;
+            } else {
+                thumbnailFile = itemFile;
+            }
+        }
+        
         mav.addObject("item", item);
-        mav.addObject("itemFileList", itemFileList);
+        mav.addObject("mainFile", mainFile);
+        mav.addObject("detailFile", detailFile);
+        mav.addObject("thumbnailFile", thumbnailFile);
 
         mav.setViewName("item/item_modify.html");
 
