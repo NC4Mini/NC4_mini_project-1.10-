@@ -34,7 +34,7 @@ public class UserAccount {
     private String userProfile;
     private String userEmail;
 
-    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<UserShpAddr> userShpAddrList;
 
