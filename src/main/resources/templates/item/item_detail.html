@@ -295,7 +295,8 @@
                             <div class="goods_wrap">
                                 <div class="goods_intro">
                                     <div class="pic">
-                                        <img th:src="@{'/upload/' + ${detailFile.itemFileName}}" style="width:1010px; height:671px;">
+                                        <img th:if="${not #strings.isEmpty(detailFile)}" th:src="@{'/upload/' + ${detailFile.itemFileName}}" style="width:1010px; height:671px;">
+                                        <img th:if="${#strings.isEmpty(detailFile)}" th:src="@{'/upload/' + ${defaultImgPath}}" style="width:1010px; height:671px;">
                                     </div>
                                     <div class="context last">
                                         <!-- 필요없는 칸 비활성화 (02.01) -->
@@ -401,7 +402,7 @@
                             </li>
                             <li class="goods-view-infomation-tab">
                                 <a href="#goods-image" class="goods-view-infomation-tab-anchor __active">상품이미지</a>
-                                <img th:src="${detailImage}">
+                                <!-- <img th:src="${detailImage}"> -->
                             </li>
                             <!-- 불필요탭 비활성화 (02.01) -->
                             <!-- <li class="goods-view-infomation-tab">
@@ -422,7 +423,8 @@
                         <div class="goods-view-infomation-content" id="goods-image">
                             <div id="goods_pi">
                                 <p class="pic">
-                                    <img th:src="@{'/upload/' + ${thumbnailFile.itemFileName}}">
+                                    <img th:if="${not #strings.isEmpty(thumbnailFile)}" th:src="@{'/upload/' + ${thumbnailFile.itemFileName}}" style="width:1010px; height:671px;">
+                                    <img th:if="${#strings.isEmpty(thumbnailFile)}" th:src="@{'/upload/' + ${defaultImgPath}}" style="width:1010px; height:671px;">
                                 </p>
                             </div>
                         </div>
@@ -700,6 +702,14 @@
                 </div>
 
     <script th:inline="javascript">
+        var detailFileName = [[${detailFile}]];
+        var mainFileName = [[${mainFile.itemFileName}]];
+        var thumbnailFileName = [[${thumbnailFile}]];
+
+        console.log(detailFileName);
+        console.log(mainFileName);
+        console.log(thumbnailFileName);
+
         function addToCart (itemId) {
             console.log(itemId);
 
@@ -720,7 +730,6 @@
                 }
             });
         }
-
     </script>
 </div>
 

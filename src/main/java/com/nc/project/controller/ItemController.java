@@ -169,6 +169,7 @@ public class ItemController {
         ItemFile mainFile = null;
         ItemFile detailFile = null;
         ItemFile thumbnailFile = null;
+        String defaultImgPath = "default_Img.png";
         
         // for-each를 통한 리스트 순회로 코드 줄이기
         for(ItemFile itemFile : itemFileList) {
@@ -180,11 +181,13 @@ public class ItemController {
                 thumbnailFile = itemFile;
             }
         }
-
+        
         mav.addObject("item", item);
         mav.addObject("mainFile", mainFile);
         mav.addObject("detailFile", detailFile);
         mav.addObject("thumbnailFile", thumbnailFile);
+        mav.addObject("defaultImgPath", defaultImgPath);
+
 
         mav.setViewName("item/item_detail.html");
 
