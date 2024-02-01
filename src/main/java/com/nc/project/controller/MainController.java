@@ -20,21 +20,18 @@ public class MainController {
 
     @GetMapping
     public String searchMain(@RequestParam(name="search", required = false) String search,
-                             @PageableDefault(page = 0, size = 10) Pageable pageable,
+                             @PageableDefault(page = 0, size = 4) Pageable pageable,
                              Model model) {
 
         Page<Item> pageList = null;
-        pageList = itemService.ItemList(pageable);
+
+        pageList = itemService.ItemListRandom(pageable);
+
+        //List<Item> content = new ArrayList<>(pageList.getContent());
+        //Collections.shuffle(content);
+
+        //model.addAttribute("itemList", new PageImpl<>(content, pageList.getPageable(), pageList.getTotalElements()));
         model.addAttribute("itemList", pageList);
-
-        if(search == null || search.isBlank()) {
-            pageList = itemService.ItemList(pageable);
-            model.addAttribute("itemList", pageList);
-        } else {
-            pageList = itemService.ItemSearchList(search, pageable);
-            model.addAttribute("itemList", pageList);
-        }
-
         model.addAttribute("search", search);
         return "index";
     }
