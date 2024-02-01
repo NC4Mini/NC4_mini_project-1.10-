@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.nc.project.entity.Cart;
@@ -40,49 +41,10 @@ public class DeliveryController {
     public final DeliveryService deliveryService;
     public final UserService userService;
     public final CartService cartService;
-
-    // // 장바구니에서 주문하기 기능
-    // @PostMapping("/to-delivery")
-    // public ModelAndView getDelivery(Principal Principal, @RequestParam ("cartId") long cartId) {
-    //     ModelAndView mav = new ModelAndView();
-
-    //     // 로그인 하지 않은 경우
-    //     if (Principal == null) {
-    //         mav.setViewName("redirect:/login");
-    //         return mav;
-    //     }
-
-    //     long id = cartService.getUserAccountByCartId(cartId).getId();
-
-    //     Delivery delivery = deliveryService.deliveryFromCart(id, cartId);
-    //     // tempDelivery = deliveryService.deliveryFromCart(id, cartId);
-        
-    //     UserShpAddr defaultUserShpAddr = cartService.bringDefaultAddr(id);
-        
-    //     mav.addObject("delivery", delivery);
-    //     mav.addObject("defaultUserShpAddr", defaultUserShpAddr);
-    //     mav.setViewName("delivery/get_delivery.html");
-
-    //     return mav;
-    // }
-
-    // @PostMapping("/confirm-delivery")
-    // @Transactional
-    // public ModelAndView confirmDelivery (@RequestParam ("userAccountId") long id) {
-    //     ModelAndView mav = new ModelAndView();
-
-    //     // 사용자 id를 받아 새로운 상태의 delivery를 저장하는 메서드
-    //     deliveryService.confirmDelivery(id);
-
-    //     mav.setViewName("delivery/complete_delivery.html");
-
-    //     // 완료 페이지로 이동
-    //     return mav;
-    // }
     
     // 장바구니에서 주문하기 기능
     @PostMapping("/to-delivery")
-    public ModelAndView getDelivery (Principal principal, @RequestParam ("cartId") long cartId) {
+    public ModelAndView getDelivery (Principal principal, @RequestParam ("cartId") long cartId ) {
         ModelAndView mav = new ModelAndView();
 
         // 로그인 하지 않은 경우

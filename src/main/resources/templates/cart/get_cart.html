@@ -285,29 +285,20 @@
 
         $('#deliveryBtn').click(function () {
             var cartId = $('#cart_id').val();
-            
-            $('#deliveryForm input[name=cartId]').val(cartId);
+            var cartItemId = $('#cartItemId').val();
+
+            // 장바구니가 비었을 때 주문하기 버튼 클릭시 경고창 및 이동 막기
+            if (cartItemId == null) {
+                alert('장바구니가 비었습니다.');
+
+                event.preventDefault();
+            }
+            else {
+                alert('주문서로 이동합니다.');
+
+                $('#deliveryForm input[name=cartId]').val(cartId);
+            }
         });
-
-
-        // 주문하기 버튼 기능
-        // $('#deliveryBtn').click(function () {
-        //     var cartId = $('#cart_id').val();
-            
-        //     console.log(cartId);
-
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: '/delivery/to-delivery',
-        //         data: {
-        //             cartId: cartId
-        //         },
-        //         success: function (data) {
-        //             alert('주문서로 이동합니다.');
-        //             window.location.href = data.viewName;
-        //         }
-        //     });
-        // });
 
     </script>
 </div>

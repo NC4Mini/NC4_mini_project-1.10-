@@ -102,25 +102,6 @@ public class CartController {
         response.put("newTotalPrice", String.valueOf(cart.getTotalPrice()));
 
         return ResponseEntity.ok(response);
-
-//        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
-//        Map<String, String> returnMap = new HashMap<>();
-//
-//        Cart cart = cartService.getCart(cartId);
-//
-//        cartService.deleteCartItem(cartItemId);
-//
-//        cart.calcTotalPrice();
-//        cartRepository.save(cart);
-//
-//        returnMap.put("msg", "삭제 되었습니다.");
-//        returnMap.put("newTotalPrice", String.valueOf(cart.getTotalPrice()));
-//
-//        System.out.println("=====================" + returnMap.get("newTotalPrice"));
-//
-//        response.setItem(returnMap);
-//        response.setStatusCode(HttpStatus.OK.value());
-//        return ResponseEntity.ok(response);
     }
 
 

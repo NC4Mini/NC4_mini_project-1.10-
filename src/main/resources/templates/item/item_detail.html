@@ -10,10 +10,12 @@
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{/js/item/item_detail.js}"></script>
+        <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
     </th:block>
 </head>
 <body>
 <div layout:fragment="content">
+
                 <div class="section_view">
                     <div id="sectionView">
                         <div class="inner_view">
@@ -22,18 +24,22 @@
 
                             </div>
                             <p class="goods_name">
-                                <span class="btn_share">
+                                <!-- 공유하기 버튼 / 비활성화 (01.22) -->
+                                <!--<span class="btn_share">
                                     <button id="btnShare">공유하기</button>
-                                </span>
-                                <strong class="name">[상품명] 데이터 넣는곳</strong>
-                                <span class="short_desc">[한줄소개] 데이터 넣는곳</span>
+                                </span>-->
+                                <!-- 상품명 데이터 위치 -->
+                                <strong class="name" th:text="${item.itemName}">[상품명] 데이터 넣는곳</strong>
+                                <!-- 상품명 밑 한줄소개 / 비활성화 (01.22) -->
+                                <!--<span class="short_desc">[한줄소개] 데이터 넣는곳</span>-->
                             </p>
+                            <!-- 가격 데이터 들어가는 곳, 제목 아래, 장바구니 버튼 위 연동됨 -->
                             <p class="goods_price">
                                 <span class="position">
                                     <span class="dc">
-                                        <span class="dc_price">
+                                        <span class="dc_price" th:text="${item.itemPrice}">
                                             [가격]데이터 넣는곳
-                                            <input type="hidden" value=0>  <!-- 여기 벨류에다가 가격데이터 넣어줘야댐-->
+                                            <input type="hidden" th:value="${item.itemPrice}">  
 
                                         </span>
                                         <span class="won">원</span>
@@ -41,47 +47,55 @@
 
                                 </span>
                                 <span>
-                                    <span class="txt_benefit">
+                                    <!-- 웰컴 할인정보, 적립정보 / 비활성화 (01.22) -->
+                                    <!--<span class="txt_benefit">
                                         <span class="ico_grade grade6">웰컴 5%</span>
                                         <span class="point">
                                             개당
                                             <strong class="emphh">65원 적립(여긴 건들지마세요 제가 계산식 js에 넣어뒀어요)</strong>
                                         </span>
-                                    </span>
+                                    </span>-->
                                 </span>
                             </p>
                             <div class="goods_info">
-                                <dl class="list fst">
+                                <!-- 판매 단위 / 비활성화 (01.22)-->
+                                <!--<dl class="list fst">
                                     <dt class="tit">판매단위</dt>
                                     <dd class="desc">판매단위 데이터 넣는곳</dd>
-                                </dl>
-                                <dl class="list">
+                                </dl>-->
+                                <!-- 중량, 용량 / 비활성화 (01.22)-->
+                                <!--<dl class="list">
                                     <dt class="tit">중량/용량</dt>
                                     <dd class="desc">중량/용량 데이터 넣는곳</dd>
-                                </dl>
-                                <dl class="list">
+                                </dl>-->
+                                <!-- 배송 구분 데이터 / 비활성화 (01.22) -->
+                                <!--<dl class="list">
                                     <dt class="tit">배송구분</dt>
                                     <dd class="desc">배송구분 데이터 넣는곳</dd>
-                                </dl>
-                                <dl class="list">
+                                </dl>-->
+                                <!-- 원산지 데이터 / 비활성화 (01.22) -->
+                                <!--<dl class="list">
                                     <dt class="tit">원산지</dt>
                                     <dd class="desc">원산지 데이터 넣는곳</dd>
-                                </dl>
-                                <dl class="list">
+                                </dl>-->
+                                <!-- 포장 타입 데이터 / 비활성화 (01.22) -->
+                                <!--<dl class="list">
                                     <dt class="tit">포장타입</dt>
                                     <dd class="desc">
                                         포장타입 데이터 넣는곳
                                         <strong class="emphd">택배배송은 에코포장이 스티로폼으로 대체됩니다.</strong>
                                     </dd>
-                                </dl>
-                                <dl class="list">
+                                </dl>-->
+                                <!-- 알레르기 정보 / 비활성화 (01.22) -->
+                                <!--<dl class="list">
                                     <dt class="tit">알레르기정보</dt>
                                     <dd class="desc">알레르기 정보 데이터 넣는곳</dd>
-                                </dl>
-                                <dl class="list">
+                                </dl>-->
+                                <!-- 유통기한 / 비활성화 (01.22) -->
+                                <!--<dl class="list">
                                     <dt class="tit">유통기한</dt>
                                     <dd class="desc">유통기한 데이터 넣는곳</dd>
-                                </dl>
+                                </dl>-->
                             </div>
                         </div>
                     </div>
@@ -89,12 +103,16 @@
                     <div id="cartPut">
                         <div class="cart_option cart_type2">
                             <!-- 장바구니 담을 수 있도록 form데이터로 감싸줌 -->
-                            <form action="">
+                            <!--<form id="add_cart_form">-->
+                            <form>
+                           <!-- <form th:object="${item}" th:action="@{'/cart/add/' + ${item.itemId}}" id="add_cart_form" method="post"> -->
+                                <input type="hidden" th:value="${item.itemId}">
                                 <div class="inner_option">
                                     <div class="in_option">
                                         <div class="list_goods">
                                             <ul class="list list_nopackage">
-                                                <li class="on">
+                                                <!-- 수량 선택 기능, 비활성화 (01.22)-->
+                                                <!--<li class="on">
                                                     <span class="tit_item">구매수량</span>
                                                     <div class="option">
                                                         <span class="count">
@@ -102,14 +120,13 @@
                                                             <input type="number" readonly="readonly" value = 1 class="inp">
                                                             <button  type="button" class="btn up on">수량올리기</button>
                                                         </span>
-
                                                     </div>
-                                                </li>
+                                                </li>-->
                                             </ul>
                                         </div>
                                         <div class="total">
                                             <div class="price">
-                                                <strong class="tit">총 상품금액 :</strong>
+                                                <strong class="tit">상품금액 :</strong>
                                                 <span class="sum">
                                                     <span class="num">1,300</span>
                                                     <span class="won">원</span>
@@ -128,9 +145,10 @@
                                         <div class="view_function">
                                             <button type="button" class="btn btn_save">늘 사는 것</button>
                                         </div>
-                                        <span class="btn_type1">
-                                            <button type="submit" class="txt_type">장바구니 담기</button>
+                                        <span class="btn_type1"> <!--txt_type-->
+                                            <button type="button" class="txt_type" id="add_cart_btn" th:onclick="addToCart(/*[[${item.itemId}]]*/)">장바구니 담기</button>
                                         </span>
+
                                     </div>
                                 </div>
                             </form>
@@ -655,12 +673,39 @@
                                 </a>
                             </li>
                         </ul>
+
+                        <!-- 고객 리뷰 칸 -->
                         <div class="goods-view-infomation-content" id="goods-review"> <!-- 아래 주소창에 good_review_list.html url 넣어주면 됩니당-->
                             <iframe src="http://127.0.0.1:5500/good_review_list.html" id="inreview" frameborder="0" class="goods-view-infomation-board" height="733"></iframe>
                         </div>
 
                     </div>
                 </div>
+
+    <script th:inline="javascript">
+        function addToCart (itemId) {
+            console.log(itemId);
+
+            $.ajax({
+                type: 'POST',
+                url: "/cart/add/" + itemId,
+                data: {
+                    itemId: itemId
+                },
+                success: function (data) {
+                    alert(data.msg);
+                },
+                error: function (error) {
+                    alert(error.responseJSON.msg);
+                    // 로그인 페이지로 리다이렉트
+                    location.href = "/user/login";
+
+                }
+            });
+        }
+
+    </script>
 </div>
+
 </body>
 </html>

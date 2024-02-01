@@ -115,7 +115,7 @@
                     
 
                     <div class="tax_absolute">
-                        <div class="inner_sticky" id="sticky" style="top:0px;">
+                        <div class="inner_sticky" id="sticky" style="margin-left: 300px; margin-top: 100px">
                             <h2 class="tit_section">결제금액</h2>
                             <div id="orderitem_money_info">
                                 <dl class="amount fst">
@@ -161,66 +161,69 @@
                             </div>
                         </div>
                     </div>
+                        <!-- 적립금 파트, 비활성화 (02.01) -->
+<!--                    <div class="data_payment">-->
+<!--                        <div class="tbl_left">-->
+<!--                            <h2 class="tit_section">적립금</h2>-->
 
-                    <div class="data_payment">
-                        <div class="tbl_left">
-                            <h2 class="tit_section">적립금</h2>
+<!--                            <table class="goodsinfo_table">-->
+<!--                                <tbody>-->
+<!--                                    <tr class="emoney_use">-->
+<!--                                        <th>-->
+<!--                                            적립금 적용-->
+<!--                                        </th>-->
 
-                            <table class="goodsinfo_table">
-                                <tbody>
-                                    <tr class="emoney_use">
-                                        <th>
-                                            적립금 적용
-                                        </th>
+<!--                                        <td>-->
+<!--                                            <div id="ondealCheck">-->
+<!--                                                <div class="emoney_reg">-->
+<!--                                                    <input type="text" name="using_point" id="emoney"  class="number_only" value="" placeholder="0" pattern="[0-9]*" inputmode="decimal">-->
+<!--                                                    <div class="check">-->
+<!--                                                        <label class="emoney_chkbox">-->
+<!--                                                            <span class="txt_checkbox">모두사용</span>-->
+<!--                                                        </label>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
 
-                                        <td>
-                                            <div id="ondealCheck">
-                                                <div class="emoney_reg">
-                                                    <input type="text" name="using_point" id="emoney"  class="number_only" value="" placeholder="0" pattern="[0-9]*" inputmode="decimal">
-                                                    <div class="check">
-                                                        <label class="emoney_chkbox">
-                                                            <span class="txt_checkbox">모두사용</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
+<!--                                                <p class="possess">-->
+<!--                                                    보유 적립금 : <strong class="emph">1900</strong>원-->
 
-                                                <p class="possess">
-                                                    보유 적립금 : <strong class="emph">1900</strong>원
+<!--                                                </p>-->
 
-                                                </p>
+<!--                                                <ul class="list_notice">-->
+<!--                                                    <li>· 보유 적립금 1천원 이상부터 사용가능</li>-->
+<!--                                                    <li>· 적립금 내역: 마이컬리 &gt; 적립금</li>-->
+<!--                                                </ul>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                                                <ul class="list_notice">
-                                                    <li>· 보유 적립금 1천원 이상부터 사용가능</li>
-                                                    <li>· 적립금 내역: 마이컬리 &gt; 적립금</li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="data_method">
-                        <h2 class="tit_section" id="titFocusMethod">결제수단</h2>
+                    <!-- 결제 수단 선택 파트, 비활성화 (02.01) -->
+<!--                    <div class="data_method">-->
+<!--                        <h2 class="tit_section" id="titFocusMethod">결제수단</h2>-->
 
 
-                        <table class="goodsinfo_table tbl_left">
-                            <tbody>
-                                <tr>
-                                    <th> 카카오페이 결제</th>
-                                    <td>
-                                        <label class="label_radio" id="cardBenefit_kakaopay">
-                                            <input type="radio" name="settlekind" value="kakaopay">
-                                            <span id="kakaopay">카카오페이</span>
-                                            
-                                            <div class="info_benefit"></div>
-                                        </label>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+<!--                        <table class="goodsinfo_table tbl_left">-->
+<!--                            <tbody>-->
+<!--                                <tr>-->
+<!--                                    <th> 카카오페이 결제</th>-->
+<!--                                    <td>-->
+<!--                                        <label class="label_radio" id="cardBenefit_kakaopay">-->
+<!--                                            <input type="radio" name="settlekind" value="kakaopay">-->
+<!--                                            <span id="kakaopay">카카오페이</span>-->
+<!--                                            -->
+<!--                                            <div class="info_benefit"></div>-->
+<!--                                        </label>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+
+                    <!-- 결제 버튼창 -->
                     <div class="tit_section"> 
                         <input type="submit" value="결제하기" class="btn_payment" id="pay_btn">
                     </div>
