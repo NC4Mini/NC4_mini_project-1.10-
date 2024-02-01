@@ -5,8 +5,8 @@
       layout:decorate="~{layouts/layout}" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <th:block layout:fragment="css">
-        <link rel="stylesheet" th:href="@{/css/item/prd_common.css}">
-        <link rel="stylesheet" th:href="@{/css/item/prd_upload.css}">
+        <link rel="stylesheet" th:href="@{/css/item/item_common_modify.css}">
+        <link rel="stylesheet" th:href="@{/css/item/item_upload_modify.css}">
     </th:block>
     <th:block layout:fragment="script">
         <script>
@@ -326,9 +326,9 @@
                     </div>
 
                     <div class="list_order">
-                        <form id="itemForm" action="/item/add-item" method="post" enctype="multipart/form-data">
+                        <form th:object="${item}" id="modifyForm" action="/item/item-modify" method="post" enctype="multipart/form-data">
                             <div class="size">
-                                <div class="p_board">
+                                <div class="p_board" >
                                     <table width="100%">
                                         <tbody>
                                         <tr>
@@ -337,7 +337,7 @@
                                                 <div>
                                             <span>
                                                 <input type="text" id="itemName" name="itemName" class="i_text text1"
-                                                       required>
+                                                       required th:value="${item.itemName}">
                                             </span>
                                                 </div>
                                                 <span class="txtByte" title="현재글자수/최대글자수">
@@ -354,7 +354,7 @@
                                             <span>
                                                 <input type="text" class="i_text text2" id="itemDescription"
                                                        name="itemDescription"
-                                                       required>
+                                                       required th:value="${item.itemDescription}">
                                             </span>
 
                                                 </div>
@@ -371,7 +371,7 @@
                                                 <div>
                                             <span>
                                                 <input type="text" id="itemPrice" name="itemPrice" class="i_text text3"
-                                                       required>
+                                                       required th:value="${item.itemPrice}">
                                             </span>
                                                 </div>
                                                 <span class="won">
@@ -386,7 +386,7 @@
                                         <tr>
                                             <th>메인</th>
                                             <td class="img_upload">
-                                                <div>
+                                                <div th:object="${mainFile}">
                                                     <span>상품 메인 이미지</span>
 
                                                     <div class="image_main_box">
@@ -398,8 +398,9 @@
                                                                    onchange="set_main_image(event);">
                                                             <button type="button"
                                                                     class="image_main_input_button"></button>
-                                                            <div id="image_main_container"></div>
-
+                                                            <div id="image_main_container">
+                                                                <img th:src="@{'/upload/' + ${mainFile.itemFileName}}">
+                                                            </div>
                                                             <div style="margin-bottom:40px;">
 
                                                                 <button type="button" name="image_main_container"
@@ -418,7 +419,7 @@
                                         <tr>
                                             <th>디테일</th>
                                             <td class="img_upload">
-                                                <div>
+                                                <div th:object="${detailFile}">
                                                     <span>상품 디테일 이미지</span>
 
                                                     <div class="image_detail_box">
@@ -430,7 +431,9 @@
                                                                    onchange="set_detail_image(event);">
                                                             <button type="button"
                                                                     class="image_detail_input_button"></button>
-                                                            <div id="image_detail_container"></div>
+                                                            <div id="image_detail_container">
+                                                                <img th:src="@{'/upload/' + ${detailFile.itemFileName}}">
+                                                            </div>
 
                                                             <div style="margin-bottom:40px;">
 
@@ -450,7 +453,7 @@
                                         <tr>
                                             <th>썸네일</th>
                                             <td class="img_upload">
-                                                <div>
+                                                <div th:object="${thumbnailFile}">
                                                     <span>상품 썸네일</span>
 
                                                     <div class="image_thumbnail_box">
@@ -462,7 +465,9 @@
                                                                    onchange="set_thumbnail_image(event);">
                                                             <button type="button"
                                                                     class="image_thumbnail_input_button"></button>
-                                                            <div id="image_thumbnail_container"></div>
+                                                            <div id="image_thumbnail_container">
+                                                                <img th:src="@{'/upload/' + ${thumbnailFile.itemFileName}}">
+                                                            </div>
 
                                                             <div style="margin-bottom:40px;">
 
@@ -482,8 +487,11 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div id="product_submit" class="pd_submit">
+                                <div id="item_submit" class="item_submit">
                                     <button type="button" id="btn_insert">등록하기</button>
+                                </div>
+                                <div id="item_delete" class="item_delete">
+                                    <button type="button" id="btn_delete">삭제하기</button>
                                 </div>
                             </div>
                         </form>

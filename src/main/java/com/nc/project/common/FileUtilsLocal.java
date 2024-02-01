@@ -34,6 +34,12 @@ public class FileUtilsLocal {
         // 파일 업로드 될 파일 경로
         String itemFilePath = attachPath;
 
+        // 폴더 존재 여부 확인 및 생성
+        File uploadFolder = new File(attachPath);
+        if (!uploadFolder.exists()) {
+            uploadFolder.mkdirs();
+        }
+
         // 파일 업로드 처리
         File uploadFile = new File(attachPath + itemFileName);
 
