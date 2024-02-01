@@ -27,13 +27,8 @@ public class CartItem {
     @Column(name = "cart_item_id")
     private long cartItemId;
 
-//    // cart와 ManyToOne 관계 (fk) (원본)
-//    @ManyToOne
-//    @JoinColumn(name = "cart_id")
-//    private Cart cart;
-
     // cart와 ManyToOne 관계 (fk) (수정본)
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cart_id")
     @JsonBackReference
     private Cart cart;
@@ -46,18 +41,22 @@ public class CartItem {
     @Column(name = "cart_item_cnt")
     private int cartItemCnt;
 
+    public void setCartItemCnt(int cartItemCnt) {
+        this.cartItemCnt = Math.max(cartItemCnt, 1);
+    }
+
     // @ManyToOne
     // @JoinColumn(name = "delivery_id")
     // private Delivery delivery;
 
-    // CartItem이 저장될 때 마다 부모 Cart의 totalPrice 갱신 해주는 메서드
-    @PrePersist
-    @PreUpdate
-    public void updateCartTotalPrice() {
-        if (cart != null) {
-            cart.calcTotalPrice();
-        }
-    }
+//    // CartItem이 저장될 때 마다 부모 Cart의 totalPrice 갱신 해주는 메서드
+//    @PrePersist
+//    @PreUpdate
+//    public void updateCartTotalPrice() {
+//        if (cart != null) {
+//            cart.calcTotalPrice();
+//        }
+//    }
 
     public CartItemDTO toDTO() {
         return CartItemDTO.builder()
@@ -75,7 +74,6 @@ public class CartItem {
         cartItem.setCartItemCnt(cartItemCnt);
         return cartItem;
     }
-
 
     // 기존 담겨있는 상품을 추가로 담으면 기존수량에 + 됨
     public void addCount(int cartItemCnt) {

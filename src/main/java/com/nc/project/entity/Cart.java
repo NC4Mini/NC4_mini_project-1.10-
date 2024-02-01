@@ -7,6 +7,7 @@ import groovyjarjarantlr4.v4.runtime.misc.NotNull;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,14 +34,10 @@ public class Cart {
     @JsonBackReference
     private UserAccount userAccount;
 
-//    // cartItem과 OneToMany 관계 (원본)
-//    @OneToMany (mappedBy = "cart")
-//    private List<CartItem> cartItemList = new ArrayList<>();
-
-    // cartItem과 OneToMany 관계 (수정본)
+    // cartItem과 OneToMany 관계
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<CartItem> cartItemList;
+    private List<CartItem> cartItemList = new ArrayList<>();
 
     @Column(name = "cart_total_price")
     private int totalPrice;
