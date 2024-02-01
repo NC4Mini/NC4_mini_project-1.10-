@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,6 +47,7 @@ public class CartController {
     private final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
     // 해당 유저의 장바구니 페이지 이동
+    @Transactional
     @GetMapping("/mycart")
     public ModelAndView getUserCart (Principal principal) {
         ModelAndView mav = new ModelAndView();
@@ -94,36 +96,12 @@ public class CartController {
     public ResponseEntity<?> deleteCartItem (@RequestParam ("cartItemId") Long cartItemId, @RequestParam("cartId") Long cartId) {
         Map<String, String> response = new HashMap<>();
 
-        Cart cart = cartService.getCart(cartId);
-
-        cartService.deleteCartItem(cartItemId);
-
-        cart.calcTotalPrice();
-        cartRepository.save(cart);
+        Cart cart = cartService.deleteCartItem(cartId, cartItemId);
 
         response.put("msg", "삭제 되었습니다.");
         response.put("newTotalPrice", String.valueOf(cart.getTotalPrice()));
 
         return ResponseEntity.ok(response);
-
-//        ResponseDTO<Map<String, String>> response = new ResponseDTO<>();
-//        Map<String, String> returnMap = new HashMap<>();
-//
-//        Cart cart = cartService.getCart(cartId);
-//
-//        cartService.deleteCartItem(cartItemId);
-//
-//        cart.calcTotalPrice();
-//        cartRepository.save(cart);
-//
-//        returnMap.put("msg", "삭제 되었습니다.");
-//        returnMap.put("newTotalPrice", String.valueOf(cart.getTotalPrice()));
-//
-//        System.out.println("=====================" + returnMap.get("newTotalPrice"));
-//
-//        response.setItem(returnMap);
-//        response.setStatusCode(HttpStatus.OK.value());
-//        return ResponseEntity.ok(response);
     }
 
 
