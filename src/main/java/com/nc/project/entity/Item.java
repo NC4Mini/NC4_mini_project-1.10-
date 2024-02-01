@@ -30,7 +30,7 @@ public class Item {
     @Column (name="item_price")
     private int itemPrice;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<ItemFile> itemFileList;
 
