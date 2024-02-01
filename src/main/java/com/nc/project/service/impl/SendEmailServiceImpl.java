@@ -5,6 +5,7 @@ import com.nc.project.entity.UserAccount;
 import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.service.SendEmailService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -19,7 +20,9 @@ public class SendEmailServiceImpl implements SendEmailService {
     private final PasswordEncoder passwordEncoder;
 
     private final JavaMailSender mailSender;
-    private static final String FROM_ADDRESS = "mooho6632@gmail.com";
+
+    @Value("${FROM_ADDRESS}")
+    private String FROM_ADDRESS ;
 
 
     public UserAccountDTO createMailAndChangePassword(String userEmail, String userId){
@@ -59,7 +62,7 @@ public class SendEmailServiceImpl implements SendEmailService {
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setTo(mailDto.getUserEmail());
-        message.setFrom(SendEmailServiceImpl.FROM_ADDRESS);
+        message.setFrom(FROM_ADDRESS);
         message.setSubject(mailDto.getUserId());
         message.setText(mailDto.getUserProfile());
 
