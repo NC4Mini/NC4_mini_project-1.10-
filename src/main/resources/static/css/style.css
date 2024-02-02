@@ -56,8 +56,8 @@
   width: 100%;
 }
 #wrap #header {
-  width: 100%;
-  height: 156px;
+  width: 1920px;
+  margin: 0 auto;
   background: #fff;
   box-shadow: 0 1.5px 0 2px rgba(0, 0, 0, 0.03);
   position: relative;
@@ -382,8 +382,9 @@
 #wrap #main {
   position: relative;
   z-index: 2;
-  width:100%;
-  height: 1000px;
+  width:1920px;
+  margin:0 auto;
+  /*height: 1000px;*/
   background-color: white;
 }
 #wrap #main #section1 {
@@ -623,7 +624,8 @@
 #wrap #footer {
   position: relative;
   z-index: 1;
-  width: 100%;
+  width: 1920px;
+  margin:0 auto;
   border-top: 1px solid #eee;
 }
 #wrap #footer .row {

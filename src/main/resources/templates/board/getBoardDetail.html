@@ -113,9 +113,13 @@
 <!--                    </tr>-->
                     <tr th:if="${board.fileAttached == 1} ">
                         <th>이미지</th>
-                        <td th:each="fileName:${board.boardFileList} ">
-                            <img class="inquiry-img" th:src="@{|/upload/${fileName.storedFileName}|}" alt="">
+                        <td >
+                            <div id="image_container_3" >
+                                <img class="inquiry-img" th:each="fileName:${board.boardFileList} " th:src="@{|/upload/${fileName.storedFileName}|}" alt="">
+                            </div>
                         </td>
+
+
                     </tr>
                     </tbody>
                 </table>

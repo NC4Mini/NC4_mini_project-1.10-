@@ -43,6 +43,7 @@
 }
 
 .size{
+    margin-bottom: 20px;
     padding-bottom:50px;
     background: #fff;
     position:relative;
@@ -341,9 +342,10 @@ table .text8{
 
 
 #product_submit {
+    margin-top: 13px;
     border: 1px solid #d4d4d4;
     position: absolute;
-    bottom: -7px;
+    /*bottom: -7px;*/
     left: 44%;
     height: 42px;
     width: 134.5px;
@@ -408,4 +410,15 @@ input[type="number"]::-webkit-inner-spin-button {
     margin: 0;
 }
 
+#image_container_3{
+    width: 100%;
+    /* height: 200px; */
+    /*background-color: skyblue;*/
+}
+#image_container_3 > img{
+    width:100px;
+    height:100px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
 
