@@ -1,11 +1,14 @@
 package com.nc.project.dto;
 
 import com.nc.project.entity.Board;
+import com.nc.project.entity.BoardFile;
 import lombok.*;
 import org.springframework.cglib.core.Local;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 //DTO(데이터 전송 객체)
 @Getter
@@ -27,6 +30,7 @@ public class BoardDTO {
   private String originalFileName;  //원본 파일 이름
   private String storedFileName; // 서버 저장용 파일이름
   private int fileAttached; //파일 첨부 여부(첨부1, 미첨부0)
+  private List<BoardFileDTO> boardFileList;
 
   public static  BoardDTO toBoardDTO(Board board){
       BoardDTO boardDTO = new BoardDTO();
@@ -38,6 +42,8 @@ public class BoardDTO {
       boardDTO.setBoardContents(board.getBoardContents());
       boardDTO.setBoardCreatedTime(board.getCreatedTime());
       boardDTO.setBoardUpdatedTime(board.getUpdatedTime());
+      boardDTO.setBoardFileList(board.getBoardFileList().stream().map(boardFlie1 -> boardFlie1.toDTO()
+      ).toList());
       if(board.getFileAttached() == 0){
           boardDTO.setFileAttached(board.getFileAttached()); //0
       }else{
