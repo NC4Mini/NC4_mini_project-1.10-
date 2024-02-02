@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         return CustomUserDetails.builder()
-                .user(userOptional.get())
+                .userAccount(userOptional.get())
                 .build();
     }
 }

@@ -40,7 +40,7 @@ public interface CartService {
     public void updateShpAddr (long id, int shpAddrId);
 
     // 배송지를 추가해주는 기능
-    public void addShpAddr (long id, UserShpAddr userShpAddr);
+    public void addShpAddr (long id, Map<String, String> userShpAddrMap);
 
 //    // 장바구니번호로 유저정보를 가져오는 기능
 //    public UserAccount getUserAccountByCartId (long cartId);

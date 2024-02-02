@@ -202,30 +202,29 @@
 <!--                    </div>-->
 
                     <!-- 결제 수단 선택 파트, 비활성화 (02.01) -->
-<!--                    <div class="data_method">-->
-<!--                        <h2 class="tit_section" id="titFocusMethod">결제수단</h2>-->
+                   <div class="data_method">
+                       <h2 class="tit_section" id="titFocusMethod">결제수단</h2>
 
 
-<!--                        <table class="goodsinfo_table tbl_left">-->
-<!--                            <tbody>-->
-<!--                                <tr>-->
-<!--                                    <th> 카카오페이 결제</th>-->
-<!--                                    <td>-->
-<!--                                        <label class="label_radio" id="cardBenefit_kakaopay">-->
-<!--                                            <input type="radio" name="settlekind" value="kakaopay">-->
-<!--                                            <span id="kakaopay">카카오페이</span>-->
-<!--                                            -->
-<!--                                            <div class="info_benefit"></div>-->
-<!--                                        </label>-->
-<!--                                    </td>-->
-<!--                                </tr>-->
-<!--                            </tbody>-->
-<!--                        </table>-->
-<!--                    </div>-->
+                       <table class="goodsinfo_table tbl_left">
+                           <tbody>
+                               <tr>
+                                   <td style="width: 250px;">
+                                        <button type="button" name="settlekind" value="네이버 페이">
+                                            <img src="/img/naver_pay_white.png" alt="">
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <input type="submit" value="결제하기" id="pay_btn" style="width: 240px; height: 64px; border: none; background-color: #5f0080; font-size: 16px; color: #fff; font-weight: 700; border-radius: 3px;">
+                                    </td>
+                               </tr>
+                           </tbody>
+                       </table>
+                    </div>
 
                     <!-- 결제 버튼창 -->
                     <div class="tit_section"> 
-                        <input type="submit" value="결제하기" class="btn_payment" id="pay_btn">
+                        <input type="submit" value="결제하기" class="btn_payment" id="pay_btn" style="display: none;">
                     </div>
                     
                 </form>

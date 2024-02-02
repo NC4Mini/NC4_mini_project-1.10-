@@ -49,7 +49,10 @@ public class ItemFile {
                 .itemFilePath(this.itemFilePath)
                 .itemFileOrigin(this.itemFileOrigin)
                 .itemFileCate(this.itemFileCate)
+                .itemType(this.itemType)
                 .build();
     }
+
+
 }
 
