@@ -298,7 +298,6 @@
                             success: (obj) => {
                                 console.log(obj.item.msg);
                                 alert(obj.item.msg);
-                                // location.href = `/item/item-modify/${$("#itemId").val()}`;
                                 window.location.reload();
                             },
                             error: (error) => {
@@ -443,7 +442,8 @@
                                                                     class="image_main_input_button"></button>
                                                             <div id="image_main_container" th:if="${mainFile != null}">
                                                                 <img class=image_main
-                                                                     th:src="@{'/upload/' + ${mainFile.itemFileName}}" alt="메인이미지">
+
+                                                                     th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${mainFile.itemFileName}}" alt="메인이미지">
                                                                 <p style="display: inline-block; font-size: 10px; font-weight: bold; padding: 0 10px;"
                                                                    th:text="${mainFile.itemFileOrigin}"></p>
                                                             </div>
@@ -479,7 +479,8 @@
                                                                     class="image_detail_input_button"></button>
                                                             <div id="image_detail_container"
                                                                  th:if="${detailFile != null}">
-                                                                <img class="image_detail" th:src="@{'/upload/' + ${detailFile.itemFileName}}" alt="디테일이미지">
+
+                                                                <img class="image_detail" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${detailFile.itemFileName}}" alt="디테일이미지">
                                                                 <p style="display: inline-block; font-size: 10px; font-weight: bold; padding: 0 10px;"
                                                                    th:text="${detailFile.itemFileOrigin}"></p>
                                                             </div>
@@ -516,7 +517,8 @@
                                                                     class="image_thumbnail_input_button"></button>
                                                             <div id="image_thumbnail_container"
                                                                  th:if="${thumbnailFile != null}">
-                                                                <img class="image_thumbnail" th:src="@{'/upload/' + ${thumbnailFile.itemFileName}}" alt="썸네일이미지">
+
+                                                                <img class="image_thumbnail" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${thumbnailFile.itemFileName}}" alt="썸네일이미지">
                                                                 <p style="display: inline-block; font-size: 10px; font-weight: bold; padding: 0 10px;"
                                                                    th:text="${thumbnailFile.itemFileOrigin}"></p>
                                                             </div>
