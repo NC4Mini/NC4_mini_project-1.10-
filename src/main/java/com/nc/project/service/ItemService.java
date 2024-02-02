@@ -6,13 +6,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ItemService {
 
     void insertItem(ItemDTO itemDTO);
 
-    // 상품 등록
-    public void addItem (Item item);
+    void modifyItem(ItemDTO itemDTO);
+
+    void deleteItem(long itemId);
 
     // 해당 상품 읽어오기 (1개) - 상세 페이지
     public Item getItem(long itemId);
@@ -25,4 +27,5 @@ public interface ItemService {
 
     public Page<Item> ItemListRandom(Pageable pageable);
     public Page<Item> ItemList(Pageable pageable);
+
 }

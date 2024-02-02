@@ -304,7 +304,7 @@ table .text8 {
 }
 
 
-#item_submit {
+#item_update {
     border: 1px solid #d4d4d4;
     position: absolute;
     bottom: -20px;
@@ -363,7 +363,7 @@ span.txtByte {
     margin-left: 5px;
 }
 
-#item_submit button, #item_delete button {
+#item_update button, #item_delete button {
     width: 100%;
     height: 100%;
 }

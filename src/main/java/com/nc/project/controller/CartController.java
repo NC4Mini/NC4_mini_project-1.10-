@@ -195,30 +195,13 @@ public class CartController {
     public ResponseEntity<?> addShpAddr (Principal principal, @RequestBody Map<String, String> data) {
         Map<String, String> response = new HashMap<>();
 
-        System.out.println("=============================");
-        System.out.println(data.get("addrBasic"));
-        System.out.println(data.get("addrDetail"));
-        System.out.println(data.get("addrStandard"));
-
-
         try {
             UserAccount userAccount = userService.findUser(principal.getName());
 
             long id = userAccount.getId();
 
-            // data 맵에서 필요한 값을 추출
-            String addrBasic = data.get("addrBasic");
-            String addrDetail = data.get("addrDetail");
-            char isDefault = data.get("addrStandard").charAt(0);
-
-            // UserShpAddr 객체 생성
-            UserShpAddr userShpAddr = new UserShpAddr();
-
-            userShpAddr.setAddrBasic(addrBasic);
-            userShpAddr.setAddrDetail(addrDetail);
-            userShpAddr.setAddrStandard(isDefault);
-
-            cartService.addShpAddr(id, userShpAddr);
+            cartService.addShpAddr(id, data);
+            
             response.put("success", "추가되었습니다.");
             return ResponseEntity.ok(response);
 
