@@ -1,5 +1,6 @@
 package com.nc.project.entity;
 
+import com.nc.project.dto.BoardFileDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,5 +30,14 @@ public class BoardFile extends Base {
         boardFile.setStoredFileName(storedFileName);
         boardFile.setBoard(board);
         return boardFile;
+    }
+
+    public BoardFileDTO toDTO() {
+        return BoardFileDTO.builder()
+                .id(this.id)
+                .originalFileName(this.originalFileName)
+                .storedFileName(this.storedFileName)
+                .boardId(this.board.getId())
+                .build();
     }
 }

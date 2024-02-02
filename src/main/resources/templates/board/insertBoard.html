@@ -50,7 +50,7 @@
                                     <td colspan="2">
                                         <div>
                                                 <span>
-                                                    <input type="text" name="boardCategory" class="i_text text1" onkeyup="chkword_name(this, 80)">
+                                                    <input type="text" name="boardCategory" class="i_text text1">
                                                 </span>
                                         </div>
                                         <span class="txtByte" title="현재글자수/최대글자수">
@@ -65,7 +65,7 @@
                                     <td colspan="2">
                                         <div>
                                                 <span>
-                                                    <input type="text" name="boardWriter" class="i_text text1" onkeyup="chkword_name(this, 80)">
+                                                    <input type="text" name="boardWriter" class="i_text text1" >
                                                 </span>
                                         </div>
                                         <span class="txtByte" title="현재글자수/최대글자수">
@@ -80,7 +80,7 @@
                                     <td colspan="2">
                                         <div>
                                                 <span>
-                                                    <input type="text" class="i_text text2" name="boardTitle" onkeyup="chkword_introduce(this, 150)">
+                                                    <input type="text" class="i_text text2" name="boardTitle">
                                                 </span>
 
                                         </div>
@@ -96,7 +96,7 @@
                                     <td>
                                         <div>
                                                 <span>
-                                                    <textarea class="i_text text8" name="boardContents" id="" cols="30" rows="10" onkeyup="chkword_information(this, 550)"></textarea>
+                                                    <textarea class="i_text text8" name="boardContents" id="" cols="30" rows="10"></textarea>
                                                 </span>
                                         </div>
                                         <span class="txtByte_big txtByte" title="현재글자수/최대글자수">
@@ -110,71 +110,55 @@
                                 <tr>
                                     <th>이미지</th>
                                     <td class="img_upload">
-                                        <div>
-                                            <span>대표 이미지</span>
+<!--                                        <div>-->
+<!--                                            <span>대표 이미지</span>-->
+<!--                                            <div class="image_box">-->
 
-                                            <div class="image_box">
-
-
-                                                <div class="image_add">
-
-                                                    <input type="file" name="boardFile" accept="image/*" id="image_input" onchange="set_image(event);" multiple>
-                                                    <button type="button" class="image_input_button"></button>
-                                                    <div id="image_container"></div>
-
+<!--                                                <div class="image_add">-->
+                                                    <input type="file" name="boardFile" id="image" accept="image/*" onchange="preview()"  multiple>
+<!--                                                    <button type="button" class="image_input_button"></button>-->
+                                                    <div id="image_container_3"></div>
                                                     <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
                                                     <script>
-                                                        function set_image(){
+                                                        let fileInput = document.getElementById("image");
+                                                        let imageContainer = document.getElementById("image_container_3");
+                                                        function preview(){
 
-                                                            var reader = new FileReader();
 
-                                                            reader.onload = function(event) {
-                                                                var img = document.createElement("img");
-                                                                img.setAttribute("src", event.target.result);
-                                                                document.querySelector("div#image_container").appendChild(img);
-                                                            };
+                                                            const fileArr = Array.prototype.slice.call(fileInput.files);
 
-                                                            reader.readAsDataURL(event.target.files[0]);
+                                                            for(i of fileArr) {
+                                                                // reader.readAsDataURL(image.files[0])
+                                                                // const image = document.querySelector("#image")
+                                                                // image.addEventListener("change", (e) => {
+                                                                //     //console.log(e)
+                                                                //     const reader = new FileReader()
+                                                                //     reader.readAsDataURL(e.target.files[0])
+                                                                let reader = new FileReader();
+
+                                                                    reader.onload = function (event) {
+                                                                        let img = document.createElement("img");
+                                                                        img.setAttribute("src",event.target.result);
+
+                                                                        $("#image_container_3").append(img);
+
+                                                                    }
+                                                                reader.readAsDataURL(i);
+                                                                // })
+                                                            }
                                                         }
+
 
                                                     </script>
 
 
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
 
-<!--                                                    <button type="button" class="re_upload">-->
-<!--                                                            <span>-->
-<!--                                                                수정-->
-<!--                                                            </span></button>-->
-<!--                                                    <button type="button" class="remove">-->
-<!--                                                            <span>-->
-<!--                                                                삭제-->
-<!--                                                            </span>-->
-<!--                                                    </button>-->
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div>
-
-                                        </div>
-
-
-
-
-
-
-
-
-
-
-
+<!--                                        <div>-->
+<!--                                        </div>-->
                                     </td>
-
-
-
-
                                 </tr>
                                 </tbody>
                             </table>

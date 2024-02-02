@@ -215,25 +215,30 @@ public class CartServiceImpl implements CartService {
 
     // 배송지 추가 기능
     @Override
-    public void addShpAddr(long id, UserShpAddr userShpAddr) {
+    public void addShpAddr(long id, Map<String, String> userShpAddrMap) {
+        String addrBasic = userShpAddrMap.get("addrBasic");
+        String addrDetail = userShpAddrMap.get("addrDetail");
+        char addrStandard = userShpAddrMap.get("addrStandard").charAt(0);
+        
         UserAccount userAccount = userAccountRepository.getReferenceById(id);
 
+        UserShpAddr userShpAddr = new UserShpAddr();
         userShpAddr.setUserAccount(userAccount);
-
-        userShpAddrRepository.save(userShpAddr);
+        userShpAddr.setAddrBasic(addrBasic);
+        userShpAddr.setAddrDetail(addrDetail);
+        userShpAddr.setAddrStandard(addrStandard);
 
         // 만약 추가한 배송지가 기본 배송지라면 나머지 배송지들은 기본 배송지가 아니므로 N으로 변경
-        if (userShpAddr.getAddrStandard() == 'Y') {
+        if (addrStandard == 'Y') {
             List<UserShpAddr> userShpAddrList = new ArrayList<>();
             userShpAddrList = userShpAddrRepository.findAllByUserAccount_Id(id);
             for (UserShpAddr addr : userShpAddrList) {
-                if (addr.getAddrId() != userShpAddr.getAddrId()) { // 현재 기본 배송지를 제외한 나머지 배송지
-                    addr.setAddrStandard('N');
-                    userShpAddrRepository.save(addr); // 변경된 배송지 정보 저장
-                }
+                addr.setAddrStandard('N');
+                userShpAddrRepository.save(addr); // 변경된 배송지 정보 저장
             }
         }
 
+        userShpAddrRepository.save(userShpAddr);
     }
 
     @Override

@@ -41,6 +41,9 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	// https://mvnrepository.com/artifact/org.json/json
 	implementation 'org.json:json:20231013'
+
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 tasks.named('test') {

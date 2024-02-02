@@ -63,6 +63,8 @@ public class BoardController {
 //   해당 게시글 조회수를 하나 올리고 게시글 데이터를 가져와서 detail.html에 출력
         boardService.updateHits(id);
         BoardDTO boardDTO = boardService.findById(id);
+        System.out.println("===================================");
+        System.out.println(boardDTO);
         model.addAttribute("board", boardDTO);
         return "board/getBoardDetail";
 

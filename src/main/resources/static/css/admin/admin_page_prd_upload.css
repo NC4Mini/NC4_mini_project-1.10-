@@ -197,17 +197,21 @@ table .text8{
 }
 
 #image_container{
-    overflow: hidden;
-    
+    /*overflow: hidden;*/
+    /*width: 100%;*/
+    /*height: 500px;*/
+    /*background-color: thistle;*/
     
 }
 
 #image_container img{
-    position: absolute;
-    top: -1px;
-    left: 0px;
-    width: 269px;
-    height: 227px;
+    /*position: absolute;*/
+    /*top: -1px;*/
+    /*left: 0px;*/
+    /*width: 269px;*/
+    /*height: 227px;*/
+    width:100px;
+    height:100px;
 }
 
 
@@ -250,12 +254,6 @@ table .text8{
     width: 134.5px;
     
 }
-
-
-
-
-
-
 
 
 .sub_image .sub_image_input_button::before{
