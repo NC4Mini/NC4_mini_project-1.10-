@@ -18,4 +18,10 @@ public interface UserService {
 
     // User 객체 반환해주는 메서드
     UserAccount findUser (String userId);
+
+
+    public boolean userEmailCheck(String userEmail, String userName);
+
+
+    public void updateUserPassword(String userEmail,String pw);
 }

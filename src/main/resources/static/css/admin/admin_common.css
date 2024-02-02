@@ -122,11 +122,6 @@ tblParent {
 }
 
 .delete_button{
-    position: absolute;
-    right:10px;
-    display: block;
-    padding: 0px 10px;
-    text-align: center;
     overflow: hidden;
     width: 120px;
     height: 44px;
@@ -135,5 +130,10 @@ tblParent {
     background-color: rgb(95, 0, 128);
     border: 0px none;
     cursor: pointer;
+    margin-top: 118px;
 }
 
+.inquiry-img {
+    width: 100px;
+    height: 100px;
+}
