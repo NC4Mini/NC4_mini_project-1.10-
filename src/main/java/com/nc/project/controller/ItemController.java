@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -159,10 +160,35 @@ public class ItemController {
     // 메인에서 상품 상세페이지 이동
     @GetMapping("/item-detail")
     public ModelAndView getItemDetail(@RequestParam("itemId") long itemId) {
+        ModelAndView mav = new ModelAndView();
+
         Item item = itemService.getItem(itemId);
 
-        ModelAndView mav = new ModelAndView();
+        List<ItemFile> itemFileList = item.getItemFileList();
+
+        ItemFile mainFile = null;
+        ItemFile detailFile = null;
+        ItemFile thumbnailFile = null;
+        String defaultImgPath = "default_Img.png";
+        
+        // for-each를 통한 리스트 순회로 코드 줄이기
+        for(ItemFile itemFile : itemFileList) {
+            if(itemFile.getItemType().equalsIgnoreCase("main")) {
+                mainFile = itemFile;
+            } else if(itemFile.getItemType().equalsIgnoreCase("detail")) {
+                detailFile = itemFile;
+            } else {
+                thumbnailFile = itemFile;
+            }
+        }
+        
         mav.addObject("item", item);
+        mav.addObject("mainFile", mainFile);
+        mav.addObject("detailFile", detailFile);
+        mav.addObject("thumbnailFile", thumbnailFile);
+        mav.addObject("defaultImgPath", defaultImgPath);
+
+
         mav.setViewName("item/item_detail.html");
 
         return mav;

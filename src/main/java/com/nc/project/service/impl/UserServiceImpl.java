@@ -88,4 +88,20 @@ public class UserServiceImpl implements UserService {
     public int idCheck(String userId) {
         return userAccountRepository.countByUserId(userId);
     }
+
+    public boolean userEmailCheck(String userId, String userEmail) {
+        UserAccount userAccount = userAccountRepository.findByUserId(userId).get();
+        if(userAccount != null && userAccount.getUserEmail().equals(userEmail)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+    public void updateUserPassword(String userId,String pw) {
+        Optional<UserAccount> userAccount = userAccountRepository.findByUserId(userId);
+        userAccount.get().setUserPw(pw);
+    }
 }
