@@ -107,13 +107,15 @@
                         <td th:text="${board.boardContents}">
                         </td>
                     </tr>
-                    <tr>
+<!--                    <tr>-->
+<!--                        <th>이미지</th>-->
+<!--                        <td><img th:src="@{|/upload/${board.originalFileName}|}" alt=""></td>-->
+<!--                    </tr>-->
+                    <tr th:if="${board.fileAttached == 1} ">
                         <th>이미지</th>
-                        <td><img th:src="@{|/upload/${board.originalFileName}|}" alt=""></td>
-                    </tr>
-                    <tr th:if="${board.fileAttached == 1}">
-                        <th>image</th>
-                        <td><img th:src="@{|/upload/${board.storedFileName}|}" alt=""></td>
+                        <td th:each="fileName:${board.boardFileList} ">
+                            <img class="inquiry-img" th:src="@{|/upload/${fileName.storedFileName}|}" alt="">
+                        </td>
                     </tr>
                     </tbody>
                 </table>
