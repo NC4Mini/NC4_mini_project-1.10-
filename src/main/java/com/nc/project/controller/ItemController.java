@@ -1,5 +1,6 @@
 package com.nc.project.controller;
 
+import com.nc.project.common.FileUtils;
 import com.nc.project.common.FileUtilsLocal;
 import com.nc.project.dto.ItemDTO;
 import com.nc.project.dto.ItemFileDTO;
@@ -27,6 +28,8 @@ import java.util.*;
 public class ItemController {
     private final ItemService itemService;
 
+    private final FileUtils fileUtils;
+
 
     // 상품 등록 페이지 이동
     @GetMapping("/item-add")
@@ -52,21 +55,21 @@ public class ItemController {
             if (itemMainImage.getOriginalFilename() != null &&
                     !itemMainImage.getOriginalFilename().isEmpty()) {
 
-                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemMainImage, "C:/tmp/upload/item/");
+                ItemFileDTO itemFileDTO = fileUtils.parseFileInfo(itemMainImage, "item/");
                 itemFileDTO.setItemType("Main");
                 itemFileDTOList.add(itemFileDTO);
             }
             if (itemDetailImage.getOriginalFilename() != null &&
                     !itemDetailImage.getOriginalFilename().isEmpty()) {
                 // item이라는 디렉토리에 저장 (클라우드 버켓에서 자동으로 인식해줌)
-                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemDetailImage, "C:/tmp/upload/item/");
+                ItemFileDTO itemFileDTO = fileUtils.parseFileInfo(itemDetailImage, "item/");
                 itemFileDTO.setItemType("Detail");
                 itemFileDTOList.add(itemFileDTO);
             }
             if (itemThumbnailImage.getOriginalFilename() != null &&
                     !itemThumbnailImage.getOriginalFilename().isEmpty()) {
 
-                ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemThumbnailImage, "C:/tmp/upload/item/");
+                ItemFileDTO itemFileDTO = fileUtils.parseFileInfo(itemThumbnailImage, "item/");
                 itemFileDTO.setItemType("Thumbnail");
                 itemFileDTOList.add(itemFileDTO);
             }
@@ -122,7 +125,7 @@ public class ItemController {
                 if (itemMainImage.getOriginalFilename() != null &&
                         !itemMainImage.getOriginalFilename().isEmpty()) {
 
-                    ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemMainImage, "C:/tmp/upload/item/");
+                    ItemFileDTO itemFileDTO = fileUtils.parseFileInfo(itemMainImage, "item/");
                     itemFileDTO.setItemType("Main");
                     itemFileDTOList.add(itemFileDTO);
                 } else {
@@ -137,7 +140,7 @@ public class ItemController {
                 if (itemDetailImage.getOriginalFilename() != null &&
                         !itemDetailImage.getOriginalFilename().isEmpty()) {
                     // item이라는 디렉토리에 저장 (클라우드 버켓에서 자동으로 인식해줌)
-                    ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemDetailImage, "C:/tmp/upload/item/");
+                    ItemFileDTO itemFileDTO = fileUtils.parseFileInfo(itemDetailImage, "item/");
                     itemFileDTO.setItemType("Detail");
                     itemFileDTOList.add(itemFileDTO);
                 } else {
@@ -151,7 +154,7 @@ public class ItemController {
                 if (itemThumbnailImage.getOriginalFilename() != null &&
                         !itemThumbnailImage.getOriginalFilename().isEmpty()) {
 
-                    ItemFileDTO itemFileDTO = FileUtilsLocal.parseFileInfo(itemThumbnailImage, "C:/tmp/upload/item/");
+                    ItemFileDTO itemFileDTO = fileUtils.parseFileInfo(itemThumbnailImage, "item/");
                     itemFileDTO.setItemType("Thumbnail");
                     itemFileDTOList.add(itemFileDTO);
                 } else {
