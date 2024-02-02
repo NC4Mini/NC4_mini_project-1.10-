@@ -43,6 +43,7 @@ dependencies {
 	implementation 'org.json:json:20231013'
 
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 tasks.named('test') {
