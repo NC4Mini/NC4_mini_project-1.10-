@@ -91,6 +91,7 @@ public class BoardService {
         boardRepository.updateHits(id);
     }
 
+    @Transactional
     public BoardDTO findById(Long id) {
         Optional<Board> optionalBoard = boardRepository.findById(id);
         if(optionalBoard.isPresent()){

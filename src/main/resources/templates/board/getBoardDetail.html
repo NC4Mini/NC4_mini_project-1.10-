@@ -113,16 +113,20 @@
 <!--                    </tr>-->
                     <tr th:if="${board.fileAttached == 1} ">
                         <th>이미지</th>
-                        <td th:each="fileName:${board.boardFileList} ">
-                            <img class="inquiry-img" th:src="@{|/upload/${fileName.storedFileName}|}" alt="">
+                        <td >
+                            <div id="image_container_3" >
+                                <img class="inquiry-img" th:each="fileName:${board.boardFileList} " th:src="@{|/upload/${fileName.storedFileName}|}" alt="">
+                            </div>
                         </td>
+
+
                     </tr>
                     </tbody>
                 </table>
             </div>
-            <button onclick="listReq()">목록</button>
-            <button onclick="updateReq()">수정</button>
-            <button onclick="deleteReq()">삭제</button>
+            <button class="getBoardButton" onclick="listReq()">목록</button>
+            <button class="getBoardButton" onclick="updateReq()">수정</button>
+            <button class="getBoardButton" onclick="deleteReq()">삭제</button>
         </div>
     </div>
 

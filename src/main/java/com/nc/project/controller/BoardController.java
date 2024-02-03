@@ -4,6 +4,7 @@ import com.nc.project.dto.BoardDTO;
 import com.nc.project.entity.Board;
 import com.nc.project.service.BoardService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,6 +76,8 @@ public class BoardController {
         model.addAttribute("boardUpdate", boardDTO);
         return "board/updateBoard";
     }
+
+    @Transactional
     @PostMapping("/update")
     public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
         BoardDTO board = boardService.update(boardDTO);
