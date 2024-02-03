@@ -10,11 +10,42 @@
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{js/delivery/delivery.js}"></script>
+        <!-- 토스페이 script -->
+        <script src="https://js.tosspayments.com/v1/payment"></script>
     </th:block>
 </head>
 <body>
     <div id="wrap" layout:fragment="content">
+        
+        <script th:inline="javascript">
+            function doPayment() {
+                // 클라이언트 키 설정
+                var clinetKey = 'test_ck_d46qopOB89dgljPXOA6KrZmM75y0';
+                var tossPayments = TossPayments(clinetKey);
+                
+                var totalPrice = document.getElementById('productsTotalPrice').innerText;
+                var deliveryId = document.getElementById('deliveryId').value;
+
+                // 난수 형태의 주문번호 생성
+                var orderNum = Math.floor(Math.random() * 1000000000) + 1;
+
+                tossPayments.requestPayment('카드', {
+                    amount: totalPrice,
+                    // amount: 1000,
+                    // orderId: deliveryId,
+                    orderId: orderNum,
+                    orderName: '결제테스트',
+                    customerName: '결제자명:김태현',
+                    // 결제 성공시 호출되는 함수
+                    successUrl: 'http://localhost:9090/delivery/success',
+                    // successUrl: 'https://docs.tosspayments.com/guides/payment/test-success',
+                    failUrl: 'https://docs.tosspayments.com/guides/payment/test-fail',
+                });
+            }
+            
+        </script>
         <!-- <input = type="hidden" th:value="${delivery.id}" id="deliveryTestId"> -->
+        
         <div id="container">
             <div class="user_form">
                 <h1 class="h1_tit">주문서</h1>
@@ -60,6 +91,7 @@
                     <h2 class="tit_section" id="titFocusOrderer">주문자 정보</h2>
                     <!-- 데이터 넘겨줄 input 태그 -->
                     <input type="hidden" id="cartId" th:value="${cart.cartId}" name="cartId">
+                    <input type="hidden" id="deliveryId" th:value="${delivery.deliveryId}" name="deliveryId">
                     <div class="order_section data_orderer">
                         <table class="goodsinfo_table">
                             <tbody>
@@ -210,7 +242,7 @@
                            <tbody>
                                <tr>
                                    <td style="width: 250px;">
-                                        <button type="button" name="settlekind" value="네이버 페이">
+                                        <button type="button" name="settlekind" value="toss_payment" id="tossPayment" onclick="doPayment()">
                                             <img src="/img/naver_pay_white.png" alt="">
                                         </button>
                                     </td>
@@ -223,7 +255,7 @@
                     </div>
 
                     <!-- 결제 버튼창 -->
-                    <div class="tit_section"> 
+                    <div class="tit_section" id="renderPayment"> 
                         <input type="submit" value="결제하기" class="btn_payment" id="pay_btn" style="display: none;">
                     </div>
                     
@@ -231,9 +263,7 @@
             </div>
         </div>
 
-        <script th:inline="javascript">
-            
-        </script>
+        
     </div>
 
 </body>

@@ -55,5 +55,8 @@ public class Delivery {
     @Column(name = "delivery_status")  // 0 - 주문중, 1 - 주문완료, 2 - 주문취소
     private int deliveryStatus;
 
+    // 토스 식별용 주문 고유 번호
+    @Column(name = "delivery_number")
+    private String deliveryNumber;
 
 }

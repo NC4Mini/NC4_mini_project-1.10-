@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="doPayment()">결제</button>
+    
+    <script>
+        var userCode = {imp37446886}; // 가맹점 식별코드
+
+        IMP.init(userCode);
+
+        function doPayment() {
+                IMP.request_pay ({
+                pg: "html5_inicis.INIPayTest",
+                pay_method: "card",
+                merchant_uid: "mid-20230615-001",
+                amount: 1500,
+                buyer_email: "abc@naver.com",
+                buyer_name: "홍길동",
+                });
+            }
+    </script>
+</body>
+</html>
