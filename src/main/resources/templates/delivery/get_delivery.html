@@ -56,22 +56,22 @@
 
                 <div id="itemList" class="page_aticle order_goodslist" th:each="cartItem : ${cart.cartItemList}">
                     <ul class="list_product">
-                        <li>
+                        <li th:each="itemFile : ${cartItem.item.itemFileList}">
                             <div class="thumb">
-                                <img src="https://img-cf.kurly.com/shop/data/goods/156757412839i0.jpg" alt="상품이미지">
+                                <img th:if="${itemFile.itemType} == 'Main'" th:src="@{'/upload/' + ${itemFile.itemFileName}}" >
                             </div>
 
                             <div class="name">
                                 <div class="inner_name" th:text="${cartItem.Item.itemName}">[김구원선생] 무농약 콩나물 200g</div>
                             </div>
 
-                            <div class="ea" th:text="${cartItem.cartItemCnt} + '개'">
+                            <div class="ea" th:text="${cartItem.cartItemCnt} + '개'" style="width: 1300px; position: absolute;">
                                 1개
                             </div>
 
-                            <div class="info_price">
-                                <span class="num">
-                                    <span class="price" th:text="${cartItem.Item.itemPrice} * ${cartItem.cartItemCnt} + '원'">
+                            <div class="info_price" style="position: absolute; margin-left: 670px; text-align: right;">
+                                <span class="num" style="display: block;">
+                                    <span class="price" th:text="${cartItem.Item.itemPrice} * ${cartItem.cartItemCnt} + '원'" style="padding-top: 52px;">
                                         1,300
                                         원
                                     </span>
@@ -243,7 +243,8 @@
                                <tr>
                                    <td style="width: 250px;">
                                         <button type="button" name="settlekind" value="toss_payment" id="tossPayment" onclick="doPayment()">
-                                            <img src="/img/naver_pay_white.png" alt="">
+                                            <input type="button" value="간편결제" style="width: 240px; height: 62px; border: none; background-color: #fff; font-size: 16px; color: blue; font-weight: 700; border-radius: 3px;">
+                                            <!-- <img src="/img/naver_pay_white.png" alt=""> -->
                                         </button>
                                     </td>
                                     <td>
