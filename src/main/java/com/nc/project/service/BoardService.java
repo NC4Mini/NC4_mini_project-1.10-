@@ -103,10 +103,10 @@ public class BoardService {
         }
     }
 
-    public BoardDTO update(BoardDTO boardDTO) {
+    public void update(BoardDTO boardDTO) {
         Board board = Board.toUpdateEntity(boardDTO);
         boardRepository.save(board);
-        return findById(boardDTO.getId());
+        //return findById(boardDTO.getId());
     }
 
     public void delete(Long id) {

@@ -41,6 +41,7 @@
 
             <div class="list_order">
                 <form action="/board/update" method="post">
+                    <input type="hidden" name="fileAttached" th:value="${boardUpdate.fileAttached}">
                     <div class="size">
                         <div class="p_board">
                             <table width="100%">
