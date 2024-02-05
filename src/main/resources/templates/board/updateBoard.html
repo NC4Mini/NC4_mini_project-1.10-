@@ -41,6 +41,7 @@
 
             <div class="list_order">
                 <form action="/board/update" method="post">
+                    <input type="hidden" name="fileAttached" th:value="${boardUpdate.fileAttached}">
                     <div class="size">
                         <div class="p_board">
                             <table width="100%">
@@ -59,11 +60,11 @@
                                                     <input type="text" name="boardCategory"  th:value="${boardUpdate.boardCategory}" class="i_text text1" onkeyup="chkword_name(this, 80)">
                                                 </span>
                                         </div>
-                                        <span class="txtByte" title="현재글자수/최대글자수">
-                                              [
-                                              <strong class="txt_count_name">0</strong>
-                                               / 80 ]
-                                            </span>
+<!--                                        <span class="txtByte" title="현재글자수/최대글자수">-->
+<!--                                              [-->
+<!--                                              <strong class="txt_count_name">0</strong>-->
+<!--                                               / 80 ]-->
+<!--                                            </span>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -74,11 +75,11 @@
                                                     <input type="text" name="boardWriter" th:value="${boardUpdate.boardWriter}" class="i_text text1" onkeyup="chkword_name(this, 80)" readonly>
                                                 </span>
                                         </div>
-                                        <span class="txtByte" title="현재글자수/최대글자수">
-                                              [
-                                              <strong class="txt_count_name">0</strong>
-                                               / 80 ]
-                                            </span>
+<!--                                        <span class="txtByte" title="현재글자수/최대글자수">-->
+<!--                                              [-->
+<!--                                              <strong class="txt_count_name">0</strong>-->
+<!--                                               / 80 ]-->
+<!--                                            </span>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -90,11 +91,11 @@
                                                 </span>
 
                                         </div>
-                                        <span class="txtByte" title="현재글자수/최대글자수">
-                                              [
-                                              <strong class="txt_count_introduce">0</strong>
-                                               / 150 ]
-                                            </span>
+<!--                                        <span class="txtByte" title="현재글자수/최대글자수">-->
+<!--                                              [-->
+<!--                                              <strong class="txt_count_introduce">0</strong>-->
+<!--                                               / 150 ]-->
+<!--                                            </span>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -105,78 +106,24 @@
                                                     <textarea class="i_text text8" name="boardContents" th:text="${boardUpdate.boardContents}" id="" cols="30" rows="10" onkeyup="chkword_information(this, 550)"></textarea>
                                                 </span>
                                         </div>
-                                        <span class="txtByte_big txtByte" title="현재글자수/최대글자수">
-                                              [
-                                              <strong class="txt_count_information">0</strong>
-                                               / 550 ]
-                                            </span>
+<!--                                        <span class="txtByte_big txtByte" title="현재글자수/최대글자수">-->
+<!--                                              [-->
+<!--                                              <strong class="txt_count_information">0</strong>-->
+<!--                                               / 550 ]-->
+<!--                                            </span>-->
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr th:if="${boardUpdate.fileAttached == 1} ">
                                     <th>이미지</th>
-                                    <td class="img_upload">
-                                        <div>
-                                            <span>대표 이미지</span>
-
-                                            <div class="image_box">
-
-
-                                                <div class="image_add">
-<!--                                                    <input type="file" name="boardFile" accept="image/*" id="image_input" onchange="set_image(event);" multiple>-->
-                                                    <input type="file" name="boardfile" accept="image/*" id="image_input" onchange="set_image(event); " readonly>
-                                                    <button type="button" class="image_input_button"></button>
-                                                    <div id="image_container"></div>
-
-                                                    <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
-                                                    <script>
-                                                        function set_image(){
-
-                                                            var reader = new FileReader();
-
-                                                            reader.onload = function(event) {
-                                                                var img = document.createElement("img");
-                                                                img.setAttribute("src", event.target.result);
-                                                                document.querySelector("div#image_container").appendChild(img);
-                                                            };
-
-                                                            reader.readAsDataURL(event.target.files[0]);
-                                                        }
-
-                                                    </script>
-
-
-
-                                                    <!--                                                    <button type="button" class="re_upload">-->
-                                                    <!--                                                            <span>-->
-                                                    <!--                                                                수정-->
-                                                    <!--                                                            </span></button>-->
-                                                    <!--                                                    <button type="button" class="remove">-->
-                                                    <!--                                                            <span>-->
-                                                    <!--                                                                삭제-->
-                                                    <!--                                                            </span>-->
-                                                    <!--                                                    </button>-->
-
-                                                </div>
-                                            </div>
+                                    <td >
+                                        <div id="image_container_3" >
+                                            <img class="inquiry-img" th:each="fileName:${boardUpdate.boardFileList} " th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/board/' + ${fileName.storedFileName}|}" alt="">
                                         </div>
+                                    </td>
 
 
-                                        <div>
+                                </tr>
 
-                                        </div>
-
-
-
-
-
-
-
-
-
-
-
-<!--                                    </td>-->
-<!--                                </tr>-->
                                 </tbody>
                             </table>
                         </div>

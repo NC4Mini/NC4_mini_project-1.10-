@@ -59,6 +59,7 @@ public class Board extends Base {
         board.setBoardCategory(boardDTO.getBoardCategory());
         board.setBoardTitle(boardDTO.getBoardTitle());
         board.setBoardContents(boardDTO.getBoardContents());
+        board.setFileAttached(boardDTO.getFileAttached());
         return board;
     }
 
