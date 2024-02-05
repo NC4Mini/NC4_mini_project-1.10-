@@ -296,7 +296,8 @@
                                 <div class="goods_intro">
                                     <div class="pic">
                                         <img th:if="${not #strings.isEmpty(detailFile)}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${detailFile.itemFileName}}" style="width:1010px; height:671px;">
-                                        <img th:if="${#strings.isEmpty(detailFile)}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${defaultImgPath}}" style="width:1010px; height:671px;">
+                                        <!-- <img th:if="${#strings.isEmpty(detailFile)}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${defaultImgPath}}" style="width:1010px; height:671px;"> -->
+                                        <img th:if="${#strings.isEmpty(detailFile)}" th:src="@{'/img/defaultImg.png'}" style="width:1010px; height:671px;">
                                     </div>
                                     <div class="context last">
                                         <!-- 필요없는 칸 비활성화 (02.01) -->
@@ -424,7 +425,8 @@
                             <div id="goods_pi">
                                 <p class="pic">
                                     <img th:if="${not #strings.isEmpty(thumbnailFile)}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${thumbnailFile.itemFileName}}" style="width:1010px; height:671px;">
-                                    <img th:if="${#strings.isEmpty(thumbnailFile)}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${defaultImgPath}}" style="width:1010px; height:671px;">
+                                    <!-- <img th:if="${#strings.isEmpty(thumbnailFile)}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${defaultImgPath}}" style="width:1010px; height:671px;"> -->
+                                    <img th:if="${#strings.isEmpty(thumbnailFile)}" th:src="@{'/img/defaultImg.png'}" style="width:1010px; height:671px;">
                                 </p>
                             </div>
                         </div>
