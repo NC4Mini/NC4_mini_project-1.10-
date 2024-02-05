@@ -49,7 +49,7 @@ public class DeliveryController {
 
         // 로그인 하지 않은 경우
         if (principal == null) {
-            mav.setViewName("redirect:/login");
+            mav.setViewName("redirect:/user/login");
             return mav;
         }
 
@@ -61,6 +61,13 @@ public class DeliveryController {
 
         UserShpAddr defaultUserShpAddr = cartService.bringDefaultAddr(userAccount.getId());
 
+        Delivery delivery = Delivery.builder()
+            .userAccount(userAccount)
+            .totalPrice(cart.getTotalPrice())
+            .deliveryStatus(0)
+            .build();
+
+        mav.addObject("delivery", delivery);
         mav.addObject("cart", cart);
         mav.addObject("defaultUserShpAddr", defaultUserShpAddr);
         mav.setViewName("delivery/get_delivery.html");
@@ -68,18 +75,40 @@ public class DeliveryController {
         return mav;
     }
 
-    // 결제하기 기능
+    // 결제하기 기능 (일반 결제)
     @PostMapping("/confirm-delivery")
     @Transactional
-    public ModelAndView confirmDelivery (@RequestParam ("cartId") long cartId) {
+    public ModelAndView confirmDelivery (@RequestParam ("cartId") long cartId, @RequestParam ("deliveryId") long deliveryId){
         ModelAndView mav = new ModelAndView();
 
         // 사용자 id를 받아 새로운 상태의 delivery를 저장하는 메서드
-        deliveryService.confirmDelivery(cartId);
+        deliveryService.confirmDelivery(cartId, deliveryId);
 
         mav.setViewName("delivery/complete_delivery.html");
 
         // 완료 페이지로 이동
         return mav;
     }
+
+    // 결제하기 기능 (토스 결제)
+    @GetMapping("/success")
+    @Transactional
+    public ModelAndView successTossPay (Principal principal, @RequestParam ("paymentKey") String paymentKey,
+    @RequestParam ("orderId") String deliveryId, @RequestParam ("amount") int amount) {
+        ModelAndView mav = new ModelAndView();
+        
+
+        UserAccount userAccount = userService.findUser(principal.getName());
+
+        Cart cart = cartService.getCart(userAccount.getId());
+
+        // 사용자 id를 받아 새로운 상태의 delivery를 저장하는 메서드
+        deliveryService.successTossPay(cart, userAccount, deliveryId, amount);
+
+        mav.setViewName("delivery/complete_delivery.html");
+
+        // 완료 페이지로 이동
+        return mav;
+    }
+
 }
