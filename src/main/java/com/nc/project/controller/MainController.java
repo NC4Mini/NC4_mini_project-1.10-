@@ -27,10 +27,6 @@ public class MainController {
 
         pageList = itemService.ItemListRandom(pageable);
 
-        //List<Item> content = new ArrayList<>(pageList.getContent());
-        //Collections.shuffle(content);
-
-        //model.addAttribute("itemList", new PageImpl<>(content, pageList.getPageable(), pageList.getTotalElements()));
         model.addAttribute("itemList", pageList);
         model.addAttribute("search", search);
         return "index";

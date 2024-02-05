@@ -11,6 +11,11 @@
     color: rgb(51, 51, 51);
 }
 
+.bg {
+    width: 249px;
+    height: 320px;
+}
+
 .search-direction {
     display: flex;
     font-size: 14px;
