@@ -79,10 +79,9 @@ public class BoardController {
 
     @Transactional
     @PostMapping("/update")
-    public String update(@ModelAttribute BoardDTO boardDTO, Model model) {
-        BoardDTO board = boardService.update(boardDTO);
-        model.addAttribute("board", board);
-        return "board/getBoardDetail";
+    public void update(@ModelAttribute BoardDTO boardDTO, HttpServletResponse response) throws IOException {
+         boardService.update(boardDTO);
+        response.sendRedirect("/board/" + boardDTO.getId());
 //        return "redirect:/board/" + boardDTO.getId();
     }
 
