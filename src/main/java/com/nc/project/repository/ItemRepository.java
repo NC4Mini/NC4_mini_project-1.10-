@@ -19,4 +19,9 @@ public interface ItemRepository extends JpaRepository<Item, Long> {
     //검색 기능을 위한 메소드
     Page<Item> findByItemNameContaining(String searchKeyword, Pageable pageable);
 
+    @Query(value = "select a" +
+            "           from Item a" +
+            "           left join a.itemFileList" +
+            "           order by rand()")
+    Page<Item> findAllOrderByRandom(Pageable pageable);
 }

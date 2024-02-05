@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.dto.UserShpAddrDTO;
 import com.nc.project.entity.CustomUserDetails;
+import com.nc.project.entity.UserAccount;
 import com.nc.project.repository.UserAccountRepository;
+import com.nc.project.service.impl.SendEmailServiceImpl;
 import com.nc.project.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RequiredArgsConstructor
@@ -29,6 +33,7 @@ import java.util.Objects;
 public class UserController {
 
     private final UserServiceImpl userService;
+    private final SendEmailServiceImpl sendEmailService;
     private final UserAccountRepository userAccountRepository;
 
     @Transactional
@@ -42,7 +47,6 @@ public class UserController {
         userAccountDto = userService.findUser(userId).toDTO();
 
         model.addAttribute("userAccountDto",userAccountDto);
-
 
         return "/user/modify";
     }
@@ -66,11 +70,7 @@ public class UserController {
         userShpAddrDTOList.get(0).setId(originalUserAccountDTO.getId());
         userShpAddrDTOList.get(0).setAddrId(1);
 
-
         userAccountDto.setUserShpAddrDTOList(userShpAddrDTOList);
-
-
-
         userAccountDto.setUserId(originalUserAccountDTO.getUserId());
 
         userService.modifyUser(userAccountDto);
@@ -104,9 +104,6 @@ public class UserController {
         UserAccountDTO userAccountDto = new UserAccountDTO();
         userAccountDto = userService.findUser(userId).toDTO();
 
-        System.out.println(curUserPw);
-        System.out.println(userAccountDto.getUserPw());
-
         if(Objects.equals(curUserPw, userAccountDto.getUserPw())) {
             checkPw = true;
             return new ResponseEntity<>(checkPw, HttpStatus.OK);
@@ -127,7 +124,7 @@ public class UserController {
 
         if (idCheck == 0) {
             model.addAttribute("close", "userId");
-            return "user/login.html";
+            return "redirect:user/login";
         }
 
         UserAccountDTO loginUser = userService.login(userAccountDTO);
@@ -143,5 +140,34 @@ public class UserController {
         return "redirect:/";
 
     }
+
+    @GetMapping("/find-pw")
+    public String pwFindView() {
+        return "user/password_find.html";
+    }
+
+    @Transactional
+    @PostMapping("/find-pw")
+    @ResponseBody
+    public Map<String, Boolean> pw_find(@RequestParam(name = "userId", required = false) String userId, @RequestParam(name = "userEmail", required = false) String userEmail){
+
+        Map<String, Boolean> returnMap = new HashMap<>();
+
+        if(userId !=null && userEmail != null) {
+            boolean pwFindCheck = userService.userEmailCheck(userId, userEmail);
+            returnMap.put("pwFindCheck", pwFindCheck);
+
+            if(pwFindCheck) {
+                UserAccountDTO dto = sendEmailService.createMailAndChangePassword(userEmail, userId);
+                sendEmailService.mailSend(dto);
+                returnMap.put("mailSend", true);
+            } else {
+                returnMap.put("mailSend", false);
+            }
+        }
+        return returnMap;
+    }
+
+
 }
 

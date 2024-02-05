@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name="item")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -31,7 +30,7 @@ public class Item {
     @Column (name="item_price")
     private int itemPrice;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<ItemFile> itemFileList;
 

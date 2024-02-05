@@ -257,7 +257,7 @@
                                 <div class="login_search">
                                     <a href="#" class="link">아이디 찾기</a>
                                     <span class="bar"></span>
-                                    <a href="#" class="link">비밀번호 찾기</a>
+                                    <a href="/user/find-pw" class="link">비밀번호 찾기</a>
                                 </div>
                             </div>
                             <button type="submit" th:onclick="check_input()" class="btn_type1">
@@ -268,7 +268,12 @@
                             <span class="txt_type">회원가입</span>
                         </a>
                     </div>
-
+                    <div style="display: block; margin: 20px auto;">
+                        <!--자원서버(카카오 서버)로 인증요청-->
+                        <a href="/oauth2/authorization/kakao">
+                            <img src="/img/kakao_login.png" style="width: 150px;">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

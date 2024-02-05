@@ -15,25 +15,64 @@
     <main id="main">
         <section id="section2" class="section-slide-public">
             <div class="title">
-                <h2 th:if="${search.isBlank()} ">이 상품 어때요?</h2>
+                <h2 th:if="${search.isBlank()} ">모든 상품 조회</h2>
                 <h2 th:if="${!search.isBlank()} " th:text="|${search}에 대한 검색결과|">검색결과</h2>
+                <input hidden="hidden" name="totalPage" th:value="${itemList.getPageable()}">
             </div>
-            <div class="search-total" th:text="|총 ${itemList.content.size()}건|">건수</div>
+            <div class="search-total" th:text="|총 ${itemList.getTotalElements()}건|"></div>
+            <div class="search-direction" th:object="${itemList}">
+                <a th:href="@{/search(
+                page=*{pageable.pageNumber},
+                search=${search},sort='itemId' + (*{sort.getOrderFor('itemId')} != null ?
+                (*{sort.getOrderFor('itemId').direction.name} != 'DESC' ? ',desc' : '') : ''))}">등록일 정렬 |</a>
+                <a th:href="@{/search(
+                page=*{pageable.pageNumber},
+                search=${search},sort='itemPrice' + (*{sort.getOrderFor('itemPrice')} != null ?
+                (*{sort.getOrderFor('itemPrice').direction.name} != 'ASC' ? ',ASC' : '') : ''))}">|  낮은 가격순 정렬 |</a>
+                <a th:href="@{/search(
+                page=*{pageable.pageNumber},
+                search=${search},sort='itemPrice' + (*{sort.getOrderFor('itemPrice')} != null ?
+                 (*{sort.getOrderFor('itemPrice').direction.name} != 'DESC' ? ',DESC' : '') : '') )}">|  높은 가격순 정렬</a>
+            </div>
         </section>
         <div class="search-list">
-                <div class="item-box" th:each="itemList : ${itemList}">
+                <div class="item-box" th:each="item : ${itemList}">
                     <div class="img-box" >
-                        <a th:href="@{/item/item-detail?(itemId=${itemList.getItemId()})}">
-                            <img class="img-size" src="/img/1657616036799l0.jpg" alt="">
+                        <a th:href="@{/item/item-detail?(itemId=${item.getItemId()})}">
+<!--                            <div th:each="itemFile : ${item.getItemFileList()}">-->
+<!--                            <img class="bg"  th:src="@{'/upload/'+ ${item.getItemFileList().get(0).itemFileName}}" alt="상품 대표 이미지">-->
+                            <img class="bg" th:if="${item.getItemFileList().get(0).itemFileName != null}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${item.getItemFileList().get(0).itemFileName}}" alt="상품 대표 이미지">
+<!--                            <img class="bg" th:if="${item.getItemFileList().get(0).itemFileName != null}" th:src="@{'/upload/' + ${item.getItemFileList().get(0).itemFileName}}" alt="상품 대표 이미지">-->
+                            <img class="bg" th:if="${item.getItemFileList().get(0).itemFileName == null}" src="/img/1657616036799l0.jpg" alt="상품 대표 이미지"><!--                            </div>-->
                         </a>
                     </div>
                     <div class="caption-box">
                         <p class="letter-delivery">판매자 배송</p>
-                        <h2 class="letter-item-title" th:text="${itemList.getItemName()}">상품제목 </h2>
-                        <h2 class="letter-item-desc" th:text="${itemList.getItemDescription()}">상세설명 </h2>
-                        <h3 class="letter-item-price" th:text="|${#numbers.formatInteger(itemList.getItemPrice(), 3, 'COMMA') + '원'}|"><em>원</em></h3>
+                        <h2 class="letter-item-title" th:text="${item.getItemName()}">상품제목 </h2>
+                        <h2 class="letter-item-desc" th:text="${item.getItemDescription()}">상세설명 </h2>
+                        <h3 class="letter-item-price" th:text="|${#numbers.formatInteger(item.getItemPrice(), 3, 'COMMA') + '원'}|"><em>원</em></h3>
                     </div>
                 </div>
+        </div>
+        <div class="pagination_main">
+            <ul class="pagination" th:if="${itemList.totalElements > 0}"
+                th:with="pageNumber = ${itemList.pageable.pageNumber},
+                             pageSize = ${itemList.pageable.pageSize},
+                             totalPages = ${itemList.totalPages},
+                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                             tempEndPage = ${startPage + pageSize - 1},
+                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}"
+                th:object="${itemList}">
+                <li class="pagination-btn" th:if="${pageNumber > 0}">
+                    <a th:href="@{/search(page=${pageNumber - 1},search=${search},sort=*{getSort().toString().replace(': ', ',')})}">이전</a>
+                </li>
+                <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}">
+                    <a th:href="@{/search(page=${page - 1},search=${search},sort=*{getSort().toString().replace(': ', ',')})}" th:text="${page}"></a>
+                </li>
+                <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}">
+                    <a th:href="@{/search(page=*{pageable.pageNumber+1},search=${search},sort=*{getSort().toString().replace(': ', ',')})}">다음</a>
+                </li>
+            </ul>
         </div>
     </main>
 </div>

@@ -9,6 +9,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.nc.project.configuration.NaverConfiguration;
+
 import com.nc.project.dto.BoardFileDTO;
 import com.nc.project.dto.ItemFileDTO;
 import org.springframework.stereotype.Component;
@@ -107,6 +108,7 @@ public class FileUtils {
 
         return itemFileDTO;
     }
+
 
     public BoardFileDTO parseBoardFileInfo(MultipartFile multipartFile, String directory) {
         //버킷 이름

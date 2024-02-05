@@ -10,11 +10,42 @@
     </th:block>
     <th:block layout:fragment="script">
         <script th:src="@{js/delivery/delivery.js}"></script>
+        <!-- 토스페이 script -->
+        <script src="https://js.tosspayments.com/v1/payment"></script>
     </th:block>
 </head>
 <body>
     <div id="wrap" layout:fragment="content">
+        
+        <script th:inline="javascript">
+            function doPayment() {
+                // 클라이언트 키 설정
+                var clinetKey = 'test_ck_d46qopOB89dgljPXOA6KrZmM75y0';
+                var tossPayments = TossPayments(clinetKey);
+                
+                var totalPrice = document.getElementById('productsTotalPrice').innerText;
+                var deliveryId = document.getElementById('deliveryId').value;
+
+                // 난수 형태의 주문번호 생성
+                var orderNum = Math.floor(Math.random() * 1000000000) + 1;
+
+                tossPayments.requestPayment('카드', {
+                    amount: totalPrice,
+                    // amount: 1000,
+                    // orderId: deliveryId,
+                    orderId: orderNum,
+                    orderName: '결제테스트',
+                    customerName: '결제자명:김태현',
+                    // 결제 성공시 호출되는 함수
+                    successUrl: 'http://localhost:9090/delivery/success',
+                    // successUrl: 'https://docs.tosspayments.com/guides/payment/test-success',
+                    failUrl: 'https://docs.tosspayments.com/guides/payment/test-fail',
+                });
+            }
+            
+        </script>
         <!-- <input = type="hidden" th:value="${delivery.id}" id="deliveryTestId"> -->
+        
         <div id="container">
             <div class="user_form">
                 <h1 class="h1_tit">주문서</h1>
@@ -25,22 +56,22 @@
 
                 <div id="itemList" class="page_aticle order_goodslist" th:each="cartItem : ${cart.cartItemList}">
                     <ul class="list_product">
-                        <li>
+                        <li th:each="itemFile : ${cartItem.item.itemFileList}">
                             <div class="thumb">
-                                <img src="https://img-cf.kurly.com/shop/data/goods/156757412839i0.jpg" alt="상품이미지">
+                                <img th:if="${itemFile.itemType} == 'Main'" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${itemFile.itemFileName}}" >
                             </div>
 
                             <div class="name">
                                 <div class="inner_name" th:text="${cartItem.Item.itemName}">[김구원선생] 무농약 콩나물 200g</div>
                             </div>
 
-                            <div class="ea" th:text="${cartItem.cartItemCnt} + '개'">
+                            <div class="ea" th:text="${cartItem.cartItemCnt} + '개'" style="width: 1300px; position: absolute;">
                                 1개
                             </div>
 
-                            <div class="info_price">
-                                <span class="num">
-                                    <span class="price" th:text="${cartItem.Item.itemPrice} * ${cartItem.cartItemCnt} + '원'">
+                            <div class="info_price" style="position: absolute; margin-left: 670px; text-align: right;">
+                                <span class="num" style="display: block;">
+                                    <span class="price" th:text="${cartItem.Item.itemPrice} * ${cartItem.cartItemCnt} + '원'" style="padding-top: 52px;">
                                         1,300
                                         원
                                     </span>
@@ -60,6 +91,7 @@
                     <h2 class="tit_section" id="titFocusOrderer">주문자 정보</h2>
                     <!-- 데이터 넘겨줄 input 태그 -->
                     <input type="hidden" id="cartId" th:value="${cart.cartId}" name="cartId">
+                    <input type="hidden" id="deliveryId" th:value="${delivery.deliveryId}" name="deliveryId">
                     <div class="order_section data_orderer">
                         <table class="goodsinfo_table">
                             <tbody>
@@ -115,7 +147,7 @@
                     
 
                     <div class="tax_absolute">
-                        <div class="inner_sticky" id="sticky" style="top:0px;">
+                        <div class="inner_sticky" id="sticky" style="margin-left: 300px; margin-top: 100px">
                             <h2 class="tit_section">결제금액</h2>
                             <div id="orderitem_money_info">
                                 <dl class="amount fst">
@@ -161,77 +193,78 @@
                             </div>
                         </div>
                     </div>
+                        <!-- 적립금 파트, 비활성화 (02.01) -->
+<!--                    <div class="data_payment">-->
+<!--                        <div class="tbl_left">-->
+<!--                            <h2 class="tit_section">적립금</h2>-->
 
-                    <div class="data_payment">
-                        <div class="tbl_left">
-                            <h2 class="tit_section">적립금</h2>
+<!--                            <table class="goodsinfo_table">-->
+<!--                                <tbody>-->
+<!--                                    <tr class="emoney_use">-->
+<!--                                        <th>-->
+<!--                                            적립금 적용-->
+<!--                                        </th>-->
 
-                            <table class="goodsinfo_table">
-                                <tbody>
-                                    <tr class="emoney_use">
-                                        <th>
-                                            적립금 적용
-                                        </th>
+<!--                                        <td>-->
+<!--                                            <div id="ondealCheck">-->
+<!--                                                <div class="emoney_reg">-->
+<!--                                                    <input type="text" name="using_point" id="emoney"  class="number_only" value="" placeholder="0" pattern="[0-9]*" inputmode="decimal">-->
+<!--                                                    <div class="check">-->
+<!--                                                        <label class="emoney_chkbox">-->
+<!--                                                            <span class="txt_checkbox">모두사용</span>-->
+<!--                                                        </label>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
 
-                                        <td>
-                                            <div id="ondealCheck">
-                                                <div class="emoney_reg">
-                                                    <input type="text" name="using_point" id="emoney"  class="number_only" value="" placeholder="0" pattern="[0-9]*" inputmode="decimal">
-                                                    <div class="check">
-                                                        <label class="emoney_chkbox">
-                                                            <span class="txt_checkbox">모두사용</span>
-                                                        </label>
-                                                    </div>
-                                                </div>
+<!--                                                <p class="possess">-->
+<!--                                                    보유 적립금 : <strong class="emph">1900</strong>원-->
 
-                                                <p class="possess">
-                                                    보유 적립금 : <strong class="emph">1900</strong>원
+<!--                                                </p>-->
 
-                                                </p>
+<!--                                                <ul class="list_notice">-->
+<!--                                                    <li>· 보유 적립금 1천원 이상부터 사용가능</li>-->
+<!--                                                    <li>· 적립금 내역: 마이컬리 &gt; 적립금</li>-->
+<!--                                                </ul>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
+<!--                                </tbody>-->
+<!--                            </table>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                                                <ul class="list_notice">
-                                                    <li>· 보유 적립금 1천원 이상부터 사용가능</li>
-                                                    <li>· 적립금 내역: 마이컬리 &gt; 적립금</li>
-                                                </ul>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="data_method">
-                        <h2 class="tit_section" id="titFocusMethod">결제수단</h2>
+                    <!-- 결제 수단 선택 파트, 비활성화 (02.01) -->
+                   <div class="data_method">
+                       <h2 class="tit_section" id="titFocusMethod">결제수단</h2>
 
 
-                        <table class="goodsinfo_table tbl_left">
-                            <tbody>
-                                <tr>
-                                    <th> 카카오페이 결제</th>
-                                    <td>
-                                        <label class="label_radio" id="cardBenefit_kakaopay">
-                                            <input type="radio" name="settlekind" value="kakaopay">
-                                            <span id="kakaopay">카카오페이</span>
-                                            
-                                            <div class="info_benefit"></div>
-                                        </label>
+                       <table class="goodsinfo_table tbl_left">
+                           <tbody>
+                               <tr>
+                                   <td style="width: 250px;">
+                                        <button type="button" name="settlekind" value="toss_payment" id="tossPayment" onclick="doPayment()">
+                                            <input type="button" value="간편결제" style="width: 240px; height: 62px; border: none; background-color: #fff; font-size: 16px; color: blue; font-weight: 700; border-radius: 3px;">
+                                            <!-- <img src="/img/naver_pay_white.png" alt=""> -->
+                                        </button>
                                     </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                    <td>
+                                        <input type="submit" value="결제하기" id="pay_btn" style="width: 240px; height: 64px; border: none; background-color: #5f0080; font-size: 16px; color: #fff; font-weight: 700; border-radius: 3px;">
+                                    </td>
+                               </tr>
+                           </tbody>
+                       </table>
                     </div>
-                    <div class="tit_section"> 
-                        <input type="submit" value="결제하기" class="btn_payment" id="pay_btn">
+
+                    <!-- 결제 버튼창 -->
+                    <div class="tit_section" id="renderPayment"> 
+                        <input type="submit" value="결제하기" class="btn_payment" id="pay_btn" style="display: none;">
                     </div>
                     
                 </form>
             </div>
         </div>
 
-        <script th:inline="javascript">
-            
-        </script>
+        
     </div>
 
 </body>

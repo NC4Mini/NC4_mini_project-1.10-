@@ -70,7 +70,7 @@
                             <label class="label-wrapper" for="userEmail">이메일</label>
                         </th>
                         <td>
-                            <input id="userEmail" name="userEmail" th:value="*{userEmail}" type="email">
+                            <input id="userEmail" name="userEmail" th:unless="*{userEmail == null}" th:value="*{userEmail}" type="email">
                         </td>
                     </tr>
                     <tr>
@@ -78,7 +78,7 @@
                             <label class="label-wrapper" for="userTel">휴대폰</label>
                         </th>
                         <td>
-                            <input id="userTel" name="userTel" th:value="*{userTel}" type="text">
+                            <input id="userTel" name="userTel" th:unless="*{userTel == null}" th:value="*{userTel}" type="text">
                         </td>
                     </tr>
                     <tr>
@@ -87,7 +87,7 @@
                         </th>
                         <td>
                             <input id="addrZone" name="addrZone" readonly="readonly"
-                                   th:value="*{userShpAddrDTOList.get(0).getAddrZone()}" type="text">
+                                   th:value="${#strings.isEmpty(userShpAddrDTOList) ? '' : userShpAddrDTOList.get(0).addrZone}" type="text">
                         </td>
                     </tr>
                     <tr>
@@ -95,14 +95,15 @@
                         </th>
                         <td>
                             <input id="addrBasic" name="addrBasic" readonly="readonly"
-                                   th:value="*{userShpAddrDTOList.get(0).getAddrBasic()}" type="text">
+                                   th:value="${#strings.isEmpty(userShpAddrDTOList) ? '' : userShpAddrDTOList.get(0).addrBasic}" type="text">
                         </td>
                     </tr>
                     <tr>
                         <th>
                         </th>
                         <td>
-                            <input id="addrDetail" name="addrDetail" th:value="*{userShpAddrDTOList.get(0).getAddrDetail()}"
+                            <input id="addrDetail" name="addrDetail"
+                                   th:value="${#strings.isEmpty(userShpAddrDTOList) ? '' : userShpAddrDTOList.get(0).addrDetail}"
                                    type="text">
                         </td>
                     </tr>
@@ -144,10 +145,10 @@
                     </tr>
                     <tr>
                         <th>
-                            <label class="label-wrapper" for="userBirth">생년월일</label>
+<!--                            <label class="label-wrapper" for="userBirth">생년월일</label>-->
                         </th>
                         <td>
-                            <input id="userBirth" name="userBirth" max="2024-01-01" min="1950-01-01" th:value="*{userBirth}" type="date">
+<!--                            <input id="userBirth" name="userBirth" max="2024-01-01" min="1950-01-01" th:unless="*{userBirth == null}" th:value="*{userBirth}" type="date">-->
                         </td>
                     </tr>
                     </tbody>

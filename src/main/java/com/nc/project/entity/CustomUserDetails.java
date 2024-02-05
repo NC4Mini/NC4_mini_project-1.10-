@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 // DB에서 사용자의 아이디와 비밀번호로 조회해온 데이터를 담아줄 객체
 // UsernamePasswordToken의 정보들과 비교될 객체
@@ -18,8 +20,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CustomUserDetails implements UserDetails {
-    private UserAccount user;
+public class CustomUserDetails implements UserDetails, OAuth2User {
+    private UserAccount userAccount;
+
+    // 소셜 로그인 시 사용자의 정보를 담아줄 컬렉션
+    Map<String, Object> attributes;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -39,12 +44,12 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getUserPw();
+        return userAccount.getUserPw();
     }
 
     @Override
     public String getUsername() {
-        return user.getUserId();
+        return userAccount.getUserId();
     }
 
     @Override
@@ -65,5 +70,17 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    // 소셜 로그인한 사용자의 정보를 가져오는 메소드
+    @Override
+    public Map<String, Object> getAttributes() {
+        return this.attributes;
+    }
+    // OAuth2User를 구현하기 위해 생성한 메소드. 사용하지 않음
+    @Override
+    public String getName() {
+        return null;
     }
 }

@@ -32,7 +32,7 @@
                     </div>
                     <input type="text" id="addrSub" name="addrSub" placeholder="나머지 주소를 입력해주세요" data-max-length="75" data-format="text" value="">
                 </div>
-                <input type="hidden" id="isDefault_value" value="">
+                <input type="hidden" id="isDefault_value" value="N">
                 <label class="label_default"><br>
                     <input type="checkbox" id="isDefault" name="isDefault">
                     <span class="ico"></span>기본 배송지로 저장</label>
@@ -42,10 +42,23 @@
             </div>
         </div>
         <script th:inline="javascript">
-            
+            // 기본 배송지로 저장 체크 시 isDefault에 'Y'를 담음
+            $(document).ready(function(){
+                $("#isDefault").click(function(){
+                    if($("#isDefault").is(":checked")){
+                        $("#isDefault_value").val('Y');
+                    }else{
+                        $("#isDefault_value").val('N');
+                    }
+                });
+            });
+
+            console.log($("#isDefault_value").val());
+
             // 저장 버튼 클릭 시 위에 담긴 정보를 db에 반영하고 현재 창을 특정 페이지로 리다이렉트
             $(document).ready(function(){
                 $('#button').click(function(){
+
                     var addrMain = $("#addrMain").val();
                     var addrSub = $("#addrSub").val();
                     var isDefault = $("#isDefault_value").val();
@@ -75,20 +88,6 @@
                     });
                 });
             });
-
-            // 기본 배송지로 저장 체크 시 isDefault에 'Y'를 담음
-            $(document).ready(function(){
-                $("#isDefault").click(function(){
-                    if($("#isDefault").is(":checked")){
-                        $("#isDefault_value").val('Y');
-                    }else{
-                        $("#isDefault_value").val('N');
-                    }
-                });
-            });
-            console.log($("#isDefault_value").val());
-            
-
 
         </script>
     </div>

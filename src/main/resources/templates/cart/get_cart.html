@@ -67,11 +67,15 @@
                                         </div>
                                     </div>
                                     <!-- 상품 자리 -->
-                                    <div class="goods">
+                                    <div class="goods" th:each="itemFile : ${cartItem.item.itemFileList}">
                                         <!-- 상품 이미지 누르면 해당 상품 페이지 가지도록 설정 -->
                                         <!-- 이미지자리 ^-->
+                                        <!-- <a th:href="@{/item/item-detail(itemId=${cartItem.item.itemId})}" class="thumb "
+                                           style="background-image: url(&quot;https://img-cf.kurly.com/shop/data/goods/1610599300495i0.jpg&quot;);">상품이미지</a> -->
                                         <a th:href="@{/item/item-detail(itemId=${cartItem.item.itemId})}" class="thumb "
-                                           style="background-image: url(&quot;https://img-cf.kurly.com/shop/data/goods/1610599300495i0.jpg&quot;);">상품이미지</a>
+                                            th:attr="style=${itemFile.itemType} == 'Main' ? 'background-image: url(https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${itemFile.itemFileName} + ')' : ''">
+                                            
+                                        </a>
                                         <!-- 가격 자리 -->
                                         <div class="price">
                                             <div class="in_price">
@@ -177,7 +181,7 @@
                         <dl class="amount lst">
                             <dt class="tit">결제예정금액</dt>
                             <dd class="price">
-                                <span class="num" id="total_price_2" th:text="${cart.totalPrice + ' 원'}"></span>
+                                <span class="num" id="total_price_2" th:text="${cart.totalPrice}"></span>
                                 <!-- sum of product price here -->
                                 <span class="won">원</span>
                             </dd>
@@ -255,6 +259,10 @@
 
         //  상품 삭제 버튼 기능
         function deleteCartItem (cartItemId, cartId) {
+
+            console.log(cartItemId);
+            console.log(cartId);
+
             $.ajax({
                 type: 'DELETE',
                 url: '/cart/delete-cart-item',
@@ -281,29 +289,20 @@
 
         $('#deliveryBtn').click(function () {
             var cartId = $('#cart_id').val();
-            
-            $('#deliveryForm input[name=cartId]').val(cartId);
+            var cartItemId = $('#cartItemId').val();
+
+            // 장바구니가 비었을 때 주문하기 버튼 클릭시 경고창 및 이동 막기
+            if (cartItemId == null) {
+                alert('장바구니가 비었습니다.');
+
+                event.preventDefault();
+            }
+            else {
+                alert('주문서로 이동합니다.');
+
+                $('#deliveryForm input[name=cartId]').val(cartId);
+            }
         });
-
-
-        // 주문하기 버튼 기능
-        // $('#deliveryBtn').click(function () {
-        //     var cartId = $('#cart_id').val();
-            
-        //     console.log(cartId);
-
-        //     $.ajax({
-        //         type: 'GET',
-        //         url: '/delivery/to-delivery',
-        //         data: {
-        //             cartId: cartId
-        //         },
-        //         success: function (data) {
-        //             alert('주문서로 이동합니다.');
-        //             window.location.href = data.viewName;
-        //         }
-        //     });
-        // });
 
     </script>
 </div>
