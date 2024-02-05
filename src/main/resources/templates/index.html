@@ -68,7 +68,9 @@
                     <div>
                     <div class="img-box" >
                         <a th:href="@{/item/item-detail?(itemId=${item.getItemId()})}">
-                            <img class="img-size" src="/img/1657616036799l0.jpg" alt="">
+<!--                            <img class="bg" th:if="${item.getItemFileList().get(0).itemFileName != null}" th:src="@{'/upload/' + ${item.getItemFileList().get(0).itemFileName}}" alt="상품 대표 이미지">-->
+                            <img class="bg" th:if="${item.getItemFileList().get(0).itemFileName != null}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${item.getItemFileList().get(0).itemFileName}}" alt="상품 대표 이미지">
+                            <img class="bg" th:if="${item.getItemFileList().get(0).itemFileName == null}" src="/img/1657616036799l0.jpg" alt="상품 대표 이미지">
                         </a>
                     </div>
                     <div class="caption-box">
