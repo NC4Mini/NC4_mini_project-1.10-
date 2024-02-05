@@ -31,12 +31,13 @@ public class DeliveryServiceImpl implements DeliveryService{
 
     // 결제하기 기능
     @Transactional
-    public void confirmDelivery(long cartId) {
+    public void confirmDelivery(long cartId, long deliveryId) {
         Cart cart = cartRepository.findById(cartId).orElseThrow();
         UserAccount userAccount = cart.getUserAccount();
         // List<CartItem> cartItemList = new ArrayList<>(cart.getCartItemList());
         double totalPrice = cart.getTotalPrice();
         Delivery delivery = Delivery.builder()
+            .deliveryId(deliveryId)
             .userAccount(userAccount)
             // .deliveryItemList(cartItemList)
             .totalPrice(totalPrice)
@@ -47,6 +48,22 @@ public class DeliveryServiceImpl implements DeliveryService{
         // 유저의 장바구니 비우기
         cart.getCartItemList().clear();
         // cartItemList.clear();
+        cartRepository.delete(cart);
+    }
+
+    // 토스 결제하기 기능
+    @Transactional
+    public void successTossPay(Cart cart, UserAccount userAccount, String deliveryId, int amount) {
+        Delivery delivery = Delivery.builder()
+            .userAccount(userAccount)
+            .totalPrice((double)amount)
+            .deliveryStatus(1)
+            .deliveryNumber(deliveryId)
+            .build();
+        
+        deliveryRepository.save(delivery);
+
+        cart.getCartItemList().clear();
         cartRepository.delete(cart);
     }
 }

@@ -124,7 +124,7 @@ public class UserController {
 
         if (idCheck == 0) {
             model.addAttribute("close", "userId");
-            return "user/login.html";
+            return "redirect:user/login";
         }
 
         UserAccountDTO loginUser = userService.login(userAccountDTO);

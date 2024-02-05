@@ -67,11 +67,15 @@
                                         </div>
                                     </div>
                                     <!-- 상품 자리 -->
-                                    <div class="goods">
+                                    <div class="goods" th:each="itemFile : ${cartItem.item.itemFileList}">
                                         <!-- 상품 이미지 누르면 해당 상품 페이지 가지도록 설정 -->
                                         <!-- 이미지자리 ^-->
+                                        <!-- <a th:href="@{/item/item-detail(itemId=${cartItem.item.itemId})}" class="thumb "
+                                           style="background-image: url(&quot;https://img-cf.kurly.com/shop/data/goods/1610599300495i0.jpg&quot;);">상품이미지</a> -->
                                         <a th:href="@{/item/item-detail(itemId=${cartItem.item.itemId})}" class="thumb "
-                                           style="background-image: url(&quot;https://img-cf.kurly.com/shop/data/goods/1610599300495i0.jpg&quot;);">상품이미지</a>
+                                            th:attr="style=${itemFile.itemType} == 'Main' ? 'background-image: url(https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${itemFile.itemFileName} + ')' : ''">
+                                            
+                                        </a>
                                         <!-- 가격 자리 -->
                                         <div class="price">
                                             <div class="in_price">
