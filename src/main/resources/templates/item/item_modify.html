@@ -31,6 +31,7 @@
                         img.setAttribute("src", event.target.result);
                         img.style.maxWidth = "100%";
                         img.style.height = "auto";
+                        img.style.padding = "5px";
 
                         // 파일 이름을 나타낼 p 요소 생성
                         let fileNameP = document.createElement("p");
@@ -203,6 +204,33 @@
                 }
 
                 $(() => {
+                    applyDynamicStyles("main");
+                    $(".image_main").css("maxWidth", "100%", "height", "auto", "padding", "5px");
+                    $(".image_main_input_button").css("display", "none");
+
+
+                    var detailImage = $(".image_detail");
+                    if (detailImage.length && detailImage.attr("src")) {
+                        applyDynamicStyles("detail");
+                        detailImage.css({
+                            "maxWidth": "100%",
+                            "height": "auto",
+                            "padding": "5px"
+                        });
+                        $(".image_detail_input_button").css("display", "none");
+                    }
+
+                    var thumbnailImage = $(".image_thumbnail");
+                    if (thumbnailImage.length && thumbnailImage.attr("src")) {
+                        applyDynamicStyles("thumbnail");
+                        thumbnailImage.css({
+                            "maxWidth": "100%",
+                            "height": "auto",
+                            "padding": "5px"
+                        });
+                        $(".image_thumbnail_input_button").css("display", "none");
+                    }
+
                     $("#btn_update").on("click", () => {
                         // 상품관련정보는 필수입력정보
                         if ($("#itemName").val() === "" || ($("#itemDescription").val() === "") || ($("#itemPrice").val() === "")) {
@@ -417,7 +445,6 @@
 
                                                                      th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${mainFile.itemFileName}}" alt="메인이미지">
                                                                 <p style="display: inline-block; font-size: 10px; font-weight: bold; padding: 0 10px;"
-
                                                                    th:text="${mainFile.itemFileOrigin}"></p>
                                                             </div>
                                                             <div style="margin-bottom:40px;">
