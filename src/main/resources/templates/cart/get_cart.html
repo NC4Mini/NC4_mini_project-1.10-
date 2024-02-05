@@ -73,7 +73,7 @@
                                         <!-- <a th:href="@{/item/item-detail(itemId=${cartItem.item.itemId})}" class="thumb "
                                            style="background-image: url(&quot;https://img-cf.kurly.com/shop/data/goods/1610599300495i0.jpg&quot;);">상품이미지</a> -->
                                         <a th:href="@{/item/item-detail(itemId=${cartItem.item.itemId})}" class="thumb "
-                                            th:attr="style=${itemFile.itemType} == 'Main' ? 'background-image: url(/upload/' + ${itemFile.itemFileName} + ')' : ''">
+                                            th:attr="style=${itemFile.itemType} == 'Main' ? 'background-image: url(https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${itemFile.itemFileName} + ')' : ''">
                                             
                                         </a>
                                         <!-- 가격 자리 -->

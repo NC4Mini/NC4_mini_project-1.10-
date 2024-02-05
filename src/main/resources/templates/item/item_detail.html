@@ -20,7 +20,7 @@
                     <div id="sectionView">
                         <div class="inner_view">
                             <div class="thumb" style="background-image: url(https://res.kurly.com/mobile/img/1808/img_none_x2.png);">
-                               <img th:src="@{'/upload/' + ${mainFile.itemFileName}}" alt="상품 대표 이미지" class="bg">
+                               <img th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${mainFile.itemFileName}}" alt="상품 대표 이미지" class="bg">
 
                             </div>
                             <p class="goods_name">
@@ -295,8 +295,8 @@
                             <div class="goods_wrap">
                                 <div class="goods_intro">
                                     <div class="pic">
-                                        <img th:if="${not #strings.isEmpty(detailFile)}" th:src="@{'/upload/' + ${detailFile.itemFileName}}" style="width:1010px; height:671px;">
-                                        <img th:if="${#strings.isEmpty(detailFile)}" th:src="@{'/upload/' + ${defaultImgPath}}" style="width:1010px; height:671px;">
+                                        <img th:if="${not #strings.isEmpty(detailFile)}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${detailFile.itemFileName}}" style="width:1010px; height:671px;">
+                                        <img th:if="${#strings.isEmpty(detailFile)}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${defaultImgPath}}" style="width:1010px; height:671px;">
                                     </div>
                                     <div class="context last">
                                         <!-- 필요없는 칸 비활성화 (02.01) -->
@@ -423,8 +423,8 @@
                         <div class="goods-view-infomation-content" id="goods-image">
                             <div id="goods_pi">
                                 <p class="pic">
-                                    <img th:if="${not #strings.isEmpty(thumbnailFile)}" th:src="@{'/upload/' + ${thumbnailFile.itemFileName}}" style="width:1010px; height:671px;">
-                                    <img th:if="${#strings.isEmpty(thumbnailFile)}" th:src="@{'/upload/' + ${defaultImgPath}}" style="width:1010px; height:671px;">
+                                    <img th:if="${not #strings.isEmpty(thumbnailFile)}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${thumbnailFile.itemFileName}}" style="width:1010px; height:671px;">
+                                    <img th:if="${#strings.isEmpty(thumbnailFile)}" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${defaultImgPath}}" style="width:1010px; height:671px;">
                                 </p>
                             </div>
                         </div>
