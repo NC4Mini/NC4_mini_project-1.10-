@@ -1,12 +1,13 @@
 package com.nc.project.service;
 
+import com.nc.project.common.FileUtils;
 import com.nc.project.dto.BoardDTO;
+import com.nc.project.dto.BoardFileDTO;
 import com.nc.project.entity.Board;
 import com.nc.project.entity.BoardFile;
 import com.nc.project.repository.BoardFileRepository;
 import com.nc.project.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,7 @@ import java.util.Optional;
 public class BoardService {
     private  final BoardRepository boardRepository;
     private  final BoardFileRepository boardFileRepository;
+    private final FileUtils fileUtils;
     public void save(BoardDTO boardDTO) throws IOException {
         //파일 첨부 여부에 따라 로직 분리
         if(ArrayUtils.isEmpty(boardDTO.getBoardFile())){
@@ -51,20 +53,11 @@ public class BoardService {
             MultipartFile[] boardFile = boardDTO.getBoardFile(); //1
 
             for(MultipartFile multipartFile : boardFile) {
-                String originalFilename = multipartFile.getOriginalFilename(); //2
-                //System.out.println("2." + boardFile.getOriginalFilename());
-
-                String storedFileName = System.currentTimeMillis() + "_" + originalFilename;//3
-                // System.out.println("3. storedFileName " + storedFileName);
-
-                String filePath = "C:/tmp/upload/" + storedFileName; //c:/board_img/9802398403948_내사진.jpg//4
-                // System.out.println("4. filePath" + filePath);
-
-                multipartFile.transferTo(new File(filePath));//5.여기까지가 파일저장
+                BoardFileDTO boardFileDTO = fileUtils.parseBoardFileInfo(multipartFile, "board/");
 
                 Board boardEntity = boardRepository.findById(savedId).get();
 
-                BoardFile boardFileEntity = BoardFile.toBoardFileEntity(board, originalFilename, storedFileName);
+                BoardFile boardFileEntity = BoardFile.toBoardFileEntity(board, boardFileDTO.getOriginalFileName(), boardFileDTO.getStoredFileName());
                 boardFileRepository.save(boardFileEntity);
             }
             //System.out.println("1" + boardDTO.getBoardFile());
