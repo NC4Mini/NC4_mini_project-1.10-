@@ -21,18 +21,18 @@
                 <div class="item-total" th:text="|총 ${totalItemCount}건|">건수</div>
             </section>
             <div class="item-list">
-                <div class="item-box" th:each="itemList : ${itemList}">
+                <div class="item-box" th:each="item : ${itemList}">
                     <div class="img-box">
-                        <a th:href="@{/item/item-modify?(itemId=${itemList.getItemId()})}">
-                            <img class="img-size" src="/img/1657616036799l0.jpg" alt="">
+                        <a th:if="${item.itemFileList[0].itemType.equalsIgnoreCase('Main')}" th:href="@{/item/item-modify?(itemId=${item.itemId})}">
+                            <img class="img-size" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${item.itemFileList[0].itemFileName}}" alt="메인상품이미지">
                         </a>
                     </div>
                     <div class="caption-box">
                         <p class="letter-delivery">판매자 배송</p>
-                        <h2 class="letter-item-title" th:text="${itemList.getItemName()}">상품제목 </h2>
-                        <h2 class="letter-item-desc" th:text="${itemList.getItemDescription()}">상세설명 </h2>
+                        <h2 class="letter-item-title" th:text="${item.itemName}">상품제목 </h2>
+                        <h2 class="letter-item-desc" th:text="${item.itemDescription}">상세설명 </h2>
                         <h3 class="letter-item-price"
-                            th:text="|${#numbers.formatInteger(itemList.getItemPrice(), 3, 'COMMA') + '원'}|"><em>원</em>
+                            th:text="|${#numbers.formatInteger(item.itemPrice, 3, 'COMMA') + '원'}|"><em>원</em>
                         </h3>
                     </div>
                 </div>
