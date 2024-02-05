@@ -53,11 +53,6 @@
                                                     <input type="text" name="boardCategory" class="i_text text1">
                                                 </span>
                                         </div>
-<!--                                        <span class="txtByte" title="현재글자수/최대글자수">-->
-<!--                                              [-->
-<!--                                              <strong class="txt_count_name">0</strong>-->
-<!--                                               / 80 ]-->
-<!--                                            </span>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -68,11 +63,6 @@
                                                     <input type="text" name="boardWriter" class="i_text text1" >
                                                 </span>
                                         </div>
-<!--                                        <span class="txtByte" title="현재글자수/최대글자수">-->
-<!--                                              [-->
-<!--                                              <strong class="txt_count_name">0</strong>-->
-<!--                                               / 80 ]-->
-<!--                                            </span>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -84,11 +74,6 @@
                                                 </span>
 
                                         </div>
-<!--                                        <span class="txtByte" title="현재글자수/최대글자수">-->
-<!--                                              [-->
-<!--                                              <strong class="txt_count_introduce">0</strong>-->
-<!--                                               / 150 ]-->
-<!--                                            </span>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -99,67 +84,48 @@
                                                     <textarea class="i_text text8" name="boardContents" id="" cols="30" rows="10"></textarea>
                                                 </span>
                                         </div>
-<!--                                        <span class="txtByte_big txtByte" title="현재글자수/최대글자수">-->
-<!--                                              [-->
-<!--                                              <strong class="txt_count_information">0</strong>-->
-<!--                                               / 550 ]-->
-<!--                                            </span>-->
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <th>이미지</th>
                                     <td class="img_upload">
-<!--                                        <div>-->
-<!--                                            <span>대표 이미지</span>-->
-<!--                                            <div class="image_box">-->
 
-<!--                                                <div class="image_add">-->
-                                                    <input type="file" name="boardFile" id="image" accept="image/*" onchange="preview()"  multiple>
-<!--                                                    <button type="button" class="image_input_button"></button>-->
-                                                    <div id="image_container_3">
+                                        <input type="file" name="boardFile" id="image" accept="image/*" onchange="preview()"  multiple>
 
-                                                    </div>
-                                                    <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
-                                                    <script>
-                                                        let fileInput = document.getElementById("image");
-                                                        let imageContainer = document.getElementById("image_container_3");
-                                                        function preview(){
+                                        <div id="image_container_3">
+
+                                        </div>
+                                        <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
+                                        <script>
+                                            let fileInput = document.getElementById("image");
+                                            let imageContainer = document.getElementById("image_container_3");
+                                            function preview(){
 
 
-                                                            const fileArr = Array.prototype.slice.call(fileInput.files);
+                                                const fileArr = Array.prototype.slice.call(fileInput.files);
 
-                                                            for(i of fileArr) {
-                                                                // reader.readAsDataURL(image.files[0])
-                                                                // const image = document.querySelector("#image")
-                                                                // image.addEventListener("change", (e) => {
-                                                                //     //console.log(e)
-                                                                //     const reader = new FileReader()
-                                                                //     reader.readAsDataURL(e.target.files[0])
-                                                                let reader = new FileReader();
+                                                for(i of fileArr) {
+                                                    // reader.readAsDataURL(image.files[0])
+                                                    // const image = document.querySelector("#image")
+                                                    // image.addEventListener("change", (e) => {
+                                                    //     //console.log(e)
+                                                    //     const reader = new FileReader()
+                                                    //     reader.readAsDataURL(e.target.files[0])
+                                                    let reader = new FileReader();
 
-                                                                    reader.onload = function (event) {
-                                                                        let img = document.createElement("img");
-                                                                        img.setAttribute("src",event.target.result);
+                                                        reader.onload = function (event) {
+                                                            let img = document.createElement("img");
+                                                            img.setAttribute("src",event.target.result);
 
-                                                                        $("#image_container_3").append(img);
+                                                            $("#image_container_3").append(img);
 
-                                                                    }
-                                                                reader.readAsDataURL(i);
-                                                                // })
-                                                            }
                                                         }
-
-
-                                                    </script>
-
-
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-
-<!--                                        <div>-->
-<!--                                        </div>-->
+                                                    reader.readAsDataURL(i);
+                                                    // })
+                                                }
+                                            }
+                                        </script>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -172,21 +138,12 @@
 
                     </div>
                 </form>
-
-
-
             </div>
-
-
         </div>
-
-
-
 
     </div>
 
 </div>
-
 
 </body>
 <script>

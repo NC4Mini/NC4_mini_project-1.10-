@@ -133,7 +133,7 @@ tblParent {
     border: 0px none;
     cursor: pointer;
     /*margin-top: 118px;*/
-    margin-top: 220px;
+    margin-top: 20px;
 
 }
 
@@ -163,4 +163,18 @@ th{
     border-radius: 4px;
     border: 0px none;
     cursor: pointer;
+}
+
+.pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination >ul {
+    display:flex;
+}
+
+.pagination >ul >li {
+    margin:30px;
 }
