@@ -54,7 +54,7 @@ public class BoardController {
     //데이터 가져올때 모델객체
     @GetMapping("/board-list")
     public String findAll(@RequestParam(defaultValue = "1") int page,
-                          @RequestParam(defaultValue = "10") int pageSize,
+                          @RequestParam(defaultValue = "5") int pageSize,
                           Model model) {
         Page<Board> boardPage = boardService.findPaged(page, pageSize);
         List<Board> boardList = boardPage.getContent();
