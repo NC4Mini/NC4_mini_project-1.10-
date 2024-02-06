@@ -4,16 +4,16 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 
-<head th:replace="~{/fragments/config_sidebar :: config_sidebar}">
+<head th:replace="~{fragments/config_sidebar :: config_sidebar}">
 
 </head>
 <body>
     <div id="wrap">
-        <header th:replace="~{/fragments/header :: header}"></header>
-        <nav th:replace="~{/fragments/sidebar :: sidebar}"></nav>
+        <header th:replace="~{fragments/header :: header}"></header>
+        <nav th:replace="~{fragments/sidebar :: sidebar}"></nav>
         <div layout:fragment="content"></div>
 
-        <footer th:replace="~{/fragments/footer :: footer}"></footer>
+        <footer th:replace="~{fragments/footer :: footer}"></footer>
     </div>
 
 </body>
