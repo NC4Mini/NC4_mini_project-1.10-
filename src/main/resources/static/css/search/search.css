@@ -1,6 +1,6 @@
 .search-main {
     display: flex;
-    flex-direction: column;
+    /*flex-direction: column;*/
     width: 1068px;
     margin: 0px auto;
 }
