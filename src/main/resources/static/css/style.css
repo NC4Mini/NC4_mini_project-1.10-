@@ -893,3 +893,9 @@
 button a {
   color:white;
 }
+
+#wrap #header .row2 .container .right > div a .phone{
+  width:36px;
+  height:30px;
+}
+

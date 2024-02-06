@@ -9,6 +9,8 @@ import com.nc.project.repository.BoardFileRepository;
 import com.nc.project.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -105,4 +107,16 @@ public class BoardService {
     public void delete(Long id) {
         boardRepository.deleteById(id);
     }
+
+    public Page<Board> findPaged(int page, int pageSize) {
+        PageRequest pageRequest = PageRequest.of(page - 1, pageSize);
+        return boardRepository.findAll(pageRequest);
+    }
+
+    public int countTotalPages(int pageSize) {
+        long totalItems = boardRepository.count();
+        return (int) Math.ceil((double) totalItems / pageSize);
+    }
+
+
 }
