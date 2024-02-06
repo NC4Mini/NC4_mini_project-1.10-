@@ -145,10 +145,10 @@
                     </tr>
                     <tr>
                         <th>
-<!--                            <label class="label-wrapper" for="userBirth">생년월일</label>-->
+                            <label class="label-wrapper" for="userBirth">생년월일</label>
                         </th>
                         <td>
-<!--                            <input id="userBirth" name="userBirth" max="2024-01-01" min="1950-01-01" th:unless="*{userBirth == null}" th:value="*{userBirth}" type="date">-->
+                            <input id="userBirth" name="userBirth" max="2024-01-01" min="1950-01-01" th:value="*{userBirth} == null ? '2000-01-01' : *{userBirth}" type="date">
                         </td>
                     </tr>
                     </tbody>
