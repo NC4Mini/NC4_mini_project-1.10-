@@ -78,11 +78,14 @@ public class DeliveryController {
     // 결제하기 기능 (일반 결제)
     @PostMapping("/confirm-delivery")
     @Transactional
-    public ModelAndView confirmDelivery (@RequestParam ("cartId") long cartId, @RequestParam ("deliveryId") long deliveryId){
+    public ModelAndView confirmDelivery (@RequestParam ("cartId") String toCartId){
         ModelAndView mav = new ModelAndView();
 
+        long cartId = Long.parseLong(toCartId);
+
+
         // 사용자 id를 받아 새로운 상태의 delivery를 저장하는 메서드
-        deliveryService.confirmDelivery(cartId, deliveryId);
+        deliveryService.confirmDelivery(cartId);
 
         mav.setViewName("delivery/complete_delivery.html");
 
