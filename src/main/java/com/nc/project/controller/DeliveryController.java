@@ -52,12 +52,11 @@ public class DeliveryController {
             mav.setViewName("redirect:/user/login");
             return mav;
         }
-
-        Cart cart = cartService.getCart(cartId);
-
         String userName = principal.getName();
 
         UserAccount userAccount = userService.findUser(userName);
+
+        Cart cart = cartService.getCart(userAccount.getId());
 
         UserShpAddr defaultUserShpAddr = cartService.bringDefaultAddr(userAccount.getId());
 
@@ -82,7 +81,6 @@ public class DeliveryController {
         ModelAndView mav = new ModelAndView();
 
         long cartId = Long.parseLong(toCartId);
-
 
         // 사용자 id를 받아 새로운 상태의 delivery를 저장하는 메서드
         deliveryService.confirmDelivery(cartId);
