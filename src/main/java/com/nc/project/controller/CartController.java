@@ -138,7 +138,7 @@ public class CartController {
     public ModelAndView addAddr() {
         ModelAndView mav = new ModelAndView();
 
-        mav.setViewName("cart/addr_Add.html");
+        mav.setViewName("cart/addr_add.html");
 
         return mav;
     }

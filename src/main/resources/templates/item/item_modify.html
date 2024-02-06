@@ -10,301 +10,329 @@
     </th:block>
     <th:block layout:fragment="script">
         <script>
-                // 이미지 업로드하면 메인 이미지 미리보기 나오기
-                function set_main_image() {
+            // 이미지 업로드하면 메인 이미지 미리보기 나오기
+            function set_main_image() {
 
-                    applyDynamicStyles("main");
+                applyDynamicStyles("main");
 
-                    var reader = new FileReader();
-                    var inputFile = document.querySelector("#image_main_input");
-                    var container = document.querySelector("div#image_main_container");
+                var reader = new FileReader();
+                var inputFile = document.querySelector("#image_main_input");
+                var container = document.querySelector("div#image_main_container");
 
-                    // 파일이 맞는지 검사
-                    if (!inputFile.files[0].type.startsWith('image/')) {
-                        alert("이미지 파일만 업로드 가능합니다.");
-                        return;
-                    }
-
-                    reader.onload = function (event) {
-                        // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
-                        var img = document.createElement("img");
-                        img.setAttribute("src", event.target.result);
-                        img.style.maxWidth = "100%";
-                        img.style.height = "auto";
-
-                        // 파일 이름을 나타낼 p 요소 생성
-                        let fileNameP = document.createElement("p");
-                        fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold;");
-
-                        // inputFile 변수 받아오기
-                        if (inputFile && inputFile.files.length > 0) {
-                            fileNameP.textContent = inputFile.files[0].name;
-                        }
-
-                        // 이미지와 파일 이름을 담을 컨테이너 div 요소
-                        container.innerHTML = '';
-                        container.appendChild(img);
-                        container.appendChild(fileNameP);
-
-                        // 파일선택 활성화/비활성화
-                        inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
-
-                        // + 버튼 감추기
-                        var addButton = document.querySelector(".image_add .image_main_input_button");
-                        addButton.style.display = "none";
-                    };
-
-                    reader.readAsDataURL(inputFile.files[0]);
+                // 파일이 맞는지 검사
+                if (!inputFile.files[0].type.startsWith('image/')) {
+                    alert("이미지 파일만 업로드 가능합니다.");
+                    return;
                 }
 
-                // 이미지 업로드하면 상세 이미지 미리보기 나오기
-                function set_detail_image() {
+                reader.onload = function (event) {
+                    // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.style.maxWidth = "100%";
+                    img.style.height = "auto";
+                    img.style.padding = "5px";
 
-                    applyDynamicStyles("detail");
+                    // 파일 이름을 나타낼 p 요소 생성
+                    let fileNameP = document.createElement("p");
+                    fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold;");
 
-                    var reader = new FileReader();
-                    var inputFile = document.querySelector("#image_detail_input");
-                    var container = document.querySelector("div#image_detail_container");
-
-                    // 파일이 맞는지 검사
-                    if (!inputFile.files[0].type.startsWith('image/')) {
-                        alert("이미지 파일만 업로드 가능합니다.");
-                        return;
+                    // inputFile 변수 받아오기
+                    if (inputFile && inputFile.files.length > 0) {
+                        fileNameP.textContent = inputFile.files[0].name;
                     }
 
-                    reader.onload = function (event) {
-                        // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
-                        var img = document.createElement("img");
-                        img.setAttribute("src", event.target.result);
-                        img.style.maxWidth = "100%";
-                        img.style.height = "auto";
-
-                        // 파일 이름을 나타낼 p 요소 생성
-                        let fileNameP = document.createElement("p");
-                        fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold;");
-
-                        // inputFile 변수 받아오기
-                        if (inputFile && inputFile.files.length > 0) {
-                            fileNameP.textContent = inputFile.files[0].name;
-                        }
-
-                        // 이미지와 파일 이름을 담을 컨테이너 div 요소
-                        container.innerHTML = '';
-                        container.appendChild(img);
-                        container.appendChild(fileNameP);
-
-                        // 파일선택 활성화/비활성화
-                        inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
-
-                        // + 버튼 감추기
-                        var addButton = document.querySelector(".image_add .image_detail_input_button");
-                        addButton.style.display = "none";
-                    };
-
-                    reader.readAsDataURL(inputFile.files[0]);
-                }
-
-                // 이미지 업로드하면 썸네일 미리보기 나오기
-                function set_thumbnail_image() {
-
-                    applyDynamicStyles("thumbnail");
-
-                    var reader = new FileReader();
-                    var inputFile = document.querySelector("#image_thumbnail_input");
-                    // 이미지가 담길 div
-                    var container = document.querySelector("div#image_thumbnail_container");
-
-                    // 파일이 맞는지 검사
-                    if (!inputFile.files[0].type.startsWith('image/')) {
-                        alert("이미지 파일만 업로드 가능합니다.");
-                        return;
-                    }
-
-                    reader.onload = function (event) {
-                        // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
-                        var img = document.createElement("img");
-                        img.setAttribute("src", event.target.result);
-                        img.style.maxWidth = "100%";
-                        img.style.height = "auto";
-
-                        // 파일 이름을 나타낼 p 요소 생성
-                        let fileNameP = document.createElement("p");
-                        fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold;");
-
-                        // inputFile 변수 받아오기
-                        if (inputFile && inputFile.files.length > 0) {
-                            fileNameP.textContent = inputFile.files[0].name;
-                        }
-
-                        // 이미지와 파일 이름을 담을 컨테이너 div 요소 (id 셀렉터로 지정해놓음)
-                        container.innerHTML = '';
-                        container.appendChild(img);
-                        container.appendChild(fileNameP);
-
-                        // 파일선택 활성화/비활성화
-                        inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
-
-                        // + 버튼 감추기
-                        var addButton = document.querySelector(".image_add .image_thumbnail_input_button");
-                        addButton.style.display = "none";
-                    };
-
-                    reader.readAsDataURL(inputFile.files[0]);
-                }
-
-                // 업로드 이미지 삭제
-                function img_remove(button) {
-                    var container = button.closest(".image_add").querySelector("div");
+                    // 이미지와 파일 이름을 담을 컨테이너 div 요소
                     container.innerHTML = '';
+                    container.appendChild(img);
+                    container.appendChild(fileNameP);
 
-                    var inputFile = button.closest(".image_add").querySelector("input[type=file]");
-                    inputFile.value = '';
+                    // 파일선택 활성화/비활성화
+                    inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
 
-                    inputFile.disabled = false;
+                    // + 버튼 감추기
+                    var addButton = document.querySelector(".image_add .image_main_input_button");
+                    addButton.style.display = "none";
+                };
 
-                    // 해당 이미지 종류에 따라 + 버튼 다시 보이기
-                    var addButton = button.closest(".image_add").querySelector("button");
-                    addButton.style.display = "block";
+                reader.readAsDataURL(inputFile.files[0]);
+            }
 
-                    // 이미지 삭제 후 이미지 박스 크기를 원래 스타일로 되돌리기
-                    var imageType = container.id.replace("image_", "").replace("_container", "");
-                    resetImageBoxSize(imageType);
+            // 이미지 업로드하면 상세 이미지 미리보기 나오기
+            function set_detail_image() {
 
+                applyDynamicStyles("detail");
+
+                var reader = new FileReader();
+                var inputFile = document.querySelector("#image_detail_input");
+                var container = document.querySelector("div#image_detail_container");
+
+                // 파일이 맞는지 검사
+                if (!inputFile.files[0].type.startsWith('image/')) {
+                    alert("이미지 파일만 업로드 가능합니다.");
+                    return;
                 }
 
-                function applyDynamicStyles(imageType) {
-                    // 이미지 박스 스타일 변경
-                    var imageBox = document.querySelector(".image_" + imageType + "_box");
-                    if (imageBox) {
-                        imageBox.style.maxWidth = "100%";
-                        imageBox.style.height = "auto";
-                        imageBox.style.display = "flex";
-                        imageBox.style.flexDirection = "column";
-                        imageBox.style.alignItems = "center";
+                reader.onload = function (event) {
+                    // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.style.maxWidth = "100%";
+                    img.style.height = "auto";
 
-                        if (imageType === "main") {
+                    // 파일 이름을 나타낼 p 요소 생성
+                    let fileNameP = document.createElement("p");
+                    fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold;");
 
-                        } else if (imageType === "detail") {
+                    // inputFile 변수 받아오기
+                    if (inputFile && inputFile.files.length > 0) {
+                        fileNameP.textContent = inputFile.files[0].name;
+                    }
 
-                        } else if (imageType === "thumbnail") {
+                    // 이미지와 파일 이름을 담을 컨테이너 div 요소
+                    container.innerHTML = '';
+                    container.appendChild(img);
+                    container.appendChild(fileNameP);
 
-                        }
+                    // 파일선택 활성화/비활성화
+                    inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
+
+                    // + 버튼 감추기
+                    var addButton = document.querySelector(".image_add .image_detail_input_button");
+                    addButton.style.display = "none";
+                };
+
+                reader.readAsDataURL(inputFile.files[0]);
+            }
+
+            // 이미지 업로드하면 썸네일 미리보기 나오기
+            function set_thumbnail_image() {
+
+                applyDynamicStyles("thumbnail");
+
+                var reader = new FileReader();
+                var inputFile = document.querySelector("#image_thumbnail_input");
+                // 이미지가 담길 div
+                var container = document.querySelector("div#image_thumbnail_container");
+
+                // 파일이 맞는지 검사
+                if (!inputFile.files[0].type.startsWith('image/')) {
+                    alert("이미지 파일만 업로드 가능합니다.");
+                    return;
+                }
+
+                reader.onload = function (event) {
+                    // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.style.maxWidth = "100%";
+                    img.style.height = "auto";
+
+                    // 파일 이름을 나타낼 p 요소 생성
+                    let fileNameP = document.createElement("p");
+                    fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold;");
+
+                    // inputFile 변수 받아오기
+                    if (inputFile && inputFile.files.length > 0) {
+                        fileNameP.textContent = inputFile.files[0].name;
+                    }
+
+                    // 이미지와 파일 이름을 담을 컨테이너 div 요소 (id 셀렉터로 지정해놓음)
+                    container.innerHTML = '';
+                    container.appendChild(img);
+                    container.appendChild(fileNameP);
+
+                    // 파일선택 활성화/비활성화
+                    inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
+
+                    // + 버튼 감추기
+                    var addButton = document.querySelector(".image_add .image_thumbnail_input_button");
+                    addButton.style.display = "none";
+                };
+
+                reader.readAsDataURL(inputFile.files[0]);
+            }
+
+            // 업로드 이미지 삭제
+            function img_remove(button) {
+                var container = button.closest(".image_add").querySelector("div");
+                container.innerHTML = '';
+
+                var inputFile = button.closest(".image_add").querySelector("input[type=file]");
+                inputFile.value = '';
+
+                inputFile.disabled = false;
+
+                // 해당 이미지 종류에 따라 + 버튼 다시 보이기
+                var addButton = button.closest(".image_add").querySelector("button");
+                addButton.style.display = "block";
+
+                // 이미지 삭제 후 이미지 박스 크기를 원래 스타일로 되돌리기
+                var imageType = container.id.replace("image_", "").replace("_container", "");
+                resetImageBoxSize(imageType);
+
+            }
+
+            function applyDynamicStyles(imageType) {
+                // 이미지 박스 스타일 변경
+                var imageBox = document.querySelector(".image_" + imageType + "_box");
+                if (imageBox) {
+                    imageBox.style.maxWidth = "100%";
+                    imageBox.style.height = "auto";
+                    imageBox.style.display = "flex";
+                    imageBox.style.flexDirection = "column";
+                    imageBox.style.alignItems = "center";
+
+                    if (imageType === "main") {
+
+                    } else if (imageType === "detail") {
+
+                    } else if (imageType === "thumbnail") {
 
                     }
+
                 }
+            }
 
-                // 이미지 박스 크기를 원래 스타일로 되돌리는 함수
-                function resetImageBoxSize(imageType) {
-                    var imageBox = document.querySelector(".image_" + imageType + "_box");
-                    if (imageBox) {
-                        imageBox.style.width = "268px";
-                        imageBox.style.height = "268px";
-                    }
+            // 이미지 박스 크기를 원래 스타일로 되돌리는 함수
+            function resetImageBoxSize(imageType) {
+                var imageBox = document.querySelector(".image_" + imageType + "_box");
+                if (imageBox) {
+                    imageBox.style.width = "268px";
+                    imageBox.style.height = "268px";
                 }
+            }
 
-                $(() => {
-                    $("#btn_update").on("click", () => {
-                        // 상품관련정보는 필수입력정보
-                        if ($("#itemName").val() === "" || ($("#itemDescription").val() === "") || ($("#itemPrice").val() === "")) {
-                            alert("상품 이름, 상품 설명, 상품 가격은 필수 입력사항입니다. ")
-                            if ($("#itemName").val() === "") {
-                                $("#itemName").focus();
-                                $('html, body').animate({
-                                    scrollTop: $("#itemName").offset().top - 50  // 조절 가능한 값으로 필요에 따라 조절
-                                }, 100);  // 애니메이션 속도, 필요에 따라 조절
-                            } else if ($("#itemDescription").val() === "") {
-                                $("#itemDescription").focus();
-                                $('html, body').animate({
-                                    scrollTop: $("#itemDescription").offset().top - 50
-                                }, 100);
-                            } else if ($("#itemPrice").val() === "") {
-                                $("#itemPrice").focus();
-                                $('html, body').animate({
-                                    scrollTop: $("#itemPrice").offset().top - 50
-                                }, 100);
-                            }
-                            return false;
-                        }
+            $(() => {
+                applyDynamicStyles("main");
+                $(".image_main").css("maxWidth", "100%", "height", "auto", "padding", "5px");
+                $(".image_main_input_button").css("display", "none");
 
-                        // 숫자 체크 정규식
-                        var numericRegex = /^[0-9]+$/;
 
-                        // 가격의 값이 숫자가 아니면 제출 제어
-                        if (!numericRegex.test($("#itemPrice").val())) {
-                            alert("가격은 숫자 형태만 입력해주세요.")
-                            $("#itemPrice").val("").focus();
-
-                            // 스크롤을 해당 필드로 이동시킴
-                            $('html, body').animate({
-                                scrollTop: $("#itemPrice").offset().top - 200
-                            }, 100);
-
-                            return false;
-                        }
-
-                        // 형재 페이지 URL에서 itemId 추출
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const itemId = urlParams.get('itemId');
-
-                        const formData = new FormData(document.getElementById("modifyForm"));
-
-                        // itemId가 존재하면 FormData에 추가
-                        if (itemId) {
-                            formData.append("itemId", itemId);
-                        }
-
-                        // Key : name값, Value : id에서 추출해온 값, 사진은 여러정보를 담고있는 객체이므로 [0] 처리.
-                        formData.append("item_main_image", $("#image_main_input")[0].files[0]);
-                        formData.append("item_detail_image", $("#image_detail_input")[0].files[0]);
-                        formData.append("item_thumbnail_image", $("#image_thumbnail_input")[0].files[0]);
-                        console.log(...formData);
-
-                        $.ajax({
-                            enctype: "multipart/form-data",
-                            url: '/item/item-modify',
-                            type: 'put',
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            cache: false,
-                            success: (obj) => {
-                                console.log(obj.item.msg);
-                                alert(obj.item.msg);
-                                window.location.reload();
-                            },
-                            error: (error) => {
-                                console.log(error);
-                                alert("에러발생, 관리자에게 문의하세요. ")
-                                window.location.reload();
-                            }
-                        });
+                var detailImage = $(".image_detail");
+                if (detailImage.length && detailImage.attr("src")) {
+                    applyDynamicStyles("detail");
+                    detailImage.css({
+                        "maxWidth": "100%",
+                        "height": "auto",
+                        "padding": "5px"
                     });
-                    const itemId = [[${item.itemId}]];
-                    $("#btn_delete").on("click", () => {
-                        $.ajax({
-                            url: '/item/item-delete',
-                            type: 'post',
-                            data: {"itemId": itemId},
-                            success: (obj) => {
-                                console.log(obj.item.msg);
-                                alert(obj.item.msg);
-                                location.href = "/item/item-manage"
-                            },
-                            error: (obj, error, response) => {
-                                console.log(response);
-                                console.log(obj.item.msg);
-                                console.log(error);
-                                alert("에러발생, 관리자에게 문의하세요. ")
-                                window.location.reload();
-                            }
-                        });
+                    $(".image_detail_input_button").css("display", "none");
+                }
+
+                var thumbnailImage = $(".image_thumbnail");
+                if (thumbnailImage.length && thumbnailImage.attr("src")) {
+                    applyDynamicStyles("thumbnail");
+                    thumbnailImage.css({
+                        "maxWidth": "100%",
+                        "height": "auto",
+                        "padding": "5px"
+                    });
+                    $(".image_thumbnail_input_button").css("display", "none");
+                }
+
+                $("#btn_update").on("click", () => {
+                    // 상품관련정보는 필수입력정보
+                    if ($("#itemName").val() === "" || ($("#itemDescription").val() === "") || ($("#itemPrice").val() === "")) {
+                        alert("상품 이름, 상품 설명, 상품 가격은 필수 입력사항입니다. ")
+                        if ($("#itemName").val() === "") {
+                            $("#itemName").focus();
+                            $('html, body').animate({
+                                scrollTop: $("#itemName").offset().top - 50  // 조절 가능한 값으로 필요에 따라 조절
+                            }, 100);  // 애니메이션 속도, 필요에 따라 조절
+                        } else if ($("#itemDescription").val() === "") {
+                            $("#itemDescription").focus();
+                            $('html, body').animate({
+                                scrollTop: $("#itemDescription").offset().top - 50
+                            }, 100);
+                        } else if ($("#itemPrice").val() === "") {
+                            $("#itemPrice").focus();
+                            $('html, body').animate({
+                                scrollTop: $("#itemPrice").offset().top - 50
+                            }, 100);
+                        }
+                        return false;
+                    }
+
+                    // 숫자 체크 정규식
+                    var numericRegex = /^[0-9]+$/;
+
+                    // 가격의 값이 숫자가 아니면 제출 제어
+                    if (!numericRegex.test($("#itemPrice").val())) {
+                        alert("가격은 숫자 형태만 입력해주세요.")
+                        $("#itemPrice").val("").focus();
+
+                        // 스크롤을 해당 필드로 이동시킴
+                        $('html, body').animate({
+                            scrollTop: $("#itemPrice").offset().top - 200
+                        }, 100);
+
+                        return false;
+                    }
+
+                    // 형재 페이지 URL에서 itemId 추출
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const itemId = urlParams.get('itemId');
+
+                    const formData = new FormData(document.getElementById("modifyForm"));
+
+                    // itemId가 존재하면 FormData에 추가
+                    if (itemId) {
+                        formData.append("itemId", itemId);
+                    }
+
+                    // Key : name값, Value : id에서 추출해온 값, 사진은 여러정보를 담고있는 객체이므로 [0] 처리.
+                    formData.append("item_main_image", $("#image_main_input")[0].files[0]);
+                    formData.append("item_detail_image", $("#image_detail_input")[0].files[0]);
+                    formData.append("item_thumbnail_image", $("#image_thumbnail_input")[0].files[0]);
+                    console.log(...formData);
+
+                    $.ajax({
+                        enctype: "multipart/form-data",
+                        url: '/item/item-modify',
+                        type: 'put',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: (obj) => {
+                            console.log(obj.item.msg);
+                            alert(obj.item.msg);
+                            window.location.reload();
+                        },
+                        error: (error) => {
+                            console.log(error);
+                            alert("에러발생, 관리자에게 문의하세요. ")
+                            window.location.reload();
+                        }
                     });
                 });
+                const itemId = [[${item.itemId}]];
+                $("#btn_delete").on("click", () => {
+                    $.ajax({
+                        url: '/item/item-delete',
+                        type: 'post',
+                        data: {"itemId": itemId},
+                        success: (obj) => {
+                            console.log(obj.item.msg);
+                            alert(obj.item.msg);
+                            location.href = "/item/item-manage"
+                        },
+                        error: (obj, error, response) => {
+                            console.log(response);
+                            console.log(obj.item.msg);
+                            console.log(error);
+                            alert("에러발생, 관리자에게 문의하세요. ")
+                            window.location.reload();
+                        }
+                    });
+                });
+            });
         </script>
     </th:block>
 </head>
 <body>
-<div class="content" layout:fragment="content">
+<div layout:fragment="content">
     <div id="main">
         <div id="content">
             <div class="page_aticle aticle_type2">
@@ -417,7 +445,6 @@
 
                                                                      th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${mainFile.itemFileName}}" alt="메인이미지">
                                                                 <p style="display: inline-block; font-size: 10px; font-weight: bold; padding: 0 10px;"
-
                                                                    th:text="${mainFile.itemFileOrigin}"></p>
                                                             </div>
                                                             <div style="margin-bottom:40px;">
