@@ -8,8 +8,7 @@ $('.modal').on('hidden.bs.modal', function (e) {
 $(".btn_type1").click(function () {
     let userEmail = $("#userEmail").val();
     let userId = $("#userId").val();
-    let pwFindCheck;
-    console.log("버튼 눌림");
+    let pwFindCheck = false;
 
     $.ajax({
         type: "POST",
@@ -19,7 +18,7 @@ $(".btn_type1").click(function () {
             "userId": userId,
             pwFindCheck : pwFindCheck }
         }). done(function (obj) {
-            if (obj.pwFindCheck) {
+            if (obj.pwFindCheck === true) {
                if(obj.mailSend) {
                    alert("이메일이 발송되었습니다.");
                    location.href = "/user/login";

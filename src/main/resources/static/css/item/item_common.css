@@ -4,7 +4,13 @@
 }
 
 #content {
+    width: 1050px;
+    margin: 0 auto;
     height: auto;
+}
+
+.size {
+    width : 810px;
 }
 
 #main #content {
@@ -23,7 +29,6 @@
 #main #snb {
     float: left;
     width: 200px;
-    margin-left: 200px;
 }
 
 #main #snb .tit_snb {

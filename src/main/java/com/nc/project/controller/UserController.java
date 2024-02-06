@@ -48,7 +48,7 @@ public class UserController {
 
         model.addAttribute("userAccountDto",userAccountDto);
 
-        return "/user/modify";
+        return "user/modify";
     }
 
 
@@ -143,7 +143,7 @@ public class UserController {
 
     @GetMapping("/find-pw")
     public String pwFindView() {
-        return "user/password_find.html";
+        return "user/password_find";
     }
 
     @Transactional
@@ -153,7 +153,8 @@ public class UserController {
 
         Map<String, Boolean> returnMap = new HashMap<>();
 
-        if(userId !=null && userEmail != null) {
+        
+        if(!userId.isBlank() && !userEmail.isBlank()) {
             boolean pwFindCheck = userService.userEmailCheck(userId, userEmail);
             returnMap.put("pwFindCheck", pwFindCheck);
 

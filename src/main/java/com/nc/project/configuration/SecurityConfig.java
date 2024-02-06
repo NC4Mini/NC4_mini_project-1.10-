@@ -34,8 +34,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeRequests) -> {
                     authorizeRequests.requestMatchers("/user/profile").authenticated();
 //                    authorizeRequests.requestMatchers("/board/board-list").authenticated();
-//                    authorizeRequests.requestMatchers("/item/item-add").authenticated();
-//                    authorizeRequests.requestMatchers("/item/item-manage").authenticated();
+                    authorizeRequests.requestMatchers("/item/item-add").authenticated();
+                    authorizeRequests.requestMatchers("/item/item-manage").authenticated();
                     authorizeRequests.requestMatchers("/user/join").permitAll();
                     authorizeRequests.requestMatchers("/user/login").permitAll();
                     authorizeRequests.requestMatchers("/user/login-view").permitAll();

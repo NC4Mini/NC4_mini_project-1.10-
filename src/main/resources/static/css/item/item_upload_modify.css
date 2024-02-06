@@ -141,7 +141,6 @@ table .text8 {
 
 }
 
-
 .image_add .image_main_input_button::before, .image_detail_input_button::before, .image_thumbnail_input_button::before {
     content: "";
     position: absolute;
