@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.w3.org/1999/xhtml">
+      xmlns:sec="http://www.thymleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <body>
 <header th:fragment="header" id="header" style="height: 110px;">
     <div class="row1">
@@ -66,7 +67,7 @@
             <div class="right">
                 <!--상품 추가 버튼 생성 / 24.01.16-->
                 <div>
-                    <a href="/item/item-add" title="상품 추가"><img src="/img/addItem.svg"> </a>
+                    <a sec:authorize="isAuthenticated()" href="/item/item-add" title="상품 추가"><img src="/img/addItem.svg"> </a>
                 </div>
                 <div class="map-tooltip-box">
                     <a href="/board/board-list"><img src="/img/phone-volume-solid.svg" alt="고객센터" title="고객센터"></a>
