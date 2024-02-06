@@ -1,0 +1,69 @@
+<!-- 메인 홈페이지 -->
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}"
+>
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/item/item_manage.css}">
+    </th:block>
+</head>
+<body>
+<div layout:fragment="content">
+    <main id="main">
+        <div id="content">
+            <section id="section2" class="section-slide-public">
+                <div class="title">
+                    <h2>상품 관리 페이지</h2>
+                </div>
+                <div class="item-total" th:text="|총 ${totalItemCount}건|">건수</div>
+            </section>
+            <div class="item-list">
+                <div class="item-box" th:each="item : ${itemList}">
+                    <div class="img-box">
+                        <a th:if="${item.itemFileList[0].itemType.equalsIgnoreCase('Main')}" th:href="@{/item/item-modify?(itemId=${item.itemId})}">
+                            <img class="img-size" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${item.itemFileList[0].itemFileName}}" alt="메인상품이미지">
+                        </a>
+                    </div>
+                    <div class="caption-box">
+                        <p class="letter-delivery">판매자 배송</p>
+                        <h2 class="letter-item-title" th:text="${item.itemName}">상품제목 </h2>
+                        <h2 class="letter-item-desc" th:text="${item.itemDescription}">상세설명 </h2>
+                        <h3 class="letter-item-price"
+                            th:text="|${#numbers.formatInteger(item.itemPrice, 3, 'COMMA') + '원'}|"><em>원</em>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div style="text-align: center;">
+                <ul class="pagination" th:if="${itemList.totalElements > 0}"
+                    th:with="pageNumber = ${itemList.pageable.pageNumber},
+                             pageSize = ${itemList.pageable.pageSize},
+                             totalPages = ${itemList.totalPages},
+                             startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+                             tempEndPage = ${startPage + pageSize - 1},
+                             endPage = ${tempEndPage > totalPages ? totalPages : tempEndPage}">
+                    <li class="pagination-btn" th:if="${pageNumber > 0}" style="display: inline;">
+                        <a th:href="@{/item/item-manage(page=${pageNumber - 1})}" style="font-size: 18px;">이전</a>
+                    </li>
+                    <li class="pagination-btn" th:each="page : ${#numbers.sequence(startPage, endPage)}"
+                        style="display: inline;">
+                        <a th:href="@{/item/item-manage(page=${page - 1})}" th:text="${page}"
+                           style="margin: 0 5px; font-size: 18px;"></a>
+                    </li>
+                    <li class="pagination-btn" th:if="${pageNumber < totalPages - 1}"
+                        style="display: inline;">
+                        <a th:href="@{/item/item-manage(page=${pageNumber + 1})}" style="font-size: 18px;">다음</a>
+                    </li>
+                </ul>
+                <div style="margin-bottom: 30px"></div>
+            </div>
+            <br/>
+        </div>
+    </main>
+</div>
+</body>
+</html>

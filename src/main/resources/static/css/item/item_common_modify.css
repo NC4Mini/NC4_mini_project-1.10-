@@ -1,0 +1,139 @@
+#wrap #main {
+    height: auto;
+    margin-bottom: 5%;
+}
+
+#main #content {
+    width: 1050px;
+    margin: 0 auto;
+    height: auto;
+}
+
+#main .page_aticle {
+    width: auto;
+    margin: 0 auto;
+}
+
+#main .page_aticle.aticle_type2 {
+    padding-top: 65px;
+}
+
+#main #snb {
+    float: left;
+    width: 200px;
+}
+
+#main #snb .tit_snb {
+    padding: 8px 0 33px 1px;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 34px;
+    color: #333;
+    letter-spacing: -.5px;
+}
+
+#main #snb .inner_snb {
+    border: 1px solid #f2f2f2;
+    border-bottom: 0;
+}
+
+#main #snb .list_menu li {
+    border-bottom: 1px solid #f2f2f2;
+}
+
+
+#main #snb .list_menu li.on a, #snb .list_menu li a:hover {
+    background: #fafafa url(https://res.kurly.com/pc/ico/2008/ico_arrow_6x11_on.svg) no-repeat 174px 52%;
+    background-size: 6px 11px;
+    font-weight: 700;
+    color: #5f0080;
+}
+
+#main #snb .list_menu li a {
+    display: block;
+    overflow: hidden;
+    padding: 15px 0 15px 20px;
+    background: #fff url(https://res.kurly.com/pc/ico/2008/ico_arrow_6x11.svg) no-repeat 174px 52%;
+    background-size: 6px 11px;
+    font-size: 14px;
+    color: #666;
+    line-height: 20px;
+    letter-spacing: -.3px;
+}
+
+
+#main #content .snb_my {
+    top: 50px;
+    position: sticky;
+}
+
+
+#main .page_aticle.aticle_type2 .page_section {
+    width: 810px;
+    text-align: left;
+    margin: 0 auto;
+    display: table;
+}
+
+
+#main .page_aticle .head_aticle {
+    padding: 20px 5px 20px;
+    border-top: 1px solid rgb(51, 51, 51);
+
+}
+
+#main .page_aticle .head_aticle .tit {
+    height: 36px;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+    color: #333;
+    letter-spacing: -.5px;
+    text-align: center;
+}
+
+#main #tblParent {
+    margin-bottom: 120px;
+    border-top: 1px solid rgb(51, 51, 51);
+}
+
+.page_aticle .tbl {
+    width: 100%;
+    margin-top: 23px;
+}
+
+.section_destination .tbl_type1 .tit_select {
+    width: 60px;
+}
+
+.section_destination .tbl_type1 tr:first-child td, .section_destination .tbl_type1 td {
+    height: 90px;
+    font-size: 14px;
+    color: rgb(51, 51, 51);
+    line-height: 22px;
+    letter-spacing: -0.4px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+tblParent {
+    margin-bottom: 120px;
+    border-top: 1px solid rgb(51, 51, 51);
+}
+
+.delete_button {
+    position: absolute;
+    right: 10px;
+    display: block;
+    padding: 0px 10px;
+    text-align: center;
+    overflow: hidden;
+    width: 120px;
+    height: 44px;
+    border-radius: 3px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(95, 0, 128);
+    border: 0px none;
+    cursor: pointer;
+}
+

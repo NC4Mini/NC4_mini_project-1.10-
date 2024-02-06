@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/layout}" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/item/item_common.css}">
+        <link rel="stylesheet" th:href="@{/css/item/item_upload.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script>
+            // 이미지 업로드하면 메인 이미지 미리보기 나오기
+            function set_main_image() {
+
+                applyDynamicStyles("main");
+
+                var reader = new FileReader();
+                var inputFile = document.querySelector("#image_main_input");
+                var container = document.querySelector("div#image_main_container");
+
+                // 파일이 맞는지 검사
+                if (!inputFile.files[0].type.startsWith('image/')) {
+                    alert("이미지 파일만 업로드 가능합니다.");
+                    return;
+                }
+
+                reader.onload = function (event) {
+                    // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.style.maxWidth = "100%";
+                    img.style.height = "auto";
+
+                    // 파일 이름을 나타낼 p 요소 생성
+                    let fileNameP = document.createElement("p");
+                    fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold; padding: 0 10px");
+
+                    // inputFile 변수 받아오기
+                    if (inputFile && inputFile.files.length > 0) {
+                        fileNameP.textContent = inputFile.files[0].name;
+                    }
+
+                    // 이미지와 파일 이름을 담을 컨테이너 div 요소
+                    container.innerHTML = '';
+                    container.appendChild(img);
+                    container.appendChild(fileNameP);
+
+                    // 파일선택 활성화/비활성화
+                    inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
+
+                    // + 버튼 감추기
+                    var addButton = document.querySelector(".image_add .image_main_input_button");
+                    addButton.style.display = "none";
+                };
+
+                reader.readAsDataURL(inputFile.files[0]);
+            }
+
+            // 이미지 업로드하면 상세 이미지 미리보기 나오기
+            function set_detail_image() {
+
+                applyDynamicStyles("detail");
+
+                var reader = new FileReader();
+                var inputFile = document.querySelector("#image_detail_input");
+                var container = document.querySelector("div#image_detail_container");
+
+                // 파일이 맞는지 검사
+                if (!inputFile.files[0].type.startsWith('image/')) {
+                    alert("이미지 파일만 업로드 가능합니다.");
+                    return;
+                }
+
+                reader.onload = function (event) {
+                    // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.style.maxWidth = "100%";
+                    img.style.height = "auto";
+
+                    // 파일 이름을 나타낼 p 요소 생성
+                    let fileNameP = document.createElement("p");
+                    fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold;");
+
+                    // inputFile 변수 받아오기
+                    if (inputFile && inputFile.files.length > 0) {
+                        fileNameP.textContent = inputFile.files[0].name;
+                    }
+
+                    // 이미지와 파일 이름을 담을 컨테이너 div 요소
+                    container.innerHTML = '';
+                    container.appendChild(img);
+                    container.appendChild(fileNameP);
+
+                    // 파일선택 활성화/비활성화
+                    inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
+
+                    // + 버튼 감추기
+                    var addButton = document.querySelector(".image_add .image_detail_input_button");
+                    addButton.style.display = "none";
+                };
+
+                reader.readAsDataURL(inputFile.files[0]);
+            }
+
+            // 이미지 업로드하면 썸네일 미리보기 나오기
+            function set_thumbnail_image() {
+
+                applyDynamicStyles("thumbnail");
+
+                var reader = new FileReader();
+                var inputFile = document.querySelector("#image_thumbnail_input");
+                // 이미지가 담길 div
+                var container = document.querySelector("div#image_thumbnail_container");
+
+                // 파일이 맞는지 검사
+                if (!inputFile.files[0].type.startsWith('image/')) {
+                    alert("이미지 파일만 업로드 가능합니다.");
+                    return;
+                }
+
+                reader.onload = function (event) {
+                    // FileReader로 읽은 이미지 데이터를 활용하여 img 요소 생성
+                    var img = document.createElement("img");
+                    img.setAttribute("src", event.target.result);
+                    img.style.maxWidth = "100%";
+                    img.style.height = "auto";
+
+                    // 파일 이름을 나타낼 p 요소 생성
+                    let fileNameP = document.createElement("p");
+                    fileNameP.setAttribute("style", "display: inline-block; font-size: 10px; font-weight: bold;");
+
+                    // inputFile 변수 받아오기
+                    if (inputFile && inputFile.files.length > 0) {
+                        fileNameP.textContent = inputFile.files[0].name;
+                    }
+
+                    // 이미지와 파일 이름을 담을 컨테이너 div 요소 (id 셀렉터로 지정해놓음)
+                    container.innerHTML = '';
+                    container.appendChild(img);
+                    container.appendChild(fileNameP);
+
+                    // 파일선택 활성화/비활성화
+                    inputFile.disabled = container.hasChildNodes(); // 이미지가 존재하면 비활성화, 없으면 활성화
+
+                    // + 버튼 감추기
+                    var addButton = document.querySelector(".image_add .image_thumbnail_input_button");
+                    addButton.style.display = "none";
+                };
+
+                reader.readAsDataURL(inputFile.files[0]);
+            }
+
+            // 업로드 이미지 삭제
+            function img_remove(button) {
+                var container = button.closest(".image_add").querySelector("div");
+                container.innerHTML = '';
+
+                var inputFile = button.closest(".image_add").querySelector("input[type=file]");
+                inputFile.value = '';
+
+                inputFile.disabled = false;
+
+                // 해당 이미지 종류에 따라 + 버튼 다시 보이기
+                var addButton = button.closest(".image_add").querySelector("button");
+                addButton.style.display = "block";
+
+                // 이미지 삭제 후 이미지 박스 크기를 원래 스타일로 되돌리기
+                var imageType = container.id.replace("image_", "").replace("_container", "");
+                resetImageBoxSize(imageType);
+
+            }
+
+            function applyDynamicStyles(imageType) {
+                // 이미지 박스 스타일 변경
+                var imageBox = document.querySelector(".image_" + imageType + "_box");
+                if (imageBox) {
+                    imageBox.style.maxWidth = "100%";
+                    imageBox.style.height = "auto";
+                    imageBox.style.display = "flex";
+                    imageBox.style.flexDirection = "column";
+                    imageBox.style.alignItems = "center";
+
+                    if (imageType === "main") {
+
+                    } else if (imageType === "detail") {
+
+                    } else if (imageType === "thumbnail") {
+
+                    }
+
+                }
+            }
+
+            // 이미지 박스 크기를 원래 스타일로 되돌리는 함수
+            function resetImageBoxSize(imageType) {
+                var imageBox = document.querySelector(".image_" + imageType + "_box");
+                if (imageBox) {
+                    imageBox.style.width = "268px";
+                    imageBox.style.height = "268px";
+                }
+            }
+
+            $(() => {
+                $("#btn_insert").on("click", () => {
+                    // 상품관련정보는 필수입력정보
+                    if($("#itemName").val() === "" || ($("#itemDescription").val() === "") || ($("#itemPrice").val() === "")) {
+                        alert("상품 이름, 상품 설명, 상품 가격은 필수 입력사항입니다. ")
+                        if($("#itemName").val() === "") {
+                            $("#itemName").focus();
+                            $('html, body').animate({
+                                scrollTop: $("#itemName").offset().top - 50  // 조절 가능한 값으로 필요에 따라 조절
+                            }, 100);  // 애니메이션 속도, 필요에 따라 조절
+                        } else if ($("#itemDescription").val() === "") {
+                            $("#itemDescription").focus();
+                            $('html, body').animate({
+                                scrollTop: $("#itemDescription").offset().top - 50
+                            }, 100);
+                        } else if ($("#itemPrice").val() === "") {
+                            $("#itemPrice").focus();
+                            $('html, body').animate({
+                                scrollTop: $("#itemPrice").offset().top - 50
+                            }, 100);
+                        }
+                        return false;
+                    }
+
+                    // 숫자 체크 정규식
+                    var numericRegex = /^[0-9]+$/;
+
+                    // 가격의 값이 숫자가 아니면 제출 제어
+                    if(!numericRegex.test($("#itemPrice").val())) {
+                        alert("가격은 숫자 형태만 입력해주세요.")
+                        $("#itemPrice").val("").focus();
+
+                        // 스크롤을 해당 필드로 이동시킴
+                        $('html, body').animate({
+                            scrollTop: $("#itemPrice").offset().top - 200
+                        }, 100);
+
+                        return false;
+                    }
+
+                    if($("#image_main_input").val() === "") {
+                        alert("메인이미지 등록은 필수입니다.")
+                        $('html, body').animate({
+                            scrollTop: $("#itemPrice").offset().top - 200
+                        }, 100);
+                        return false;
+                    }
+
+                    // 폼 데이터에 #Selector를 사용하면 배열안에 (K:V)로 담기게된다.
+                    const formData = new FormData($("#itemForm")[0]);
+
+                    // const image_main_input = $("#image_main_input")[0];
+                    // const image_detail_input = $("#image_detail_input")[0];
+                    // const image_thumbnail_input = $("#image_thumbnail_input")[0];
+
+                    // Key : name값, Value : id에서 추출해온 값, 사진은 여러정보를 담고있는 객체이므로 [0] 처리.
+                    formData.append("item_main_image", $("#image_main_input")[0].files[0]);
+                    formData.append("item_detail_image", $("#image_detail_input")[0].files[0]);
+                    formData.append("item_thumbnail_image", $("#image_thumbnail_input")[0].files[0]);
+                    // console.log(...formData);
+
+
+                    $.ajax({
+                        enctype: "multipart/form-data",
+                        url: '/item/item-add',
+                        type: 'post',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: (obj) => {
+                            console.log(obj.item.msg);
+                            alert("상품등록 성공");
+                            window.location.reload();
+                        },
+                        error: (error) => {
+                            console.log(error);
+                            alert("에러발생, 관리자에게 문의하세요. ")
+                            window.location.href = "/";
+                        }
+                    });
+                });
+            });
+        </script>
+    </th:block>
+</head>
+<body>
+<div class="content" layout:fragment="content">
+    <div id="main">
+        <div id="content">
+            <div class="page_aticle aticle_type2">
+                <!--왼쪽 카테고리-->
+                <div id="snb" class="snb_my">
+                    <h2 class="tit_snb">관리자 메뉴</h2>
+                    <div class="inner_snb">
+                        <ul class="list_menu">
+                            <li>
+                                <a th:href="@{/item/item-add}">상품 등록</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/item/item-manage}">상품 관리</a>
+                            </li>
+                            <li>
+                                <a href="#">주문 관리</a>
+                            </li>
+                            <li>
+                                <a href="#">후기 관리</a>
+                            </li>
+                            <li>
+                                <a th:href="@{/board/board-list}">1:1문의 관리</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="viewOrderList" class="page_section section_orderlist">
+                    <div class="head_aticle">
+                        <h2 class="tit">
+                            상품 등록
+                        </h2>
+                    </div>
+
+                    <div class="list_order">
+                        <form id="itemForm" action="/item/item-add" method="post" enctype="multipart/form-data">
+                            <div class="size">
+                                <div class="p_board">
+                                    <table width="100%">
+                                        <tbody>
+                                        <tr>
+                                            <th>상품명</th>
+                                            <td colspan="2">
+                                                <div>
+                                            <span>
+                                                <input type="text" id="itemName" name="itemName" class="i_text text1"
+                                                       required>
+                                            </span>
+                                                </div>
+                                                <span class="txtByte" title="현재글자수/최대글자수">
+                                          [
+                                          <strong class="txt_count_name">0</strong>
+                                           / 80 ]
+                                        </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>한줄 소개</th>
+                                            <td colspan="2">
+                                                <div>
+                                            <span>
+                                                <input type="text" class="i_text text2" id="itemDescription"
+                                                       name="itemDescription"
+                                                       required>
+                                            </span>
+
+                                                </div>
+                                                <span class="txtByte" title="현재글자수/최대글자수">
+                                          [
+                                          <strong class="txt_count_introduce">0</strong>
+                                           / 150 ]
+                                        </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>가격</th>
+                                            <td colspan="2">
+                                                <div>
+                                            <span>
+                                                <input type="text" id="itemPrice" name="itemPrice" class="i_text text3"
+                                                       required>
+                                            </span>
+                                                </div>
+                                                <span class="won">
+                                          원
+                                        </span>
+                                                <span class="won_type">
+                                          숫자만 입력해주세요 !
+                                        </span>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>메인</th>
+                                            <td class="img_upload">
+                                                <div>
+                                                    <span>상품 메인 이미지</span>
+
+                                                    <div class="image_main_box">
+
+                                                        <div class="image_add">
+
+                                                            <input type="file" name="item_main_image"
+                                                                   accept="image/*" id="image_main_input"
+                                                                   onchange="set_main_image(event);">
+                                                            <button type="button"
+                                                                    class="image_main_input_button"></button>
+                                                            <div id="image_main_container"></div>
+
+                                                            <div style="margin-bottom:40px;">
+
+                                                                <button type="button" name="image_main_container"
+                                                                        class="remove" onclick="img_remove(this)">
+                                                        <span>
+                                                            삭제
+                                                        </span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>디테일</th>
+                                            <td class="img_upload">
+                                                <div>
+                                                    <span>상품 디테일 이미지</span>
+
+                                                    <div class="image_detail_box">
+
+                                                        <div class="image_add">
+
+                                                            <input type="file" name="item_detail_image"
+                                                                   accept="image/*" id="image_detail_input"
+                                                                   onchange="set_detail_image(event);">
+                                                            <button type="button"
+                                                                    class="image_detail_input_button"></button>
+                                                            <div id="image_detail_container"></div>
+
+                                                            <div style="margin-bottom:40px;">
+
+                                                                <button type="button" name="image_detail_container"
+                                                                        class="remove" onclick="img_remove(this)">
+                                                        <span>
+                                                            삭제
+                                                        </span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>썸네일</th>
+                                            <td class="img_upload">
+                                                <div>
+                                                    <span>상품 썸네일</span>
+
+                                                    <div class="image_thumbnail_box">
+
+                                                        <div class="image_add">
+
+                                                            <input type="file" name="item_thumbnail_image"
+                                                                   accept="image/*" id="image_thumbnail_input"
+                                                                   onchange="set_thumbnail_image(event);">
+                                                            <button type="button"
+                                                                    class="image_thumbnail_input_button"></button>
+                                                            <div id="image_thumbnail_container"></div>
+
+                                                            <div style="margin-bottom:40px;">
+
+                                                                <button type="button" name="image_thumbnail_container"
+                                                                        class="remove"
+                                                                        onclick="img_remove(this)">
+                                                        <span>
+                                                            삭제
+                                                        </span>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="product_submit" class="pd_submit">
+                                    <button type="button" id="btn_insert">등록하기</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
