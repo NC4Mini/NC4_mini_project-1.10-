@@ -6,6 +6,7 @@ import com.nc.project.service.BoardService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -52,10 +53,16 @@ public class BoardController {
 
     //데이터 가져올때 모델객체
     @GetMapping("/board-list")
-    public String findAll(Model model){
-        //DB에서 전체 게시글 데이터를 가져와서 getBoard.html에 보여준다
-        List<BoardDTO> boardDTOList = boardService.findAll();
-        model.addAttribute("boardList", boardDTOList);
+    public String findAll(@RequestParam(defaultValue = "1") int page,
+                          @RequestParam(defaultValue = "5") int pageSize,
+                          Model model) {
+        Page<Board> boardPage = boardService.findPaged(page, pageSize);
+        List<Board> boardList = boardPage.getContent();
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("currentPage", boardPage.getNumber() + 1);
+        model.addAttribute("totalPages", boardPage.getTotalPages());
+
         return "board/getBoardList";
     }
 

@@ -67,226 +67,34 @@
                         <td class="name" th:text="${board.boardWriter}" >
                             <span></span>
                         </td>
-                        <td class="phone" th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm:ss')}">
+                        <td class="phone" th:text="*{#temporals.format(board.createdTime, 'yyyy-MM-dd HH:mm:ss')}">
                             <span></span>
                         </td>
                         <td th:text="${board.boardHits}">
                             <span></span>
                         </td>
-<!--                        <td class="delete_position">-->
-<!--                            <span class="delivery star">Y</span>-->
-<!--                        </td>-->
                     </tr>
-<!--                    <tr>-->
-<!--                        <td class="select type_radio">-->
-<!--                            <label class="skin_checkbox">-->
-<!--                                <p>3</p>-->
-<!--                            </label>-->
-<!--                        </td>-->
-<!--                        <td class="address">-->
-
-<!--                            <p class="addr">-->
-<!--                                제품에 하자가 있어요-->
-<!--                            </p>-->
-<!--                        </td>-->
-<!--                        <td class="name">-->
-<!--                            <span>admin</span>-->
-<!--                        </td>-->
-<!--                        <td class="phone">-->
-<!--                            <span>2023-11-27T16:44</span>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <span class="delivery star">13</span>-->
-<!--                        </td>-->
-<!--                        <td class="delete_position">-->
-<!--                            <span class="delivery star">N</span>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td class="select type_radio">-->
-<!--                            <label class="skin_checkbox">-->
-<!--                                <p>3</p>-->
-<!--                            </label>-->
-<!--                        </td>-->
-<!--                        <td class="address">-->
-
-<!--                            <p class="addr">-->
-<!--                                제품에 하자가 있어요-->
-<!--                            </p>-->
-<!--                        </td>-->
-<!--                        <td class="name">-->
-<!--                            <span>admin</span>-->
-<!--                        </td>-->
-<!--                        <td class="phone">-->
-<!--                            <span>2023-11-27T16:44</span>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <span class="delivery star">13</span>-->
-<!--                        </td>-->
-<!--                        <td class="delete_position">-->
-<!--                            <span class="delivery star">Y</span>-->
-<!--                        </td>-->
-<!--                    </tr>        <tr>-->
-<!--                        <td class="select type_radio">-->
-<!--                            <label class="skin_checkbox">-->
-<!--                                <p>3</p>-->
-<!--                            </label>-->
-<!--                        </td>-->
-<!--                        <td class="address">-->
-
-<!--                            <p class="addr">-->
-<!--                                제품에 하자가 있어요-->
-<!--                            </p>-->
-<!--                        </td>-->
-<!--                        <td class="name">-->
-<!--                            <span>admin</span>-->
-<!--                        </td>-->
-<!--                        <td class="phone">-->
-<!--                            <span>2023-11-27T16:44</span>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <span class="delivery star">13</span>-->
-<!--                        </td>-->
-<!--                        <td class="delete_position">-->
-<!--                            <span class="delivery star">N</span>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td class="select type_radio">-->
-<!--                            <label class="skin_checkbox">-->
-<!--                                <p>3</p>-->
-<!--                            </label>-->
-<!--                        </td>-->
-<!--                        <td class="address">-->
-
-<!--                            <p class="addr">-->
-<!--                                제품에 하자가 있어요-->
-<!--                            </p>-->
-<!--                        </td>-->
-<!--                        <td class="name">-->
-<!--                            <span>admin</span>-->
-<!--                        </td>-->
-<!--                        <td class="phone">-->
-<!--                            <span>2023-11-27T16:44</span>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <span class="delivery star">13</span>-->
-<!--                        </td>-->
-<!--                        <td class="delete_position">-->
-<!--                            <span class="delivery star">Y</span>-->
-<!--                        </td>-->
-<!--                    </tr>        <tr>-->
-<!--                        <td class="select type_radio">-->
-<!--                            <label class="skin_checkbox">-->
-<!--                                <p>3</p>-->
-<!--                            </label>-->
-<!--                        </td>-->
-<!--                        <td class="address">-->
-
-<!--                            <p class="addr">-->
-<!--                                제품에 하자가 있어요-->
-<!--                            </p>-->
-<!--                        </td>-->
-<!--                        <td class="name">-->
-<!--                            <span>admin</span>-->
-<!--                        </td>-->
-<!--                        <td class="phone">-->
-<!--                            <span>2023-11-27T16:44</span>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <span class="delivery star">13</span>-->
-<!--                        </td>-->
-<!--                        <td class="delete_position">-->
-<!--                            <span class="delivery star">N</span>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td class="select type_radio">-->
-<!--                            <label class="skin_checkbox">-->
-<!--                                <p>3</p>-->
-<!--                            </label>-->
-<!--                        </td>-->
-<!--                        <td class="address">-->
-
-<!--                            <p class="addr">-->
-<!--                                제품에 하자가 있어요-->
-<!--                            </p>-->
-<!--                        </td>-->
-<!--                        <td class="name">-->
-<!--                            <span>admin</span>-->
-<!--                        </td>-->
-<!--                        <td class="phone">-->
-<!--                            <span>2023-11-27T16:44</span>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <span class="delivery star">13</span>-->
-<!--                        </td>-->
-<!--                        <td class="delete_position">-->
-<!--                            <span class="delivery star">Y</span>-->
-<!--                        </td>-->
-<!--                    </tr>        <tr>-->
-<!--                        <td class="select type_radio">-->
-<!--                            <label class="skin_checkbox">-->
-<!--                                <p>3</p>-->
-<!--                            </label>-->
-<!--                        </td>-->
-<!--                        <td class="address">-->
-
-<!--                            <p class="addr">-->
-<!--                                제품에 하자가 있어요-->
-<!--                            </p>-->
-<!--                        </td>-->
-<!--                        <td class="name">-->
-<!--                            <span>admin</span>-->
-<!--                        </td>-->
-<!--                        <td class="phone">-->
-<!--                            <span>2023-11-27T16:44</span>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <span class="delivery star">13</span>-->
-<!--                        </td>-->
-<!--                        <td class="delete_position">-->
-<!--                            <span class="delivery star">N</span>-->
-<!--                        </td>-->
-<!--                    </tr>-->
-<!--                    <tr>-->
-<!--                        <td class="select type_radio">-->
-<!--                            <label class="skin_checkbox">-->
-<!--                                <p>3</p>-->
-<!--                            </label>-->
-<!--                        </td>-->
-<!--                        <td class="address">-->
-
-<!--                            <p class="addr">-->
-<!--                                제품에 하자가 있어요-->
-<!--                            </p>-->
-<!--                        </td>-->
-<!--                        <td class="name">-->
-<!--                            <span>admin</span>-->
-<!--                        </td>-->
-<!--                        <td class="phone">-->
-<!--                            <span>2023-11-27T16:44</span>-->
-<!--                        </td>-->
-<!--                        <td>-->
-<!--                            <span class="delivery star">13</span>-->
-<!--                        </td>-->
-<!--                        <td class="delete_position">-->
-<!--                            <span class="delivery star">Y</span>-->
-<!--                        </td>-->
-<!--                    </tr>-->
                     </tbody>
 
                 </table>
+                <div class="pagination">
+                    <ul>
+                        <li th:if="${currentPage > 1}">
+                            <a th:href="@{|/board/board-list?page=${currentPage - 1}|}">&laquo; 이전</a>
+                        </li>
+                        <li th:each="pageNum : ${#numbers.sequence(1, totalPages)}"
+                            th:class="${pageNum == currentPage} ? 'active' : ''">
+                            <a th:href="@{|/board/board-list?page=${pageNum}|}" th:text="${pageNum}"></a>
+                        </li>
+                        <li th:if="${currentPage < totalPages}">
+                            <a th:href="@{|/board/board-list?page=${currentPage + 1}|}">다음 &raquo;</a>
+                        </li>
+                    </ul>
+                </div>
                 <a href="/board/insert-board"><button class="delete_button" onclick="saveReq()">등록</button></a>
             </div>
 
-
-
-
         </div>
-
-
-
 
     </div>
 
