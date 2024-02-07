@@ -86,8 +86,8 @@
                             <label class="label-wrapper" for="addrZone">주소</label>
                         </th>
                         <td>
-                            <input id="addrZone" name="addrZone" readonly="readonly"
-                                   th:value="${#strings.isEmpty(userShpAddrDTOList) ? '' : userShpAddrDTOList.get(0).addrZone}" type="text">
+                            <input id="addrZone" name="addrZone" readonly="readonly" type="text"
+                                   th:value="${#lists.isEmpty(userAccountDto.userShpAddrDTOList) ? '' : userAccountDto.userShpAddrDTOList[0].addrZone}">
                         </td>
                     </tr>
                     <tr>
@@ -95,7 +95,7 @@
                         </th>
                         <td>
                             <input id="addrBasic" name="addrBasic" readonly="readonly"
-                                   th:value="${#strings.isEmpty(userShpAddrDTOList) ? '' : userShpAddrDTOList.get(0).addrBasic}" type="text">
+                                   th:value="${#lists.isEmpty(userAccountDto.userShpAddrDTOList) ? '' : userAccountDto.userShpAddrDTOList[0].addrBasic}" type="text">
                         </td>
                     </tr>
                     <tr>
@@ -103,8 +103,7 @@
                         </th>
                         <td>
                             <input id="addrDetail" name="addrDetail"
-                                   th:value="${#strings.isEmpty(userShpAddrDTOList) ? '' : userShpAddrDTOList.get(0).addrDetail}"
-                                   type="text">
+                                   th:value="${#lists.isEmpty(userAccountDto.userShpAddrDTOList) ? '' : userAccountDto.userShpAddrDTOList[0].addrDetail}" type="text">
                         </td>
                     </tr>
                     <tr>
