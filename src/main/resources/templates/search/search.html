@@ -3,7 +3,7 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout_no_footer}"
+      layout:decorate="~{layouts/layout}"
       >
 <head>
     <th:block layout:fragment="css">
@@ -11,8 +11,9 @@
     </th:block>
 </head>
 <body>
-<div layout:fragment="content" class="search-main">
-    <main id="main">
+<div layout:fragment="content">
+    <main id="main" >
+        <div class="search-main">
         <section id="section2" class="section-slide-public">
             <div class="title">
                 <h2 th:if="${search.isBlank()} ">모든 상품 조회</h2>
@@ -74,7 +75,8 @@
                 </li>
             </ul>
         </div>
+        </div>
     </main>
-</div>
+        </div>
 </body>
 </html>

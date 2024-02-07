@@ -7,6 +7,8 @@ import com.nc.project.repository.ItemRepository;
 import com.nc.project.service.ItemService;
 
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -21,7 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
-    public final ItemRepository itemRepository;
+    private final ItemRepository itemRepository;
 
     @Transactional
     @Override
@@ -41,17 +43,18 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void modifyItem(ItemDTO itemDTO) {
-
-        Item item = itemDTO.toEntity();
+        System.out.println("+++++++++++++++++++++++++++++++++++++");
+        System.out.println(itemDTO);
+        Item updateItem = itemDTO.toEntity();
 
         List<ItemFile> itemFileList = itemDTO.getItemFileDTOList().stream()
-                .map(itemFileDTO -> itemFileDTO.toEntity(item)).toList();
+                .map(itemFileDTO -> itemFileDTO.toEntity(updateItem)).toList();
 
         itemFileList.forEach(
-                item::addItemFileList
+                updateItem::addItemFileList
         );
 
-        itemRepository.save(item);
+        itemRepository.save(updateItem);
 
     }
 

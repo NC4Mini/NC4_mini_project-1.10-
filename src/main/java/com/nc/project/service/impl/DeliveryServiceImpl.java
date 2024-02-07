@@ -31,13 +31,12 @@ public class DeliveryServiceImpl implements DeliveryService{
 
     // 결제하기 기능
     @Transactional
-    public void confirmDelivery(long cartId, long deliveryId) {
+    public void confirmDelivery(long cartId) {
         Cart cart = cartRepository.findById(cartId).orElseThrow();
         UserAccount userAccount = cart.getUserAccount();
         // List<CartItem> cartItemList = new ArrayList<>(cart.getCartItemList());
         double totalPrice = cart.getTotalPrice();
         Delivery delivery = Delivery.builder()
-            .deliveryId(deliveryId)
             .userAccount(userAccount)
             // .deliveryItemList(cartItemList)
             .totalPrice(totalPrice)

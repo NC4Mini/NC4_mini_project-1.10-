@@ -89,3 +89,9 @@
     white-space: nowrap;
     padding-top: 8px;
 }
+
+#content {
+    width: 1050px;
+    margin: 0 auto;
+    height: auto;
+}

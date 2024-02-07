@@ -3,12 +3,25 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/admin/admin_common.css}">
+        <link rel="stylesheet" th:href="@{/css/admin/admin_page_prd_upload.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script>
+            $(() => {
+                $("#saveForm").on("submit", function() {
+                    if($("#image")[0].files.length == 0) {
+                        $("#image").attr("disabled", "disabled");
+                    }
+                });
+            });
+        </script>
+    </th:block>
+</head>
 <body>
 
-<th:block layout:fragment="css">
-    <link rel="stylesheet" th:href="@{/css/admin/admin_common.css}">
-    <link rel="stylesheet" th:href="@{/css/admin/admin_page_prd_upload.css}">
-</th:block>
 <div layout:fragment="content" id="main">
     <div class="page_aticle aticle_type2">
         <div id="snb" class="snb_my">
@@ -40,7 +53,7 @@
             </div>
 
             <div class="list_order">
-                <form action="/board/save" method="post" enctype="multipart/form-data">
+                <form action="/board/save" id="saveForm" method="post" enctype="multipart/form-data">
                     <div class="size">
                         <div class="p_board">
                             <table width="100%">
@@ -53,11 +66,6 @@
                                                     <input type="text" name="boardCategory" class="i_text text1">
                                                 </span>
                                         </div>
-<!--                                        <span class="txtByte" title="현재글자수/최대글자수">-->
-<!--                                              [-->
-<!--                                              <strong class="txt_count_name">0</strong>-->
-<!--                                               / 80 ]-->
-<!--                                            </span>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -68,11 +76,6 @@
                                                     <input type="text" name="boardWriter" class="i_text text1" >
                                                 </span>
                                         </div>
-<!--                                        <span class="txtByte" title="현재글자수/최대글자수">-->
-<!--                                              [-->
-<!--                                              <strong class="txt_count_name">0</strong>-->
-<!--                                               / 80 ]-->
-<!--                                            </span>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -84,11 +87,6 @@
                                                 </span>
 
                                         </div>
-<!--                                        <span class="txtByte" title="현재글자수/최대글자수">-->
-<!--                                              [-->
-<!--                                              <strong class="txt_count_introduce">0</strong>-->
-<!--                                               / 150 ]-->
-<!--                                            </span>-->
                                     </td>
                                 </tr>
                                 <tr>
@@ -99,67 +97,42 @@
                                                     <textarea class="i_text text8" name="boardContents" id="" cols="30" rows="10"></textarea>
                                                 </span>
                                         </div>
-<!--                                        <span class="txtByte_big txtByte" title="현재글자수/최대글자수">-->
-<!--                                              [-->
-<!--                                              <strong class="txt_count_information">0</strong>-->
-<!--                                               / 550 ]-->
-<!--                                            </span>-->
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <th>이미지</th>
                                     <td class="img_upload">
-<!--                                        <div>-->
-<!--                                            <span>대표 이미지</span>-->
-<!--                                            <div class="image_box">-->
 
-<!--                                                <div class="image_add">-->
-                                                    <input type="file" name="boardFile" id="image" accept="image/*" onchange="preview()"  multiple>
-<!--                                                    <button type="button" class="image_input_button"></button>-->
-                                                    <div id="image_container_3">
+                                        <input type="file" name="boardFile" id="image" accept="image/*" onchange="preview()"  multiple>
 
-                                                    </div>
-                                                    <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
-                                                    <script>
-                                                        let fileInput = document.getElementById("image");
-                                                        let imageContainer = document.getElementById("image_container_3");
-                                                        function preview(){
+                                        <div id="image_container_3">
+
+                                        </div>
+                                        <!--  이미지 업로드하면 미리보기 썸네일 나오기-->
+                                        <script>
+                                            let fileInput = document.getElementById("image");
+                                            let imageContainer = document.getElementById("image_container_3");
+                                            function preview(){
 
 
-                                                            const fileArr = Array.prototype.slice.call(fileInput.files);
+                                                const fileArr = Array.prototype.slice.call(fileInput.files);
 
-                                                            for(i of fileArr) {
-                                                                // reader.readAsDataURL(image.files[0])
-                                                                // const image = document.querySelector("#image")
-                                                                // image.addEventListener("change", (e) => {
-                                                                //     //console.log(e)
-                                                                //     const reader = new FileReader()
-                                                                //     reader.readAsDataURL(e.target.files[0])
-                                                                let reader = new FileReader();
+                                                for(i of fileArr) {
+                                                    let reader = new FileReader();
 
-                                                                    reader.onload = function (event) {
-                                                                        let img = document.createElement("img");
-                                                                        img.setAttribute("src",event.target.result);
+                                                        reader.onload = function (event) {
+                                                            let img = document.createElement("img");
+                                                            img.setAttribute("src",event.target.result);
 
-                                                                        $("#image_container_3").append(img);
+                                                            $("#image_container_3").append(img);
 
-                                                                    }
-                                                                reader.readAsDataURL(i);
-                                                                // })
-                                                            }
                                                         }
-
-
-                                                    </script>
-
-
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-
-<!--                                        <div>-->
-<!--                                        </div>-->
+                                                    reader.readAsDataURL(i);
+                                                    // })
+                                                }
+                                            }
+                                        </script>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -167,31 +140,18 @@
                         </div>
 
                         <div id="product_submit" class="pd_submit">
-                            <button type="submit"  onclick="listReq()">등록하기</button>
+                            <button type="submit">등록하기</button>
                         </div>
 
                     </div>
                 </form>
-
-
-
             </div>
-
-
         </div>
-
-
-
 
     </div>
 
 </div>
 
-
 </body>
-<script>
-    const listReq = () => {
-        location.href = "/getBoardList.html";
-    }
-</script>
+
 </html>

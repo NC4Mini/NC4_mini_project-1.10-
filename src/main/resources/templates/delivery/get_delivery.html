@@ -37,7 +37,7 @@
                     orderName: '결제테스트',
                     customerName: '결제자명:김태현',
                     // 결제 성공시 호출되는 함수
-                    successUrl: 'http://localhost:9090/delivery/success',
+                    successUrl: 'http://223.130.160.102:9090/delivery/success',
                     // successUrl: 'https://docs.tosspayments.com/guides/payment/test-success',
                     failUrl: 'https://docs.tosspayments.com/guides/payment/test-fail',
                 });
@@ -91,7 +91,7 @@
                     <h2 class="tit_section" id="titFocusOrderer">주문자 정보</h2>
                     <!-- 데이터 넘겨줄 input 태그 -->
                     <input type="hidden" id="cartId" th:value="${cart.cartId}" name="cartId">
-                    <input type="hidden" id="deliveryId" th:value="${delivery.deliveryId}" name="deliveryId">
+                    <input type="hidden" id="deliveryId" name="deliveryId">
                     <div class="order_section data_orderer">
                         <table class="goodsinfo_table">
                             <tbody>
