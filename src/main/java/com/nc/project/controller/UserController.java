@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nc.project.dto.UserAccountDTO;
 import com.nc.project.dto.UserShpAddrDTO;
 import com.nc.project.entity.CustomUserDetails;
-import com.nc.project.entity.UserAccount;
 import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.service.impl.SendEmailServiceImpl;
 import com.nc.project.service.impl.UserServiceImpl;
@@ -17,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RequiredArgsConstructor
 @RequestMapping("/user")
@@ -35,6 +34,7 @@ public class UserController {
     private final UserServiceImpl userService;
     private final SendEmailServiceImpl sendEmailService;
     private final UserAccountRepository userAccountRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @GetMapping("/profile")
@@ -45,7 +45,7 @@ public class UserController {
         String userId = userDetails.getUsername();
 
         userAccountDto = userService.findUser(userId).toDTO();
-
+        System.out.println(userAccountDto);
         model.addAttribute("userAccountDto",userAccountDto);
 
         return "user/modify";
@@ -104,7 +104,9 @@ public class UserController {
         UserAccountDTO userAccountDto = new UserAccountDTO();
         userAccountDto = userService.findUser(userId).toDTO();
 
-        if(Objects.equals(curUserPw, userAccountDto.getUserPw())) {
+        Boolean checkEquals = passwordEncoder.matches(curUserPw, userAccountDto.getUserPw());
+
+        if(checkEquals) {
             checkPw = true;
             return new ResponseEntity<>(checkPw, HttpStatus.OK);
         } else {
