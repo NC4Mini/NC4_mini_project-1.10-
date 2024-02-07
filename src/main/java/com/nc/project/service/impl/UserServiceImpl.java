@@ -6,6 +6,7 @@ import com.nc.project.repository.UserAccountRepository;
 import com.nc.project.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserAccountRepository userAccountRepository;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public void join(UserAccountDTO userAccountDTO) {
 
@@ -36,11 +38,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void modifyUser(UserAccountDTO userAccountDTO) {
+
+
         UserAccount userAccount = userAccountRepository.findByUserId(userAccountDTO.getUserId()).get();
         UserAccountDTO newUserAccountDto = userAccount.toDTO();
 
         if(!userAccountDTO.getUserPw().isBlank()) {
-        userAccount.setUserPw(userAccountDTO.getUserPw());
+        userAccount.setUserPw(passwordEncoder.encode(userAccountDTO.getUserPw()));
         }
 
         userAccount.setUserName(userAccountDTO.getUserName());
