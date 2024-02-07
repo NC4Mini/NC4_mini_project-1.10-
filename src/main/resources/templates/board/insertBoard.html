@@ -3,12 +3,25 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/layout}">
+<head>
+    <th:block layout:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/admin/admin_common.css}">
+        <link rel="stylesheet" th:href="@{/css/admin/admin_page_prd_upload.css}">
+    </th:block>
+    <th:block layout:fragment="script">
+        <script>
+            $(() => {
+                $("#saveForm").on("submit", function() {
+                    if($("#image")[0].files.length == 0) {
+                        $("#image").attr("disabled", "disabled");
+                    }
+                });
+            });
+        </script>
+    </th:block>
+</head>
 <body>
 
-<th:block layout:fragment="css">
-    <link rel="stylesheet" th:href="@{/css/admin/admin_common.css}">
-    <link rel="stylesheet" th:href="@{/css/admin/admin_page_prd_upload.css}">
-</th:block>
 <div layout:fragment="content" id="main">
     <div class="page_aticle aticle_type2">
         <div id="snb" class="snb_my">
@@ -40,7 +53,7 @@
             </div>
 
             <div class="list_order">
-                <form action="/board/save" method="post" enctype="multipart/form-data">
+                <form action="/board/save" id="saveForm" method="post" enctype="multipart/form-data">
                     <div class="size">
                         <div class="p_board">
                             <table width="100%">
@@ -106,12 +119,6 @@
                                                 const fileArr = Array.prototype.slice.call(fileInput.files);
 
                                                 for(i of fileArr) {
-                                                    // reader.readAsDataURL(image.files[0])
-                                                    // const image = document.querySelector("#image")
-                                                    // image.addEventListener("change", (e) => {
-                                                    //     //console.log(e)
-                                                    //     const reader = new FileReader()
-                                                    //     reader.readAsDataURL(e.target.files[0])
                                                     let reader = new FileReader();
 
                                                         reader.onload = function (event) {
@@ -133,7 +140,7 @@
                         </div>
 
                         <div id="product_submit" class="pd_submit">
-                            <button type="submit"  onclick="listReq()">등록하기</button>
+                            <button type="submit">등록하기</button>
                         </div>
 
                     </div>
@@ -146,9 +153,5 @@
 </div>
 
 </body>
-<script>
-    const listReq = () => {
-        location.href = "/getBoardList.html";
-    }
-</script>
+
 </html>
