@@ -141,8 +141,11 @@ table .text8 {
 
 }
 
+.image_main_input_button, .image_detail_input_button, .image_thumbnail_input_button {
+    display: none;
+}
 
-.image_add .image_main_input_button::before, .image_detail_input_button::before, .image_thumbnail_input_button::before {
+.image_add::before {
     content: "";
     position: absolute;
     top: 50%;
@@ -155,7 +158,7 @@ table .text8 {
 
 }
 
-.image_add .image_main_input_button::after, .image_detail_input_button::after, .image_thumbnail_input_button::after {
+.image_add::after {
     content: "";
     position: absolute;
     top: 50%;

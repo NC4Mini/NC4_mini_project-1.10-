@@ -171,6 +171,20 @@
                 var imageType = container.id.replace("image_", "").replace("_container", "");
                 resetImageBoxSize(imageType);
 
+                switch (imageType) {
+                    case "main":
+                        $(".image_add .image_main_input_button").hide();
+                        break;
+                    case "detail":
+                        $(".image_add .image_detail_input_button").hide();
+                        break;
+                    case "thumbnail":
+                        $(".image_add .image_thumbnail_input_button").hide();
+                        break;
+                    default:
+                        break;
+                }
+
             }
 
             function applyDynamicStyles(imageType) {

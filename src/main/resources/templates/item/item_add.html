@@ -170,6 +170,23 @@
                 var imageType = container.id.replace("image_", "").replace("_container", "");
                 resetImageBoxSize(imageType);
 
+                switch (imageType) {
+                    case "main":
+                        var mainButton = button.closest(".image_add").querySelector(".image_main_input_button");
+                        mainButton.style.display = "none";
+                        break;
+                    case "detail":
+                        var detailButton = button.closest(".image_add").querySelector(".image_detail_input_button");
+                        detailButton.style.display = "none";
+                        break;
+                    case "thumbnail":
+                        var thumbnailButton = button.closest(".image_add").querySelector(".image_thumbnail_input_button");
+                        thumbnailButton.style.display = "none";
+                        break;
+                    default:
+                        break;
+                }
+
             }
 
             function applyDynamicStyles(imageType) {
