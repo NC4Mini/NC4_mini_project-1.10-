@@ -30,7 +30,7 @@ public class BoardService {
     private final FileUtils fileUtils;
     public void save(BoardDTO boardDTO) throws IOException {
         //파일 첨부 여부에 따라 로직 분리
-        if(boardDTO.getBoardFile()[0].getOriginalFilename().equals("")){
+        if(ArrayUtils.isEmpty(boardDTO.getBoardFile())){
                 System.out.println("첨부파일 없음");
                 //첨부 파일 없음.
                 Board board = Board.toSaveEntity(boardDTO);
