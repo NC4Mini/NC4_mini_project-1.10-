@@ -1,4 +1,4 @@
-# 비트컬
+# 비트컬리
 
 ![발표자료_pages-to-jpg-0001](https://github.com/NC4Mini/NC4_mini_project-1.10-/assets/74390199/e10563e7-a4c3-4c93-8def-214a66526a41)
 ![발표자료_pages-to-jpg-0002](https://github.com/NC4Mini/NC4_mini_project-1.10-/assets/74390199/6e64a155-4b73-4953-a350-0760bdc26e68)
