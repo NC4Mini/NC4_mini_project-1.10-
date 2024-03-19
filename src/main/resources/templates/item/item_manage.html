@@ -24,7 +24,7 @@
                 <div class="item-box" th:each="item : ${itemList}">
                     <div class="img-box">
                         <a th:if="${item.itemFileList[0].itemType.equalsIgnoreCase('Main')}" th:href="@{/item/item-modify?(itemId=${item.itemId})}">
-                            <img class="img-size" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${item.itemFileList[0].itemFileName}}" alt="메인상품이미지">
+                            <img class="img-size" th:src="@{'http://mooho.shop:9000/bitcamp/item/' + ${item.itemFileList[0].itemFileName}}" alt="메인상품이미지">
                         </a>
                     </div>
                     <div class="caption-box">

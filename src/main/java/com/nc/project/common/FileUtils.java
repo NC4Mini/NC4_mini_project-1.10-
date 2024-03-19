@@ -15,6 +15,10 @@ import com.nc.project.dto.ItemFileDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,24 +29,19 @@ import java.util.UUID;
 
 @Component
 public class FileUtils {
-    private final AmazonS3 s3;
+    private final MinioClient minioClient;
 
     public FileUtils(NaverConfiguration naverConfiguration) {
-        s3 = AmazonS3ClientBuilder.standard()
-                .withEndpointConfiguration(new AwsClientBuilder.EndpointConfiguration(
-                        naverConfiguration.getEndPoint(), naverConfiguration.getRegionName()
-                ))
-                .withCredentials(new AWSStaticCredentialsProvider(
-                        new BasicAWSCredentials(
-                                naverConfiguration.getAccessKey(), naverConfiguration.getSecretKey()
-                        )
-                ))
-                .build();
+        minioClient = MinioClient.builder()
+                      .endpoint("mooho.shop", 9000, false)
+                      .credentials("IOcExBLeGsRzdrE3Xqfr", "oKVmXIuQWMaWmQyxjgagqedrqjJn28cfZiNPWk60")
+                      .region("ap-northeast-2")
+                      .build();
     }
 
     public ItemFileDTO parseFileInfo(MultipartFile multipartFile, String directory) {
         //버킷 이름
-        String bucketName = "bit-nc4th-miniproject";
+        String bucketName = "bitcamp";
 
         // 리턴할 BoardFileDTO 객체 생성
         ItemFileDTO itemFileDTO = new ItemFileDTO();
@@ -63,19 +62,18 @@ public class FileUtils {
         // 파일 업로드 될 파일 경로
         String itemFilePath = directory;
 
+        System.out.println("업로드 시도");
         // 오브젝트 스토리지에 파일 업로드
         try(InputStream fileIputStream = multipartFile.getInputStream()) {
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentType(multipartFile.getContentType());
-
-            PutObjectRequest putObjectRequest = new PutObjectRequest(
-                    bucketName,
-                    directory + itemFileName,
-                    fileIputStream,
-                    objectMetadata
-            ).withCannedAcl(CannedAccessControlList.PublicRead);
-
-            s3.putObject(putObjectRequest);
+            System.out.println("업로드 시도2");
+            System.out.println("bucketName" + bucketName);
+            System.out.println("directory + itemFileName" + directory + itemFileName);
+            System.out.println("fileIputStream" + fileIputStream);
+            minioClient.putObject(
+            PutObjectArgs.builder().bucket(bucketName).object(directory + itemFileName).stream(
+                fileIputStream, -1, 10485760)
+        .contentType("image/jpg")
+        .build());
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
@@ -112,7 +110,7 @@ public class FileUtils {
 
     public BoardFileDTO parseBoardFileInfo(MultipartFile multipartFile, String directory) {
         //버킷 이름
-        String bucketName = "bit-nc4th-miniproject";
+        String bucketName = "bitcamp";
         BoardFileDTO boardFileDTO = new BoardFileDTO();
         boardFileDTO.setOriginalFileName(multipartFile.getOriginalFilename());
         boardFileDTO.setStoredFileName(System.currentTimeMillis() + "_" + multipartFile.getOriginalFilename());
@@ -120,17 +118,11 @@ public class FileUtils {
 
         // 오브젝트 스토리지에 파일 업로드
         try(InputStream fileIputStream = multipartFile.getInputStream()) {
-            ObjectMetadata objectMetadata = new ObjectMetadata();
-            objectMetadata.setContentType(multipartFile.getContentType());
-
-            PutObjectRequest putObjectRequest = new PutObjectRequest(
-                    bucketName,
-                    directory + boardFileDTO.getStoredFileName(),
-                    fileIputStream,
-                    objectMetadata
-            ).withCannedAcl(CannedAccessControlList.PublicRead);
-
-            s3.putObject(putObjectRequest);
+            minioClient.putObject(
+            PutObjectArgs.builder().bucket(bucketName).object(directory + boardFileDTO.getStoredFileName()).stream(
+                fileIputStream, -1, 10485760)
+            .contentType("image/jpg")
+            .build());
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }

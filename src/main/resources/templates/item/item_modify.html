@@ -443,7 +443,7 @@
                                                             <div id="image_main_container" th:if="${mainFile != null}">
                                                                 <img class=image_main
 
-                                                                     th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${mainFile.itemFileName}}" alt="메인이미지">
+                                                                     th:src="@{'http://mooho.shop:9000/bitcamp/item/' + ${mainFile.itemFileName}}" alt="메인이미지">
                                                                 <p style="display: inline-block; font-size: 10px; font-weight: bold; padding: 0 10px;"
                                                                    th:text="${mainFile.itemFileOrigin}"></p>
                                                             </div>
@@ -480,7 +480,7 @@
                                                             <div id="image_detail_container"
                                                                  th:if="${detailFile != null}">
 
-                                                                <img class="image_detail" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${detailFile.itemFileName}}" alt="디테일이미지">
+                                                                <img class="image_detail" th:src="@{'http://mooho.shop:9000/bitcamp/item/' + ${detailFile.itemFileName}}" alt="디테일이미지">
                                                                 <p style="display: inline-block; font-size: 10px; font-weight: bold; padding: 0 10px;"
                                                                    th:text="${detailFile.itemFileOrigin}"></p>
                                                             </div>
@@ -518,7 +518,7 @@
                                                             <div id="image_thumbnail_container"
                                                                  th:if="${thumbnailFile != null}">
 
-                                                                <img class="image_thumbnail" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${thumbnailFile.itemFileName}}" alt="썸네일이미지">
+                                                                <img class="image_thumbnail" th:src="@{'http://mooho.shop:9000/bitcamp/item/' + ${thumbnailFile.itemFileName}}" alt="썸네일이미지">
                                                                 <p style="display: inline-block; font-size: 10px; font-weight: bold; padding: 0 10px;"
                                                                    th:text="${thumbnailFile.itemFileOrigin}"></p>
                                                             </div>

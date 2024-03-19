@@ -58,7 +58,7 @@
                     <ul class="list_product">
                         <li th:each="itemFile : ${cartItem.item.itemFileList}">
                             <div class="thumb">
-                                <img th:if="${itemFile.itemType} == 'Main'" th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/item/' + ${itemFile.itemFileName}}" >
+                                <img th:if="${itemFile.itemType} == 'Main'" th:src="@{'http://mooho.shop:9000/bitcamp/item/' + ${itemFile.itemFileName}}" >
                             </div>
 
                             <div class="name">

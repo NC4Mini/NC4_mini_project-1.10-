@@ -96,7 +96,7 @@
                                     <th>이미지</th>
                                     <td>
                                         <div id="image_container_3" >
-                                            <img class="inquiry-img" th:each="fileName:${boardUpdate.boardFileList} " th:src="@{'https://kr.object.ncloudstorage.com/bit-nc4th-miniproject/board/' + ${fileName.storedFileName}|}" alt="">
+                                            <img class="inquiry-img" th:each="fileName:${boardUpdate.boardFileList} " th:src="@{'http://mooho.shop:9000/bitcamp/board/' + ${fileName.storedFileName}|}" alt="">
                                         </div>
                                     </td>
                                 </tr>
